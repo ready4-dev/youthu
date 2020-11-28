@@ -38,3 +38,4 @@ Knit parameters (a list)
 \description{
 make_knit_pars_ls() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make knit parameters list. The function returns Knit parameters (a list).
 }
+\keyword{internal}
