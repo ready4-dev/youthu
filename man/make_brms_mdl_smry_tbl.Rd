@@ -21,4 +21,3 @@ Brms mdl smry (a tibble)
 \description{
 make_brms_mdl_smry_tbl() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make brms mdl smry table. The function returns Brms mdl smry (a tibble).
 }
-\keyword{internal}

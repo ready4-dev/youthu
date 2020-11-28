@@ -20,4 +20,3 @@ plot_obsd_predd_dnst(
 \description{
 plot_obsd_predd_dnst() is a Plot function that plots data Specifically, this function implements an algorithm to plot obsd predd dnst. The function is called for its side effects and does not return a value.
 }
-\keyword{internal}

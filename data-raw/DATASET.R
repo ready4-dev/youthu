@@ -123,6 +123,13 @@ fns_dmt_tb <- ready4fun::make_dmt_for_all_fns(paths_ls = ready4fun::make_fn_nms(
                                                                    args_ls_ls = NULL),
                                               fn_type_lup_tb = fn_type_lup_tb,
                                               abbreviations_lup = abbreviations_lup)
+pkg_dss_tb <- fns_dmt_tb %>%
+  ready4fun::write_and_doc_ds(db_1L_chr = "fns_dmt_tb",
+                              title_1L_chr = "map2aqol function documentation table",
+                              desc_1L_chr = "Meta-data on each map2aqol function used to create package documentation",
+                              url_1L_chr = "https://ready4-dev.github.io/map2aqol/",
+                              abbreviations_lup = abbreviations_lup,
+                              pkg_dss_tb = pkg_dss_tb)
 ##
 pkg_dss_tb <- tibble::tribble(
   ~var_name_chr, ~coeff_dbl,

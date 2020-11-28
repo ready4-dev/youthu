@@ -13,7 +13,6 @@
 #' @export 
 #' @importFrom brms brm
 #' @importFrom purrr map_chr
-#' @keywords internal
 fit_ts_model_with_brm <- function (data_tb, dep_var_nm_1L_chr, predr_vars_nms_chr, id_var_nm_1L_chr, 
     backend_1L_chr = getOption("brms.backend", "rstan"), link_1L_chr = "identity", 
     iters_1L_int = 4000L, seed_1L_int = 1000L) 
