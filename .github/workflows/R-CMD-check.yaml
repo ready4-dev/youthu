@@ -41,7 +41,7 @@ jobs:
           r-version: ${{ matrix.config.r }}
 
       - name: Install XQuartz for rayshader
-        if: runner.os != 'macOS'
+        if: runner.os == 'macOS'
         run: |
           brew cask install xquartz
 
