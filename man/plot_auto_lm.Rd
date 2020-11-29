@@ -18,3 +18,4 @@ plot_auto_lm(mdl, which_dbl = 1:6, ncol_1L_int = 3L, label_size_1L_int = 3)
 \description{
 plot_auto_lm() is a Plot function that plots data Specifically, this function implements an algorithm to plot auto lm. The function is called for its side effects and does not return a value.
 }
+\keyword{internal}

@@ -1,0 +1,20 @@
+﻿Dim_scal,Label,Equ
+dvD1,Disvalue Score for Dimension 1 - Independent Living,(1/-0.978)*((1+(-0.978*0.385412*dvQ1))*(1+(-0.978*0.593819*dvQ2))*(1+(-0.978*0.630323*dvQ3))*(1+(-0.978*0.794888*dvQ4))-1)
+dvD2,Disvalue Score for Dimension 2 - Relationships,(1/-0.923)*((1+(-0.923*0.64303*dvQ5))*(1+(-0.923*0.697742*dvQ6))*(1+(-0.923*0.508658*dvQ7))-1)
+dvD3,Disvalue Score for Dimension 3 - Mental Health,(1/-0.983)*((1+(-0.983*0.640377*dvQ8))*(1+(-0.983*0.588422*dvQ9))*(1+(-0.983*0.648748*dvQ10))*(1+(-0.983*0.71122*dvQ11))-1)
+dvD4,Disvalue Score for Dimension 4 - Coping,(1/-0.930)*((1+(-0.930*0.415694*dvQ12))*(1+(-0.930*0.636994*dvQ13))*(1+(-0.930*0.773296*dvQ14))-1)
+dvD5,Disvalue Score for Dimension 5 - Pain,(1/-0.962)*((1+(-0.962*0.631833*dvQ15))*(1+(-0.962*0.767573*dvQ16))*(1+(-0.962*0.652241*dvQ17))-1)
+dvD6,Disvalue Score for Dimension 6 - Senses,(1/-0.851)*((1+(-0.851*0.580696*dvQ18))*(1+(-0.851*0.463022*dvQ19))*(1+(-0.851*0.604613*dvQ20))-1)
+vD1,Adult Score Dimension 1 - Independent Living,1-dvD1
+vD2,Adult Score Dimension 2 - Relationships,1-dvD2
+vD3,Adult Score Dimension 3 - Mental Health,1-dvD3
+vD4,"Adult Score Dimension 4 - Coping"".",1-dvD4
+vD5,Adult Score Dimension 5 - Pain,1-dvD5
+vD6,Adult Score Dimension 6 - Senses,1-dvD6
+duaqol,Overall score on a 0-1 disvalue scale,(1/-0.965)*((1+(-0.965*0.472*0.883*dvD1))*(1+(-0.965*0.448*0.883*dvD2))*(1+(-0.965*0.479*0.883*dvD3))*(1+(-0.965*0.345*0.883*dvD4))*(1+(-0.965*0.592*0.883*dvD5))*(1+(-0.965*0.637*0.883*dvD6))-1)
+duaqolld,Overall score on a life-death disutility scale,1.132*duaqol
+duAQoL6D_t,AQoL-6D AdolescentDisutility Score, duaqolld**1.8407651
+duAQoL6D,AQoL-6D AdolescentDisutility Score,"ifelse(duAQoL6D_t>1,(1 + (duAQoL6D_t-1)*.25773196), duAQoL6D_t)"
+uAQoL6D,Instrument utility score,1- duAQoL6D
+uAQoL6DRotated,Instrument utility score rotated,uAQoL6D*0.8807+0.1189
+uaqol,AQOL 6D ADOLESCENT Utility Score,1-(1-uAQoL6DRotated)**1.19

@@ -12,3 +12,4 @@ Adolescent Assessment of Quality of Life Six Dimension disvalue (a lookup table)
 \description{
 make_adol_aqol6d_disv_lup() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make adolescent assessment of quality of life six dimension disvalue lookup table. The function returns Adolescent Assessment of Quality of Life Six Dimension disvalue (a lookup table).
 }
+\keyword{internal}
