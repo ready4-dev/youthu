@@ -17,4 +17,3 @@ Signt covars (a character vector)
 \description{
 get_signft_covars() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get signft covars. Function argument mdls_with_covars_smry_tb specifies the where to look for the required object. The function returns Signt covars (a character vector).
 }
-\keyword{internal}

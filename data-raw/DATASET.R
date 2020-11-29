@@ -280,4 +280,4 @@ ready4fun::write_and_doc_fn_fls(fns_dmt_tb,
                                 path_to_dvpr_dmt_dir_1L_chr = "../../../../../Documentation/Code/Developer",
                                 path_to_user_dmt_dir_1L_chr = "../../../../../Documentation/Code/User")
 #usethis::use_github_action("pkgdown")
-usethis::use_package("rgl")
+# usethis::use_package("rgl")

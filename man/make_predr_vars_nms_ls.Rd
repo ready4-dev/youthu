@@ -17,4 +17,3 @@ Predr vars names (a list)
 \description{
 make_predr_vars_nms_ls() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make predr vars names list. The function returns Predr vars names (a list).
 }
-\keyword{internal}

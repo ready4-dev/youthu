@@ -28,3 +28,5 @@
 ^\.github$
 ^data-raw/csvs/AQoL_6D_Dim_Scaling\.csv$
 ^data-raw/csvs/aqol_valid_stata\.csv$
+^data-raw/csvs/adol_dim_scalg_eqs_lup\.csv$
+^data-raw/R-CMD-check_BUP\.txt$

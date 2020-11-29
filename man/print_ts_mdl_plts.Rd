@@ -18,4 +18,3 @@ print_ts_mdl_plts(paths_to_plts_chr, title_1L_chr, label_refs_chr, mdl_smry_ls)
 \description{
 print_ts_mdl_plts() is a Print function that prints output to console Specifically, this function implements an algorithm to print ts mdl plts. The function is called for its side effects and does not return a value.
 }
-\keyword{internal}
