@@ -228,14 +228,14 @@ pkg_dss_tb <- tibble::tribble(
                                   url_1L_chr = "https://www.aqol.com.au/index.php/scoring-algorithms",
                                   abbreviations_lup = abbreviations_lup,
                                   pkg_dss_tb = pkg_dss_tb)
-pkg_dss_tb <- read.csv("data-raw/AQoL_6D_Dim_Scaling.csv", stringsAsFactors = F, fileEncoding="UTF-8-BOM") %>%
+pkg_dss_tb <- read.csv("data-raw/csvs/AQoL_6D_Dim_Scaling.csv", stringsAsFactors = F, fileEncoding="UTF-8-BOM") %>%
   ready4fun::write_and_doc_ds(db_1L_chr = "adol_dim_scalg_eqs_lup",
                               title_1L_chr = "AQoL6D (adolescent) item worst weightings equations lookup table",
                               desc_1L_chr = "Dimension scaling equations for adolescent version of AQoL6D scoring algorithm.",
                               url_1L_chr = "https://www.aqol.com.au/index.php/scoring-algorithms",
                               abbreviations_lup = abbreviations_lup,
                               pkg_dss_tb = pkg_dss_tb)
-pkg_dss_tb <- read.csv("vignettes/Data/aqol_valid_stata.csv") %>%
+pkg_dss_tb <- read.csv("data-raw/csvs/aqol_valid_stata.csv") %>%
   ready4fun::write_and_doc_ds(db_1L_chr = "aqol6d_adult_vldn_pop_with_STATA_scores_tb",
                               title_1L_chr = "STATA comparison validation synthetic population",
                               desc_1L_chr = "Synthetic population following application of STATA adult scoring algorithm.",
