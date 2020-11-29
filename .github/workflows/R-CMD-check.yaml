@@ -42,11 +42,6 @@ jobs:
 
       - uses: r-lib/actions/setup-pandoc@v1
 
-      - name: Install XQuartz for rgl
-        if: runner.os == 'macOS'
-        run: |
-          brew cask install xquartz
-
       - name: Query dependencies
         run: |
           install.packages('remotes')
@@ -69,6 +64,11 @@ jobs:
           do
             eval sudo $cmd
           done < <(Rscript -e 'writeLines(remotes::system_requirements("ubuntu", "20.04"))')
+
+      - name: Install X11 dependencies on MacOS
+        if: runner.os == 'macOS'
+        run: |
+          brew cask install xquartz
 
       - name: Install dependencies
         run: |
