@@ -26,4 +26,3 @@ Wtd and unwtd dimension (a tibble)
 \description{
 add_wtd_dim_tots() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add wtd dimension totals. Function argument unwtd_dim_tb specifies the object to be updated. The function returns Wtd and unwtd dimension (a tibble).
 }
-\keyword{internal}

@@ -26,3 +26,5 @@
 ^data-raw/fns/write\.R$
 ^data-raw/map2aqol_DATASET\.R$
 ^\.github$
+^data-raw/csvs/AQoL_6D_Dim_Scaling\.csv$
+^data-raw/csvs/aqol_valid_stata\.csv$

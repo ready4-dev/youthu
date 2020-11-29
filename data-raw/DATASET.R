@@ -79,12 +79,11 @@ pkg_dss_tb <- classes_to_make_tb %>%
                                           output_dir_1L_chr = "R",
                                           file_exists_cdn_1L_chr = "overwrite",
                                           abbreviations_lup = abbreviations_lup,
-                                          init_class_pt_lup = ready4u::prototype_lup)  %>%
+                                          init_class_pt_lup = ready4use::prototype_lup)  %>% # UPDATE TO READY4U WHEN CLASSES ARE ADDED
   ready4fun::write_and_doc_ds(db_1L_chr = "prototype_lup",
                               title_1L_chr = "Class prototype lookup table",
                               desc_1L_chr = "Metadata on classes used in readyforwhatsnext suite",
                               pkg_dss_tb = pkg_dss_tb)
-
 # 5. Create function types and generics look-up tables
 # 5.1 Create a lookup table of function types used in this package and save it as a package dataset (data gets saved in the data directory, documentation script is created in R directory).
 data("fn_type_lup_tb",package = "ready4u")
@@ -280,4 +279,4 @@ ready4fun::write_and_doc_fn_fls(fns_dmt_tb,
                                 update_pkgdown_1L_lgl = T,
                                 path_to_dvpr_dmt_dir_1L_chr = "../../../../../Documentation/Code/Developer",
                                 path_to_user_dmt_dir_1L_chr = "../../../../../Documentation/Code/User")
-usethis::use_github_action("pkgdown")
+#usethis::use_github_action("pkgdown")

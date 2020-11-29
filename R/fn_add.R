@@ -10,7 +10,6 @@
 #' @importFrom dplyr select starts_with rename_all inner_join rename
 #' @importFrom stringr str_replace
 #' @importFrom rlang sym
-#' @keywords internal
 add_adol6d_scores <- function (unscored_aqol_tb, prefix_1L_chr = "aqol6d_q", id_var_nm_1L_chr = "fkClientID", 
     wtd_aqol_var_nm_1L_chr = "aqol6d_total_w") 
 {
@@ -39,7 +38,6 @@ add_adol6d_scores <- function (unscored_aqol_tb, prefix_1L_chr = "aqol6d_q", id_
 #' @importFrom dplyr mutate
 #' @importFrom rlang parse_expr
 #' @importFrom Hmisc label
-#' @keywords internal
 add_aqol6d_adol_dim_scrg_eqs <- function (unscored_aqol_tb) 
 {
     utils::data("adol_dim_scalg_eqs_lup", package = "ready4u", 
@@ -67,10 +65,10 @@ add_aqol6d_adol_dim_scrg_eqs <- function (unscored_aqol_tb)
 #' @export 
 #' @importFrom purrr map2 map reduce map_int
 #' @importFrom dplyr select mutate arrange left_join starts_with everything
+#' @importFrom stats na.omit
 #' @importFrom simstudy defData genData
 #' @importFrom rlang sym
 #' @importFrom tibble rowid_to_column
-#' @keywords internal
 add_aqol6d_items_to_aqol6d_tbs_ls <- function (aqol6d_tbs_ls, aqol_items_props_tbs_ls, prefix_chr, 
     aqol_tots_var_nms_chr, id_var_nm_1L_chr = "fkClientID", scaling_cnst_dbl = 5) 
 {
@@ -81,12 +79,13 @@ add_aqol6d_items_to_aqol6d_tbs_ls <- function (aqol6d_tbs_ls, aqol_items_props_t
                 t()
             item_ranges_dbl_ls <- 1:ncol(transposed_items_props_tb) %>% 
                 purrr::map(~c(1, length(transposed_items_props_tb[, 
-                  .x] %>% na.omit())))
+                  .x] %>% stats::na.omit())))
             cat_probs_def_tbl <- purrr::reduce(1:ncol(transposed_items_props_tb), 
                 .init = NULL, ~simstudy::defData(.x, varname = paste0("aqol6d_q", 
                   .y), formula = transposed_items_props_tb[, 
-                  .y] %>% na.omit() %>% as.vector() %>% format(digits = 10) %>% 
-                  paste0(collapse = ";"), dist = "categorical"))
+                  .y] %>% stats::na.omit() %>% as.vector() %>% 
+                  format(digits = 10) %>% paste0(collapse = ";"), 
+                  dist = "categorical"))
             items_tb <- simstudy::genData(nbr_obs_1L_int, cat_probs_def_tbl) %>% 
                 dplyr::select(-id) %>% dplyr::mutate(`:=`(!!rlang::sym(unname(aqol_tots_var_nms_chr["cumulative"])), 
                 rowSums(., na.rm = T))) %>% dplyr::arrange(!!rlang::sym(unname(aqol_tots_var_nms_chr["cumulative"]))) %>% 
@@ -137,7 +136,6 @@ add_aqol6dU_to_aqol6d_items_tb <- function (aqol6d_items_tb, coeffs_lup_tb = aqo
 #' @export 
 #' @importFrom purrr map
 #' @importFrom dplyr mutate
-#' @keywords internal
 add_aqol6dU_to_aqol6d_tbs_ls <- function (aqol6d_tbs_ls, prefix_1L_chr = "aqol6d_q", id_var_nm_1L_chr) 
 {
     aqol6d_tbs_ls <- aqol6d_tbs_ls %>% purrr::map(~.x %>% dplyr::mutate(aqol6dU = calculate_adol_aqol6dU(.x, 
@@ -157,7 +155,6 @@ add_aqol6dU_to_aqol6d_tbs_ls <- function (aqol6d_tbs_ls, prefix_1L_chr = "aqol6d
 #' @rdname add_cors_and_uts_to_aqol6d_tbs_ls
 #' @export 
 
-#' @keywords internal
 add_cors_and_uts_to_aqol6d_tbs_ls <- function (aqol6d_tbs_ls, aqol_scores_pars_ls, aqol_items_props_tbs_ls, 
     temporal_cors_ls, prefix_chr, aqol_tots_var_nms_chr, id_var_nm_1L_chr = "fkClientID") 
 {
@@ -342,7 +339,6 @@ add_unwtd_dim_tots <- function (items_tb, domain_items_ls, domain_pfx_1L_chr)
 #' @importFrom purrr map_dbl map2_dbl discard reduce
 #' @importFrom dplyr filter pull select_if mutate
 #' @importFrom rlang sym
-#' @keywords internal
 add_wtd_dim_tots <- function (unwtd_dim_tb, domain_items_ls, domain_unwtd_pfx_1L_chr, 
     domain_wtd_pfx_1L_chr) 
 {

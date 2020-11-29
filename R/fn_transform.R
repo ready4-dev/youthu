@@ -14,7 +14,7 @@
 #' @importFrom purrr discard
 #' @importFrom dplyr filter select mutate
 #' @importFrom rlang sym syms
-#' @keywords internal
+#' @importFrom stats na.omit
 transform_ds_for_tstng <- function (data_tb, dep_var_nm_1L_chr = "aqol6d_total_w", dep_var_max_val_1L_dbl = 0.999, 
     candidate_predrs_chr = NA_character_, covar_var_nms_chr = NA_character_, 
     round_var_nm_1L_chr = "round", round_val_1L_chr = "Baseline", 
@@ -27,7 +27,7 @@ transform_ds_for_tstng <- function (data_tb, dep_var_nm_1L_chr = "aqol6d_total_w
         dplyr::mutate(`:=`(!!rlang::sym(dep_var_nm_1L_chr), ifelse(!!rlang::sym(dep_var_nm_1L_chr) == 
             1, 0.999, !!rlang::sym(dep_var_nm_1L_chr))))
     if (remove_all_mssng_1L_lgl) 
-        tfd_data_tb <- tfd_data_tb %>% na.omit()
+        tfd_data_tb <- tfd_data_tb %>% stats::na.omit()
     return(tfd_data_tb)
 }
 #' Transform raw Assessment of Quality of Life tibble to Assessment of Quality of Life Six Dimension
@@ -75,7 +75,6 @@ transform_raw_aqol_tb_to_aqol6d_tb <- function (raw_aqol_tb)
 #' @export 
 #' @importFrom dplyr select all_of summarise across everything
 #' @importFrom purrr map flatten_chr
-#' @keywords internal
 transform_ts_mdl_data <- function (mdl_ls, data_tb, dep_var_nm_1L_chr = "aqol6d_total_w", 
     predr_vars_nms_chr, id_var_nm_1L_chr = "fkClientID", mdl_nm_1L_chr) 
 {
