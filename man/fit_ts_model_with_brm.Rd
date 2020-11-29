@@ -38,3 +38,4 @@ Mdl (a list)
 \description{
 fit_ts_model_with_brm() is a Fit function that fits a model of a specified type to a dataset Specifically, this function implements an algorithm to fit ts model with brm. The function returns Mdl (a list).
 }
+\keyword{internal}

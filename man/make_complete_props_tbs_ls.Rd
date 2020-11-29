@@ -20,3 +20,4 @@ Complete props tibbles (a list)
 \description{
 make_complete_props_tbs_ls() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make complete props tibbles list. The function returns Complete props tibbles (a list).
 }
+\keyword{internal}

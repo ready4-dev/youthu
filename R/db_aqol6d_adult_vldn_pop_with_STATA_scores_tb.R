@@ -1,0 +1,97 @@
+#' STATA comparison validation synthetic population
+#' 
+#' Synthetic population following application of STATA adult scoring algorithm.
+#' 
+#' A tibble
+#' 
+#' \describe{
+#'   \item{v1}{NO MATCH}
+#'   \item{aqol1}{NO MATCH}
+#'   \item{aqol2}{NO MATCH}
+#'   \item{aqol3}{NO MATCH}
+#'   \item{aqol4}{NO MATCH}
+#'   \item{aqol5}{NO MATCH}
+#'   \item{aqol6}{NO MATCH}
+#'   \item{aqol7}{NO MATCH}
+#'   \item{aqol8}{NO MATCH}
+#'   \item{aqol9}{NO MATCH}
+#'   \item{aqol10}{NO MATCH}
+#'   \item{aqol11}{NO MATCH}
+#'   \item{aqol12}{NO MATCH}
+#'   \item{aqol13}{NO MATCH}
+#'   \item{aqol14}{NO MATCH}
+#'   \item{aqol15}{NO MATCH}
+#'   \item{aqol16}{NO MATCH}
+#'   \item{aqol17}{NO MATCH}
+#'   \item{aqol18}{NO MATCH}
+#'   \item{aqol19}{NO MATCH}
+#'   \item{aqol20}{NO MATCH}
+#'   \item{Q1}{NO MATCH}
+#'   \item{Q2}{NO MATCH}
+#'   \item{Q3}{NO MATCH}
+#'   \item{Q4}{NO MATCH}
+#'   \item{Q5}{NO MATCH}
+#'   \item{Q6}{NO MATCH}
+#'   \item{Q7}{NO MATCH}
+#'   \item{Q8}{NO MATCH}
+#'   \item{Q9}{NO MATCH}
+#'   \item{Q10}{NO MATCH}
+#'   \item{Q11}{NO MATCH}
+#'   \item{Q12}{NO MATCH}
+#'   \item{Q13}{NO MATCH}
+#'   \item{Q14}{NO MATCH}
+#'   \item{Q15}{NO MATCH}
+#'   \item{Q16}{NO MATCH}
+#'   \item{Q17}{NO MATCH}
+#'   \item{Q18}{NO MATCH}
+#'   \item{Q19}{NO MATCH}
+#'   \item{Q20}{NO MATCH}
+#'   \item{DILmiss}{NO MATCH}
+#'   \item{DILmissno}{NO MATCH}
+#'   \item{DRLmiss}{NO MATCH}
+#'   \item{DRLmissno}{NO MATCH}
+#'   \item{DMHmiss}{NO MATCH}
+#'   \item{DMHmissno}{NO MATCH}
+#'   \item{DCOPmiss}{NO MATCH}
+#'   \item{DCOPmissno}{NO MATCH}
+#'   \item{DPmiss}{NO MATCH}
+#'   \item{DPmissno}{NO MATCH}
+#'   \item{DSENmiss}{NO MATCH}
+#'   \item{DSENmissno}{NO MATCH}
+#'   \item{dvQ1}{NO MATCH}
+#'   \item{dvQ2}{NO MATCH}
+#'   \item{dvQ3}{NO MATCH}
+#'   \item{dvQ4}{NO MATCH}
+#'   \item{dvQ5}{NO MATCH}
+#'   \item{dvQ6}{NO MATCH}
+#'   \item{dvQ7}{NO MATCH}
+#'   \item{dvQ8}{NO MATCH}
+#'   \item{dvQ9}{NO MATCH}
+#'   \item{dvQ10}{NO MATCH}
+#'   \item{dvQ11}{NO MATCH}
+#'   \item{dvQ12}{NO MATCH}
+#'   \item{dvQ13}{NO MATCH}
+#'   \item{dvQ14}{NO MATCH}
+#'   \item{dvQ15}{NO MATCH}
+#'   \item{dvQ16}{NO MATCH}
+#'   \item{dvQ17}{NO MATCH}
+#'   \item{dvQ18}{NO MATCH}
+#'   \item{dvQ19}{NO MATCH}
+#'   \item{dvQ20}{NO MATCH}
+#'   \item{dvD1}{NO MATCH}
+#'   \item{dvD2}{NO MATCH}
+#'   \item{dvD3}{NO MATCH}
+#'   \item{dvD4}{NO MATCH}
+#'   \item{dvD5}{NO MATCH}
+#'   \item{dvD6}{NO MATCH}
+#'   \item{vD1}{NO MATCH}
+#'   \item{vD2}{NO MATCH}
+#'   \item{vD3}{NO MATCH}
+#'   \item{vD4}{NO MATCH}
+#'   \item{vD5}{NO MATCH}
+#'   \item{vD6}{NO MATCH}
+#'   \item{uaqol6Dusing8D}{NO MATCH}
+#'   \item{uaqol6Dusing8Da}{NO MATCH}
+#' }
+#' @source \url{https://www.aqol.com.au/index.php/scoring-algorithms}
+"aqol6d_adult_vldn_pop_with_STATA_scores_tb"
