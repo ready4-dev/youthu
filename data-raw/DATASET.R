@@ -275,7 +275,7 @@ pkg_dss_tb <- tibble::tibble(short_name_chr = c("BADS","GAD7","K6","OASIS","PHQ9
 ## 8. Document functions.
 ready4fun::write_and_doc_fn_fls(fns_dmt_tb,
                                 r_dir_1L_chr = "R",
-                                dev_pkgs_chr = c("ready4fun","ready4class","ready4use"),
+                                dev_pkgs_chr = c("ready4fun"),
                                 update_pkgdown_1L_lgl = T,
                                 path_to_dvpr_dmt_dir_1L_chr = "../../../../../Documentation/Code/Developer",
                                 path_to_user_dmt_dir_1L_chr = "../../../../../Documentation/Code/User")

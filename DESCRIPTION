@@ -1,7 +1,7 @@
 Package: map2aqol
 Title: Map Measures Routinely Collected in Mental Health
     Services To AQOL 6D Health Utility.
-Version: 0.0.0.9005
+Version: 0.0.0.9006
 Authors@R: 
     c(person(given = "Caroline",
              family = "Gao",

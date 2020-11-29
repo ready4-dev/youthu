@@ -15,7 +15,6 @@
 #' @importFrom dplyr filter select mutate
 #' @importFrom rlang sym syms
 #' @importFrom stats na.omit
-#' @keywords internal
 transform_ds_for_tstng <- function (data_tb, dep_var_nm_1L_chr = "aqol6d_total_w", dep_var_max_val_1L_dbl = 0.999, 
     candidate_predrs_chr = NA_character_, covar_var_nms_chr = NA_character_, 
     round_var_nm_1L_chr = "round", round_val_1L_chr = "Baseline", 
@@ -76,7 +75,6 @@ transform_raw_aqol_tb_to_aqol6d_tb <- function (raw_aqol_tb)
 #' @export 
 #' @importFrom dplyr select all_of summarise across everything
 #' @importFrom purrr map flatten_chr
-#' @keywords internal
 transform_ts_mdl_data <- function (mdl_ls, data_tb, dep_var_nm_1L_chr = "aqol6d_total_w", 
     predr_vars_nms_chr, id_var_nm_1L_chr = "fkClientID", mdl_nm_1L_chr) 
 {

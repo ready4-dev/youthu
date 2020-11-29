@@ -4,11 +4,11 @@ on:
   push:
     branches:
       - main
-      - dev
+      - master
   pull_request:
     branches:
       - main
-      - dev
+      - master
 
 name: R-CMD-check
 
@@ -29,7 +29,6 @@ jobs:
 
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
-      RGL_USE_NULL: true
       RSPM: ${{ matrix.config.rspm }}
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
 
@@ -64,11 +63,6 @@ jobs:
           do
             eval sudo $cmd
           done < <(Rscript -e 'writeLines(remotes::system_requirements("ubuntu", "20.04"))')
-
-      - name: Install X11 dependencies on MacOS
-        if: runner.os == 'macOS'
-        run: |
-          brew cask install xquartz
 
       - name: Install dependencies
         run: |

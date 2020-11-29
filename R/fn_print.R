@@ -6,7 +6,6 @@
 #' @rdname print_all_plts_for_mdl_set
 #' @export 
 #' @importFrom purrr flatten walk
-#' @keywords internal
 print_all_plts_for_mdl_set <- function (output_ls, start_from_1L_int = 0L) 
 {
     label_refs_mat <- paste0("lab", 1:(output_ls %>% purrr::flatten() %>% 
@@ -37,7 +36,6 @@ print_all_plts_for_mdl_set <- function (output_ls, start_from_1L_int = 0L)
 #' @importFrom flextable flextable set_caption merge_h_range bold colformat_num autofit add_footer_lines
 #' @importFrom officer run_autonum
 #' @importFrom purrr reduce
-#' @keywords internal
 print_table_xx <- function (data_tb, output_type_1L_chr = "PDF", caption_1L_chr = NA_character_, 
     footnotes_chr = NA_character_, merge_row_idx_int = NA_integer_, 
     digits_dbl = NULL, big_mark_1L_chr = " ", label, hline.after, 
@@ -102,7 +100,6 @@ print_table_xx <- function (data_tb, output_type_1L_chr = "PDF", caption_1L_chr 
 #' @rdname print_ts_mdl_plts
 #' @export 
 #' @importFrom purrr pwalk
-#' @keywords internal
 print_ts_mdl_plts <- function (paths_to_plts_chr, title_1L_chr, label_refs_chr, mdl_smry_ls) 
 {
     cat("\n")

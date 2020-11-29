@@ -15,7 +15,6 @@
 #' @export 
 #' @importFrom utils data
 #' @importFrom MASS boxcox
-#' @keywords internal
 write_box_cox_tfmn <- function (data_tb, predr_var_nm_1L_chr, path_to_write_to_1L_chr, 
     dep_var_nm_1L_chr = "aqol6d_total_w", covar_var_nms_chr = NA_character_, 
     fl_nm_pfx_1L_chr = "A_RT", height_1L_dbl = 6, width_1L_dbl = 6, 
@@ -97,7 +96,6 @@ write_results_to_csv <- function (synth_data_spine_ls, output_dir_1L_chr = ".")
 #' @rdname write_rndrd_rprt
 #' @export 
 #' @importFrom rmarkdown render
-#' @keywords internal
 write_rndrd_rprt <- function (path_to_RMD_dir_1L_chr, nm_of_RMD_1L_chr = "report.RMD", 
     params_ls = list(output_type_1L_chr = "HTML"), rltv_path_to_outpt_yaml_1L_chr = "output_yml", 
     paths_to_fls_to_copy_chr = NA_character_, path_to_write_fls_to_1L_chr = NA_character_, 

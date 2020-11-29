@@ -18,4 +18,3 @@ knit_mdl_rprt(
 \description{
 knit_mdl_rprt() is a Knit function that knits a rmarkdown file Specifically, this function implements an algorithm to knit mdl rprt. The function is called for its side effects and does not return a value.
 }
-\keyword{internal}
