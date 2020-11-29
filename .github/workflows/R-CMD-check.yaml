@@ -40,6 +40,11 @@ jobs:
         with:
           r-version: ${{ matrix.config.r }}
 
+      - name: Install XQuartz for rayshader
+        if: runner.os != 'macOS'
+        run: |
+          brew cask install xquartz
+
       - uses: r-lib/actions/setup-pandoc@v1
 
       - name: Query dependencies
