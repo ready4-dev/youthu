@@ -7,6 +7,7 @@
 #' @export 
 #' @importFrom purrr pmap
 #' @importFrom knitr knit_expand knit_child
+#' @keywords internal
 knit_mdl_rprt <- function (knit_pars_ls, path_to_mdl_rprt_tmpl_1L_chr = system.file("_Model_Report_Template.Rmd", 
     package = "ready4u")) 
 {

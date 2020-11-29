@@ -29,3 +29,4 @@ plot_obsd_predd_sctr(
 \description{
 plot_obsd_predd_sctr() is a Plot function that plots data Specifically, this function implements an algorithm to plot obsd predd sctr. The function is called for its side effects and does not return a value.
 }
+\keyword{internal}
