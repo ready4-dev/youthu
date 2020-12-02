@@ -15,3 +15,4 @@ Unscored Assessment of Quality of Life (a tibble)
 \description{
 add_aqol6d_adol_dim_scrg_eqs() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add assessment of quality of life six dimension adolescent dimension scoring equations. Function argument unscored_aqol_tb specifies the object to be updated. The function returns Unscored Assessment of Quality of Life (a tibble).
 }
+\keyword{internal}

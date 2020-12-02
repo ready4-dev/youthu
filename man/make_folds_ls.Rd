@@ -23,3 +23,4 @@ Folds (a list)
 \description{
 make_folds_ls() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make folds list. The function returns Folds (a list).
 }
+\keyword{internal}

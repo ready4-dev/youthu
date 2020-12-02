@@ -17,3 +17,4 @@ Mdl elmt sum (a tibble)
 \description{
 make_mdl_smry_elmt_tbl() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make mdl smry elmt table. The function returns Mdl elmt sum (a tibble).
 }
+\keyword{internal}

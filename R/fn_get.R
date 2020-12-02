@@ -6,6 +6,7 @@
 #' @rdname get_signft_covars
 #' @export 
 #' @importFrom purrr map flatten flatten_chr
+#' @keywords internal
 get_signft_covars <- function (mdls_with_covars_smry_tb, covar_var_nms_chr) 
 {
     signif_vars_chr <- mdls_with_covars_smry_tb$Significant %>% 
