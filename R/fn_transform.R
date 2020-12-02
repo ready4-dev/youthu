@@ -15,7 +15,6 @@
 #' @importFrom dplyr filter select mutate
 #' @importFrom rlang sym syms
 #' @importFrom stats na.omit
-#' @keywords internal
 transform_ds_for_tstng <- function (data_tb, dep_var_nm_1L_chr = "aqol6d_total_w", dep_var_max_val_1L_dbl = 0.999, 
     candidate_predrs_chr = NA_character_, covar_var_nms_chr = NA_character_, 
     round_var_nm_1L_chr = "round", round_val_1L_chr = "Baseline", 
@@ -38,7 +37,6 @@ transform_ds_for_tstng <- function (data_tb, dep_var_nm_1L_chr = "aqol6d_total_w
 #' @rdname transform_raw_aqol_tb_to_aqol6d_tb
 #' @export 
 #' @importFrom dplyr mutate select contains rename
-#' @importFrom Hmisc label
 transform_raw_aqol_tb_to_aqol6d_tb <- function (raw_aqol_tb) 
 {
     aqol6d_tb <- raw_aqol_tb %>% dplyr::mutate(d_agegroup = cut(d_age, 
@@ -59,8 +57,6 @@ transform_raw_aqol_tb_to_aqol6d_tb <- function (raw_aqol_tb)
         "No" | d_ATSI == "Yes", "Yes", "No"))) %>% dplyr::rename(PHQ9 = phq9_total, 
         BADS = bads_total, GAD7 = gad7_total, OASIS = oasis_total, 
         SCARED = scared_total, K6 = k6_total, SOFAS = c_sofas)
-    Hmisc::label(aqol6d_tb$CALD) = "Culturally and linguistically diverse (CALD) background"
-    Hmisc::label(aqol6d_tb$d_agegroup) = "Age group"
     return(aqol6d_tb)
 }
 #' Transform ts mdl data
@@ -76,7 +72,6 @@ transform_raw_aqol_tb_to_aqol6d_tb <- function (raw_aqol_tb)
 #' @export 
 #' @importFrom dplyr select all_of summarise across everything
 #' @importFrom purrr map flatten_chr
-#' @keywords internal
 transform_ts_mdl_data <- function (mdl_ls, data_tb, dep_var_nm_1L_chr = "aqol6d_total_w", 
     predr_vars_nms_chr, id_var_nm_1L_chr = "fkClientID", mdl_nm_1L_chr) 
 {

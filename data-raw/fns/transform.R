@@ -33,8 +33,8 @@ transform_raw_aqol_tb_to_aqol6d_tb <- function (raw_aqol_tb)
         "No" | d_ATSI == "Yes", "Yes", "No"))) %>% dplyr::rename(PHQ9 = phq9_total,
         BADS = bads_total, GAD7 = gad7_total, OASIS = oasis_total,
         SCARED = scared_total, K6 = k6_total, SOFAS = c_sofas)
-    Hmisc::label(aqol6d_tb$CALD) = "Culturally and linguistically diverse (CALD) background"
-    Hmisc::label(aqol6d_tb$d_agegroup) = "Age group"
+    # Hmisc::label(aqol6d_tb$CALD) = "Culturally and linguistically diverse (CALD) background"
+    # Hmisc::label(aqol6d_tb$d_agegroup) = "Age group"
     return(aqol6d_tb)
 }
 transform_ts_mdl_data <- function (mdl_ls, data_tb, dep_var_nm_1L_chr = "aqol6d_total_w",

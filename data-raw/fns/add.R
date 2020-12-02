@@ -18,7 +18,7 @@ add_adol6d_scores <- function (unscored_aqol_tb, prefix_1L_chr = "aqol6d_q", id_
 }
 add_aqol6d_adol_dim_scrg_eqs <- function (unscored_aqol_tb)
 {
-    utils::data("adol_dim_scalg_eqs_lup", package = "ready4u",
+    utils::data("adol_dim_scalg_eqs_lup",
         envir = environment())
     for (var in adol_dim_scalg_eqs_lup$Dim_scal) {
         expression = adol_dim_scalg_eqs_lup[adol_dim_scalg_eqs_lup$Dim_scal ==

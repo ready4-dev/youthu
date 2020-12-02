@@ -242,13 +242,77 @@ pkg_dss_tb <- read.csv("data-raw/csvs/aqol_valid_stata.csv") %>%
                               url_1L_chr = "https://www.aqol.com.au/index.php/scoring-algorithms",
                               abbreviations_lup = abbreviations_lup,
                               pkg_dss_tb = pkg_dss_tb)
-pkg_dss_tb <- ready4use::ready4_dv_import_lup() %>%
+replication_popl_tb <- ready4use::ready4_dv_import_lup() %>%
   tibble::add_case(data_repo_db_ui = "https://doi.org/10.7910/DVN/GRZRY5",
                    file_name = "fake_pop_tb",
                    file_type = ".csv",
                    data_repo_file_ext = ".tab") %>%
   ready4use::get_data() %>%
-  transform_raw_aqol_tb_to_aqol6d_tb() %>%
+  transform_raw_aqol_tb_to_aqol6d_tb()
+scored_data_tb <- add_adol6d_scores(replication_popl_tb,
+                                    prefix_1L_chr =  "aqol6d_q",
+                                    id_var_nm_1L_chr = "fkClientID",
+                                    wtd_aqol_var_nm_1L_chr = "aqol6d_total_w")
+dictionary_tb <- tibble::tibble(var_nm_chr = names(scored_data_tb),
+                                var_cat_chr = c("Identifier", "Clinical","Service","Clinical",
+                                                rep("Demographic",11),
+                                                rep("Clinical",6),
+                                                rep("Utility Questionaire Response",20),
+                                                "Functioning",
+                                                "Temporal",
+                                                rep("Demographic",3),
+                                                rep("Utility Item Disvalue",20),
+                                                rep("Utility Dimension Disvalue",6),
+                                                rep("Utility Dimension Score (Adult)",6),
+                                                "Utility Overall Score (Disvalue Scale)",
+                                                "Utility Overall Score (Life-Death Scale)",
+                                                rep("Utility Overall Score (Adolescent Disutility Scale)",2), # Includes Testing Duplicate
+                                                "Utility Overall Score (Instrument)",
+                                                "Utility Overall Score (Instrument - Rotated)",
+                                                "Utility Overall Score (Final Weighted)"
+                                ),
+                                var_desc_chr = c("Unique Client Identifier",
+                                                 "Primary Diagnosis",
+                                                 "Centre Name",
+                                                 "Clinical Stage",
+                                                 "Age",
+                                                 "Age Group",
+                                                 "Gender",
+                                                 "Sex at Birth",
+                                                 "Sexual Orientation",
+                                                 "Country Of Birth",
+                                                 "Aboriginal or Torres Strait Islander",
+                                                 "Speaks English At Home",
+                                                 "Native English Speaker",
+                                                 "Relationship Status",
+                                                 "Education and Employment Status",
+                                                 "Kessler Psychological Distress Scale (6 Dimension)",
+                                                 "Patient Health Questionnaire",
+                                                 "Behavioural Activation for Depression Scale",
+                                                 "Generalised Anxiety Disorder Scale",
+                                                 "Overall Anxiety Severity and Impairment Scale",
+                                                 "Screen for Child Anxiety Related Disorders",
+                                                 paste0("Assessment of Quality of Life (6 Dimension) Question ",1:20),
+                                                 "Social and Occupational Functioning Assessment Scale",
+                                                 "Round of Data Collection",
+                                                 "Gender", # Check if duplicate
+                                                 "Region of Residence (Metropolitan or Regional)",
+                                                 "Demographic - Culturally And Linguistically Diverse",
+                                                 paste0("Assessment of Quality of Life (6 Dimension) Item Disvalue",1:20),
+                                                 lapply(scored_data_tb, Hmisc::label) %>% purrr::flatten_chr() %>% purrr::keep(c(rep(F,66),rep(T,19)))
+                                ),
+                                var_type_chr = var_nm_chr %>% purrr::map_chr(~{
+                                  class_chr <- class(scored_data_tb %>% dplyr::pull(.x))
+                                  class_chr[class_chr!="labelled"][1]
+                                }))
+pkg_dss_tb <- dictionary_tb %>%
+  ready4fun::write_and_doc_ds(db_1L_chr = "dictionary_tb",
+                              title_1L_chr = "Data dictionary for study population dataset",
+                              desc_1L_chr = "A data dictionary of the variables used in the source and replication (synthetic) datasets for the First Bounce transfer to utility study",
+                              abbreviations_lup = abbreviations_lup,
+                              pkg_dss_tb = pkg_dss_tb)
+pkg_dss_tb <- replication_popl_tb %>%
+  #add_labels_from_dictionary(dictionary_tb = dictionary_tb) %>%
   ready4fun::write_and_doc_ds(db_1L_chr = "replication_popl_tb",
                               title_1L_chr = "Synthetic population replication dataset",
                               desc_1L_chr = "A purely synthetic dataset, representative of the original study data, that can be used for replication runs of package algorithms.",
