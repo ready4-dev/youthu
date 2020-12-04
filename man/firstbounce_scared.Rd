@@ -4,10 +4,10 @@
 \alias{firstbounce_scared}
 \title{First Bounce S3 class for Screen for Child Anxiety Related Disorders (SCARED) scores}
 \usage{
-firstbounce_scared(x = make_prototype_firstbounce_scared())
+firstbounce_scared(x = make_pt_firstbounce_scared())
 }
 \arguments{
-\item{x}{A prototype for the First Bounce S3 class for Screen for Child Anxiety Related Disorders (SCARED) scores, Default: make_prototype_firstbounce_scared()}
+\item{x}{A prototype for the First Bounce S3 class for Screen for Child Anxiety Related Disorders (SCARED) scores, Default: make_pt_firstbounce_scared()}
 }
 \value{
 A validated instance of the First Bounce S3 class for Screen for Child Anxiety Related Disorders (SCARED) scores

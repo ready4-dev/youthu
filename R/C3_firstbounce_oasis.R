@@ -1,13 +1,13 @@
 
 #' First Bounce S3 class for Overall Anxiety Severity and Impairment Scale (OASIS) scores
 #' @description Create a new valid instance of the First Bounce S3 class for Overall Anxiety Severity and Impairment Scale (OASIS) scores
-#' @param x A prototype for the First Bounce S3 class for Overall Anxiety Severity and Impairment Scale (OASIS) scores, Default: make_prototype_firstbounce_oasis()
+#' @param x A prototype for the First Bounce S3 class for Overall Anxiety Severity and Impairment Scale (OASIS) scores, Default: make_pt_firstbounce_oasis()
 #' @return A validated instance of the First Bounce S3 class for Overall Anxiety Severity and Impairment Scale (OASIS) scores
 #' @details First Bounce S3 class for Overall Anxiety Severity and Impairment Scale (OASIS) scores
 #' @rdname firstbounce_oasis
 #' @export 
 
-firstbounce_oasis <- function(x = make_prototype_firstbounce_oasis()){ 
+firstbounce_oasis <- function(x = make_pt_firstbounce_oasis()){ 
 validate_firstbounce_oasis(make_new_firstbounce_oasis(x))
 }
 #' Make new First Bounce S3 class for Overall Anxiety Severity and Impairment Scale (OASIS) scores
@@ -20,7 +20,7 @@ validate_firstbounce_oasis(make_new_firstbounce_oasis(x))
 
 make_new_firstbounce_oasis <- function(x){ 
 stopifnot(is.integer(x))
-class(x) <- append(c("firstbounce_oasis",setdiff(make_prototype_firstbounce_oasis() %>% class(),class(x))),
+class(x) <- append(c("firstbounce_oasis",setdiff(make_pt_firstbounce_oasis() %>% class(),class(x))),
 class(x))
 x
 }
@@ -29,10 +29,10 @@ x
 
 #' @return A prototype for First Bounce S3 class for Overall Anxiety Severity and Impairment Scale (OASIS) scores
 #' @details First Bounce S3 class for Overall Anxiety Severity and Impairment Scale (OASIS) scores
-#' @rdname make_prototype_firstbounce_oasis
+#' @rdname make_pt_firstbounce_oasis
 #' @export 
 
-make_prototype_firstbounce_oasis <- function(){ 
+make_pt_firstbounce_oasis <- function(){ 
 integer(0)
 }
 #' Validate First Bounce S3 class for Overall Anxiety Severity and Impairment Scale (OASIS) scores

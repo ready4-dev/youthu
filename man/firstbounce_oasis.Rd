@@ -4,10 +4,10 @@
 \alias{firstbounce_oasis}
 \title{First Bounce S3 class for Overall Anxiety Severity and Impairment Scale (OASIS) scores}
 \usage{
-firstbounce_oasis(x = make_prototype_firstbounce_oasis())
+firstbounce_oasis(x = make_pt_firstbounce_oasis())
 }
 \arguments{
-\item{x}{A prototype for the First Bounce S3 class for Overall Anxiety Severity and Impairment Scale (OASIS) scores, Default: make_prototype_firstbounce_oasis()}
+\item{x}{A prototype for the First Bounce S3 class for Overall Anxiety Severity and Impairment Scale (OASIS) scores, Default: make_pt_firstbounce_oasis()}
 }
 \value{
 A validated instance of the First Bounce S3 class for Overall Anxiety Severity and Impairment Scale (OASIS) scores

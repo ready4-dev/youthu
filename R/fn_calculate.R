@@ -1,5 +1,5 @@
 #' Calculate adolescent Assessment of Quality of Life Six Dimension Health Utility
-#' @description calculate_adol_aqol6dU() is a Calculate function that calculates a numeric value. Specifically, this function implements an algorithm to calculate adolescent assessment of quality of life six dimension health utility. The function returns Adolescent Assessment of Quality of Life Six Dimension (a double vector).
+#' @description calculate_adol_aqol6dU() is a Calculate function that calculates a numeric value. Specifically, this function implements an algorithm to calculate adolescent assessment of quality of life six dimension health utility. Function argument unscored_aqol_tb specifies the calculate The function returns Adolescent Assessment of Quality of Life Six Dimension (a double vector).
 #' @param unscored_aqol_tb Unscored Assessment of Quality of Life (a tibble)
 #' @param prefix_1L_chr Prefix (a character vector of length one), Default: 'aqol6d_q'
 #' @param id_var_nm_1L_chr Id var name (a character vector of length one), Default: 'fkClientID'
@@ -9,7 +9,6 @@
 #' @export 
 #' @importFrom dplyr pull
 #' @importFrom rlang sym
-#' @keywords internal
 calculate_adol_aqol6dU <- function (unscored_aqol_tb, prefix_1L_chr = "aqol6d_q", id_var_nm_1L_chr = "fkClientID", 
     wtd_aqol_var_nm_1L_chr = "aqol6d_total_w") 
 {
@@ -19,7 +18,7 @@ calculate_adol_aqol6dU <- function (unscored_aqol_tb, prefix_1L_chr = "aqol6d_q"
     return(adol_aqol6d_dbl)
 }
 #' Calculate adult Assessment of Quality of Life Six Dimension Health Utility
-#' @description calculate_adult_aqol6dU() is a Calculate function that calculates a numeric value. Specifically, this function implements an algorithm to calculate adult assessment of quality of life six dimension health utility. The function returns Assessment of Quality of Life Six Dimension Health Utility (a double vector).
+#' @description calculate_adult_aqol6dU() is a Calculate function that calculates a numeric value. Specifically, this function implements an algorithm to calculate adult assessment of quality of life six dimension health utility. Function argument aqol6d_items_tb specifies the calculate The function returns Assessment of Quality of Life Six Dimension Health Utility (a double vector).
 #' @param aqol6d_items_tb Assessment of Quality of Life Six Dimension items (a tibble)
 #' @param prefix_1L_chr Prefix (a character vector of length one)
 #' @param coeffs_lup_tb Coeffs lookup table (a tibble), Default: aqol6d_from_8d_coeffs_lup_tb
@@ -49,7 +48,7 @@ calculate_adult_aqol6dU <- function (aqol6d_items_tb, prefix_1L_chr, coeffs_lup_
     return(aqol6dU_dbl)
 }
 #' Calculate Assessment of Quality of Life Six Dimension dimension 1 disvalue
-#' @description calculate_aqol6d_dim_1_disv() is a Calculate function that calculates a numeric value. Specifically, this function implements an algorithm to calculate assessment of quality of life six dimension dimension 1 disvalue. The function returns DvD1 (a double vector).
+#' @description calculate_aqol6d_dim_1_disv() is a Calculate function that calculates a numeric value. Specifically, this function implements an algorithm to calculate assessment of quality of life six dimension dimension 1 disvalue. Function argument dvQs_tb specifies the calculate The function returns DvD1 (a double vector).
 #' @param dvQs_tb DvQs (a tibble)
 #' @param kD_1L_dbl KD (a double vector of length one)
 #' @param w_dbl W (a double vector)
@@ -68,7 +67,7 @@ calculate_aqol6d_dim_1_disv <- function (dvQs_tb, kD_1L_dbl, w_dbl)
     return(dvD1_dbl)
 }
 #' Calculate Assessment of Quality of Life Six Dimension dimension 2 disvalue
-#' @description calculate_aqol6d_dim_2_disv() is a Calculate function that calculates a numeric value. Specifically, this function implements an algorithm to calculate assessment of quality of life six dimension dimension 2 disvalue. The function returns DvD2 (a double vector).
+#' @description calculate_aqol6d_dim_2_disv() is a Calculate function that calculates a numeric value. Specifically, this function implements an algorithm to calculate assessment of quality of life six dimension dimension 2 disvalue. Function argument dvQs_tb specifies the calculate The function returns DvD2 (a double vector).
 #' @param dvQs_tb DvQs (a tibble)
 #' @param kD_1L_dbl KD (a double vector of length one)
 #' @param w_dbl W (a double vector)
@@ -86,7 +85,7 @@ calculate_aqol6d_dim_2_disv <- function (dvQs_tb, kD_1L_dbl, w_dbl)
     return(dvD2_dbl)
 }
 #' Calculate Assessment of Quality of Life Six Dimension dimension 3 disvalue
-#' @description calculate_aqol6d_dim_3_disv() is a Calculate function that calculates a numeric value. Specifically, this function implements an algorithm to calculate assessment of quality of life six dimension dimension 3 disvalue. The function returns DvD3 (a double vector).
+#' @description calculate_aqol6d_dim_3_disv() is a Calculate function that calculates a numeric value. Specifically, this function implements an algorithm to calculate assessment of quality of life six dimension dimension 3 disvalue. Function argument dvQs_tb specifies the calculate The function returns DvD3 (a double vector).
 #' @param dvQs_tb DvQs (a tibble)
 #' @param kD_1L_dbl KD (a double vector of length one)
 #' @param w_dbl W (a double vector)
@@ -105,7 +104,7 @@ calculate_aqol6d_dim_3_disv <- function (dvQs_tb, kD_1L_dbl, w_dbl)
     return(dvD3_dbl)
 }
 #' Calculate Assessment of Quality of Life Six Dimension dimension 4 disvalue
-#' @description calculate_aqol6d_dim_4_disv() is a Calculate function that calculates a numeric value. Specifically, this function implements an algorithm to calculate assessment of quality of life six dimension dimension 4 disvalue. The function returns DvD4 (a double vector).
+#' @description calculate_aqol6d_dim_4_disv() is a Calculate function that calculates a numeric value. Specifically, this function implements an algorithm to calculate assessment of quality of life six dimension dimension 4 disvalue. Function argument dvQs_tb specifies the calculate The function returns DvD4 (a double vector).
 #' @param dvQs_tb DvQs (a tibble)
 #' @param kD_1L_dbl KD (a double vector of length one)
 #' @param w_dbl W (a double vector)
@@ -123,7 +122,7 @@ calculate_aqol6d_dim_4_disv <- function (dvQs_tb, kD_1L_dbl, w_dbl)
     return(dvD4_dbl)
 }
 #' Calculate Assessment of Quality of Life Six Dimension dimension 5 disvalue
-#' @description calculate_aqol6d_dim_5_disv() is a Calculate function that calculates a numeric value. Specifically, this function implements an algorithm to calculate assessment of quality of life six dimension dimension 5 disvalue. The function returns DvD5 (a double vector).
+#' @description calculate_aqol6d_dim_5_disv() is a Calculate function that calculates a numeric value. Specifically, this function implements an algorithm to calculate assessment of quality of life six dimension dimension 5 disvalue. Function argument dvQs_tb specifies the calculate The function returns DvD5 (a double vector).
 #' @param dvQs_tb DvQs (a tibble)
 #' @param kD_1L_dbl KD (a double vector of length one)
 #' @param w_dbl W (a double vector)
@@ -141,7 +140,7 @@ calculate_aqol6d_dim_5_disv <- function (dvQs_tb, kD_1L_dbl, w_dbl)
     return(dvD5_dbl)
 }
 #' Calculate Assessment of Quality of Life Six Dimension dimension 6 disvalue
-#' @description calculate_aqol6d_dim_6_disv() is a Calculate function that calculates a numeric value. Specifically, this function implements an algorithm to calculate assessment of quality of life six dimension dimension 6 disvalue. The function returns DvD6 (a double vector).
+#' @description calculate_aqol6d_dim_6_disv() is a Calculate function that calculates a numeric value. Specifically, this function implements an algorithm to calculate assessment of quality of life six dimension dimension 6 disvalue. Function argument dvQs_tb specifies the calculate The function returns DvD6 (a double vector).
 #' @param dvQs_tb DvQs (a tibble)
 #' @param kD_1L_dbl KD (a double vector of length one)
 #' @param w_dbl W (a double vector)
@@ -159,14 +158,13 @@ calculate_aqol6d_dim_6_disv <- function (dvQs_tb, kD_1L_dbl, w_dbl)
     return(dvD6_dbl)
 }
 #' Calculate rmse tfmn
-#' @description calculate_rmse_tfmn() is a Calculate function that calculates a numeric value. Specifically, this function implements an algorithm to calculate rmse tfmn. The function returns Rmse tfmn (a double vector).
+#' @description calculate_rmse_tfmn() is a Calculate function that calculates a numeric value. Specifically, this function implements an algorithm to calculate rmse tfmn. Function argument y_dbl specifies the calculate The function returns Rmse tfmn (a double vector).
 #' @param y_dbl Y (a double vector)
 #' @param yhat_dbl Yhat (a double vector)
 #' @return Rmse tfmn (a double vector)
 #' @rdname calculate_rmse_tfmn
 #' @export 
 
-#' @keywords internal
 calculate_rmse_tfmn <- function (y_dbl, yhat_dbl) 
 {
     rmse_tfmn_dbl <- sqrt(mean((1 - exp(-exp(yhat_dbl)) - y_dbl)^2))

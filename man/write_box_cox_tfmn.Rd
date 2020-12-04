@@ -44,4 +44,3 @@ Path to plot (a character vector of length one)
 \description{
 write_box_cox_tfmn() is a Write function that writes a file to a specified local directory. Specifically, this function implements an algorithm to write box cox tfmn. The function returns Path to plot (a character vector of length one).
 }
-\keyword{internal}

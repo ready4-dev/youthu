@@ -4,10 +4,10 @@
 \alias{firstbounce_k6}
 \title{First Bounce S3 class for Kessler Psychological Distress Scale (K6) - US Scoring System scores}
 \usage{
-firstbounce_k6(x = make_prototype_firstbounce_k6())
+firstbounce_k6(x = make_pt_firstbounce_k6())
 }
 \arguments{
-\item{x}{A prototype for the First Bounce S3 class for Kessler Psychological Distress Scale (K6) - US Scoring System scores, Default: make_prototype_firstbounce_k6()}
+\item{x}{A prototype for the First Bounce S3 class for Kessler Psychological Distress Scale (K6) - US Scoring System scores, Default: make_pt_firstbounce_k6()}
 }
 \value{
 A validated instance of the First Bounce S3 class for Kessler Psychological Distress Scale (K6) - US Scoring System scores

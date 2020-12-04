@@ -4,10 +4,10 @@
 \alias{firstbounce_phq9}
 \title{First Bounce S3 class for Patient Health Questionnaire (PHQ-9) scores}
 \usage{
-firstbounce_phq9(x = make_prototype_firstbounce_phq9())
+firstbounce_phq9(x = make_pt_firstbounce_phq9())
 }
 \arguments{
-\item{x}{A prototype for the First Bounce S3 class for Patient Health Questionnaire (PHQ-9) scores, Default: make_prototype_firstbounce_phq9()}
+\item{x}{A prototype for the First Bounce S3 class for Patient Health Questionnaire (PHQ-9) scores, Default: make_pt_firstbounce_phq9()}
 }
 \value{
 A validated instance of the First Bounce S3 class for Patient Health Questionnaire (PHQ-9) scores

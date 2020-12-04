@@ -1,13 +1,13 @@
 
 #' First Bounce S3 class for Screen for Child Anxiety Related Disorders (SCARED) scores
 #' @description Create a new valid instance of the First Bounce S3 class for Screen for Child Anxiety Related Disorders (SCARED) scores
-#' @param x A prototype for the First Bounce S3 class for Screen for Child Anxiety Related Disorders (SCARED) scores, Default: make_prototype_firstbounce_scared()
+#' @param x A prototype for the First Bounce S3 class for Screen for Child Anxiety Related Disorders (SCARED) scores, Default: make_pt_firstbounce_scared()
 #' @return A validated instance of the First Bounce S3 class for Screen for Child Anxiety Related Disorders (SCARED) scores
 #' @details First Bounce S3 class for Screen for Child Anxiety Related Disorders (SCARED) scores
 #' @rdname firstbounce_scared
 #' @export 
 
-firstbounce_scared <- function(x = make_prototype_firstbounce_scared()){ 
+firstbounce_scared <- function(x = make_pt_firstbounce_scared()){ 
 validate_firstbounce_scared(make_new_firstbounce_scared(x))
 }
 #' Make new First Bounce S3 class for Screen for Child Anxiety Related Disorders (SCARED) scores
@@ -20,7 +20,7 @@ validate_firstbounce_scared(make_new_firstbounce_scared(x))
 
 make_new_firstbounce_scared <- function(x){ 
 stopifnot(is.integer(x))
-class(x) <- append(c("firstbounce_scared",setdiff(make_prototype_firstbounce_scared() %>% class(),class(x))),
+class(x) <- append(c("firstbounce_scared",setdiff(make_pt_firstbounce_scared() %>% class(),class(x))),
 class(x))
 x
 }
@@ -29,10 +29,10 @@ x
 
 #' @return A prototype for First Bounce S3 class for Screen for Child Anxiety Related Disorders (SCARED) scores
 #' @details First Bounce S3 class for Screen for Child Anxiety Related Disorders (SCARED) scores
-#' @rdname make_prototype_firstbounce_scared
+#' @rdname make_pt_firstbounce_scared
 #' @export 
 
-make_prototype_firstbounce_scared <- function(){ 
+make_pt_firstbounce_scared <- function(){ 
 integer(0)
 }
 #' Validate First Bounce S3 class for Screen for Child Anxiety Related Disorders (SCARED) scores

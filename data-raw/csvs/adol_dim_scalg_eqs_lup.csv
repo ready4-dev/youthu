@@ -8,7 +8,7 @@
 "vD1","Adult Score Dimension 1 - Independent Living","1-dvD1"
 "vD2","Adult Score Dimension 2 - Relationships","1-dvD2"
 "vD3","Adult Score Dimension 3 - Mental Health","1-dvD3"
-"vD4","Adult Score Dimension 4 - Coping"".","1-dvD4"
+"vD4","Adult Score Dimension 4 - Coping.","1-dvD4"
 "vD5","Adult Score Dimension 5 - Pain","1-dvD5"
 "vD6","Adult Score Dimension 6 - Senses","1-dvD6"
 "duaqol","Overall score on a 0-1 disvalue scale","(1/-0.965)*((1+(-0.965*0.472*0.883*dvD1))*(1+(-0.965*0.448*0.883*dvD2))*(1+(-0.965*0.479*0.883*dvD3))*(1+(-0.965*0.345*0.883*dvD4))*(1+(-0.965*0.592*0.883*dvD5))*(1+(-0.965*0.637*0.883*dvD6))-1)"

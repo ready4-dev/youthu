@@ -4,10 +4,10 @@
 \alias{firstbounce_bads}
 \title{First Bounce S3 class for Behavioural Activation for Depression Scale (BADS) scores}
 \usage{
-firstbounce_bads(x = make_prototype_firstbounce_bads())
+firstbounce_bads(x = make_pt_firstbounce_bads())
 }
 \arguments{
-\item{x}{A prototype for the First Bounce S3 class for Behavioural Activation for Depression Scale (BADS) scores, Default: make_prototype_firstbounce_bads()}
+\item{x}{A prototype for the First Bounce S3 class for Behavioural Activation for Depression Scale (BADS) scores, Default: make_pt_firstbounce_bads()}
 }
 \value{
 A validated instance of the First Bounce S3 class for Behavioural Activation for Depression Scale (BADS) scores

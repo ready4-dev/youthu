@@ -4,10 +4,10 @@
 \alias{firstbounce_aqol6d_adol}
 \title{First Bounce S3 class for Assessment of Quality of Life Six Dimension Health Utility - Adolescent Version (AQoL6d Adolescent))}
 \usage{
-firstbounce_aqol6d_adol(x = make_prototype_firstbounce_aqol6d_adol())
+firstbounce_aqol6d_adol(x = make_pt_firstbounce_aqol6d_adol())
 }
 \arguments{
-\item{x}{A prototype for the First Bounce S3 class for Assessment of Quality of Life Six Dimension Health Utility - Adolescent Version (AQoL6d Adolescent)), Default: make_prototype_firstbounce_aqol6d_adol()}
+\item{x}{A prototype for the First Bounce S3 class for Assessment of Quality of Life Six Dimension Health Utility - Adolescent Version (AQoL6d Adolescent)), Default: make_pt_firstbounce_aqol6d_adol()}
 }
 \value{
 A validated instance of the First Bounce S3 class for Assessment of Quality of Life Six Dimension Health Utility - Adolescent Version (AQoL6d Adolescent))

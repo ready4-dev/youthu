@@ -1,13 +1,13 @@
 
 #' First Bounce S3 class for Generalised Anxiety Disorder Scale (GAD-7) scores
 #' @description Create a new valid instance of the First Bounce S3 class for Generalised Anxiety Disorder Scale (GAD-7) scores
-#' @param x A prototype for the First Bounce S3 class for Generalised Anxiety Disorder Scale (GAD-7) scores, Default: make_prototype_firstbounce_gad7()
+#' @param x A prototype for the First Bounce S3 class for Generalised Anxiety Disorder Scale (GAD-7) scores, Default: make_pt_firstbounce_gad7()
 #' @return A validated instance of the First Bounce S3 class for Generalised Anxiety Disorder Scale (GAD-7) scores
 #' @details First Bounce S3 class for Generalised Anxiety Disorder Scale (GAD-7) scores
 #' @rdname firstbounce_gad7
 #' @export 
 
-firstbounce_gad7 <- function(x = make_prototype_firstbounce_gad7()){ 
+firstbounce_gad7 <- function(x = make_pt_firstbounce_gad7()){ 
 validate_firstbounce_gad7(make_new_firstbounce_gad7(x))
 }
 #' Make new First Bounce S3 class for Generalised Anxiety Disorder Scale (GAD-7) scores
@@ -20,7 +20,7 @@ validate_firstbounce_gad7(make_new_firstbounce_gad7(x))
 
 make_new_firstbounce_gad7 <- function(x){ 
 stopifnot(is.integer(x))
-class(x) <- append(c("firstbounce_gad7",setdiff(make_prototype_firstbounce_gad7() %>% class(),class(x))),
+class(x) <- append(c("firstbounce_gad7",setdiff(make_pt_firstbounce_gad7() %>% class(),class(x))),
 class(x))
 x
 }
@@ -29,10 +29,10 @@ x
 
 #' @return A prototype for First Bounce S3 class for Generalised Anxiety Disorder Scale (GAD-7) scores
 #' @details First Bounce S3 class for Generalised Anxiety Disorder Scale (GAD-7) scores
-#' @rdname make_prototype_firstbounce_gad7
+#' @rdname make_pt_firstbounce_gad7
 #' @export 
 
-make_prototype_firstbounce_gad7 <- function(){ 
+make_pt_firstbounce_gad7 <- function(){ 
 integer(0)
 }
 #' Validate First Bounce S3 class for Generalised Anxiety Disorder Scale (GAD-7) scores

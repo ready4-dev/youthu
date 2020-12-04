@@ -1,13 +1,13 @@
 
 #' First Bounce S3 class for Kessler Psychological Distress Scale (K6) - US Scoring System scores
 #' @description Create a new valid instance of the First Bounce S3 class for Kessler Psychological Distress Scale (K6) - US Scoring System scores
-#' @param x A prototype for the First Bounce S3 class for Kessler Psychological Distress Scale (K6) - US Scoring System scores, Default: make_prototype_firstbounce_k6()
+#' @param x A prototype for the First Bounce S3 class for Kessler Psychological Distress Scale (K6) - US Scoring System scores, Default: make_pt_firstbounce_k6()
 #' @return A validated instance of the First Bounce S3 class for Kessler Psychological Distress Scale (K6) - US Scoring System scores
 #' @details First Bounce S3 class for Kessler Psychological Distress Scale (K6) - US Scoring System scores
 #' @rdname firstbounce_k6
 #' @export 
 
-firstbounce_k6 <- function(x = make_prototype_firstbounce_k6()){ 
+firstbounce_k6 <- function(x = make_pt_firstbounce_k6()){ 
 validate_firstbounce_k6(make_new_firstbounce_k6(x))
 }
 #' Make new First Bounce S3 class for Kessler Psychological Distress Scale (K6) - US Scoring System scores
@@ -20,7 +20,7 @@ validate_firstbounce_k6(make_new_firstbounce_k6(x))
 
 make_new_firstbounce_k6 <- function(x){ 
 stopifnot(is.integer(x))
-class(x) <- append(c("firstbounce_k6",setdiff(make_prototype_firstbounce_k6() %>% class(),class(x))),
+class(x) <- append(c("firstbounce_k6",setdiff(make_pt_firstbounce_k6() %>% class(),class(x))),
 class(x))
 x
 }
@@ -29,10 +29,10 @@ x
 
 #' @return A prototype for First Bounce S3 class for Kessler Psychological Distress Scale (K6) - US Scoring System scores
 #' @details First Bounce S3 class for Kessler Psychological Distress Scale (K6) - US Scoring System scores
-#' @rdname make_prototype_firstbounce_k6
+#' @rdname make_pt_firstbounce_k6
 #' @export 
 
-make_prototype_firstbounce_k6 <- function(){ 
+make_pt_firstbounce_k6 <- function(){ 
 integer(0)
 }
 #' Validate First Bounce S3 class for Kessler Psychological Distress Scale (K6) - US Scoring System scores

@@ -87,11 +87,31 @@ pkg_dss_tb <- classes_to_make_tb %>%
 # 5. Create function types and generics look-up tables
 # 5.1 Create a lookup table of function types used in this package and save it as a package dataset (data gets saved in the data directory, documentation script is created in R directory).
 data("fn_type_lup_tb",package = "ready4u")
-fn_type_lup_tb %>%
+# fn_type_lup_tb %>%
+#   ready4fun::write_dmtd_fn_type_lup(url_1L_chr = NA_character_,
+#                                     abbreviations_lup = abbreviations_lup,
+#                                     pkg_dss_tb = pkg_dss_tb)
+# data("fn_type_lup_tb")
+# utils::data("fn_type_lup_tb",package = "ready4use")
+pkg_dss_tb <- fn_type_lup_tb %>%
+  ready4fun::add_rows_to_fn_type_lup(fn_type_nm_chr = ready4fun::get_new_fn_types(abbreviations_lup = abbreviations_lup,
+                                                                                  fn_type_lup_tb = fn_type_lup_tb),
+                                     fn_type_desc_chr = c("Extracts data from an object.",
+                                                          "Imputes data.",
+                                                          "Knits a rmarkdown file",
+                                                          "Plots data",
+                                                          "Prints output to console",
+                                                          "Randomly samples from data.",
+                                                          "Reorders an object to conform to a pre-specified schema.",
+                                                          "Randomly reorders an object."),
+                                     is_generic_lgl = F,
+                                     is_method_lgl = F) %>% # Add to ready4fun template.
+  dplyr::arrange(fn_type_nm_chr) %>%
   ready4fun::write_dmtd_fn_type_lup(url_1L_chr = NA_character_,
                                     abbreviations_lup = abbreviations_lup,
                                     pkg_dss_tb = pkg_dss_tb)
-data("fn_type_lup_tb")
+utils::data("fn_type_lup_tb")
+
 #
 # 6. Create a table of all functions to document
 fns_dmt_tb <- ready4fun::make_dmt_for_all_fns(paths_ls = ready4fun::make_fn_nms()[1],
@@ -253,62 +273,70 @@ scored_data_tb <- add_adol6d_scores(replication_popl_tb,
                                     prefix_1L_chr =  "aqol6d_q",
                                     id_var_nm_1L_chr = "fkClientID",
                                     wtd_aqol_var_nm_1L_chr = "aqol6d_total_w")
-dictionary_tb <- tibble::tibble(var_nm_chr = names(scored_data_tb),
-                                var_cat_chr = c("Identifier", "Clinical","Service","Clinical",
-                                                rep("Demographic",11),
-                                                rep("Clinical",6),
-                                                rep("Utility Questionaire Response",20),
-                                                "Functioning",
-                                                "Temporal",
-                                                rep("Demographic",3),
-                                                rep("Utility Item Disvalue",20),
-                                                rep("Utility Dimension Disvalue",6),
-                                                rep("Utility Dimension Score (Adult)",6),
-                                                "Utility Overall Score (Disvalue Scale)",
-                                                "Utility Overall Score (Life-Death Scale)",
-                                                rep("Utility Overall Score (Adolescent Disutility Scale)",2), # Includes Testing Duplicate
-                                                "Utility Overall Score (Instrument)",
-                                                "Utility Overall Score (Instrument - Rotated)",
-                                                "Utility Overall Score (Final Weighted)"
-                                ),
-                                var_desc_chr = c("Unique Client Identifier",
-                                                 "Primary Diagnosis",
-                                                 "Centre Name",
-                                                 "Clinical Stage",
-                                                 "Age",
-                                                 "Age Group",
-                                                 "Gender",
-                                                 "Sex at Birth",
-                                                 "Sexual Orientation",
-                                                 "Country Of Birth",
-                                                 "Aboriginal or Torres Strait Islander",
-                                                 "Speaks English At Home",
-                                                 "Native English Speaker",
-                                                 "Relationship Status",
-                                                 "Education and Employment Status",
-                                                 "Kessler Psychological Distress Scale (6 Dimension)",
-                                                 "Patient Health Questionnaire",
-                                                 "Behavioural Activation for Depression Scale",
-                                                 "Generalised Anxiety Disorder Scale",
-                                                 "Overall Anxiety Severity and Impairment Scale",
-                                                 "Screen for Child Anxiety Related Disorders",
-                                                 paste0("Assessment of Quality of Life (6 Dimension) Question ",1:20),
-                                                 "Social and Occupational Functioning Assessment Scale",
-                                                 "Round of Data Collection",
-                                                 "Gender", # Check if duplicate
-                                                 "Region of Residence (Metropolitan or Regional)",
-                                                 "Demographic - Culturally And Linguistically Diverse",
-                                                 paste0("Assessment of Quality of Life (6 Dimension) Item Disvalue",1:20),
-                                                 lapply(scored_data_tb, Hmisc::label) %>% purrr::flatten_chr() %>% purrr::keep(c(rep(F,66),rep(T,19)))
-                                ),
-                                var_type_chr = var_nm_chr %>% purrr::map_chr(~{
-                                  class_chr <- class(scored_data_tb %>% dplyr::pull(.x))
-                                  class_chr[class_chr!="labelled"][1]
-                                }))
+dictionary_tb <- ready4use::make_pt_ready4_dictionary(var_nm_chr = names(scored_data_tb),
+                                     var_cat_chr = c("Identifier", "Clinical","Service","Clinical",
+                                                     rep("Demographic",11),
+                                                     rep("Clinical",6),
+                                                     rep("Utility Questionaire Response",20),
+                                                     "Functioning",
+                                                     "Temporal",
+                                                     rep("Demographic",3),
+                                                     rep("Utility Item Disvalue",20),
+                                                     rep("Utility Dimension Disvalue",6),
+                                                     rep("Utility Dimension Score (Adult)",6),
+                                                     "Utility Overall Score (Disvalue Scale)",
+                                                     "Utility Overall Score (Life-Death Scale)",
+                                                     rep("Utility Overall Score (Adolescent Disutility Scale)",2), # Includes Testing Duplicate
+                                                     "Utility Overall Score (Instrument)",
+                                                     "Utility Overall Score (Instrument - Rotated)",
+                                                     "Utility Overall Score (Final Weighted)"
+                                     ),
+                                     var_desc_chr = c("Unique Client Identifier",
+                                                      "Primary Diagnosis",
+                                                      "Centre Name",
+                                                      "Clinical Stage",
+                                                      "Age",
+                                                      "Age Group",
+                                                      "Gender",
+                                                      "Sex at Birth",
+                                                      "Sexual Orientation",
+                                                      "Country Of Birth",
+                                                      "Aboriginal or Torres Strait Islander",
+                                                      "Speaks English At Home",
+                                                      "Native English Speaker",
+                                                      "Relationship Status",
+                                                      "Education and Employment Status",
+                                                      "Kessler Psychological Distress Scale (6 Dimension)",
+                                                      "Patient Health Questionnaire",
+                                                      "Behavioural Activation for Depression Scale",
+                                                      "Generalised Anxiety Disorder Scale",
+                                                      "Overall Anxiety Severity and Impairment Scale",
+                                                      "Screen for Child Anxiety Related Disorders",
+                                                      paste0("Assessment of Quality of Life (6 Dimension) Question ",1:20),
+                                                      "Social and Occupational Functioning Assessment Scale",
+                                                      "Round of Data Collection",
+                                                      "Gender", # Check if duplicate
+                                                      "Region of Residence (Metropolitan or Regional)",
+                                                      "Demographic - Culturally And Linguistically Diverse",
+                                                      paste0("Assessment of Quality of Life (6 Dimension) Item Disvalue",1:20),
+                                                      lapply(scored_data_tb, Hmisc::label) %>% purrr::flatten_chr() %>% purrr::keep(c(rep(F,66),rep(T,19)))
+                                     ),
+                                     var_type_chr = names(scored_data_tb) %>% purrr::map_chr(~{
+                                       class_chr <- class(scored_data_tb %>% dplyr::pull(.x))
+                                       class_chr[class_chr!="labelled"][1]
+                                     })) %>% ready4use::ready4_dictionary()
 pkg_dss_tb <- dictionary_tb %>%
-  ready4fun::write_and_doc_ds(db_1L_chr = "dictionary_tb",
+  dplyr::filter(var_nm_chr %in% names(replication_popl_tb)) %>%
+  ready4fun::write_and_doc_ds(db_1L_chr = "repln_ds_dict_r3",
                               title_1L_chr = "Data dictionary for study population dataset",
                               desc_1L_chr = "A data dictionary of the variables used in the source and replication (synthetic) datasets for the First Bounce transfer to utility study",
+                              abbreviations_lup = abbreviations_lup,
+                              pkg_dss_tb = pkg_dss_tb)
+pkg_dss_tb <- dictionary_tb %>%
+  dplyr::filter((!var_nm_chr %in% names(replication_popl_tb)) | startsWith(var_nm_chr, "aqol")) %>%
+  ready4fun::write_and_doc_ds(db_1L_chr = "aqol_scrg_dict_r3",
+                              title_1L_chr = "Data dictionary for AQoL scoring",
+                              desc_1L_chr = "A data dictionary of the variables used in scoring AQoL 6D utility questionnaire responses.",
                               abbreviations_lup = abbreviations_lup,
                               pkg_dss_tb = pkg_dss_tb)
 pkg_dss_tb <- replication_popl_tb %>%

@@ -4,10 +4,10 @@
 \alias{firstbounce_gad7}
 \title{First Bounce S3 class for Generalised Anxiety Disorder Scale (GAD-7) scores}
 \usage{
-firstbounce_gad7(x = make_prototype_firstbounce_gad7())
+firstbounce_gad7(x = make_pt_firstbounce_gad7())
 }
 \arguments{
-\item{x}{A prototype for the First Bounce S3 class for Generalised Anxiety Disorder Scale (GAD-7) scores, Default: make_prototype_firstbounce_gad7()}
+\item{x}{A prototype for the First Bounce S3 class for Generalised Anxiety Disorder Scale (GAD-7) scores, Default: make_pt_firstbounce_gad7()}
 }
 \value{
 A validated instance of the First Bounce S3 class for Generalised Anxiety Disorder Scale (GAD-7) scores

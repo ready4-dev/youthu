@@ -1,13 +1,13 @@
 
 #' First Bounce S3 class for Behavioural Activation for Depression Scale (BADS) scores
 #' @description Create a new valid instance of the First Bounce S3 class for Behavioural Activation for Depression Scale (BADS) scores
-#' @param x A prototype for the First Bounce S3 class for Behavioural Activation for Depression Scale (BADS) scores, Default: make_prototype_firstbounce_bads()
+#' @param x A prototype for the First Bounce S3 class for Behavioural Activation for Depression Scale (BADS) scores, Default: make_pt_firstbounce_bads()
 #' @return A validated instance of the First Bounce S3 class for Behavioural Activation for Depression Scale (BADS) scores
 #' @details First Bounce S3 class for Behavioural Activation for Depression Scale (BADS) scores
 #' @rdname firstbounce_bads
 #' @export 
 
-firstbounce_bads <- function(x = make_prototype_firstbounce_bads()){ 
+firstbounce_bads <- function(x = make_pt_firstbounce_bads()){ 
 validate_firstbounce_bads(make_new_firstbounce_bads(x))
 }
 #' Make new First Bounce S3 class for Behavioural Activation for Depression Scale (BADS) scores
@@ -20,7 +20,7 @@ validate_firstbounce_bads(make_new_firstbounce_bads(x))
 
 make_new_firstbounce_bads <- function(x){ 
 stopifnot(is.integer(x))
-class(x) <- append(c("firstbounce_bads",setdiff(make_prototype_firstbounce_bads() %>% class(),class(x))),
+class(x) <- append(c("firstbounce_bads",setdiff(make_pt_firstbounce_bads() %>% class(),class(x))),
 class(x))
 x
 }
@@ -29,10 +29,10 @@ x
 
 #' @return A prototype for First Bounce S3 class for Behavioural Activation for Depression Scale (BADS) scores
 #' @details First Bounce S3 class for Behavioural Activation for Depression Scale (BADS) scores
-#' @rdname make_prototype_firstbounce_bads
+#' @rdname make_pt_firstbounce_bads
 #' @export 
 
-make_prototype_firstbounce_bads <- function(){ 
+make_pt_firstbounce_bads <- function(){ 
 integer(0)
 }
 #' Validate First Bounce S3 class for Behavioural Activation for Depression Scale (BADS) scores

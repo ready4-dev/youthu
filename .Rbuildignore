@@ -30,3 +30,4 @@
 ^data-raw/csvs/aqol_valid_stata\.csv$
 ^data-raw/csvs/adol_dim_scalg_eqs_lup\.csv$
 ^data-raw/R-CMD-check_BUP\.txt$
+^data-raw/gnrcs/generics\.R$

@@ -1,13 +1,13 @@
 
 #' First Bounce S3 class for Assessment of Quality of Life Six Dimension Health Utility - Adolescent Version (AQoL6d Adolescent))
 #' @description Create a new valid instance of the First Bounce S3 class for Assessment of Quality of Life Six Dimension Health Utility - Adolescent Version (AQoL6d Adolescent))
-#' @param x A prototype for the First Bounce S3 class for Assessment of Quality of Life Six Dimension Health Utility - Adolescent Version (AQoL6d Adolescent)), Default: make_prototype_firstbounce_aqol6d_adol()
+#' @param x A prototype for the First Bounce S3 class for Assessment of Quality of Life Six Dimension Health Utility - Adolescent Version (AQoL6d Adolescent)), Default: make_pt_firstbounce_aqol6d_adol()
 #' @return A validated instance of the First Bounce S3 class for Assessment of Quality of Life Six Dimension Health Utility - Adolescent Version (AQoL6d Adolescent))
 #' @details First Bounce S3 class for Assessment of Quality of Life Six Dimension Health Utility - Adolescent Version (AQoL6d Adolescent))
 #' @rdname firstbounce_aqol6d_adol
 #' @export 
 
-firstbounce_aqol6d_adol <- function(x = make_prototype_firstbounce_aqol6d_adol()){ 
+firstbounce_aqol6d_adol <- function(x = make_pt_firstbounce_aqol6d_adol()){ 
 validate_firstbounce_aqol6d_adol(make_new_firstbounce_aqol6d_adol(x))
 }
 #' Make new First Bounce S3 class for Assessment of Quality of Life Six Dimension Health Utility - Adolescent Version (AQoL6d Adolescent))
@@ -20,7 +20,7 @@ validate_firstbounce_aqol6d_adol(make_new_firstbounce_aqol6d_adol(x))
 
 make_new_firstbounce_aqol6d_adol <- function(x){ 
 stopifnot(is.numeric(x))
-class(x) <- append(c("firstbounce_aqol6d_adol",setdiff(make_prototype_firstbounce_aqol6d_adol() %>% class(),class(x))),
+class(x) <- append(c("firstbounce_aqol6d_adol",setdiff(make_pt_firstbounce_aqol6d_adol() %>% class(),class(x))),
 class(x))
 x
 }
@@ -29,10 +29,10 @@ x
 
 #' @return A prototype for First Bounce S3 class for Assessment of Quality of Life Six Dimension Health Utility - Adolescent Version (AQoL6d Adolescent))
 #' @details First Bounce S3 class for Assessment of Quality of Life Six Dimension Health Utility - Adolescent Version (AQoL6d Adolescent))
-#' @rdname make_prototype_firstbounce_aqol6d_adol
+#' @rdname make_pt_firstbounce_aqol6d_adol
 #' @export 
 
-make_prototype_firstbounce_aqol6d_adol <- function(){ 
+make_pt_firstbounce_aqol6d_adol <- function(){ 
 numeric(0)
 }
 #' Validate First Bounce S3 class for Assessment of Quality of Life Six Dimension Health Utility - Adolescent Version (AQoL6d Adolescent))

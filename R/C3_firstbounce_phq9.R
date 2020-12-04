@@ -1,13 +1,13 @@
 
 #' First Bounce S3 class for Patient Health Questionnaire (PHQ-9) scores
 #' @description Create a new valid instance of the First Bounce S3 class for Patient Health Questionnaire (PHQ-9) scores
-#' @param x A prototype for the First Bounce S3 class for Patient Health Questionnaire (PHQ-9) scores, Default: make_prototype_firstbounce_phq9()
+#' @param x A prototype for the First Bounce S3 class for Patient Health Questionnaire (PHQ-9) scores, Default: make_pt_firstbounce_phq9()
 #' @return A validated instance of the First Bounce S3 class for Patient Health Questionnaire (PHQ-9) scores
 #' @details First Bounce S3 class for Patient Health Questionnaire (PHQ-9) scores
 #' @rdname firstbounce_phq9
 #' @export 
 
-firstbounce_phq9 <- function(x = make_prototype_firstbounce_phq9()){ 
+firstbounce_phq9 <- function(x = make_pt_firstbounce_phq9()){ 
 validate_firstbounce_phq9(make_new_firstbounce_phq9(x))
 }
 #' Make new First Bounce S3 class for Patient Health Questionnaire (PHQ-9) scores
@@ -20,7 +20,7 @@ validate_firstbounce_phq9(make_new_firstbounce_phq9(x))
 
 make_new_firstbounce_phq9 <- function(x){ 
 stopifnot(is.integer(x))
-class(x) <- append(c("firstbounce_phq9",setdiff(make_prototype_firstbounce_phq9() %>% class(),class(x))),
+class(x) <- append(c("firstbounce_phq9",setdiff(make_pt_firstbounce_phq9() %>% class(),class(x))),
 class(x))
 x
 }
@@ -29,10 +29,10 @@ x
 
 #' @return A prototype for First Bounce S3 class for Patient Health Questionnaire (PHQ-9) scores
 #' @details First Bounce S3 class for Patient Health Questionnaire (PHQ-9) scores
-#' @rdname make_prototype_firstbounce_phq9
+#' @rdname make_pt_firstbounce_phq9
 #' @export 
 
-make_prototype_firstbounce_phq9 <- function(){ 
+make_pt_firstbounce_phq9 <- function(){ 
 integer(0)
 }
 #' Validate First Bounce S3 class for Patient Health Questionnaire (PHQ-9) scores

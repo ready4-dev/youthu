@@ -1,6 +1,6 @@
 # map2aqol <img src="man/figures/fav120.png" align="right" />
 
-## Map Measures Routinely Collected in Mental Health Services To AQOL 6D Health Utility.
+## Map Measures Routinely Collected in Mental Health Services to AQOL 6d Health Utility.
 
 <!-- badges: start -->
 [![R build status](https://github.com/ready4-dev/map2aqol/workflows/R-CMD-check/badge.svg)](https://github.com/ready4-dev/map2aqol/actions)

@@ -1,5 +1,5 @@
 #' map2aqol: Map Measures Routinely Collected in Mental Health
-#' Services To AQOL 6D Health Utility.
+#' Services to AQOL 6d Health Utility.
 #'
 #' Tools for mapping measures routinely collected in
 #' youth mental health services to AQOL 6D Health Utility. Part of the
