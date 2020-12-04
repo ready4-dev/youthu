@@ -9,6 +9,7 @@
 #' @export 
 #' @importFrom pacman p_load
 #' @importFrom ggplot2 autoplot
+#' @keywords internal
 plot_auto_lm <- function (mdl, which_dbl = 1:6, ncol_1L_int = 3L, label_size_1L_int = 3) 
 {
     pacman::p_load(char = "ggfortify")
@@ -33,6 +34,7 @@ plot_auto_lm <- function (mdl, which_dbl = 1:6, ncol_1L_int = 3L, label_size_1L_
 #' @importFrom dplyr filter
 #' @importFrom rlang sym
 #' @importFrom ggplot2 ggplot aes geom_point geom_smooth geom_line theme_bw labs
+#' @keywords internal
 plot_lnr_cmprsn <- function (data_tb, predn_ds_tb, dep_var_nm_1L_chr = "aqol6d_total_w", 
     predr_var_nm_1L_chr, dep_var_desc_1L_chr = "AQoL-6D utility score", 
     predr_var_desc_1L_chr) 
@@ -56,6 +58,7 @@ plot_lnr_cmprsn <- function (data_tb, predn_ds_tb, dep_var_nm_1L_chr = "aqol6d_t
 #' @export 
 #' @importFrom ggplot2 ggplot aes geom_point geom_smooth theme_bw geom_abline xlim ylim
 #' @importFrom rlang sym
+#' @keywords internal
 plot_lnr_cmprsn_sctr_plt <- function (tfd_data_tb, dep_var_nm_1L_chr = "aqol6d_total_w", 
     predd_val_var_nm_1L_chr = "Predicted") 
 {
@@ -80,6 +83,7 @@ plot_lnr_cmprsn_sctr_plt <- function (tfd_data_tb, dep_var_nm_1L_chr = "aqol6d_t
 #' @importFrom ggplot2 ggplot aes geom_rug theme_bw theme labs
 #' @importFrom ggalt geom_bkde
 #' @importFrom viridis scale_fill_viridis
+#' @keywords internal
 plot_obsd_predd_dnst <- function (tfd_data_tb, dep_var_desc_1L_chr = "AQoL-6D utility score", 
     predd_val_var_nm_1L_chr = "Predicted") 
 {
@@ -104,6 +108,7 @@ plot_obsd_predd_dnst <- function (tfd_data_tb, dep_var_desc_1L_chr = "AQoL-6D ut
 #' @export 
 #' @importFrom ggplot2 ggplot geom_point aes theme_bw xlim ylim scale_color_manual labs theme
 #' @importFrom rlang exec sym
+#' @keywords internal
 plot_obsd_predd_sctr <- function (tfd_data_tb, dep_var_nm_1L_chr = "aqol6d_total_w", 
     dep_var_desc_1L_chr = "AQoL-6D utility score", round_var_nm_1L_chr = "round", 
     args_ls = NULL, predd_val_var_nm_1L_chr = "Predicted") 

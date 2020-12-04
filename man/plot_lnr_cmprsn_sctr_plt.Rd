@@ -20,3 +20,4 @@ plot_lnr_cmprsn_sctr_plt(
 \description{
 plot_lnr_cmprsn_sctr_plt() is a Plot function that plots data Specifically, this function implements an algorithm to plot lnr cmprsn sctr plt. The function is called for its side effects and does not return a value.
 }
+\keyword{internal}
