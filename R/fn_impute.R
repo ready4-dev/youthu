@@ -34,7 +34,6 @@ impute_adult_aqol6d_items_tb <- function (aqol6d_items_tb, domain_items_ls)
 #' @export 
 #' @importFrom dplyr mutate select filter
 #' @importFrom mice mice complete
-#' @keywords internal
 impute_unscrd_adol_aqol6d_ds <- function (unscrd_aqol_ds_tb) 
 {
     unscrd_aqol_ds_tb <- unscrd_aqol_ds_tb %>% dplyr::mutate(missing = rowSums(is.na(dplyr::select(., 

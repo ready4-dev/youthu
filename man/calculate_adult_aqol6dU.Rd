@@ -30,5 +30,5 @@ calculate_adult_aqol6dU(
 Assessment of Quality of Life Six Dimension Health Utility (a double vector)
 }
 \description{
-calculate_adult_aqol6dU() is a Calculate function that calculates a numeric value. Specifically, this function implements an algorithm to calculate adult assessment of quality of life six dimension health utility. Function argument aqol6d_items_tb specifies the calculate The function returns Assessment of Quality of Life Six Dimension Health Utility (a double vector).
+calculate_adult_aqol6dU() is a Calculate function that calculates a numeric value. Specifically, this function implements an algorithm to calculate adult assessment of quality of life six dimension health utility. The function returns Assessment of Quality of Life Six Dimension Health Utility (a double vector).
 }

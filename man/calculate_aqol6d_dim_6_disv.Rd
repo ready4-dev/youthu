@@ -17,5 +17,5 @@ calculate_aqol6d_dim_6_disv(dvQs_tb, kD_1L_dbl, w_dbl)
 DvD6 (a double vector)
 }
 \description{
-calculate_aqol6d_dim_6_disv() is a Calculate function that calculates a numeric value. Specifically, this function implements an algorithm to calculate assessment of quality of life six dimension dimension 6 disvalue. Function argument dvQs_tb specifies the calculate The function returns DvD6 (a double vector).
+calculate_aqol6d_dim_6_disv() is a Calculate function that calculates a numeric value. Specifically, this function implements an algorithm to calculate assessment of quality of life six dimension dimension 6 disvalue. The function returns DvD6 (a double vector).
 }

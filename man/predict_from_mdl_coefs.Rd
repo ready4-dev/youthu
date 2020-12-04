@@ -15,6 +15,5 @@ predict_from_mdl_coefs(smry_of_mdl_tb, new_data_tb)
 Pred (a double vector)
 }
 \description{
-predict_from_mdl_coefs() is a Predict function that makes predictions from data using a specified statistical model. Specifically, this function implements an algorithm to predict from mdl coefs. Function argument smry_of_mdl_tb specifies the predict The function returns Pred (a double vector).
+predict_from_mdl_coefs() is a Predict function that makes predictions from data using a specified statistical model. Specifically, this function implements an algorithm to predict from mdl coefs. The function returns Pred (a double vector).
 }
-\keyword{internal}

@@ -5,7 +5,7 @@
 \alias{repln_ds_dict_r3}
 \title{Data dictionary for study population dataset}
 \format{
-An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 46 rows and 4 columns.
+An object of class \code{ready4_dictionary} (inherits from \code{tbl_df}, \code{tbl}, \code{data.frame}) with 46 rows and 4 columns.
 }
 \usage{
 repln_ds_dict_r3

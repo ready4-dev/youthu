@@ -15,6 +15,5 @@ calculate_rmse_tfmn(y_dbl, yhat_dbl)
 Rmse tfmn (a double vector)
 }
 \description{
-calculate_rmse_tfmn() is a Calculate function that calculates a numeric value. Specifically, this function implements an algorithm to calculate rmse tfmn. Function argument y_dbl specifies the calculate The function returns Rmse tfmn (a double vector).
+calculate_rmse_tfmn() is a Calculate function that calculates a numeric value. Specifically, this function implements an algorithm to calculate rmse tfmn. The function returns Rmse tfmn (a double vector).
 }
-\keyword{internal}
