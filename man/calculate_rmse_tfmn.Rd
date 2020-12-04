@@ -17,4 +17,3 @@ Rmse tfmn (a double vector)
 \description{
 calculate_rmse_tfmn() is a Calculate function that calculates a numeric value. Specifically, this function implements an algorithm to calculate rmse tfmn. The function returns Rmse tfmn (a double vector).
 }
-\keyword{internal}
