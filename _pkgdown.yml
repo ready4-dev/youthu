@@ -51,7 +51,6 @@ reference:
   - make_aqol6d_fns_ls
   - make_aqol6d_items_tb
   - make_correlated_data_tb
-  - make_corstars_tbl_xx
   - make_dim_sclg_cons_dbl
   - make_domain_items_ls
   - make_item_wrst_wghts_ls_ls

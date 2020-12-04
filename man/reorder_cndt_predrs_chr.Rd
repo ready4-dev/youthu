@@ -26,3 +26,4 @@ NA ()
 \description{
 reorder_cndt_predrs_chr() is a Reorder function that reorders an object to conform to a pre-specified schema. Specifically, this function implements an algorithm to reorder cndt predrs character vector. The function is called for its side effects and does not return a value.
 }
+\keyword{internal}

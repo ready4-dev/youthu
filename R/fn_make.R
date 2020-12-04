@@ -5,6 +5,7 @@
 #' @rdname make_adol_aqol6d_disv_lup
 #' @export 
 #' @importFrom dplyr mutate case_when
+#' @keywords internal
 make_adol_aqol6d_disv_lup <- function () 
 {
     adol_aqol6d_disv_lup <- aqol6d_adult_disv_lup_tb %>% dplyr::mutate(Answer_4_dbl = dplyr::case_when(Question_chr == 
@@ -29,6 +30,7 @@ make_adol_aqol6d_disv_lup <- function ()
 #' @importFrom purrr map
 #' @importFrom dplyr select starts_with everything
 #' @importFrom rlang sym
+#' @keywords internal
 make_aqol6d_adol_pop_tbs_ls <- function (aqol_items_props_tbs_ls, aqol_scores_pars_ls, series_names_chr, 
     synth_data_spine_ls, temporal_cors_ls, id_var_nm_1L_chr = "fkClientID", 
     prefix_chr = c(uid = "Participant_", aqol_item = "aqol6d_q", 
@@ -97,6 +99,7 @@ make_aqol6d_items_tb <- function (aqol_tb, old_pfx_1L_chr, new_pfx_1L_chr)
 #' @importFrom purrr map map2_dbl
 #' @importFrom dplyr mutate select mutate_if
 #' @importFrom rlang sym
+#' @keywords internal
 make_complete_props_tbs_ls <- function (raw_props_tbs_ls, question_var_nm_1L_chr = "Question") 
 {
     complete_props_tbs_ls <- raw_props_tbs_ls %>% purrr::map(~{
@@ -225,6 +228,7 @@ make_synth_series_tbs_ls <- function (synth_data_spine_ls, series_names_chr)
 #' @importFrom dplyr mutate case_when group_by row_number ungroup
 #' @importFrom purrr map2_chr map flatten_int
 #' @importFrom ready4fun get_from_lup_obj
+#' @keywords internal
 make_unique_ls_elmt_idx_int <- function (data_ls) 
 {
     combos_tb <- tibble::as_tibble(data_ls, .name_repair = ~paste0("r_", 
