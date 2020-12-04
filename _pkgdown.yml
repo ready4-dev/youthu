@@ -5,6 +5,7 @@ reference:
 - contents:
   - abbreviations_lup
   - adol_dim_scalg_eqs_lup
+  - aqol_scrg_dict_r3
   - aqol6d_adult_disv_lup_tb
   - aqol6d_adult_itm_wrst_wghts_lup_tb
   - aqol6d_adult_vldn_pop_with_STATA_scores_tb
@@ -17,6 +18,7 @@ reference:
   - fns_dmt_tb
   - prototype_lup
   - replication_popl_tb
+  - repln_ds_dict_r3
 - title: "Classes"
 - contents:
   - firstbounce_aqol6d_adol

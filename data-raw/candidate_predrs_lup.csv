@@ -1,0 +1,7 @@
+"short_name_chr","long_name_chr","min_val_dbl","max_val_dbl","increment_dbl"
+"BADS","BADS total score",0,150,1
+"GAD7","GAD7 total score",0,21,1
+"K6","K6 total score",0,24,1
+"OASIS","OASIS total score",0,20,1
+"PHQ9","PHQ9 total score",0,27,1
+"SCARED","SCARED total score",0,82,1

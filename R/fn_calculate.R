@@ -9,6 +9,7 @@
 #' @export 
 #' @importFrom dplyr pull
 #' @importFrom rlang sym
+#' @keywords internal
 calculate_adol_aqol6dU <- function (unscored_aqol_tb, prefix_1L_chr = "aqol6d_q", id_var_nm_1L_chr = "fkClientID", 
     wtd_aqol_var_nm_1L_chr = "aqol6d_total_w") 
 {
@@ -165,6 +166,7 @@ calculate_aqol6d_dim_6_disv <- function (dvQs_tb, kD_1L_dbl, w_dbl)
 #' @rdname calculate_rmse_tfmn
 #' @export 
 
+#' @keywords internal
 calculate_rmse_tfmn <- function (y_dbl, yhat_dbl) 
 {
     rmse_tfmn_dbl <- sqrt(mean((1 - exp(-exp(yhat_dbl)) - y_dbl)^2))
