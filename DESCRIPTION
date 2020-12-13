@@ -1,7 +1,7 @@
 Package: map2aqol
 Title: Map Measures Routinely Collected in Mental Health
     Services to AQOL 6d Health Utility.
-Version: 0.0.0.9010
+Version: 0.0.0.9011
 Authors@R: 
     c(person(given = "Caroline",
              family = "Gao",
@@ -44,8 +44,7 @@ RoxygenNote: 7.1.1
 Imports: 
     testthat,
     knitr,
-    lifecycle,
-    ready4fun (>= 0.0.0.9262),
+    ready4fun (>= 0.0.0.9265),
     brms,
     dplyr,
     ggalt,
@@ -73,7 +72,6 @@ Imports:
     utils,
     viridis
 VignetteBuilder: knitr
-RdMacros: lifecycle
 Depends: 
     R (>= 2.10)
 Remotes: 
