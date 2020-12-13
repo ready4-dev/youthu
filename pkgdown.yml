@@ -1,0 +1,7 @@
+pandoc: 2.7.3
+pkgdown: 1.6.1
+pkgdown_sha: ~
+articles:
+  map2aqol: map2aqol.html
+last_built: 2020-12-13T23:54Z
+
