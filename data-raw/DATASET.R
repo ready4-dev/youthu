@@ -12,7 +12,7 @@ ready4fun::write_fn_type_dirs()
 ## PART TWO
 ##
 # 4. Set-up package structure
-ready4fun::make_pkg_desc_ls(pkg_title_1L_chr = "Map Measures Routinely Collected in Mental Health Services To AQOL 6D Health Utility.",
+ready4fun::make_pkg_desc_ls(pkg_title_1L_chr = "Map Measures Routinely Collected in Mental Health Services To AQOL 6D Health Utility",
                             pkg_desc_1L_chr = "Tools for mapping measures routinely collected in youth mental health services to AQOL 6D Health Utility. Part of the First Bounce model of primary youth mental health services.
   This development version of the map2aqol package has been made available as part of the process of testing and documenting the package. The tools contained in this development release automate a number of tasks which MODIFY THE DIRECTORY STRUCTURE OF YOUR LOCAL MACHINE.
   Therefore you should only trial this software if you feel confident that you understand what it does and have created a sandpit area in which you can safely undertake testing. If you have any questions, please contact the authors (matthew.hamilton@orygen.org.au).
