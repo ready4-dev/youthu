@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">map2aqol</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9019</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9020</span>
       </span>
     </div>
 
@@ -126,7 +126,7 @@
 <p>The following lines print the data dictionary as Table @ref(tab:ddic).</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dictionary_tb</span> <span class="op">%&gt;%</span>
-  <span class="fu">ready4u</span><span class="fu">::</span><span class="fu"><a href="https://ready4-dev.github.io/ready4u/reference/print_table_xx.html">print_table_xx</a></span><span class="op">(</span>output_type_1L_chr <span class="op">=</span> <span class="va">params</span><span class="op">$</span><span class="va">output_format_1L_chr</span> , caption_1L_chr <span class="op">=</span> <span class="st">"Data dictionary"</span>,  
+  <span class="fu">ready4u</span><span class="fu">::</span><span class="fu"><a href="https://ready4-dev.github.io/ready4u/reference/print_table_xx.html">print_table_xx</a></span><span class="op">(</span>output_type_1L_chr <span class="op">=</span> <span class="st">"HTML"</span>, caption_1L_chr <span class="op">=</span> <span class="st">"Data dictionary"</span>,  
                  use_lbls_as_col_nms_1L_lgl <span class="op">=</span> <span class="cn">T</span>, mkdn_tbl_ref_1L_chr <span class="op">=</span> <span class="st">"tab:ddic"</span><span class="op">)</span></code></pre></div>
 <table class="table  lightable-paper lightable-hover">
 <caption>
@@ -813,11 +813,10 @@ integer
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">raw_data_tb</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">ready4u</span><span class="fu">::</span><span class="fu"><a href="https://ready4-dev.github.io/ready4u/reference/print_table_xx.html">print_table_xx</a></span><span class="op">(</span>output_type_1L_chr <span class="op">=</span> <span class="va">params</span><span class="op">$</span><span class="va">output_format_1L_chr</span> , caption_1L_chr <span class="op">=</span> <span class="st">"Replication dataset"</span>,  
+  <span class="fu">ready4u</span><span class="fu">::</span><span class="fu"><a href="https://ready4-dev.github.io/ready4u/reference/print_table_xx.html">print_table_xx</a></span><span class="op">(</span>output_type_1L_chr <span class="op">=</span> <span class="st">"HTML"</span>, caption_1L_chr <span class="op">=</span> <span class="st">"Replication dataset"</span>,  
                  use_lbls_as_col_nms_1L_lgl <span class="op">=</span> <span class="cn">T</span>, 
-                 scroll_box_args_ls <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>width <span class="op">=</span> <span class="st">"100%"</span><span class="op">)</span>, mkdn_tbl_ref_1L_chr <span class="op">=</span> <span class="st">"tab:repds"</span><span class="op">)</span> </code></pre></div>
-<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; ">
-<table class="table  lightable-paper lightable-hover lightable-paper">
+                 mkdn_tbl_ref_1L_chr <span class="op">=</span> <span class="st">"tab:repds"</span><span class="op">)</span> </code></pre></div>
+<table class="table  lightable-paper lightable-hover">
 <caption>
 Replication dataset
 </caption>
@@ -1809,7 +1808,6 @@ Yes
 </td>
 </tr></tfoot>
 </table>
-</div>
 </div>
   </div>
 
