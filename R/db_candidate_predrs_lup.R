@@ -10,5 +10,6 @@
 #'   \item{min_val_dbl}{Min value (a double vector)}
 #'   \item{max_val_dbl}{Max value (a double vector)}
 #'   \item{increment_dbl}{Increment (a double vector)}
+#'   \item{mdl_scaling_dbl}{Mdl scaling (a double vector)}
 #' }
 "candidate_predrs_lup"

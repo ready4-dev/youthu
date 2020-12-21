@@ -46,3 +46,4 @@
 ^data-raw/prototype_lup\.csv$
 ^data-raw/replication_popl_tb\.csv$
 ^data-raw/repln_ds_dict_r3\.csv$
+^initial_setup\.R$

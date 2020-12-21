@@ -13,8 +13,8 @@ vD5,Adult Score Dimension 5 - Pain,1-dvD5
 vD6,Adult Score Dimension 6 - Senses,1-dvD6
 duaqol,Overall score on a 0-1 disvalue scale,(1/-0.965)*((1+(-0.965*0.472*0.883*dvD1))*(1+(-0.965*0.448*0.883*dvD2))*(1+(-0.965*0.479*0.883*dvD3))*(1+(-0.965*0.345*0.883*dvD4))*(1+(-0.965*0.592*0.883*dvD5))*(1+(-0.965*0.637*0.883*dvD6))-1)
 duaqolld,Overall score on a life-death disutility scale,1.132*duaqol
-duAQoL6D_t,AQoL-6D Adolescent Disutility Score, duaqolld**1.8407651
-duAQoL6D,AQoL-6D Adolescent Disutility Score,"ifelse(duAQoL6D_t>1,(1 + (duAQoL6D_t-1)*.25773196), duAQoL6D_t)"
+duAQoL6D_t,AQoL-6D Adolescent Disutility Score (Untransformed), duaqolld**1.8407651
+duAQoL6D,AQoL-6D Adolescent Disutility Score (Transformed),"ifelse(duAQoL6D_t>1,(1 + (duAQoL6D_t-1)*.25773196), duAQoL6D_t)"
 uAQoL6D,Instrument utility score,1- duAQoL6D
 uAQoL6DRotated,Instrument utility score rotated,uAQoL6D*0.8807+0.1189
 uaqol,AQOL 6D ADOLESCENT Utility Score,1-(1-uAQoL6DRotated)**1.19

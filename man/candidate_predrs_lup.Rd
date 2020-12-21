@@ -5,7 +5,7 @@
 \alias{candidate_predrs_lup}
 \title{Candidate predictors lookup table}
 \format{
-An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 6 rows and 5 columns.
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 6 rows and 6 columns.
 }
 \usage{
 candidate_predrs_lup
@@ -22,6 +22,7 @@ A tibble
 \item{min_val_dbl}{Min value (a double vector)}
 \item{max_val_dbl}{Max value (a double vector)}
 \item{increment_dbl}{Increment (a double vector)}
+\item{mdl_scaling_dbl}{Mdl scaling (a double vector)}
 }
 }
 \keyword{datasets}

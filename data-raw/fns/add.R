@@ -191,10 +191,8 @@ add_unwtd_dim_tots <- function (items_tb, domain_items_ls, domain_pfx_1L_chr)
 add_wtd_dim_tots <- function (unwtd_dim_tb, domain_items_ls, domain_unwtd_pfx_1L_chr,
     domain_wtd_pfx_1L_chr)
 {
-    utils::data("aqol6d_adult_disv_lup_tb", package = "ready4u",
-        envir = environment())
-    utils::data("aqol6d_domain_qs_lup_tb", package = "ready4u",
-        envir = environment())
+    utils::data("aqol6d_adult_disv_lup_tb", envir = environment())
+    utils::data("aqol6d_domain_qs_lup_tb", envir = environment())
     min_vals_dbl <- purrr::map_dbl(domain_items_ls, ~length(.x)) %>%
         unname()
     max_vals_dbl <- purrr::map2_dbl(domain_items_ls, names(domain_items_ls),
