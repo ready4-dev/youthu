@@ -2,7 +2,7 @@
 title: "Data Integrity Tools"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{classes}
+  %\VignetteIndexEntry{Data Integrity Tools}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

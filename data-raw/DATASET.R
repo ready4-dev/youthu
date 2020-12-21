@@ -381,6 +381,8 @@ ready4use::ready4_dv_import_lup() %>%
 ## Note files to be rewritten cannot be open in RStudio.
 ## 8. Document functions.
 usethis::use_build_ignore("initial_setup.R")
+usethis::use_package("knitrBootstrap")
+usethis::use_dev_package("ready4u")
 readLines(".github/workflows/R-CMD-check.yaml")[-28] %>%
   writeLines(".github/workflows/R-CMD-check.yaml")
 ready4fun::write_and_doc_fn_fls(fns_dmt_tb,

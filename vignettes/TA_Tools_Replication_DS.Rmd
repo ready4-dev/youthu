@@ -2,7 +2,7 @@
 title: "Replication Dataset"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{repds}
+  %\VignetteIndexEntry{Replication Dataset}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 params:

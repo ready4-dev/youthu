@@ -2,7 +2,7 @@
 title: "Health Utility Scoring Tools"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{scoring}
+  %\VignetteIndexEntry{Health Utility Scoring Tools}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 params:
