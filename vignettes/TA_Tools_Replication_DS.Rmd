@@ -1,0 +1,61 @@
+---
+title: "Replication Dataset"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{repds}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+params:
+  output_format_1L_chr: HTML
+---
+```{r}
+library(magrittr)
+```
+# Origin and purpose of map2aqol replication dataset
+The replication dataset distributed with the map2aqol package is a purely synthetic (entirely fake) dataset that is nonetheless representative (in terms of constituent variables and their uni-variate and [to some extent] joint distributions) of the original study dataset that we used to derive the transfer to utility algorithms included in map2aqol. The purpose of the replication dataset is two-fold:
+
+1) to help users replicate the results in our original study (by applying the same algorithms we used to a different but similar dataset, users will be able to get broadly similar results);
+
+2) to help users trial the functions in the map2aqol package before potentially applying these functions to their own data.
+
+# Replication dataset dictionary
+
+An overview of the contents of the replication dataset is provided in a data dictionary that can be accessed with the following command.
+
+```{r message=FALSE}
+dictionary_tb <- map2aqol::repln_ds_dict_r3
+```
+
+The following lines print the data dictionary as Table \@ref(tab:ddic).
+
+```{r ddic}
+dictionary_tb %>%
+  ready4u::print_table_xx(output_type_1L_chr = params$output_format_1L_chr , caption_1L_chr = "Data dictionary",  
+                 use_lbls_as_col_nms_1L_lgl = T, label = "tab:ddic", hline.after = NULL, addtorow = NULL)
+```
+
+# Accessing the replication dataset
+The replication dataset itself can be accessed using the following command.
+
+```{r}
+raw_data_tb <- map2aqol::replication_popl_tb 
+```
+
+Adding variable labels makes it easier to interpret the dataset. In the following command, we add lables from the data dictionary to the replication dataset.
+
+```{r }
+raw_data_tb <- raw_data_tb %>%
+  ready4use::add_labels_from_dictionary(dictionary_tb)
+```
+
+The following command prints the first ten cases from the replication dataset as Table \@ref(tab:repds), using variable labels as column names.
+
+```{r repds}
+raw_data_tb %>%
+  head() %>%
+  ready4u::print_table_xx(output_type_1L_chr = params$output_format_1L_chr , caption_1L_chr = "Replication dataset",  
+                 use_lbls_as_col_nms_1L_lgl = T, 
+                 scroll_box_args_ls = list(width = "100%"),label = "tab:repds", hline.after = NULL, addtorow = NULL) 
+```
+
+

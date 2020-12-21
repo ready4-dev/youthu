@@ -15,6 +15,7 @@ reference:
   - candidate_predrs_lup
   - fn_type_lup_tb
   - fns_dmt_tb
+  - mdls_smry_tb
   - prototype_lup
   - replication_popl_tb
   - repln_ds_dict_r3

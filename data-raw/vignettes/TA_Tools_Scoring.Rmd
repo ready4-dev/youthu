@@ -1,0 +1,58 @@
+---
+title: "Health Utility Scoring Tools"
+author: "Matthew Hamilton & Caroline Gao"
+date: "`r format(Sys.Date(), '%d %B %Y')`"
+output: 
+  bookdown::html_document2:
+    theme: journal
+params:
+  output_format_1L_chr: HTML
+---
+
+```{r warning=FALSE, message=FALSE}
+library(map2aqol)
+```
+# Converting Assessment of Quality of Life Six Dimension questionnaire response to Health Utility Scores
+To derive a health utility score from the raw responses to a multi-attribute utility instrument it is necessary to implement a scoring algorithm. Scoring algorithms for the Assessment of Quality of Life Six Dimension (AQoL-6D) are publicly available in SPSS format. However, to include scoring algorithms in reproducible research workflows, it is desirable to have these algorithms available in open science languages such as R. We therefore developed R versions of the adult and adolescent versions of the AQoL-6D scoring algorithm and have made them available as part of the map2aqol package.
+
+# Calculating scores
+To calculate AQoL 6D adolescent utility scores, a dataset with all twenty AQoL 6D questionnaire response items must be passed to the add_adol6d_scores function. The names of these twenty variables must all have a common prefix and end with the item number. In our replication dataset, they are named "aqol6d_q1", "aqol6d_q2" ... "aqol6d_q20". Details of the common prefix for the AQoL 6D response item variables, the name of the unique individual identifier variable and the desired name for the AQoL 6D adolescent utility score variable to be calculated must also be passed to the add_adol6d_scores function. The function returns an updated dataset, with additional variables that include the intermediate and final calculations for AQoL 6D adolescent utility scores.
+
+```{r results='hide', warning=F, message=FALSE}
+scored_data_tb <- add_adol6d_scores(map2aqol::replication_popl_tb,
+                                              prefix_1L_chr =  "aqol6d_q",
+                                              id_var_nm_1L_chr = "fkClientID",
+                                              wtd_aqol_var_nm_1L_chr = "aqol6d_total_w") 
+```
+
+# Viewing the updated dataset
+Before displaying the updated dataset, it may be desirable to label variables so that their meaning is clearer. The first step to do this is to create a data dictionary that extends to all variables in the updated dataset, by combining a data dictionary for the source (unscored) dataset with a data dictionary for a template scored dataset.
+
+```{r}
+dictionary_tb <- ready4use::bind_lups(map2aqol::repln_ds_dict_r3,
+                                      new_ready4_dictionary = map2aqol::aqol_scrg_dict_r3)
+```
+
+Labels from the new data dictionary can then be added to our updated (scored) dataset.
+
+```{r}
+scored_data_tb <- scored_data_tb %>%
+  ready4use::add_labels_from_dictionary(dictionary_tb)
+```
+
+The following lines then print the first ten lines of the updated dataset as Table \@ref(tab:scoredds), using variable labels as column names.
+
+```{r include=F}
+# Hmisc::label(scored_data_tb$Gender) <- "Gender (Grouped)" # Update in map2aqol
+# Hmisc::label(scored_data_tb$duAQoL6D_t) <- "AQoL-6D Adolescent Disutility Score (Validation)"
+```
+
+```{r scoredds}
+scored_data_tb %>%
+  head() %>%
+  #ready4u::
+  print_table_xx(output_type_1L_chr = params$output_format_1L_chr , caption_1L_chr = "Replication dataset with AQoL scores", 
+                          use_lbls_as_col_nms_1L_lgl = T, 
+                 scroll_box_args_ls = list(width = "100%"), label = "tab:scoredds", hline.after = NULL, addtorow = NULL)
+```
+

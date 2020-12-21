@@ -47,3 +47,6 @@
 ^data-raw/replication_popl_tb\.csv$
 ^data-raw/repln_ds_dict_r3\.csv$
 ^initial_setup\.R$
+^data-raw/vignettes/TA_Tools_Data_Integrity\.Rmd$
+^data-raw/vignettes/TA_Tools_Replication_DS\.Rmd$
+^data-raw/vignettes/TA_Tools_Scoring\.Rmd$

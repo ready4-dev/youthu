@@ -1,0 +1,204 @@
+---
+title: "Data Integrity Tools"
+author: "Matthew Hamilton & Caroline Gao"
+date: "`r format(Sys.Date(), '%d %B %Y')`"
+output: 
+  bookdown::html_document2:
+    theme: journal
+---
+```{r echo = F}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# The role of classes in assuring data integrity
+The map2aqol package defines a number of classes that can be used to help assure the quality of input data used for deriving or applying transfer to utility algorithms. Within the R scripting language, a class is a named data structure that comprises a definition of required properties (e.g. whether numeric, minimum or maximum values) and tools for creating and validating instances of this data structure. The classes included in the map2aqol package include one class for Assessment of Quality of Life (Adolescent) health utility and one for each of the six predictors used in map2aqol transfer to utility algorithms. 
+
+These classes have two main purposes:
+
+1) to facilitate automated data integrity checks that verify no impermissible values (e.g. utility scores greater than one) are present in source data, within calculation transformed data or results;
+2) to automate the selection of the appropriate method to apply to each data type (e.g. selecting the transfer to utility model to use based on the predictors supplied to a method).
+
+All of the classes included in the map2aqol package are prefixed with "firstbounce" as map2aqol has been developped as part of the First Bounce model.
+
+# Included classes
+
+```{r include=FALSE}
+library(map2aqol)
+```
+```{r eval=FALSE}
+library(map2aqol)
+```
+## Assessment of Quality of Life Six Dimension (Adolescent) Health Utility 
+
+The firstbounce_aqol6d_adol class is defined for numeric vectors with a minimum value of 0.03 and maximum value of 1.0.
+
+```{r}
+firstbounce_aqol6d_adol(0.4)
+```
+
+```{r}
+firstbounce_aqol6d_adol(c(0.03,0.2,1))
+```
+
+Non numeric objects and values outside these ranges will produce errors.
+
+```{r error = T}
+firstbounce_aqol6d_adol("0.5")
+```
+
+```{r error = T}
+firstbounce_aqol6d_adol(-0.1)
+```
+
+```{r, error = T}
+firstbounce_aqol6d_adol(1.2)
+```
+
+## Behavioural Activation for Depression Scale (BADS)
+
+The firstbounce_bads class is defined for integer vectors with a minimum value of 0 and maximum value of 150.
+
+```{r}
+firstbounce_bads(143L)
+```
+
+```{r}
+firstbounce_bads(as.integer(c(1,15,150)))
+```
+
+Non-integers and values outside these ranges will produce errors.
+
+```{r, error = T}
+firstbounce_bads(22.5)
+```
+
+```{r, error = T}
+firstbounce_bads(-1L)
+```
+
+```{r error = T}
+firstbounce_bads(160L)
+```
+
+## Generalised Anxiety Disorder Scale (GAD-7)
+
+The firstbounce_gad7 class is defined for integer vectors with a minimum value of 0 and a maximum value of 21.
+
+```{r}
+firstbounce_gad7(15L)
+```
+
+```{r}
+firstbounce_gad7(as.integer(c(0,14,21)))
+```
+
+Non-integers and values outside these ranges will produce errors.
+
+```{r, error = T}
+firstbounce_gad7(14.6)
+```
+
+```{r error = T}
+firstbounce_gad7(-1L)
+```
+
+```{r error = T}
+firstbounce_gad7(22L)
+```
+## Kessler Psychological Distress Scale (K6) - US Scoring System
+
+The firstbounce_k6 class is defined for integer vectors with a minimum value of 0 and a maximum value of 24.
+
+```{r}
+firstbounce_k6(21L)
+```
+
+```{r}
+firstbounce_k6(as.integer(c(0,13,24)))
+```
+
+Non-integers and values outside these ranges will produce errors.
+
+```{r, error = T}
+firstbounce_k6(11.2)
+```
+
+```{r error = T}
+firstbounce_k6(-1L)
+```
+
+```{r error = T}
+firstbounce_k6(25L)
+```
+## Overall Anxiety Severity and Impairment Scale (OASIS)
+
+The firstbounce_oasis class is defined for integer vectors with a minimum value of 0 and a maximum value of 20.
+
+```{r}
+firstbounce_oasis(15L)
+```
+
+```{r}
+firstbounce_oasis(as.integer(c(0,12,20)))
+```
+
+Non-integers and values outside these ranges will produce errors.
+
+```{r, error = T}
+firstbounce_oasis(14.2)
+```
+
+```{r error = T}
+firstbounce_oasis(-1L)
+```
+
+```{r error = T}
+firstbounce_oasis(21L)
+```
+## Patient Health Questionnaire (PHQ-9)
+
+The firstbounce_phq9 class is defined for integer vectors with a minimum value of 0 and a maximum value of 27.
+
+```{r}
+firstbounce_phq9(11L)
+```
+
+```{r}
+firstbounce_phq9(as.integer(c(0,13,27)))
+```
+
+Non-integers and values outside these ranges will produce errors.
+
+```{r, error = T}
+firstbounce_phq9(15.2)
+```
+```{r, error = T}
+firstbounce_phq9(-1L)
+```
+```{r error = T}
+firstbounce_phq9(28L)
+```
+
+##  Screen for Child Anxiety Related Disorders (SCARED)
+
+The firstbounce_scared class is defined for integer vectors with a minimum value of 0 and a maximum value of 82.
+
+```{r}
+firstbounce_scared(77L)
+```
+
+```{r}
+firstbounce_scared(as.integer(c(0,42,82)))
+```
+
+Non-integers and values outside these ranges will produce errors.
+
+```{r, error = T}
+firstbounce_scared(33.2)
+```
+```{r, error = T}
+firstbounce_scared(-1L)
+```
+```{r error = T}
+firstbounce_scared(83)
+```
