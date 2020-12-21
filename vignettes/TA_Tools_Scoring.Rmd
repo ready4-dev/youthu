@@ -5,8 +5,6 @@ vignette: >
   %\VignetteIndexEntry{Health Utility Scoring Tools}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
-params:
-  output_format_1L_chr: HTML
 ---
 
 ```{r warning=FALSE, message=FALSE}
@@ -45,8 +43,9 @@ The following lines then print the first ten lines of the updated dataset as Tab
 ```{r scoredds}
 scored_data_tb %>%
   head() %>%
-  ready4u::print_table_xx(output_type_1L_chr = params$output_format_1L_chr , caption_1L_chr = "Replication dataset with AQoL scores", 
+  ready4u::print_table_xx(output_type_1L_chr = "HTML", 
+                          caption_1L_chr = "Replication dataset with AQoL scores", 
                           use_lbls_as_col_nms_1L_lgl = T, 
-                 scroll_box_args_ls = list(width = "100%"), mkdn_tbl_ref_1L_chr = "tab:scoredds")
+                          mkdn_tbl_ref_1L_chr = "tab:scoredds")
 ```
 
