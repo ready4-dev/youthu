@@ -31,7 +31,7 @@ The following lines print the data dictionary as Table \@ref(tab:ddic).
 ```{r ddic}
 dictionary_tb %>%
   ready4u::print_table_xx(output_type_1L_chr = params$output_format_1L_chr , caption_1L_chr = "Data dictionary",  
-                 use_lbls_as_col_nms_1L_lgl = T, label = "tab:ddic", hline.after = NULL, addtorow = NULL)
+                 use_lbls_as_col_nms_1L_lgl = T, mkdn_tbl_ref_1L_chr = "tab:ddic")
 ```
 
 # Accessing the replication dataset
@@ -55,7 +55,7 @@ raw_data_tb %>%
   head() %>%
   ready4u::print_table_xx(output_type_1L_chr = params$output_format_1L_chr , caption_1L_chr = "Replication dataset",  
                  use_lbls_as_col_nms_1L_lgl = T, 
-                 scroll_box_args_ls = list(width = "100%"),label = "tab:repds", hline.after = NULL, addtorow = NULL) 
+                 scroll_box_args_ls = list(width = "100%"), mkdn_tbl_ref_1L_chr = "tab:repds") 
 ```
 
 
