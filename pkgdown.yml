@@ -2,6 +2,9 @@ pandoc: 2.7.3
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
+  TA_Tools_Data_Integrity: TA_Tools_Data_Integrity.html
+  TA_Tools_Replication_DS: TA_Tools_Replication_DS.html
+  TA_Tools_Scoring: TA_Tools_Scoring.html
   map2aqol: map2aqol.html
-last_built: 2020-12-21T09:32Z
+last_built: 2020-12-21T23:17Z
 
