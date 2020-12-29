@@ -86,7 +86,7 @@ pkg_dss_tb <- classes_to_make_tb %>%
                               pkg_dss_tb = pkg_dss_tb)
 # 5. Create function types and generics look-up tables
 # 5.1 Create a lookup table of function types used in this package and save it as a package dataset (data gets saved in the data directory, documentation script is created in R directory).
-data("fn_type_lup_tb",package = "ready4u")
+data("fn_type_lup_tb",package = "TTU")
 # fn_type_lup_tb %>%
 #   ready4fun::write_dmtd_fn_type_lup(url_1L_chr = NA_character_,
 #                                     abbreviations_lup = abbreviations_lup,
@@ -382,7 +382,7 @@ ready4use::ready4_dv_import_lup() %>%
 ## 8. Document functions.
 usethis::use_build_ignore("initial_setup.R")
 usethis::use_package("knitrBootstrap")
-usethis::use_dev_package("ready4u")
+usethis::use_dev_package("TTU")
 readLines(".github/workflows/R-CMD-check.yaml")[-28] %>%
   writeLines(".github/workflows/R-CMD-check.yaml")
 ready4fun::write_and_doc_fn_fls(fns_dmt_tb,
