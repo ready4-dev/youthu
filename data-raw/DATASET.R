@@ -382,6 +382,7 @@ ready4use::ready4_dv_import_lup() %>%
 ## 8. Document functions.
 usethis::use_build_ignore("initial_setup.R")
 usethis::use_package("knitrBootstrap")
+usethis::use_dev_package("ready4show")
 usethis::use_dev_package("TTU")
 readLines(".github/workflows/R-CMD-check.yaml")[-28] %>%
   writeLines(".github/workflows/R-CMD-check.yaml")

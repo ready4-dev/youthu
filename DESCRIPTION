@@ -69,10 +69,12 @@ Imports:
     tidyr,
     tidyselect,
     utils,
-    viridis
+    viridis,
+    ready4show (>= 0.0.0.9005)
 VignetteBuilder: knitr
 Depends: 
     R (>= 2.10)
-Remotes: 
+Remotes:  
     ready4-dev/TTU,
-    ready4-dev/ready4fun
+    ready4-dev/ready4fun,
+    ready4-dev/ready4show

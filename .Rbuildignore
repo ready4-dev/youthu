@@ -51,3 +51,4 @@
 ^data-raw/vignettes/TA_Tools_Replication_DS\.Rmd$
 ^data-raw/vignettes/TA_Tools_Scoring\.Rmd$
 ^data-raw/youthu_DATASET\.R$
+^data-raw/fake_pop_tb\.csv$
