@@ -50,9 +50,12 @@ The following lines then print the first ten lines of the updated dataset as Tab
 ```{r scoredds}
 scored_data_tb %>%
   head() %>%
-  #ready4u::
-  print_table_xx(output_type_1L_chr = params$output_format_1L_chr , caption_1L_chr = "Replication dataset with AQoL scores", 
+  ready4show::print_table(output_type_1L_chr = params$output_format_1L_chr,
+                          caption_1L_chr = "Replication dataset with AQoL scores", 
                           use_lbls_as_col_nms_1L_lgl = T, 
-                 scroll_box_args_ls = list(width = "100%"), label = "tab:scoredds", hline.after = NULL, addtorow = NULL)
+                          scroll_box_args_ls = list(width = "100%"), 
+                          mkdn_tbl_ref_1L_chr = "tab:scoredds", 
+                          hline_after_ls = NULL, 
+                          add_to_row_ls = NULL)
 ```
 
