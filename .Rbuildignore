@@ -1,4 +1,4 @@
-^map2aqol\.Rproj$
+^youthu\.Rproj$
 ^\.Rproj\.user$
 ^data-raw$
 ^LICENSE\.md$
@@ -24,7 +24,7 @@
 ^data-raw/fns/scramble\.R$
 ^data-raw/fns/transform\.R$
 ^data-raw/fns/write\.R$
-^data-raw/map2aqol_DATASET\.R$
+^data-raw/youthu_DATASET\.R$
 ^\.github$
 ^data-raw/csvs/AQoL_6D_Dim_Scaling\.csv$
 ^data-raw/csvs/aqol_valid_stata\.csv$
@@ -50,3 +50,4 @@
 ^data-raw/vignettes/TA_Tools_Data_Integrity\.Rmd$
 ^data-raw/vignettes/TA_Tools_Replication_DS\.Rmd$
 ^data-raw/vignettes/TA_Tools_Scoring\.Rmd$
+^data-raw/map2aqol_DATASET\.R$

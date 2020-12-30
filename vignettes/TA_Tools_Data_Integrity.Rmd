@@ -10,22 +10,22 @@ vignette: >
 knitr::opts_chunk$set(echo = TRUE)
 ```
 ```{r include=FALSE}
-library(map2aqol)
+library(youthu)
 ```
 ```{r eval=FALSE}
-library(map2aqol)
+library(youthu)
 ```
 # The role of classes in assuring data integrity
-The map2aqol package defines a number of classes that can be used to help assure the quality of input data used for deriving or applying transfer to utility algorithms. Within the R scripting language, a class is a named data structure that comprises a definition of required properties (e.g. whether numeric, minimum or maximum values) and tools for creating and validating instances of this data structure. These classes have two main purposes:
+The youthu package defines a number of classes that can be used to help assure the quality of input data used for deriving or applying transfer to utility algorithms. Within the R scripting language, a class is a named data structure that comprises a definition of required properties (e.g. whether numeric, minimum or maximum values) and tools for creating and validating instances of this data structure. These classes have two main purposes:
 
 1) to facilitate automated data integrity checks that verify no impermissible values (e.g. utility scores greater than one) are present in source data, within calculation transformed data or results;
 2) to automate the selection of the appropriate method to apply to each data type (e.g. selecting the transfer to utility model to use based on the predictors supplied to a method).
 
-All of the classes included in the map2aqol package are prefixed with "firstbounce" as map2aqol has been developped as part of the First Bounce model.
+All of the classes included in the youthu package are prefixed with "firstbounce" as youthu has been developped as part of the First Bounce model.
 
 # Included classes
 
-The classes included in the map2aqol package include one class for Assessment of Quality of Life (Adolescent) health utility and one for each of the six predictors used in map2aqol transfer to utility algorithms. 
+The classes included in the youthu package include one class for Assessment of Quality of Life (Adolescent) health utility and one for each of the six predictors used in youthu transfer to utility algorithms. 
 
 ## Assessment of Quality of Life Six Dimension (Adolescent) Health Utility 
 

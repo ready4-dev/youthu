@@ -3,7 +3,7 @@
 \docType{data}
 \name{mdls_smry_tb}
 \alias{mdls_smry_tb}
-\title{Summary coefficients for map2aqol transfer to utility models}
+\title{Summary coefficients for youthu transfer to utility models}
 \format{
 An object of class \code{data.frame} with 168 rows and 5 columns.
 }
@@ -11,7 +11,7 @@ An object of class \code{data.frame} with 168 rows and 5 columns.
 mdls_smry_tb
 }
 \description{
-A summary of the models included in the map2aqol package that can be used to predict adolescent AQoL6D. Note this summary is a placeholder as all models have been estimated from synthetic data.
+A summary of the models included in the youthu package that can be used to predict adolescent AQoL6D. Note this summary is a placeholder as all models have been estimated from synthetic data.
 }
 \details{
 A tibble

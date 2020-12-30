@@ -1,6 +1,6 @@
-#' Summary coefficients for map2aqol transfer to utility models
+#' Summary coefficients for youthu transfer to utility models
 #' 
-#' A summary of the models included in the map2aqol package that can be used to predict adolescent AQoL6D. Note this summary is a placeholder as all models have been estimated from synthetic data.
+#' A summary of the models included in the youthu package that can be used to predict adolescent AQoL6D. Note this summary is a placeholder as all models have been estimated from synthetic data.
 #' 
 #' A tibble
 #' 
