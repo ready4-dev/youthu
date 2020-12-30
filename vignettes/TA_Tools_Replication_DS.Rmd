@@ -28,15 +28,10 @@ The following lines print the data dictionary as Table \@ref(tab:ddic).
 
 ```{r ddic}
 dictionary_tb %>%
-<<<<<<< HEAD
-  ready4show::print_table(output_type_1L_chr = "HTML", caption_1L_chr = "Data dictionary",  
-                 use_lbls_as_col_nms_1L_lgl = T, mkdn_tbl_ref_1L_chr = "tab:ddic")
-=======
   ready4show::print_table(output_type_1L_chr = "HTML", 
                           caption_1L_chr = "Data dictionary",  
                           use_lbls_as_col_nms_1L_lgl = T, 
                           mkdn_tbl_ref_1L_chr = "tab:ddic")
->>>>>>> dev
 ```
 
 # Accessing the replication dataset
@@ -58,14 +53,8 @@ The following command prints the first ten cases from the replication dataset as
 ```{r repds}
 raw_data_tb %>%
   head() %>%
-<<<<<<< HEAD
-  ready4show::print_table(output_type_1L_chr = "HTML", caption_1L_chr = "Replication dataset",  
-                 use_lbls_as_col_nms_1L_lgl = T, 
-                 mkdn_tbl_ref_1L_chr = "tab:repds") 
-=======
   ready4show::print_table(output_type_1L_chr = "HTML",
                           caption_1L_chr = "Replication dataset", 
                           use_lbls_as_col_nms_1L_lgl = T, 
                           mkdn_tbl_ref_1L_chr = "tab:repds") 
->>>>>>> dev
 ```
