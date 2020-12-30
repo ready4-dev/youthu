@@ -261,12 +261,13 @@ pkg_dss_tb <- read.csv("data-raw/csvs/aqol_valid_stata.csv") %>%
                               url_1L_chr = "https://www.aqol.com.au/index.php/scoring-algorithms",
                               abbreviations_lup = abbreviations_lup,
                               pkg_dss_tb = pkg_dss_tb)
-replication_popl_tb <- ready4use::ready4_dv_import_lup() %>%
-  tibble::add_case(data_repo_db_ui = "https://doi.org/10.7910/DVN/GRZRY5",
-                   file_name = "fake_pop_tb",
-                   file_type = ".csv",
-                   data_repo_file_ext = ".tab") %>%
-  ready4use::get_data() %>%
+replication_popl_tb <- read.csv("data-raw/fake_pop_tb.csv") %>%
+  # ready4use::ready4_dv_import_lup() %>%
+  # tibble::add_case(data_repo_db_ui = "https://doi.org/10.7910/DVN/GRZRY5",
+  #                  file_name = "fake_pop_tb",
+  #                  file_type = ".csv",
+  #                  data_repo_file_ext = ".tab") %>%
+  # ready4use::get_data() %>%
   transform_raw_aqol_tb_to_aqol6d_tb()
 scored_data_tb <- add_adol6d_scores(replication_popl_tb,
                                     prefix_1L_chr =  "aqol6d_q",

@@ -15,11 +15,11 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-library(map2aqol)
+library(youthu)
 ```
-This development version of the map2aqol package has been made available as part of the process of testing and documenting the package. 
+This development version of the youthu package has been made available as part of the process of testing and documenting the package. 
 
-Vignettes that demonstrate some of the tools currently included in the map2aqol package:
+Vignettes that demonstrate some of the tools currently included in the youthu package:
 
 - [Data integrity tools](TA_Tools_Data_Integrity.html)
 - [Replication dataset](TA_Tools_Replication_DS.html)

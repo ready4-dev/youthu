@@ -38,7 +38,7 @@ dictionary_tb %>%
 The replication dataset itself can be accessed using the following command.
 
 ```{r}
-raw_data_tb <- map2aqol::replication_popl_tb 
+raw_data_tb <- youthu::replication_popl_tb 
 ```
 
 Adding variable labels makes it easier to interpret the dataset. In the following command, we add lables from the data dictionary to the replication dataset.
