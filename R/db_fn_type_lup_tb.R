@@ -1,6 +1,6 @@
 #' Function type lookup table
 #' 
-#' A lookup table to find descriptions for different types of functions used within the map2aqol package suite.
+#' A lookup table to find descriptions for different types of functions used within the youthu package suite.
 #' 
 #' A tibble
 #' 

@@ -18,10 +18,10 @@
 "ready4_local_raw","ready4use::ready4_local_raw()","ready4use","ready4_local_raw","",FALSE
 "ready4_local_proc","ready4use::ready4_local_proc()","ready4use","ready4_local_proc","",FALSE
 "ready4_script_data","ready4use::ready4_script_data()","ready4use","ready4_script_data","",FALSE
-"firstbounce_aqol6d_adol","firstbounce_aqol6d_adol()","map2aqol","firstbounce_aqol6d_adol","",TRUE
-"firstbounce_phq9","firstbounce_phq9()","map2aqol","firstbounce_phq9","",TRUE
-"firstbounce_bads","firstbounce_bads()","map2aqol","firstbounce_bads","",TRUE
-"firstbounce_gad7","firstbounce_gad7()","map2aqol","firstbounce_gad7","",TRUE
-"firstbounce_oasis","firstbounce_oasis()","map2aqol","firstbounce_oasis","",TRUE
-"firstbounce_scared","firstbounce_scared()","map2aqol","firstbounce_scared","",TRUE
-"firstbounce_k6","firstbounce_k6()","map2aqol","firstbounce_k6","",TRUE
+"firstbounce_aqol6d_adol","firstbounce_aqol6d_adol()","youthu","firstbounce_aqol6d_adol","",TRUE
+"firstbounce_phq9","firstbounce_phq9()","youthu","firstbounce_phq9","",TRUE
+"firstbounce_bads","firstbounce_bads()","youthu","firstbounce_bads","",TRUE
+"firstbounce_gad7","firstbounce_gad7()","youthu","firstbounce_gad7","",TRUE
+"firstbounce_oasis","firstbounce_oasis()","youthu","firstbounce_oasis","",TRUE
+"firstbounce_scared","firstbounce_scared()","youthu","firstbounce_scared","",TRUE
+"firstbounce_k6","firstbounce_k6()","youthu","firstbounce_k6","",TRUE

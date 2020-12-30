@@ -1,6 +1,6 @@
-#' map2aqol function documentation table
+#' youthu function documentation table
 #' 
-#' Meta-data on each map2aqol function used to create package documentation
+#' Meta-data on each youthu function used to create package documentation
 #' 
 #' A tibble
 #' 
@@ -16,5 +16,5 @@
 #'   \item{file_nm_chr}{File name (a character vector)}
 #'   \item{file_pfx_chr}{File prefix (a character vector)}
 #' }
-#' @source \url{https://ready4-dev.github.io/map2aqol/}
+#' @source \url{https://ready4-dev.github.io/youthu/}
 "fns_dmt_tb"

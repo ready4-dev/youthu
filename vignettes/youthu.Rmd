@@ -1,8 +1,8 @@
 ---
-title: "map2aqol"
+title: "youthu"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{map2aqol}
+  %\VignetteIndexEntry{youthu}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
