@@ -1,16 +1,6 @@
-<<<<<<< HEAD
-Package: map2aqol
-Title: Map Measures Routinely Collected in Mental Health
-    Services to AQOL 6d Health Utility
-=======
 Package: youthu
 Title: Youth Outcomes to Health Utility
-<<<<<<< HEAD
->>>>>>> dev
-Version: 0.0.0.9021
-=======
-Version: 0.0.0.9024
->>>>>>> dev
+Version: 0.0.0.9025
 Authors@R: 
     c(person(given = "Matthew",
              family = "Hamilton",
@@ -53,11 +43,7 @@ Imports:
     testthat,
     knitr,
     knitrBootstrap,
-<<<<<<< HEAD
-    TTU (>= 0.0.0.9096),
-=======
-    ready4u (>= 0.0.0.9092),
->>>>>>> dev
+    TTU (>= 0.0.0.9097),
     ready4fun (>= 0.0.0.9268),
     brms,
     dplyr,
