@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Health Utility Scoring Tools • map2aqol</title>
+<title>Health Utility Scoring Tools • youthu</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Health Utility Scoring Tools">
-<meta property="og:description" content="map2aqol">
+<meta property="og:description" content="youthu">
 <meta property="og:image" content="/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -37,8 +37,8 @@
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">map2aqol</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9020</span>
+        <a class="navbar-link" href="../index.html">youthu</a>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9025</span>
       </span>
     </div>
 
@@ -51,7 +51,7 @@
   </a>
 </li>
 <li>
-  <a href="../articles/map2aqol.html">Get started</a>
+  <a href="../articles/youthu.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -77,7 +77,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/ready4-dev/map2aqol/">
+  <a href="https://github.com/ready4-dev/youthu/">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -99,7 +99,7 @@
       <h1 data-toc-skip>Health Utility Scoring Tools</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/ready4-dev/map2aqol/blob/master/vignettes/TA_Tools_Scoring.Rmd"><code>vignettes/TA_Tools_Scoring.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/ready4-dev/youthu/blob/master/vignettes/TA_Tools_Scoring.Rmd"><code>vignettes/TA_Tools_Scoring.Rmd</code></a></small>
       <div class="hidden name"><code>TA_Tools_Scoring.Rmd</code></div>
 
     </div>
@@ -107,18 +107,18 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ready4-dev.github.io/map2aqol/">map2aqol</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ready4-dev.github.io/youthu/">youthu</a></span><span class="op">)</span></code></pre></div>
 <div id="converting-assessment-of-quality-of-life-six-dimension-questionnaire-response-to-health-utility-scores" class="section level1">
 <h1 class="hasAnchor">
 <a href="#converting-assessment-of-quality-of-life-six-dimension-questionnaire-response-to-health-utility-scores" class="anchor"></a>Converting Assessment of Quality of Life Six Dimension questionnaire response to Health Utility Scores</h1>
-<p>To derive a health utility score from the raw responses to a multi-attribute utility instrument it is necessary to implement a scoring algorithm. Scoring algorithms for the Assessment of Quality of Life Six Dimension (AQoL-6D) are publicly available in SPSS format. However, to include scoring algorithms in reproducible research workflows, it is desirable to have these algorithms available in open science languages such as R. We therefore developed R versions of the adult and adolescent versions of the AQoL-6D scoring algorithm and have made them available as part of the map2aqol package.</p>
+<p>To derive a health utility score from the raw responses to a multi-attribute utility instrument it is necessary to implement a scoring algorithm. Scoring algorithms for the Assessment of Quality of Life Six Dimension (AQoL-6D) are publicly available in SPSS format. However, to include scoring algorithms in reproducible research workflows, it is desirable to have these algorithms available in open science languages such as R. We therefore developed R versions of the adult and adolescent versions of the AQoL-6D scoring algorithm and have made them available as part of the youthu package.</p>
 </div>
 <div id="calculating-scores" class="section level1">
 <h1 class="hasAnchor">
 <a href="#calculating-scores" class="anchor"></a>Calculating scores</h1>
 <p>To calculate AQoL 6D adolescent utility scores, a dataset with all twenty AQoL 6D questionnaire response items must be passed to the add_adol6d_scores function. The names of these twenty variables must all have a common prefix and end with the item number. In our replication dataset, they are named “aqol6d_q1”, “aqol6d_q2” … “aqol6d_q20”. Details of the common prefix for the AQoL 6D response item variables, the name of the unique individual identifier variable and the desired name for the AQoL 6D adolescent utility score variable to be calculated must also be passed to the add_adol6d_scores function. The function returns an updated dataset, with additional variables that include the intermediate and final calculations for AQoL 6D adolescent utility scores.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">scored_data_tb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/add_adol6d_scores.html">add_adol6d_scores</a></span><span class="op">(</span><span class="fu">map2aqol</span><span class="fu">::</span><span class="va"><a href="../reference/replication_popl_tb.html">replication_popl_tb</a></span>,
+<code class="sourceCode R"><span class="va">scored_data_tb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/add_adol6d_scores.html">add_adol6d_scores</a></span><span class="op">(</span><span class="fu">youthu</span><span class="fu">::</span><span class="va"><a href="../reference/replication_popl_tb.html">replication_popl_tb</a></span>,
                                               prefix_1L_chr <span class="op">=</span>  <span class="st">"aqol6d_q"</span>,
                                               id_var_nm_1L_chr <span class="op">=</span> <span class="st">"fkClientID"</span>,
                                               wtd_aqol_var_nm_1L_chr <span class="op">=</span> <span class="st">"aqol6d_total_w"</span><span class="op">)</span> </code></pre></div>
@@ -128,8 +128,8 @@
 <a href="#viewing-the-updated-dataset" class="anchor"></a>Viewing the updated dataset</h1>
 <p>Before displaying the updated dataset, it may be desirable to label variables so that their meaning is clearer. The first step to do this is to create a data dictionary that extends to all variables in the updated dataset, by combining a data dictionary for the source (unscored) dataset with a data dictionary for a template scored dataset.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">dictionary_tb</span> <span class="op">&lt;-</span> <span class="fu">ready4use</span><span class="fu">::</span><span class="fu"><a href="https://ready4-dev.github.io/ready4use/reference/bind_lups-methods.html">bind_lups</a></span><span class="op">(</span><span class="fu">map2aqol</span><span class="fu">::</span><span class="va"><a href="../reference/repln_ds_dict_r3.html">repln_ds_dict_r3</a></span>,
-                                      new_ready4_dictionary <span class="op">=</span> <span class="fu">map2aqol</span><span class="fu">::</span><span class="va"><a href="../reference/aqol_scrg_dict_r3.html">aqol_scrg_dict_r3</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">dictionary_tb</span> <span class="op">&lt;-</span> <span class="fu">ready4use</span><span class="fu">::</span><span class="fu"><a href="https://ready4-dev.github.io/ready4use/reference/bind_lups-methods.html">bind_lups</a></span><span class="op">(</span><span class="fu">youthu</span><span class="fu">::</span><span class="va"><a href="../reference/repln_ds_dict_r3.html">repln_ds_dict_r3</a></span>,
+                                      new_ready4_dictionary <span class="op">=</span> <span class="fu">youthu</span><span class="fu">::</span><span class="va"><a href="../reference/aqol_scrg_dict_r3.html">aqol_scrg_dict_r3</a></span><span class="op">)</span></code></pre></div>
 <p>Labels from the new data dictionary can then be added to our updated (scored) dataset.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">scored_data_tb</span> <span class="op">&lt;-</span> <span class="va">scored_data_tb</span> <span class="op">%&gt;%</span>
@@ -138,7 +138,7 @@
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">scored_data_tb</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">ready4u</span><span class="fu">::</span><span class="fu"><a href="https://ready4-dev.github.io/ready4u/reference/print_table_xx.html">print_table_xx</a></span><span class="op">(</span>output_type_1L_chr <span class="op">=</span> <span class="st">"HTML"</span>, 
+  <span class="fu">ready4show</span><span class="fu">::</span><span class="fu"><a href="https://ready4-dev.github.io/ready4show/reference/print_table.html">print_table</a></span><span class="op">(</span>output_type_1L_chr <span class="op">=</span> <span class="st">"HTML"</span>,
                           caption_1L_chr <span class="op">=</span> <span class="st">"Replication dataset with AQoL scores"</span>, 
                           use_lbls_as_col_nms_1L_lgl <span class="op">=</span> <span class="cn">T</span>, 
                           mkdn_tbl_ref_1L_chr <span class="op">=</span> <span class="st">"tab:scoredds"</span><span class="op">)</span></code></pre></div>

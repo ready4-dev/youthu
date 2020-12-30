@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Data Integrity Tools • map2aqol</title>
+<title>Data Integrity Tools • youthu</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -18,7 +18,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Data Integrity Tools">
-<meta property="og:description" content="map2aqol">
+<meta property="og:description" content="youthu">
 <meta property="og:image" content="/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -37,8 +37,8 @@
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">map2aqol</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9020</span>
+        <a class="navbar-link" href="../index.html">youthu</a>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9025</span>
       </span>
     </div>
 
@@ -51,7 +51,7 @@
   </a>
 </li>
 <li>
-  <a href="../articles/map2aqol.html">Get started</a>
+  <a href="../articles/youthu.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
@@ -77,7 +77,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/ready4-dev/map2aqol/">
+  <a href="https://github.com/ready4-dev/youthu/">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -98,7 +98,7 @@
       <h1 data-toc-skip>Data Integrity Tools</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/ready4-dev/map2aqol/blob/master/vignettes/TA_Tools_Data_Integrity.Rmd"><code>vignettes/TA_Tools_Data_Integrity.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/ready4-dev/youthu/blob/master/vignettes/TA_Tools_Data_Integrity.Rmd"><code>vignettes/TA_Tools_Data_Integrity.Rmd</code></a></small>
       <div class="hidden name"><code>TA_Tools_Data_Integrity.Rmd</code></div>
 
     </div>
@@ -106,21 +106,21 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ready4-dev.github.io/map2aqol/">map2aqol</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ready4-dev.github.io/youthu/">youthu</a></span><span class="op">)</span></code></pre></div>
 <div id="the-role-of-classes-in-assuring-data-integrity" class="section level1">
 <h1 class="hasAnchor">
 <a href="#the-role-of-classes-in-assuring-data-integrity" class="anchor"></a>The role of classes in assuring data integrity</h1>
-<p>The map2aqol package defines a number of classes that can be used to help assure the quality of input data used for deriving or applying transfer to utility algorithms. Within the R scripting language, a class is a named data structure that comprises a definition of required properties (e.g. whether numeric, minimum or maximum values) and tools for creating and validating instances of this data structure. These classes have two main purposes:</p>
+<p>The youthu package defines a number of classes that can be used to help assure the quality of input data used for deriving or applying transfer to utility algorithms. Within the R scripting language, a class is a named data structure that comprises a definition of required properties (e.g. whether numeric, minimum or maximum values) and tools for creating and validating instances of this data structure. These classes have two main purposes:</p>
 <ol style="list-style-type: decimal">
 <li>to facilitate automated data integrity checks that verify no impermissible values (e.g. utility scores greater than one) are present in source data, within calculation transformed data or results;</li>
 <li>to automate the selection of the appropriate method to apply to each data type (e.g. selecting the transfer to utility model to use based on the predictors supplied to a method).</li>
 </ol>
-<p>All of the classes included in the map2aqol package are prefixed with “firstbounce” as map2aqol has been developped as part of the First Bounce model.</p>
+<p>All of the classes included in the youthu package are prefixed with “firstbounce” as youthu has been developped as part of the First Bounce model.</p>
 </div>
 <div id="included-classes" class="section level1">
 <h1 class="hasAnchor">
 <a href="#included-classes" class="anchor"></a>Included classes</h1>
-<p>The classes included in the map2aqol package include one class for Assessment of Quality of Life (Adolescent) health utility and one for each of the six predictors used in map2aqol transfer to utility algorithms.</p>
+<p>The classes included in the youthu package include one class for Assessment of Quality of Life (Adolescent) health utility and one for each of the six predictors used in youthu transfer to utility algorithms.</p>
 <div id="assessment-of-quality-of-life-six-dimension-adolescent-health-utility" class="section level2">
 <h2 class="hasAnchor">
 <a href="#assessment-of-quality-of-life-six-dimension-adolescent-health-utility" class="anchor"></a>Assessment of Quality of Life Six Dimension (Adolescent) Health Utility</h2>
