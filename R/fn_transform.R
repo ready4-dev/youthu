@@ -31,6 +31,44 @@ transform_ds_for_tstng <- function (data_tb, dep_var_nm_1L_chr = "aqol6d_total_w
         tfd_data_tb <- tfd_data_tb %>% stats::na.omit()
     return(tfd_data_tb)
 }
+#' Transform dataset to predn dataset
+#' @description transform_ds_to_predn_ds() is a Transform function that edits an object in such a way that core object attributes - e.g. shape, dimensions, elements, type - are altered. Specifically, this function implements an algorithm to transform dataset to predn dataset. Function argument data_tb specifies the object to be updated. Argument predr_vars_nms_chr provides the object to be updated. The function returns Data (a tibble).
+#' @param data_tb Data (a tibble)
+#' @param predr_vars_nms_chr Predr vars names (a character vector)
+#' @param tfmn_1L_chr Tfmn (a character vector of length one)
+#' @param dep_var_nm_1L_chr Dep var name (a character vector of length one), Default: 'aqol6d_total_w'
+#' @param id_var_nm_1L_chr Id var name (a character vector of length one), Default: 'fkClientID'
+#' @param round_var_nm_1L_chr Round var name (a character vector of length one), Default: 'round'
+#' @param round_bl_val_1L_chr Round bl value (a character vector of length one), Default: 'Baseline'
+#' @return Data (a tibble)
+#' @rdname transform_ds_to_predn_ds
+#' @export 
+#' @importFrom dplyr mutate
+#' @importFrom rlang sym exec
+#' @importFrom purrr reduce
+#' @importFrom TTU transform_tb_to_mdl_inp
+#' @keywords internal
+transform_ds_to_predn_ds <- function (data_tb, predr_vars_nms_chr, tfmn_1L_chr, dep_var_nm_1L_chr = "aqol6d_total_w", 
+    id_var_nm_1L_chr = "fkClientID", round_var_nm_1L_chr = "round", 
+    round_bl_val_1L_chr = "Baseline") 
+{
+    data_tb <- data_tb %>% dplyr::mutate(`:=`(!!rlang::sym(dep_var_nm_1L_chr), 
+        NA_real_))
+    data_tb <- purrr::reduce(predr_vars_nms_chr, .init = data_tb, 
+        ~{
+            predr_cls_fn <- eval(parse(text = paste0("firstbounce_", 
+                tolower(.y))))
+            dplyr::mutate(.x, `:=`(!!rlang::sym(.y), !!rlang::sym(.y) %>% 
+                rlang::exec(.fn = predr_cls_fn)))
+        })
+    data_tb <- data_tb %>% TTU::transform_tb_to_mdl_inp(dep_var_nm_1L_chr = dep_var_nm_1L_chr, 
+        predr_vars_nms_chr = predr_vars_nms_chr, id_var_nm_1L_chr = id_var_nm_1L_chr, 
+        round_var_nm_1L_chr = round_var_nm_1L_chr, round_bl_val_1L_chr = round_bl_val_1L_chr, 
+        drop_all_msng_1L_lgl = F, scaling_fctr_1L_dbl = 0.01, 
+        ungroup_1L_lgl = T, add_cll_tfmn_1L_lgl = ifelse(tfmn_1L_chr == 
+            "CLL", T, F))
+    return(data_tb)
+}
 #' Transform raw Assessment of Quality of Life tibble to Assessment of Quality of Life Six Dimension
 #' @description transform_raw_aqol_tb_to_aqol6d_tb() is a Transform function that edits an object in such a way that core object attributes - e.g. shape, dimensions, elements, type - are altered. Specifically, this function implements an algorithm to transform raw assessment of quality of life tibble to assessment of quality of life six dimension tibble. Function argument raw_aqol_tb specifies the object to be updated. The function returns Assessment of Quality of Life Six Dimension (a tibble).
 #' @param raw_aqol_tb Raw Assessment of Quality of Life (a tibble)

@@ -108,6 +108,61 @@ add_aqol6d_items_to_aqol6d_tbs_ls <- function (aqol6d_tbs_ls, aqol_items_props_t
         })
     return(updated_aqol6d_tbs_ls)
 }
+#' Add Assessment of Quality of Life Six Dimension predn to dataset
+#' @description add_aqol6d_predn_to_ds() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add assessment of quality of life six dimension predn to dataset. Function argument data_tb specifies the object to be updated. The function returns Updated (a tibble).
+#' @param data_tb Data (a tibble)
+#' @param model_mdl PARAM_DESCRIPTION
+#' @param tfmn_1L_chr Tfmn (a character vector of length one)
+#' @param predr_vars_nms_chr Predr vars names (a character vector), Default: NULL
+#' @param utl_var_nm_1L_chr Utl var name (a character vector of length one), Default: NULL
+#' @param id_var_nm_1L_chr Id var name (a character vector of length one), Default: 'fkClientID'
+#' @param round_var_nm_1L_chr Round var name (a character vector of length one), Default: 'round'
+#' @param round_bl_val_1L_chr Round bl value (a character vector of length one), Default: 'Baseline'
+#' @param utl_cls_fn Utl class (a function), Default: firstbounce_aqol6d_adol
+#' @return Updated (a tibble)
+#' @rdname add_aqol6d_predn_to_ds
+#' @export 
+#' @importFrom purrr map_chr
+#' @importFrom stringr str_replace
+#' @importFrom TTU add_utility_predn_to_ds
+#' @importFrom dplyr rename
+#' @importFrom rlang sym
+#' @importFrom tidyselect all_of
+#' @keywords internal
+add_aqol6d_predn_to_ds <- function (data_tb, model_mdl, tfmn_1L_chr, predr_vars_nms_chr = NULL, 
+    utl_var_nm_1L_chr = NULL, id_var_nm_1L_chr = "fkClientID", 
+    round_var_nm_1L_chr = "round", round_bl_val_1L_chr = "Baseline", 
+    utl_cls_fn = firstbounce_aqol6d_adol) 
+{
+    if (!is.null(names(predr_vars_nms_chr))) {
+        data_tb <- rename_from_nmd_vec(data_tb, nmd_vec_chr = predr_vars_nms_chr, 
+            vec_nms_as_new_1L_lgl = T)
+    }
+    terms_ls <- model_mdl$terms
+    mdl_dep_var_1L_chr <- terms_ls[[2]] %>% as.character()
+    mdl_predr_terms_chr <- terms_ls[[3]] %>% as.character()
+    mdl_predr_terms_chr <- mdl_predr_terms_chr[mdl_predr_terms_chr != 
+        "+"]
+    mdl_predr_terms_chr <- mdl_predr_terms_chr %>% purrr::map_chr(~stringr::str_replace(.x, 
+        "_baseline", "") %>% stringr::str_replace("_change", 
+        "")) %>% unique()
+    updated_tb <- data_tb %>% transform_ds_to_predn_ds(predr_vars_nms_chr = mdl_predr_terms_chr, 
+        tfmn_1L_chr = tfmn_1L_chr, dep_var_nm_1L_chr = mdl_dep_var_1L_chr, 
+        id_var_nm_1L_chr = id_var_nm_1L_chr, round_var_nm_1L_chr = round_var_nm_1L_chr, 
+        round_bl_val_1L_chr = round_bl_val_1L_chr) %>% TTU::add_utility_predn_to_ds(model_mdl = model_mdl, 
+        tfmn_1L_chr = tfmn_1L_chr, dep_var_nm_1L_chr = mdl_dep_var_1L_chr, 
+        predr_vars_nms_chr = mdl_predr_terms_chr, utl_cls_fn = firstbounce_aqol6d_adol, 
+        rmv_tfmd_dep_var_1L_lgl = T)
+    if (!is.null(names(predr_vars_nms_chr))) {
+        updated_tb <- rename_from_nmd_vec(updated_tb, nmd_vec_chr = predr_vars_nms_chr, 
+            vec_nms_as_new_1L_lgl = F)
+    }
+    if (!is.null(utl_var_nm_1L_chr)) {
+        updated_tb <- updated_tb %>% dplyr::rename(`:=`(!!rlang::sym(utl_var_nm_1L_chr), 
+            tidyselect::all_of(mdl_dep_var_1L_chr)))
+    }
+    return(updated_tb)
+}
 #' Add Assessment of Quality of Life Six Dimension Health Utility to Assessment of Quality of Life Six Dimension items
 #' @description add_aqol6dU_to_aqol6d_items_tb() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add assessment of quality of life six dimension health utility to assessment of quality of life six dimension items tibble. Function argument aqol6d_items_tb specifies the object to be updated. The function returns Assessment of Quality of Life Six Dimension items (a tibble).
 #' @param aqol6d_items_tb Assessment of Quality of Life Six Dimension items (a tibble)
