@@ -35,7 +35,8 @@ The following lines print the data dictionary as Table \@ref(tab:ddic).
 
 ```{r ddic}
 dictionary_tb %>%
-  ready4show::print_table(output_type_1L_chr = params$output_format_1L_chr , 
+  ready4show::print_table(output_type_1L_chr = params$output_format_1L_chr, 
+                          use_rdocx_1L_lgl = F,
                           caption_1L_chr = "Data dictionary",  
                           use_lbls_as_col_nms_1L_lgl = T, 
                           mkdn_tbl_ref_1L_chr = "tab:ddic", 
@@ -63,6 +64,7 @@ The following command prints the first ten cases from the replication dataset as
 raw_data_tb %>%
   head() %>%
   ready4show::print_table(output_type_1L_chr = params$output_format_1L_chr,
+                          use_rdocx_1L_lgl = F,
                           caption_1L_chr = "Replication dataset",
                           use_lbls_as_col_nms_1L_lgl = T, 
                           scroll_box_args_ls = list(width = "100%"),

@@ -46,7 +46,8 @@ classes_to_make_tb <- ready4class::ready4_constructor_tbl() %>%
     TRUE, "gad7", list("integer"), list("is."),list("base"),NULL, NULL,list(c(0,21)), NULL, "First Bounce S3 class for Generalised Anxiety Disorder Scale (GAD-7) scores", NA_character_, NULL, NULL, NULL,
     TRUE, "oasis", list("integer"), list("is."),list("base"),NULL, NULL,list(c(0,20)), NULL, "First Bounce S3 class for Overall Anxiety Severity and Impairment Scale (OASIS) scores", NA_character_, NULL, NULL, NULL,
     TRUE, "scared", list("integer"), list("is."),list("base"),NULL, NULL,list(c(0,82)), NULL, "First Bounce S3 class for Screen for Child Anxiety Related Disorders (SCARED) scores", NA_character_, NULL, NULL, NULL,
-    TRUE, "k6", list("integer"), list("is."),list("base"),NULL, NULL,list(c(0,24)), NULL, "First Bounce S3 class for Kessler Psychological Distress Scale (K6) - US Scoring System scores", NA_character_, NULL, NULL, NULL)
+    TRUE, "k6", list("integer"), list("is."),list("base"),NULL, NULL,list(c(0,24)), NULL, "First Bounce S3 class for Kessler Psychological Distress Scale (K6) - US Scoring System scores", NA_character_, NULL, NULL, NULL,
+    TRUE, "sofas", list("integer"), list("is."),list("base"),NULL, NULL,list(c(0,100)), NULL, "First Bounce S3 class for Social and Occupational Functioning Assessment Scale (SOFAS)", NA_character_, NULL, NULL, NULL)
   )
 name_pfx_1L_chr <- "firstbounce_"
 
@@ -85,13 +86,14 @@ pkg_dss_tb <- classes_to_make_tb %>%
                               pkg_dss_tb = pkg_dss_tb)
 # 5. Create function types and generics look-up tables
 # 5.1 Create a lookup table of function types used in this package and save it as a package dataset (data gets saved in the data directory, documentation script is created in R directory).
-data("fn_type_lup_tb",package = "TTU")
+utils::data("fn_type_lup_tb",package = "TTU")
 # fn_type_lup_tb %>%
 #   ready4fun::write_dmtd_fn_type_lup(url_1L_chr = NA_character_,
 #                                     abbreviations_lup = abbreviations_lup,
 #                                     pkg_dss_tb = pkg_dss_tb)
 # data("fn_type_lup_tb")
 # utils::data("fn_type_lup_tb",package = "ready4use")
+# Adds rename to below
 pkg_dss_tb <- fn_type_lup_tb %>%
   ready4fun::add_rows_to_fn_type_lup(fn_type_nm_chr = ready4fun::get_new_fn_types(abbreviations_lup = abbreviations_lup,
                                                                                   fn_type_lup_tb = fn_type_lup_tb),
@@ -101,6 +103,7 @@ pkg_dss_tb <- fn_type_lup_tb %>%
                                                           "Plots data",
                                                           #"Prints output to console",
                                                           "Randomly samples from data.",
+                                                          "Renames elements of an object based on a pre-speccified schema.",
                                                           "Reorders an object to conform to a pre-specified schema.",
                                                           "Randomly reorders an object."),
                                      is_generic_lgl = F,
@@ -360,7 +363,7 @@ pkg_dss_tb <- tibble::tibble(short_name_chr = c("BADS","GAD7","K6","OASIS","PHQ9
                               desc_1L_chr = "A lookup table of the short name and long name of each candidate predictor.",
                               abbreviations_lup = abbreviations_lup,
                               pkg_dss_tb = pkg_dss_tb)
-ready4use::ready4_dv_import_lup() %>%
+pkg_dss_tb <- ready4use::ready4_dv_import_lup() %>%
   tibble::add_case(data_repo_db_ui = "https://doi.org/10.7910/DVN/JC6PTV",
                    file_name = "mdls_smry_tb",
                    file_type = ".csv",
@@ -369,6 +372,16 @@ ready4use::ready4_dv_import_lup() %>%
   ready4fun::write_and_doc_ds(db_1L_chr = "mdls_smry_tb",
                               title_1L_chr = "Summary coefficients for youthu transfer to utility models",
                               desc_1L_chr = "A summary of the models included in the youthu package that can be used to predict adolescent AQoL6D. Note this summary is a placeholder as all models have been estimated from synthetic data.",
+                              abbreviations_lup = abbreviations_lup,
+                              pkg_dss_tb = pkg_dss_tb)
+utils::data("mdls_smry_tb")
+pkg_dss_tb <- tibble::tibble(mdl_nms_chr = mdls_smry_tb$Model %>% unique()) %>%
+  dplyr::mutate(predrs_ls = mdl_nms_chr %>% strsplit("_") %>% purrr::map(~ .x[.x %in% c(candidate_predrs_lup$short_name_chr, "SOFAS")]),
+                mdl_type_chr = mdl_nms_chr %>% strsplit("_") %>% purrr::map(~ .x[.x %in% c("GLM", "OLS")]) %>% purrr::flatten_chr(),
+                tfmn_chr = mdl_nms_chr %>% purrr::map_chr(~stringr::str_sub(.x,start = 1 +  stringi::stri_locate_last(.x,fixed = "_")[1,1] %>% as.vector())))  %>%
+  ready4fun::write_and_doc_ds(db_1L_chr = "mdls_lup",
+                              title_1L_chr = "Lookup table of prediction models",
+                              desc_1L_chr = "A summary of the key descriptive features of the prediction models included in the youthu package.",
                               abbreviations_lup = abbreviations_lup,
                               pkg_dss_tb = pkg_dss_tb)
 # 7. Save copy of package documentation to online data repo.

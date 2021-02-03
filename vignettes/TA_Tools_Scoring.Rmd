@@ -44,6 +44,7 @@ The following lines then print the first ten lines of the updated dataset as Tab
 scored_data_tb %>%
   head() %>%
   ready4show::print_table(output_type_1L_chr = "HTML",
+                          use_rdocx_1L_lgl = F,
                           caption_1L_chr = "Replication dataset with AQoL scores", 
                           use_lbls_as_col_nms_1L_lgl = T, 
                           mkdn_tbl_ref_1L_chr = "tab:scoredds")

@@ -15,6 +15,7 @@ reference:
   - candidate_predrs_lup
   - fn_type_lup_tb
   - fns_dmt_tb
+  - mdls_lup
   - mdls_smry_tb
   - prototype_lup
   - replication_popl_tb
@@ -28,6 +29,7 @@ reference:
   - firstbounce_oasis
   - firstbounce_scared
   - firstbounce_k6
+  - firstbounce_sofas
 - title: "Functions"
 - contents:
   - add_aqol6dU_to_aqol6d_items_tb

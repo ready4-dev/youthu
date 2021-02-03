@@ -13,6 +13,33 @@ transform_ds_for_tstng <- function (data_tb, dep_var_nm_1L_chr = "aqol6d_total_w
         tfd_data_tb <- tfd_data_tb %>% stats::na.omit()
     return(tfd_data_tb)
 }
+transform_ds_to_predn_ds <- function(data_tb,
+                                     predr_vars_nms_chr,
+                                     tfmn_1L_chr,
+                                     dep_var_nm_1L_chr = "aqol6d_total_w",
+                                     id_var_nm_1L_chr = "fkClientID",
+                                     round_var_nm_1L_chr = "round",
+                                     round_bl_val_1L_chr = "Baseline"){
+  data_tb <- data_tb %>%
+    dplyr::mutate(!!rlang::sym(dep_var_nm_1L_chr):= NA_real_)
+  data_tb <- purrr::reduce(predr_vars_nms_chr,
+                           .init = data_tb,
+                           ~ {
+                             predr_cls_fn <- eval(parse(text=paste0("firstbounce_",tolower(.y))))
+                             dplyr::mutate(.x,
+                                           !!rlang::sym(.y) := !!rlang::sym(.y) %>% rlang::exec(.fn = predr_cls_fn))
+                           })
+  data_tb <- data_tb %>% TTU::transform_tb_to_mdl_inp(dep_var_nm_1L_chr = dep_var_nm_1L_chr,
+                                                 predr_vars_nms_chr = predr_vars_nms_chr,
+                                                 id_var_nm_1L_chr = id_var_nm_1L_chr,
+                                                 round_var_nm_1L_chr = round_var_nm_1L_chr,
+                                                 round_bl_val_1L_chr = round_bl_val_1L_chr,
+                                                 drop_all_msng_1L_lgl = F,
+                                                 scaling_fctr_1L_dbl = 0.01, # Update to be read from lookup
+                                                 ungroup_1L_lgl = T,
+                                                 add_cll_tfmn_1L_lgl = ifelse(tfmn_1L_chr=="CLL",T,F))
+  return(data_tb)
+}
 transform_raw_aqol_tb_to_aqol6d_tb <- function (raw_aqol_tb)
 {
     aqol6d_tb <- raw_aqol_tb %>% dplyr::mutate(d_agegroup = cut(d_age,
