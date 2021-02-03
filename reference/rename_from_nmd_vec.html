@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Add unwtd dimension totals — add_unwtd_dim_tots • youthu</title>
+<title>Rename from nmd vec — rename_from_nmd_vec • youthu</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="Add unwtd dimension totals — add_unwtd_dim_tots" />
-<meta property="og:description" content="add_unwtd_dim_tots() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add unwtd dimension totals. Function argument items_tb specifies the object to be updated. The function returns Items and domains (a tibble)." />
+<meta property="og:title" content="Rename from nmd vec — rename_from_nmd_vec" />
+<meta property="og:description" content="rename_from_nmd_vec() is a Rename function that renames elements of an object based on a pre-speccified schema. Specifically, this function implements an algorithm to rename from nmd vec. The function returns Renamed data (a tibble)." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -137,37 +137,37 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Add unwtd dimension totals</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ready4-dev/youthu/blob/master/R/fn_add.R'><code>R/fn_add.R</code></a></small>
-    <div class="hidden name"><code>add_unwtd_dim_tots.Rd</code></div>
+    <h1>Rename from nmd vec</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ready4-dev/youthu/blob/master/R/fn_rename.R'><code>R/fn_rename.R</code></a></small>
+    <div class="hidden name"><code>rename_from_nmd_vec.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>add_unwtd_dim_tots() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add unwtd dimension totals. Function argument items_tb specifies the object to be updated. The function returns Items and domains (a tibble).</p>
+    <p>rename_from_nmd_vec() is a Rename function that renames elements of an object based on a pre-speccified schema. Specifically, this function implements an algorithm to rename from nmd vec. The function returns Renamed data (a tibble).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>add_unwtd_dim_tots</span><span class='op'>(</span><span class='va'>items_tb</span>, <span class='va'>domain_items_ls</span>, <span class='va'>domain_pfx_1L_chr</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>rename_from_nmd_vec</span><span class='op'>(</span><span class='va'>data_tb</span>, <span class='va'>nmd_vec_chr</span>, vec_nms_as_new_1L_lgl <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>items_tb</th>
-      <td><p>Items (a tibble)</p></td>
+      <th>data_tb</th>
+      <td><p>Data (a tibble)</p></td>
     </tr>
     <tr>
-      <th>domain_items_ls</th>
-      <td><p>Domain items (a list)</p></td>
+      <th>nmd_vec_chr</th>
+      <td><p>Nmd vec (a character vector)</p></td>
     </tr>
     <tr>
-      <th>domain_pfx_1L_chr</th>
-      <td><p>Domain prefix (a character vector of length one)</p></td>
+      <th>vec_nms_as_new_1L_lgl</th>
+      <td><p>Vec names as new (a logical vector of length one), Default: T</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Items and domains (a tibble)</p>
+    <p>Renamed data (a tibble)</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

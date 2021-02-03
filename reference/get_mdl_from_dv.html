@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Add unwtd dimension totals — add_unwtd_dim_tots • youthu</title>
+<title>Get mdl from dataverse — get_mdl_from_dv • youthu</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="Add unwtd dimension totals — add_unwtd_dim_tots" />
-<meta property="og:description" content="add_unwtd_dim_tots() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add unwtd dimension totals. Function argument items_tb specifies the object to be updated. The function returns Items and domains (a tibble)." />
+<meta property="og:title" content="Get mdl from dataverse — get_mdl_from_dv" />
+<meta property="og:description" content="get_mdl_from_dv() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get mdl from dataverse. Function argument mdl_nm_1L_chr specifies the where to look for the required object. The function is called for its side effects and does not return a value." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -137,37 +137,36 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Add unwtd dimension totals</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ready4-dev/youthu/blob/master/R/fn_add.R'><code>R/fn_add.R</code></a></small>
-    <div class="hidden name"><code>add_unwtd_dim_tots.Rd</code></div>
+    <h1>Get mdl from dataverse</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ready4-dev/youthu/blob/master/R/fn_get.R'><code>R/fn_get.R</code></a></small>
+    <div class="hidden name"><code>get_mdl_from_dv.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>add_unwtd_dim_tots() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add unwtd dimension totals. Function argument items_tb specifies the object to be updated. The function returns Items and domains (a tibble).</p>
+    <p>get_mdl_from_dv() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get mdl from dataverse. Function argument mdl_nm_1L_chr specifies the where to look for the required object. The function is called for its side effects and does not return a value.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>add_unwtd_dim_tots</span><span class='op'>(</span><span class='va'>items_tb</span>, <span class='va'>domain_items_ls</span>, <span class='va'>domain_pfx_1L_chr</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>get_mdl_from_dv</span><span class='op'>(</span>
+  <span class='va'>mdl_nm_1L_chr</span>,
+  dv_ds_nm_1L_chr <span class='op'>=</span> <span class='st'>"https://doi.org/10.7910/DVN/JC6PTV"</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>items_tb</th>
-      <td><p>Items (a tibble)</p></td>
+      <th>mdl_nm_1L_chr</th>
+      <td><p>Mdl name (a character vector of length one)</p></td>
     </tr>
     <tr>
-      <th>domain_items_ls</th>
-      <td><p>Domain items (a list)</p></td>
-    </tr>
-    <tr>
-      <th>domain_pfx_1L_chr</th>
-      <td><p>Domain prefix (a character vector of length one)</p></td>
+      <th>dv_ds_nm_1L_chr</th>
+      <td><p>Dataverse dataset name (a character vector of length one), Default: 'https://doi.org/10.7910/DVN/JC6PTV'</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Items and domains (a tibble)</p>
+    <p>NA ()</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
