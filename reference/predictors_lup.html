@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Make new First Bounce S3 class for Screen for Child Anxiety Related Disorders (SCARED) scores — make_new_firstbounce_scared • youthu</title>
+<title>Predictors lookup table — predictors_lup • youthu</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="Make new First Bounce S3 class for Screen for Child Anxiety Related Disorders (SCARED) scores — make_new_firstbounce_scared" />
-<meta property="og:description" content="Create a new unvalidated instance of the First Bounce S3 class for Screen for Child Anxiety Related Disorders (SCARED) scores" />
+<meta property="og:title" content="Predictors lookup table — predictors_lup" />
+<meta property="og:description" content="A lookup table of the short name and long name of each predictor used in the models included with the youthu package." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -137,32 +137,35 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Make new First Bounce S3 class for Screen for Child Anxiety Related Disorders (SCARED) scores</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ready4-dev/youthu/blob/master/R/C3_firstbounce_scared.R'><code>R/C3_firstbounce_scared.R</code></a></small>
-    <div class="hidden name"><code>make_new_firstbounce_scared.Rd</code></div>
+    <h1>Predictors lookup table</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ready4-dev/youthu/blob/master/R/db_predictors_lup.R'><code>R/db_predictors_lup.R</code></a></small>
+    <div class="hidden name"><code>predictors_lup.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Create a new unvalidated instance of the First Bounce S3 class for Screen for Child Anxiety Related Disorders (SCARED) scores</p>
+    <p>A lookup table of the short name and long name of each predictor used in the models included with the youthu package.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>make_new_firstbounce_scared</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='va'>predictors_lup</span></pre>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>x</th>
-      <td><p>A prototype for the First Bounce S3 class for Screen for Child Anxiety Related Disorders (SCARED) scores</p></td>
-    </tr>
-    </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>An unvalidated instance of the First Bounce S3 class for Screen for Child Anxiety Related Disorders (SCARED) scores</p>
+    <p>An object of class <code>tbl_df</code> (inherits from <code>tbl</code>, <code>data.frame</code>) with 7 rows and 7 columns.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>First Bounce S3 class for Screen for Child Anxiety Related Disorders (SCARED) scores</p>
+    <p>A tibble</p>
+<dl>
+<dt>short_name_chr</dt><dd><p>Short name (a character vector)</p></dd>
+<dt>long_name_chr</dt><dd><p>Long name (a character vector)</p></dd>
+<dt>min_val_dbl</dt><dd><p>Min value (a double vector)</p></dd>
+<dt>max_val_dbl</dt><dd><p>Max value (a double vector)</p></dd>
+<dt>increment_dbl</dt><dd><p>Increment (a double vector)</p></dd>
+<dt>mdl_scaling_dbl</dt><dd><p>Mdl scaling (a double vector)</p></dd>
+<dt>covariate_lgl</dt><dd><p>Covariate (a logical vector)</p></dd>
+
+</dl>
+
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
