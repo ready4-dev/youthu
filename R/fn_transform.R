@@ -40,24 +40,30 @@ transform_ds_for_tstng <- function (data_tb, dep_var_nm_1L_chr = "aqol6d_total_w
 #' @param id_var_nm_1L_chr Id var name (a character vector of length one), Default: 'fkClientID'
 #' @param round_var_nm_1L_chr Round var name (a character vector of length one), Default: 'round'
 #' @param round_bl_val_1L_chr Round bl value (a character vector of length one), Default: 'Baseline'
+#' @param predictors_lup Predictors (a lookup table), Default: NULL
 #' @return Data (a tibble)
 #' @rdname transform_ds_to_predn_ds
 #' @export 
+#' @importFrom utils data
 #' @importFrom dplyr mutate
 #' @importFrom rlang sym exec
 #' @importFrom purrr reduce
+#' @importFrom ready4fun get_from_lup_obj
 #' @importFrom TTU transform_tb_to_mdl_inp
 #' @keywords internal
 transform_ds_to_predn_ds <- function (data_tb, predr_vars_nms_chr, tfmn_1L_chr, dep_var_nm_1L_chr = "aqol6d_total_w", 
     id_var_nm_1L_chr = "fkClientID", round_var_nm_1L_chr = "round", 
-    round_bl_val_1L_chr = "Baseline") 
+    round_bl_val_1L_chr = "Baseline", predictors_lup = NULL) 
 {
+    if (is.null(predictors_lup)) 
+        utils::data("predictors_lup", envir = environment())
     data_tb <- data_tb %>% dplyr::mutate(`:=`(!!rlang::sym(dep_var_nm_1L_chr), 
         NA_real_))
     data_tb <- purrr::reduce(predr_vars_nms_chr, .init = data_tb, 
         ~{
-            predr_cls_fn <- eval(parse(text = paste0("firstbounce_", 
-                tolower(.y))))
+            predr_cls_fn <- eval(parse(text = ready4fun::get_from_lup_obj(predictors_lup, 
+                match_var_nm_1L_chr = "short_name_chr", match_value_xx = .y, 
+                target_var_nm_1L_chr = "class_fn_chr", evaluate_lgl = F)))
             dplyr::mutate(.x, `:=`(!!rlang::sym(.y), !!rlang::sym(.y) %>% 
                 rlang::exec(.fn = predr_cls_fn)))
         })

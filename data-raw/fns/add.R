@@ -56,7 +56,10 @@ add_aqol6d_predn_to_ds <- function(data_tb,
                                    id_var_nm_1L_chr = "fkClientID",
                                    round_var_nm_1L_chr = "round",
                                    round_bl_val_1L_chr = "Baseline",
-                                   utl_cls_fn = firstbounce_aqol6d_adol){
+                                   utl_cls_fn = firstbounce_aqol6d_adol,
+                                   predictors_lup = NULL){
+  if (is.null(predictors_lup))
+    utils::data("predictors_lup", envir = environment())
   if(!is.null(names(predr_vars_nms_chr))){
     data_tb <- rename_from_nmd_vec(data_tb,
                                    nmd_vec_chr = predr_vars_nms_chr,
@@ -65,6 +68,7 @@ add_aqol6d_predn_to_ds <- function(data_tb,
   terms_ls <- model_mdl$terms
   mdl_dep_var_1L_chr <- terms_ls[[2]] %>% as.character()
   mdl_predr_terms_chr <- terms_ls[[3]] %>% as.character()
+  mdl_predr_terms_chr <- mdl_predr_terms_chr %>% strsplit(split = " +") %>% purrr::flatten_chr()
   mdl_predr_terms_chr <- mdl_predr_terms_chr[mdl_predr_terms_chr!="+"]
   mdl_predr_terms_chr <- mdl_predr_terms_chr %>% purrr::map_chr(~stringr::str_replace(.x,"_baseline","") %>%                                                         stringr::str_replace("_change","")
   ) %>% unique()
@@ -74,7 +78,8 @@ add_aqol6d_predn_to_ds <- function(data_tb,
                              dep_var_nm_1L_chr = mdl_dep_var_1L_chr,
                              id_var_nm_1L_chr = id_var_nm_1L_chr,
                              round_var_nm_1L_chr = round_var_nm_1L_chr,
-                             round_bl_val_1L_chr = round_bl_val_1L_chr) %>%
+                             round_bl_val_1L_chr = round_bl_val_1L_chr,
+                             predictors_lup = predictors_lup) %>%
     TTU::add_utility_predn_to_ds(model_mdl = model_mdl,
                                  tfmn_1L_chr = tfmn_1L_chr,
                                  dep_var_nm_1L_chr = mdl_dep_var_1L_chr,

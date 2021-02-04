@@ -5,7 +5,7 @@
 \alias{predictors_lup}
 \title{Predictors lookup table}
 \format{
-An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 7 rows and 8 columns.
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 7 rows and 9 columns.
 }
 \usage{
 predictors_lup
@@ -21,6 +21,7 @@ A tibble
 \item{long_name_chr}{Long name (a character vector)}
 \item{min_val_dbl}{Min value (a double vector)}
 \item{max_val_dbl}{Max value (a double vector)}
+\item{class_chr}{Class (a character vector)}
 \item{increment_dbl}{Increment (a double vector)}
 \item{class_fn_chr}{Class function (a character vector)}
 \item{mdl_scaling_dbl}{Mdl scaling (a double vector)}

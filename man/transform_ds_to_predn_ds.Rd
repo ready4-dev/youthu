@@ -11,7 +11,8 @@ transform_ds_to_predn_ds(
   dep_var_nm_1L_chr = "aqol6d_total_w",
   id_var_nm_1L_chr = "fkClientID",
   round_var_nm_1L_chr = "round",
-  round_bl_val_1L_chr = "Baseline"
+  round_bl_val_1L_chr = "Baseline",
+  predictors_lup = NULL
 )
 }
 \arguments{
@@ -28,6 +29,8 @@ transform_ds_to_predn_ds(
 \item{round_var_nm_1L_chr}{Round var name (a character vector of length one), Default: 'round'}
 
 \item{round_bl_val_1L_chr}{Round bl value (a character vector of length one), Default: 'Baseline'}
+
+\item{predictors_lup}{Predictors (a lookup table), Default: NULL}
 }
 \value{
 Data (a tibble)

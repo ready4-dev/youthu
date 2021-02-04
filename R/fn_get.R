@@ -18,6 +18,44 @@ get_mdl_from_dv <- function (mdl_nm_1L_chr, dv_ds_nm_1L_chr = "https://doi.org/1
         ds_ls[[idx_1L_int]]$dataFile$id)))
     return(model_mdl)
 }
+#' Get mdls using predrs
+#' @description get_mdls_using_predrs() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get mdls using predrs. Function argument mdl_predrs_in_ds_chr specifies the where to look for the required object. The function returns Filtered mdls (a lookup table).
+#' @param mdl_predrs_in_ds_chr Mdl predrs in dataset (a character vector)
+#' @param mdls_lup Mdls (a lookup table), Default: NULL
+#' @return Filtered mdls (a lookup table)
+#' @rdname get_mdls_using_predrs
+#' @export 
+#' @importFrom utils data
+#' @importFrom purrr map flatten map_lgl
+#' @importFrom stats setNames
+#' @importFrom rlang exec
+#' @importFrom tidyr crossing unite
+#' @importFrom dplyr filter mutate across everything pull
+#' @importFrom stringr str_trim
+#' @importFrom tibble as_tibble
+#' @keywords internal
+get_mdls_using_predrs <- function (mdl_predrs_in_ds_chr, mdls_lup = NULL) 
+{
+    if (is.null(mdls_lup)) 
+        utils::data("mdls_lup", envir = environment())
+    args_ls <- mdl_predrs_in_ds_chr %>% purrr::map(~c(NA_character_, 
+        .x)) %>% stats::setNames(paste0("var", 1:length(mdl_predrs_in_ds_chr)))
+    tb <- rlang::exec(.fn = tidyr::crossing, !!!args_ls)
+    include_lgl <- tb %>% dplyr::filter(tb %>% is.na() %>% rowSums() < 
+        length(mdl_predrs_in_ds_chr)) %>% dplyr::mutate(dplyr::across(dplyr::everything(), 
+        ~ifelse(is.na(.), "", .))) %>% tidyr::unite("combinations_chr", 
+        colnames(tb), sep = " ", remove = T) %>% dplyr::pull(combinations_chr) %>% 
+        stringr::str_trim() %>% purrr::map(~strsplit(.x, split = " ")) %>% 
+        purrr::flatten() %>% purrr::map(~{
+        terms_to_match_chr <- .x
+        mdls_lup$predrs_ls %>% purrr::map_lgl(~{
+            setdiff(.x, terms_to_match_chr) %>% identical(character(0))
+        })
+    }) %>% tibble::as_tibble(.name_repair = "unique") %>% rowSums() > 
+        0
+    filtered_mdls_lup <- mdls_lup %>% dplyr::filter(include_lgl)
+    return(filtered_mdls_lup)
+}
 #' Get signft covars
 #' @description get_signft_covars() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get signft covars. Function argument mdls_with_covars_smry_tb specifies the where to look for the required object. The function returns Signt covars (a character vector).
 #' @param mdls_with_covars_smry_tb Mdls with covars smry (a tibble)
