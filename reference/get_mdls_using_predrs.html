@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Transform dataset for tstng — transform_ds_for_tstng • youthu</title>
+<title>Get mdls using predrs — get_mdls_using_predrs • youthu</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="Transform dataset for tstng — transform_ds_for_tstng" />
-<meta property="og:description" content="transform_ds_for_tstng() is a Transform function that edits an object in such a way that core object attributes - e.g. shape, dimensions, elements, type - are altered. Specifically, this function implements an algorithm to transform dataset for tstng. Function argument data_tb specifies the object to be updated. Argument dep_var_nm_1L_chr provides the object to be updated. The function returns Transformed data (a tibble)." />
+<meta property="og:title" content="Get mdls using predrs — get_mdls_using_predrs" />
+<meta property="og:description" content="get_mdls_using_predrs() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get mdls using predrs. Function argument mdl_predrs_in_ds_chr specifies the where to look for the required object. The function returns Filtered mdls (a lookup table)." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -137,66 +137,33 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Transform dataset for tstng</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ready4-dev/youthu/blob/master/R/fn_transform.R'><code>R/fn_transform.R</code></a></small>
-    <div class="hidden name"><code>transform_ds_for_tstng.Rd</code></div>
+    <h1>Get mdls using predrs</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ready4-dev/youthu/blob/master/R/fn_get.R'><code>R/fn_get.R</code></a></small>
+    <div class="hidden name"><code>get_mdls_using_predrs.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>transform_ds_for_tstng() is a Transform function that edits an object in such a way that core object attributes - e.g. shape, dimensions, elements, type - are altered. Specifically, this function implements an algorithm to transform dataset for tstng. Function argument data_tb specifies the object to be updated. Argument dep_var_nm_1L_chr provides the object to be updated. The function returns Transformed data (a tibble).</p>
+    <p>get_mdls_using_predrs() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get mdls using predrs. Function argument mdl_predrs_in_ds_chr specifies the where to look for the required object. The function returns Filtered mdls (a lookup table).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>transform_ds_for_tstng</span><span class='op'>(</span>
-  <span class='va'>data_tb</span>,
-  dep_var_nm_1L_chr <span class='op'>=</span> <span class='st'>"aqol6d_total_w"</span>,
-  dep_var_max_val_1L_dbl <span class='op'>=</span> <span class='fl'>0.999</span>,
-  candidate_predrs_chr <span class='op'>=</span> <span class='cn'>NA_character_</span>,
-  covar_var_nms_chr <span class='op'>=</span> <span class='cn'>NA_character_</span>,
-  round_var_nm_1L_chr <span class='op'>=</span> <span class='st'>"round"</span>,
-  round_val_1L_chr <span class='op'>=</span> <span class='st'>"Baseline"</span>,
-  remove_all_mssng_1L_lgl <span class='op'>=</span> <span class='cn'>F</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>get_mdls_using_predrs</span><span class='op'>(</span><span class='va'>mdl_predrs_in_ds_chr</span>, mdls_lup <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>data_tb</th>
-      <td><p>Data (a tibble)</p></td>
+      <th>mdl_predrs_in_ds_chr</th>
+      <td><p>Mdl predrs in dataset (a character vector)</p></td>
     </tr>
     <tr>
-      <th>dep_var_nm_1L_chr</th>
-      <td><p>Dep var name (a character vector of length one), Default: 'aqol6d_total_w'</p></td>
-    </tr>
-    <tr>
-      <th>dep_var_max_val_1L_dbl</th>
-      <td><p>Dep var max value (a double vector of length one), Default: 0.999</p></td>
-    </tr>
-    <tr>
-      <th>candidate_predrs_chr</th>
-      <td><p>Candidate predrs (a character vector), Default: 'NA'</p></td>
-    </tr>
-    <tr>
-      <th>covar_var_nms_chr</th>
-      <td><p>Covar var names (a character vector), Default: 'NA'</p></td>
-    </tr>
-    <tr>
-      <th>round_var_nm_1L_chr</th>
-      <td><p>Round var name (a character vector of length one), Default: 'round'</p></td>
-    </tr>
-    <tr>
-      <th>round_val_1L_chr</th>
-      <td><p>Round value (a character vector of length one), Default: 'Baseline'</p></td>
-    </tr>
-    <tr>
-      <th>remove_all_mssng_1L_lgl</th>
-      <td><p>Remove all mssng (a logical vector of length one), Default: F</p></td>
+      <th>mdls_lup</th>
+      <td><p>Mdls (a lookup table), Default: NULL</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Transformed data (a tibble)</p>
+    <p>Filtered mdls (a lookup table)</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
