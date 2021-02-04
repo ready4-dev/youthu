@@ -357,6 +357,7 @@ pkg_dss_tb <- tibble::tibble(short_name_chr = c("BADS","GAD7","K6","OASIS","PHQ9
                              min_val_dbl = rep(0,7),
                              max_val_dbl = c(150,21,24,20,27,82,100),
                              increment_dbl = rep(1,7),
+                             class_fn_chr = paste0("firstbounce_",tolower(short_name_chr)),
                              mdl_scaling_dbl = 0.01,
                              covariate_lgl = c(rep(F,6),T)) %>%
   ready4fun::write_and_doc_ds(db_1L_chr = "predictors_lup",
