@@ -39,14 +39,17 @@ get_signft_covars <- function (mdls_with_covars_smry_tb, covar_var_nms_chr)
 #' Get tfmn from
 #' @description get_tfmn_from_lup() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get tfmn from lookup table. Function argument mdl_nm_1L_chr specifies the where to look for the required object. The function returns Tfmn (a character vector of length one).
 #' @param mdl_nm_1L_chr Mdl name (a character vector of length one)
-#' @param mdls_lup Mdls (a lookup table)
+#' @param mdls_lup Mdls (a lookup table), Default: NULL
 #' @return Tfmn (a character vector of length one)
 #' @rdname get_tfmn_from_lup
 #' @export 
+#' @importFrom utils data
 #' @importFrom ready4fun get_from_lup_obj
 #' @keywords internal
-get_tfmn_from_lup <- function (mdl_nm_1L_chr, mdls_lup) 
+get_tfmn_from_lup <- function (mdl_nm_1L_chr, mdls_lup = NULL) 
 {
+    if (is.null(mdls_lup)) 
+        utils::data("mdls_lup", envir = environment())
     tfmn_1L_chr <- ready4fun::get_from_lup_obj(mdls_lup, target_var_nm_1L_chr = "tfmn_chr", 
         match_value_xx = mdl_nm_1L_chr, match_var_nm_1L_chr = "mdl_nms_chr", 
         evaluate_lgl = F)

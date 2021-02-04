@@ -4,12 +4,12 @@
 \alias{get_tfmn_from_lup}
 \title{Get tfmn from}
 \usage{
-get_tfmn_from_lup(mdl_nm_1L_chr, mdls_lup)
+get_tfmn_from_lup(mdl_nm_1L_chr, mdls_lup = NULL)
 }
 \arguments{
 \item{mdl_nm_1L_chr}{Mdl name (a character vector of length one)}
 
-\item{mdls_lup}{Mdls (a lookup table)}
+\item{mdls_lup}{Mdls (a lookup table), Default: NULL}
 }
 \value{
 Tfmn (a character vector of length one)

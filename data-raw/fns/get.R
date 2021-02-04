@@ -15,7 +15,9 @@ get_signft_covars <- function (mdls_with_covars_smry_tb, covar_var_nms_chr)
         signif_vars_chr]
     return(signt_covars_chr)
 }
-get_tfmn_from_lup <- function(mdl_nm_1L_chr, mdls_lup){
+get_tfmn_from_lup <- function(mdl_nm_1L_chr, mdls_lup = NULL){
+  if (is.null(mdls_lup))
+    utils::data("mdls_lup", envir = environment())
   tfmn_1L_chr <- ready4fun::get_from_lup_obj(mdls_lup,
                                              target_var_nm_1L_chr = "tfmn_chr",
                                              match_value_xx = mdl_nm_1L_chr,

@@ -1,6 +1,6 @@
-#' Candidate predictors lookup table
+#' Predictors lookup table
 #' 
-#' A lookup table of the short name and long name of each candidate predictor.
+#' A lookup table of the short name and long name of each predictor used in the models included with the youthu package.
 #' 
 #' A tibble
 #' 
@@ -11,5 +11,6 @@
 #'   \item{max_val_dbl}{Max value (a double vector)}
 #'   \item{increment_dbl}{Increment (a double vector)}
 #'   \item{mdl_scaling_dbl}{Mdl scaling (a double vector)}
+#'   \item{covariate_lgl}{Covariate (a logical vector)}
 #' }
-"candidate_predrs_lup"
+"predictors_lup"

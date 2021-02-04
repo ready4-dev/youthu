@@ -17,6 +17,7 @@ reference:
   - fns_dmt_tb
   - mdls_lup
   - mdls_smry_tb
+  - predictors_lup
   - prototype_lup
   - replication_popl_tb
   - repln_ds_dict_r3

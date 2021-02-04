@@ -202,3 +202,26 @@ firstbounce_scared(-1L)
 ```{r error = T}
 firstbounce_scared(83)
 ```
+##  Social and Occupational Functioning Assessment Scale (SOFAS)
+
+The firstbounce_sofas class is defined for integer vectors with a minimum value of 0 and a maximum value of 100.
+
+```{r}
+firstbounce_sofas(44L)
+```
+
+```{r}
+firstbounce_sofas(as.integer(c(0,23,89)))
+```
+
+Non-integers and values outside these ranges will produce errors.
+
+```{r, error = T}
+firstbounce_sofas(73.2)
+```
+```{r, error = T}
+firstbounce_sofas(-1L)
+```
+```{r error = T}
+firstbounce_sofas(103L)
+```

@@ -1,38 +1,3 @@
-#' Write box cox tfmn
-#' @description write_box_cox_tfmn() is a Write function that writes a file to a specified local directory. Specifically, this function implements an algorithm to write box cox tfmn. The function returns Path to plot (a character vector of length one).
-#' @param data_tb Data (a tibble)
-#' @param predr_var_nm_1L_chr Predr var name (a character vector of length one)
-#' @param path_to_write_to_1L_chr Path to write to (a character vector of length one)
-#' @param dep_var_nm_1L_chr Dep var name (a character vector of length one), Default: 'aqol6d_total_w'
-#' @param covar_var_nms_chr Covar var names (a character vector), Default: 'NA'
-#' @param fl_nm_pfx_1L_chr File name prefix (a character vector of length one), Default: 'A_RT'
-#' @param height_1L_dbl Height (a double vector of length one), Default: 6
-#' @param width_1L_dbl Width (a double vector of length one), Default: 6
-#' @param start_1L_chr Start (a character vector of length one), Default: NULL
-#' @param mdl_types_lup Mdl types (a lookup table), Default: NULL
-#' @return Path to plot (a character vector of length one)
-#' @rdname write_box_cox_tfmn
-#' @export 
-#' @importFrom utils data
-#' @importFrom MASS boxcox
-#' @keywords internal
-write_box_cox_tfmn <- function (data_tb, predr_var_nm_1L_chr, path_to_write_to_1L_chr, 
-    dep_var_nm_1L_chr = "aqol6d_total_w", covar_var_nms_chr = NA_character_, 
-    fl_nm_pfx_1L_chr = "A_RT", height_1L_dbl = 6, width_1L_dbl = 6, 
-    start_1L_chr = NULL, mdl_types_lup = NULL) 
-{
-    if (is.null(mdl_types_lup)) 
-        utils::data("mdl_types_lup", envir = environment())
-    mdl <- make_mdl(data_tb, dep_var_nm_1L_chr = dep_var_nm_1L_chr, 
-        predr_var_nm_1L_chr = predr_var_nm_1L_chr, covar_var_nms_chr = covar_var_nms_chr, 
-        mdl_type_1L_chr = "OLS_NTF", mdl_types_lup = mdl_types_lup, 
-        start_1L_chr = start_1L_chr)
-    path_to_plot_1L_chr <- write_brm_mdl_plt_fl(plt_fn = MASS::boxcox, 
-        fn_args_ls = list(mdl, plotit = T), path_to_write_to_1L_chr = path_to_write_to_1L_chr, 
-        plt_nm_1L_chr = paste0(fl_nm_pfx_1L_chr, "_", predr_var_nm_1L_chr, 
-            "_", "BOXCOX"), height_1L_dbl = height_1L_dbl, width_1L_dbl = width_1L_dbl)
-    return(path_to_plot_1L_chr)
-}
 #' Write results to comma separated variables file
 #' @description write_results_to_csv() is a Write function that writes a file to a specified local directory. Specifically, this function implements an algorithm to write results to comma separated variables file. The function returns Datasets (a tibble).
 #' @param synth_data_spine_ls Synth data spine (a list)

@@ -352,15 +352,16 @@ pkg_dss_tb <- replication_popl_tb %>%
                               desc_1L_chr = "A purely synthetic dataset, representative of the original study data, that can be used for replication runs of package algorithms.",
                               abbreviations_lup = abbreviations_lup,
                               pkg_dss_tb = pkg_dss_tb)
-pkg_dss_tb <- tibble::tibble(short_name_chr = c("BADS","GAD7","K6","OASIS","PHQ9","SCARED"),
+pkg_dss_tb <- tibble::tibble(short_name_chr = c("BADS","GAD7","K6","OASIS","PHQ9","SCARED","SOFAS"),
                              long_name_chr = short_name_chr %>% purrr::map_chr(~paste0(.x, " total score")),
-                             min_val_dbl = rep(0,6),
-                             max_val_dbl = c(150,21,24,20,27,82),
-                             increment_dbl = rep(1,6),
-                             mdl_scaling_dbl = 0.01) %>%
-  ready4fun::write_and_doc_ds(db_1L_chr = "candidate_predrs_lup",
-                              title_1L_chr = "Candidate predictors lookup table",
-                              desc_1L_chr = "A lookup table of the short name and long name of each candidate predictor.",
+                             min_val_dbl = rep(0,7),
+                             max_val_dbl = c(150,21,24,20,27,82,100),
+                             increment_dbl = rep(1,7),
+                             mdl_scaling_dbl = 0.01,
+                             covariate_lgl = c(rep(F,6),T)) %>%
+  ready4fun::write_and_doc_ds(db_1L_chr = "predictors_lup",
+                              title_1L_chr = "Predictors lookup table",
+                              desc_1L_chr = "A lookup table of the short name and long name of each predictor used in the models included with the youthu package.",
                               abbreviations_lup = abbreviations_lup,
                               pkg_dss_tb = pkg_dss_tb)
 pkg_dss_tb <- ready4use::ready4_dv_import_lup() %>%
@@ -376,7 +377,7 @@ pkg_dss_tb <- ready4use::ready4_dv_import_lup() %>%
                               pkg_dss_tb = pkg_dss_tb)
 utils::data("mdls_smry_tb")
 pkg_dss_tb <- tibble::tibble(mdl_nms_chr = mdls_smry_tb$Model %>% unique()) %>%
-  dplyr::mutate(predrs_ls = mdl_nms_chr %>% strsplit("_") %>% purrr::map(~ .x[.x %in% c(candidate_predrs_lup$short_name_chr, "SOFAS")]),
+  dplyr::mutate(predrs_ls = mdl_nms_chr %>% strsplit("_") %>% purrr::map(~ .x[.x %in% c(predictors_lup$short_name_chr)]),
                 mdl_type_chr = mdl_nms_chr %>% strsplit("_") %>% purrr::map(~ .x[.x %in% c("GLM", "OLS")]) %>% purrr::flatten_chr(),
                 tfmn_chr = mdl_nms_chr %>% purrr::map_chr(~stringr::str_sub(.x,start = 1 +  stringi::stri_locate_last(.x,fixed = "_")[1,1] %>% as.vector())))  %>%
   ready4fun::write_and_doc_ds(db_1L_chr = "mdls_lup",

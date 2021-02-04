@@ -1,20 +1,3 @@
-write_box_cox_tfmn <- function (data_tb, predr_var_nm_1L_chr, path_to_write_to_1L_chr,
-    dep_var_nm_1L_chr = "aqol6d_total_w", covar_var_nms_chr = NA_character_,
-    fl_nm_pfx_1L_chr = "A_RT", height_1L_dbl = 6, width_1L_dbl = 6,
-    start_1L_chr = NULL, mdl_types_lup = NULL)
-{
-    if (is.null(mdl_types_lup))
-        utils::data("mdl_types_lup", envir = environment())
-    mdl <- make_mdl(data_tb, dep_var_nm_1L_chr = dep_var_nm_1L_chr,
-        predr_var_nm_1L_chr = predr_var_nm_1L_chr, covar_var_nms_chr = covar_var_nms_chr,
-        mdl_type_1L_chr = "OLS_NTF", mdl_types_lup = mdl_types_lup,
-        start_1L_chr = start_1L_chr)
-    path_to_plot_1L_chr <- write_brm_mdl_plt_fl(plt_fn = MASS::boxcox,
-        fn_args_ls = list(mdl, plotit = T), path_to_write_to_1L_chr = path_to_write_to_1L_chr,
-        plt_nm_1L_chr = paste0(fl_nm_pfx_1L_chr, "_", predr_var_nm_1L_chr,
-            "_", "BOXCOX"), height_1L_dbl = height_1L_dbl, width_1L_dbl = width_1L_dbl)
-    return(path_to_plot_1L_chr)
-}
 write_results_to_csv <- function (synth_data_spine_ls, output_dir_1L_chr = ".")
 {
     measurements_tb <- tibble::tibble(timepoint_nms_chr = synth_data_spine_ls$timepoint_nms_chr,
