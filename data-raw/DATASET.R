@@ -397,12 +397,13 @@ pkg_dss_tb <- tibble::tibble(mdl_nms_chr = mdls_smry_tb$Model %>% unique()) %>%
 usethis::use_build_ignore("initial_setup.R")
 usethis::use_package("knitrBootstrap")
 usethis::use_dev_package("ready4show")
+usethis::use_dev_package("ready4use")
 usethis::use_dev_package("TTU")
 readLines(".github/workflows/R-CMD-check.yaml")[-28] %>%
   writeLines(".github/workflows/R-CMD-check.yaml")
 ready4fun::write_and_doc_fn_fls(fns_dmt_tb,
                                 r_dir_1L_chr = "R",
-                                dev_pkgs_chr = c("ready4fun"),
+                                dev_pkgs_chr = c("ready4fun","ready4show","ready4use","TTU"),
                                 update_pkgdown_1L_lgl = T,
                                 path_to_dvpr_dmt_dir_1L_chr = "../../../../../Documentation/Code/Developer",
                                 path_to_user_dmt_dir_1L_chr = "../../../../../Documentation/Code/User")
