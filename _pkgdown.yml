@@ -12,7 +12,6 @@ reference:
   - aqol6d_dim_sclg_con_lup_tb
   - aqol6d_domain_qs_lup_tb
   - aqol6d_from_8d_coeffs_lup_tb
-  - candidate_predrs_lup
   - fn_type_lup_tb
   - fns_dmt_tb
   - mdls_lup
