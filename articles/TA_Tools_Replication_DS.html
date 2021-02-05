@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">youthu</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9034</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9038</span>
       </span>
     </div>
 
@@ -65,6 +65,9 @@
   <ul class="dropdown-menu" role="menu">
 <li>
       <a href="../articles/TA_Tools_Data_Integrity.html">Data Integrity Tools</a>
+    </li>
+    <li>
+      <a href="../articles/TA_Tools_Prediction_With_Mdls.html">Predict Adolescent AQoL-6D</a>
     </li>
     <li>
       <a href="../articles/TA_Tools_Replication_DS.html">Replication Dataset</a>
@@ -123,7 +126,7 @@
 <p>An overview of the contents of the replication dataset is provided in a data dictionary that can be accessed with the following command.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dictionary_tb</span> <span class="op">&lt;-</span> <span class="fu">youthu</span><span class="fu">::</span><span class="va"><a href="../reference/repln_ds_dict_r3.html">repln_ds_dict_r3</a></span></code></pre></div>
-<p>The following lines print the data dictionary as Table @ref(tab:ddic).</p>
+<p>The following lines print the data dictionary as a table.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dictionary_tb</span> <span class="op">%&gt;%</span>
   <span class="fu">ready4show</span><span class="fu">::</span><span class="fu"><a href="https://ready4-dev.github.io/ready4show/reference/print_table.html">print_table</a></span><span class="op">(</span>output_type_1L_chr <span class="op">=</span> <span class="st">"HTML"</span>, 
@@ -811,7 +814,7 @@ integer
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">raw_data_tb</span> <span class="op">&lt;-</span> <span class="va">raw_data_tb</span> <span class="op">%&gt;%</span>
   <span class="fu">ready4use</span><span class="fu">::</span><span class="fu"><a href="https://ready4-dev.github.io/ready4use/reference/add_labels_from_dictionary.html">add_labels_from_dictionary</a></span><span class="op">(</span><span class="va">dictionary_tb</span><span class="op">)</span></code></pre></div>
-<p>The following command prints the first ten cases from the replication dataset as Table @ref(tab:repds), using variable labels as column names.</p>
+<p>The following command prints the first ten cases from the replication dataset as a table, using variable labels as column names.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">raw_data_tb</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>

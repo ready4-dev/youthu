@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">youthu</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9034</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9038</span>
       </span>
     </div>
 
@@ -65,6 +65,9 @@
   <ul class="dropdown-menu" role="menu">
 <li>
       <a href="../articles/TA_Tools_Data_Integrity.html">Data Integrity Tools</a>
+    </li>
+    <li>
+      <a href="../articles/TA_Tools_Prediction_With_Mdls.html">Predict Adolescent AQoL-6D</a>
     </li>
     <li>
       <a href="../articles/TA_Tools_Replication_DS.html">Replication Dataset</a>
@@ -295,6 +298,31 @@
 <div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/firstbounce_scared.html">firstbounce_scared</a></span><span class="op">(</span><span class="fl">83</span><span class="op">)</span></code></pre></div>
 <pre><code>## Error in make_new_firstbounce_scared(x): is.integer(x) is not TRUE</code></pre>
+</div>
+<div id="social-and-occupational-functioning-assessment-scale-sofas" class="section level2">
+<h2 class="hasAnchor">
+<a href="#social-and-occupational-functioning-assessment-scale-sofas" class="anchor"></a>Social and Occupational Functioning Assessment Scale (SOFAS)</h2>
+<p>The firstbounce_sofas class is defined for integer vectors with a minimum value of 0 and a maximum value of 100.</p>
+<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/firstbounce_sofas.html">firstbounce_sofas</a></span><span class="op">(</span><span class="fl">44L</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] 44
+## attr(,"class")
+## [1] "firstbounce_sofas" "integer"</code></pre>
+<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/firstbounce_sofas.html">firstbounce_sofas</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">23</span>,<span class="fl">89</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1]  0 23 89
+## attr(,"class")
+## [1] "firstbounce_sofas" "integer"</code></pre>
+<p>Non-integers and values outside these ranges will produce errors.</p>
+<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/firstbounce_sofas.html">firstbounce_sofas</a></span><span class="op">(</span><span class="fl">73.2</span><span class="op">)</span></code></pre></div>
+<pre><code>## Error in make_new_firstbounce_sofas(x): is.integer(x) is not TRUE</code></pre>
+<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/firstbounce_sofas.html">firstbounce_sofas</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1L</span><span class="op">)</span></code></pre></div>
+<pre><code>## Error: All values in valid firstbounce_sofas object must be greater than or equal to 0.</code></pre>
+<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/firstbounce_sofas.html">firstbounce_sofas</a></span><span class="op">(</span><span class="fl">103L</span><span class="op">)</span></code></pre></div>
+<pre><code>## Error: All values in valid firstbounce_sofas object must be less than or equal to 100.</code></pre>
 </div>
 </div>
   </div>

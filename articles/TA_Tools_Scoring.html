@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">youthu</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9034</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9038</span>
       </span>
     </div>
 
@@ -65,6 +65,9 @@
   <ul class="dropdown-menu" role="menu">
 <li>
       <a href="../articles/TA_Tools_Data_Integrity.html">Data Integrity Tools</a>
+    </li>
+    <li>
+      <a href="../articles/TA_Tools_Prediction_With_Mdls.html">Predict Adolescent AQoL-6D</a>
     </li>
     <li>
       <a href="../articles/TA_Tools_Replication_DS.html">Replication Dataset</a>
@@ -134,7 +137,7 @@
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">scored_data_tb</span> <span class="op">&lt;-</span> <span class="va">scored_data_tb</span> <span class="op">%&gt;%</span>
   <span class="fu">ready4use</span><span class="fu">::</span><span class="fu"><a href="https://ready4-dev.github.io/ready4use/reference/add_labels_from_dictionary.html">add_labels_from_dictionary</a></span><span class="op">(</span><span class="va">dictionary_tb</span><span class="op">)</span></code></pre></div>
-<p>The following lines then print the first ten lines of the updated dataset as Table @ref(tab:scoredds), using variable labels as column names.</p>
+<p>The following lines then print the first ten lines of the updated dataset as a table, using variable labels as column names.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">scored_data_tb</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
