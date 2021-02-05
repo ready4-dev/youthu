@@ -47,7 +47,7 @@ transform_ds_for_tstng <- function (data_tb, dep_var_nm_1L_chr = "aqol6d_total_w
 #' @importFrom utils data
 #' @importFrom dplyr mutate
 #' @importFrom rlang sym exec
-#' @importFrom purrr reduce
+#' @importFrom purrr reduce map_dbl
 #' @importFrom ready4fun get_from_lup_obj
 #' @importFrom TTU transform_tb_to_mdl_inp
 #' @keywords internal
@@ -70,8 +70,10 @@ transform_ds_to_predn_ds <- function (data_tb, predr_vars_nms_chr, tfmn_1L_chr, 
     data_tb <- data_tb %>% TTU::transform_tb_to_mdl_inp(dep_var_nm_1L_chr = dep_var_nm_1L_chr, 
         predr_vars_nms_chr = predr_vars_nms_chr, id_var_nm_1L_chr = id_var_nm_1L_chr, 
         round_var_nm_1L_chr = round_var_nm_1L_chr, round_bl_val_1L_chr = round_bl_val_1L_chr, 
-        drop_all_msng_1L_lgl = F, scaling_fctr_1L_dbl = 0.01, 
-        ungroup_1L_lgl = T, add_cll_tfmn_1L_lgl = ifelse(tfmn_1L_chr == 
+        drop_all_msng_1L_lgl = F, scaling_fctr_1L_dbl = purrr::map_dbl(predr_vars_nms_chr, 
+            ~ready4fun::get_from_lup_obj(predictors_lup, target_var_nm_1L_chr = "mdl_scaling_dbl", 
+                match_var_nm_1L_chr = "short_name_chr", match_value_xx = .x, 
+                evaluate_lgl = F)), ungroup_1L_lgl = T, add_cll_tfmn_1L_lgl = ifelse(tfmn_1L_chr == 
             "CLL", T, F))
     return(data_tb)
 }
