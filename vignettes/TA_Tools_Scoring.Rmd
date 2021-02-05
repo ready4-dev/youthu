@@ -38,7 +38,7 @@ scored_data_tb <- scored_data_tb %>%
   ready4use::add_labels_from_dictionary(dictionary_tb)
 ```
 
-The following lines then print the first ten lines of the updated dataset as Table \@ref(tab:scoredds), using variable labels as column names.
+The following lines then print the first ten lines of the updated dataset as a table, using variable labels as column names.
 
 ```{r scoredds}
 scored_data_tb %>%

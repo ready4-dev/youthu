@@ -24,7 +24,7 @@ An overview of the contents of the replication dataset is provided in a data dic
 dictionary_tb <- youthu::repln_ds_dict_r3
 ```
 
-The following lines print the data dictionary as Table \@ref(tab:ddic).
+The following lines print the data dictionary as a table.
 
 ```{r ddic}
 dictionary_tb %>%
@@ -48,7 +48,7 @@ raw_data_tb <- raw_data_tb %>%
   ready4use::add_labels_from_dictionary(dictionary_tb)
 ```
 
-The following command prints the first ten cases from the replication dataset as Table \@ref(tab:repds), using variable labels as column names.
+The following command prints the first ten cases from the replication dataset as a table, using variable labels as column names.
 
 ```{r repds}
 raw_data_tb %>%

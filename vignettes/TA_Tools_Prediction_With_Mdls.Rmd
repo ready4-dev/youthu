@@ -5,6 +5,8 @@ vignette: >
   %\VignetteIndexEntry{Predict Adolescent AQoL-6D}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+params:
+  output_type_1L_chr: HTML
 ---
 
 ```{r message=FALSE}
