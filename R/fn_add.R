@@ -127,7 +127,7 @@ add_aqol6d_items_to_aqol6d_tbs_ls <- function (aqol6d_tbs_ls, aqol_items_props_t
 #' @importFrom purrr flatten_chr map_chr
 #' @importFrom stringr str_replace
 #' @importFrom TTU add_utility_predn_to_ds
-#' @importFrom dplyr rename
+#' @importFrom dplyr rename select
 #' @importFrom rlang sym
 #' @importFrom tidyselect all_of
 #' @keywords internal
@@ -167,6 +167,8 @@ add_aqol6d_predn_to_ds <- function (data_tb, model_mdl, tfmn_1L_chr, predr_vars_
         updated_tb <- updated_tb %>% dplyr::rename(`:=`(!!rlang::sym(utl_var_nm_1L_chr), 
             tidyselect::all_of(mdl_dep_var_1L_chr)))
     }
+    if ("aqol6d_total_w_CLL_cloglog" %in% names(updated_tb)) 
+        updated_tb <- updated_tb %>% dplyr::select(-aqol6d_total_w_CLL_cloglog)
     return(updated_tb)
 }
 #' Add Assessment of Quality of Life Six Dimension Health Utility to Assessment of Quality of Life Six Dimension items

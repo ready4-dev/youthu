@@ -1,6 +1,10 @@
 get_mdl_from_dv <- function(mdl_nm_1L_chr,
-                            dv_ds_nm_1L_chr = "https://doi.org/10.7910/DVN/JC6PTV"){
-  ds_ls <- dataverse::dataset_files(dv_ds_nm_1L_chr)
+                            dv_ds_nm_1L_chr = "https://doi.org/10.7910/DVN/JC6PTV",
+                            server_1L_chr = "dataverse.harvard.edu",
+                            key_1L_chr = NULL){
+  ds_ls <- dataverse::dataset_files(dv_ds_nm_1L_chr,
+                                    server = server_1L_chr,
+                                    key = key_1L_chr)
   all_mdls_chr <- purrr::map_chr(ds_ls,~.x$label)
   idx_1L_int <- which(all_mdls_chr == paste0(mdl_nm_1L_chr,".RDS"))
   model_mdl <- readRDS(url(paste0("https://dataverse.harvard.edu/api/access/datafile/",ds_ls[[idx_1L_int]]$dataFile$id)))

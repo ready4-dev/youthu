@@ -29,7 +29,7 @@ The classes included in the youthu package include one class for Assessment of Q
 
 ## Assessment of Quality of Life Six Dimension (Adolescent) Health Utility 
 
-The firstbounce_aqol6d_adol class is defined for numeric vectors with a minimum value of 0.03 and maximum value of 1.0.
+The `firstbounce_aqol6d_adol`{.R} class is defined for numeric vectors with a minimum value of 0.03 and maximum value of 1.0.
 
 ```{r}
 firstbounce_aqol6d_adol(0.4)
@@ -55,7 +55,7 @@ firstbounce_aqol6d_adol(1.2)
 
 ## Behavioural Activation for Depression Scale (BADS)
 
-The firstbounce_bads class is defined for integer vectors with a minimum value of 0 and maximum value of 150.
+The `firstbounce_bads`{.R} class is defined for integer vectors with a minimum value of 0 and maximum value of 150.
 
 ```{r}
 firstbounce_bads(143L)
@@ -81,7 +81,7 @@ firstbounce_bads(160L)
 
 ## Generalised Anxiety Disorder Scale (GAD-7)
 
-The firstbounce_gad7 class is defined for integer vectors with a minimum value of 0 and a maximum value of 21.
+The `firstbounce_gad7`{.R} class is defined for integer vectors with a minimum value of 0 and a maximum value of 21.
 
 ```{r}
 firstbounce_gad7(15L)
@@ -106,7 +106,7 @@ firstbounce_gad7(22L)
 ```
 ## Kessler Psychological Distress Scale (K6) - US Scoring System
 
-The firstbounce_k6 class is defined for integer vectors with a minimum value of 0 and a maximum value of 24.
+The `firstbounce_k6`{.R} class is defined for integer vectors with a minimum value of 0 and a maximum value of 24.
 
 ```{r}
 firstbounce_k6(21L)
@@ -131,7 +131,7 @@ firstbounce_k6(25L)
 ```
 ## Overall Anxiety Severity and Impairment Scale (OASIS)
 
-The firstbounce_oasis class is defined for integer vectors with a minimum value of 0 and a maximum value of 20.
+The `firstbounce_oasis`{.R} class is defined for integer vectors with a minimum value of 0 and a maximum value of 20.
 
 ```{r}
 firstbounce_oasis(15L)
@@ -156,7 +156,7 @@ firstbounce_oasis(21L)
 ```
 ## Patient Health Questionnaire (PHQ-9)
 
-The firstbounce_phq9 class is defined for integer vectors with a minimum value of 0 and a maximum value of 27.
+The `firstbounce_phq9`{.R} class is defined for integer vectors with a minimum value of 0 and a maximum value of 27.
 
 ```{r}
 firstbounce_phq9(11L)
@@ -180,7 +180,7 @@ firstbounce_phq9(28L)
 
 ##  Screen for Child Anxiety Related Disorders (SCARED)
 
-The firstbounce_scared class is defined for integer vectors with a minimum value of 0 and a maximum value of 82.
+The `firstbounce_scared`{.R} class is defined for integer vectors with a minimum value of 0 and a maximum value of 82.
 
 ```{r}
 firstbounce_scared(77L)
@@ -203,7 +203,7 @@ firstbounce_scared(83)
 ```
 ##  Social and Occupational Functioning Assessment Scale (SOFAS)
 
-The firstbounce_sofas class is defined for integer vectors with a minimum value of 0 and a maximum value of 100.
+The `firstbounce_sofas`{.R} class is defined for integer vectors with a minimum value of 0 and a maximum value of 100.
 
 ```{r}
 firstbounce_sofas(44L)

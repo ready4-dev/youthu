@@ -24,3 +24,4 @@ Vignettes that demonstrate some of the tools currently included in the youthu pa
 - [Data integrity tools](TA_Tools_Data_Integrity.html)
 - [Replication dataset](TA_Tools_Replication_DS.html)
 - [Health utility scoring tools](TA_Tools_Scoring.html)
+- [Predict Adolescent AQoL-6D](TA_Tools_Prediction_With_Mdls.html)

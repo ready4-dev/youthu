@@ -2,15 +2,19 @@
 #' @description get_mdl_from_dv() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get mdl from dataverse. Function argument mdl_nm_1L_chr specifies the where to look for the required object. The function is called for its side effects and does not return a value.
 #' @param mdl_nm_1L_chr Mdl name (a character vector of length one)
 #' @param dv_ds_nm_1L_chr Dataverse dataset name (a character vector of length one), Default: 'https://doi.org/10.7910/DVN/JC6PTV'
+#' @param server_1L_chr Server (a character vector of length one), Default: 'dataverse.harvard.edu'
+#' @param key_1L_chr Key (a character vector of length one), Default: NULL
 #' @return NA ()
 #' @rdname get_mdl_from_dv
 #' @export 
 #' @importFrom dataverse dataset_files
 #' @importFrom purrr map_chr
 #' @keywords internal
-get_mdl_from_dv <- function (mdl_nm_1L_chr, dv_ds_nm_1L_chr = "https://doi.org/10.7910/DVN/JC6PTV") 
+get_mdl_from_dv <- function (mdl_nm_1L_chr, dv_ds_nm_1L_chr = "https://doi.org/10.7910/DVN/JC6PTV", 
+    server_1L_chr = "dataverse.harvard.edu", key_1L_chr = NULL) 
 {
-    ds_ls <- dataverse::dataset_files(dv_ds_nm_1L_chr)
+    ds_ls <- dataverse::dataset_files(dv_ds_nm_1L_chr, server = server_1L_chr, 
+        key = key_1L_chr)
     all_mdls_chr <- purrr::map_chr(ds_ls, ~.x$label)
     idx_1L_int <- which(all_mdls_chr == paste0(mdl_nm_1L_chr, 
         ".RDS"))

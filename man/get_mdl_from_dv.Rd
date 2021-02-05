@@ -6,13 +6,19 @@
 \usage{
 get_mdl_from_dv(
   mdl_nm_1L_chr,
-  dv_ds_nm_1L_chr = "https://doi.org/10.7910/DVN/JC6PTV"
+  dv_ds_nm_1L_chr = "https://doi.org/10.7910/DVN/JC6PTV",
+  server_1L_chr = "dataverse.harvard.edu",
+  key_1L_chr = NULL
 )
 }
 \arguments{
 \item{mdl_nm_1L_chr}{Mdl name (a character vector of length one)}
 
 \item{dv_ds_nm_1L_chr}{Dataverse dataset name (a character vector of length one), Default: 'https://doi.org/10.7910/DVN/JC6PTV'}
+
+\item{server_1L_chr}{Server (a character vector of length one), Default: 'dataverse.harvard.edu'}
+
+\item{key_1L_chr}{Key (a character vector of length one), Default: NULL}
 }
 \value{
 NA ()
