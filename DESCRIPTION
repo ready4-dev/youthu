@@ -1,6 +1,6 @@
 Package: youthu
 Title: Youth Outcomes to Health Utility
-Version: 0.0.0.9034
+Version: 0.0.0.9035
 Authors@R: 
     c(person(given = "Matthew",
              family = "Hamilton",
@@ -45,7 +45,7 @@ Imports:
     knitrBootstrap,
     ready4show (>= 0.0.0.9008),
     ready4use (>= 0.0.0.9107),
-    TTU (>= 0.0.0.9101),
+    TTU (>= 0.0.0.9102),
     ready4fun (>= 0.0.0.9268),
     brms,
     dataverse,
