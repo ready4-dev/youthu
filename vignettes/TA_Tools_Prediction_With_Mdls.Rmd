@@ -129,10 +129,14 @@ candidate_mdls_tb %>%
 # Select and download preferred model
 All youthu models are publicly available in a Dataverse repository (https://doi.org/10.7910/DVN/JC6PTV). The following function call will download the desired model from the data repository. To download a choosen model, use the `get_mdl_from_dv`{.R} function. In the below example we have selected the fourth model in the candidate models table (`r candidate_mdls_tb$mdl_nms_chr[4]`). We suggest consulting the scientific summary of the study that produced the youthu models to help guide your choice of which candidate model to select.
 
-```{r}
+```{r eval=F}
 model_mdl <- get_mdl_from_dv(candidate_mdls_tb$mdl_nms_chr[4])
 
 ```
+```{r include=F}
+model_mdl <- readRDS(system.file("models/example_mdl.RDS", package = "youthu"))
+```
+
 ```{r}
 model_mdl 
 ```

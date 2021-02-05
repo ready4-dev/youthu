@@ -54,3 +54,4 @@
 ^data-raw/fake_pop_tb\.csv$
 ^data-raw/fns/rename\.R$
 ^data-raw/candidate_predrs_lup\.csv$
+^data-raw/inst/models/example_mdl\.RDS$
