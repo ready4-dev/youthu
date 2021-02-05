@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">youthu</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9038</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9039</span>
       </span>
     </div>
 
@@ -119,7 +119,8 @@
 <div id="calculating-scores" class="section level1">
 <h1 class="hasAnchor">
 <a href="#calculating-scores" class="anchor"></a>Calculating scores</h1>
-<p>To calculate AQoL 6D adolescent utility scores, a dataset with all twenty AQoL 6D questionnaire response items must be passed to the add_adol6d_scores function. The names of these twenty variables must all have a common prefix and end with the item number. In our replication dataset, they are named “aqol6d_q1”, “aqol6d_q2” … “aqol6d_q20”. Details of the common prefix for the AQoL 6D response item variables, the name of the unique individual identifier variable and the desired name for the AQoL 6D adolescent utility score variable to be calculated must also be passed to the add_adol6d_scores function. The function returns an updated dataset, with additional variables that include the intermediate and final calculations for AQoL 6D adolescent utility scores.</p>
+<p>To calculate AQoL 6D adolescent utility scores, a dataset with all twenty AQoL-6D questionnaire response items must be passed to the <code class="sourceCode r">add_adol6d_scores</code> function. In the following illustrative example, we use the <a href="TA_Tools_Replication_DS.html">replication dataset</a> that is included in the youthu package.</p>
+<p>The names of the twenty questionnaire response variables must all have a common prefix and end with the item number. In our replication dataset, they are named “aqol6d_q1”, “aqol6d_q2” … “aqol6d_q20”. Details of the common prefix for the AQoL-6D response item variables, the name of the unique individual identifier variable and the desired name for the AQoL-6D adolescent utility score variable to be calculated must also be passed to the add_adol6d_scores function. The function returns an updated dataset, with additional variables that include the intermediate and final calculations for AQoL 6D adolescent utility scores.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">scored_data_tb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/add_adol6d_scores.html">add_adol6d_scores</a></span><span class="op">(</span><span class="fu">youthu</span><span class="fu">::</span><span class="va"><a href="../reference/replication_popl_tb.html">replication_popl_tb</a></span>,
                                               prefix_1L_chr <span class="op">=</span>  <span class="st">"aqol6d_q"</span>,
@@ -129,7 +130,7 @@
 <div id="viewing-the-updated-dataset" class="section level1">
 <h1 class="hasAnchor">
 <a href="#viewing-the-updated-dataset" class="anchor"></a>Viewing the updated dataset</h1>
-<p>Before displaying the updated dataset, it may be desirable to label variables so that their meaning is clearer. The first step to do this is to create a data dictionary that extends to all variables in the updated dataset, by combining a data dictionary for the source (unscored) dataset with a data dictionary for a template scored dataset.</p>
+<p>Before displaying the updated dataset, it may be desirable to label variables so that their meaning is clearer. The first step to do this is to create a data dictionary that extends to all variables in the updated dataset, by combining a data dictionary for the source (unscored) dataset (in our case <code class="sourceCode r">repln_ds_dict_r3</code>) with a data dictionary for a template scored dataset (<code class="sourceCode r">aqol_scrg_dict_r3</code> for this example).</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dictionary_tb</span> <span class="op">&lt;-</span> <span class="fu">ready4use</span><span class="fu">::</span><span class="fu"><a href="https://ready4-dev.github.io/ready4use/reference/bind_lups-methods.html">bind_lups</a></span><span class="op">(</span><span class="fu">youthu</span><span class="fu">::</span><span class="va"><a href="../reference/repln_ds_dict_r3.html">repln_ds_dict_r3</a></span>,
                                       new_ready4_dictionary <span class="op">=</span> <span class="fu">youthu</span><span class="fu">::</span><span class="va"><a href="../reference/aqol_scrg_dict_r3.html">aqol_scrg_dict_r3</a></span><span class="op">)</span></code></pre></div>

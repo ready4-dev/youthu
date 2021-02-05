@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">youthu</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9038</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9039</span>
       </span>
     </div>
 
@@ -275,7 +275,7 @@ integer
 <div id="match-model-predictors-to-the-prediction-dataset" class="section level2">
 <h2 class="hasAnchor">
 <a href="#match-model-predictors-to-the-prediction-dataset" class="anchor"></a>Match model predictors to the prediction dataset</h2>
-<p>Next, we can identify which of the above variables are present in the dataset we plan to use for prediction. To illustrate this step, we have created a prediction dataset that is a simplified version of the youthu replication dataset. This illustrative dataset reflects the likely real-world circumstance in which the prediction dataset uses a different naming convention to that of the dataset we used to estimate the youth models.</p>
+<p>Next, we can identify which of the above variables are present in the dataset we plan to use for prediction. To illustrate this step, we have created a prediction dataset that is a simplified version of the youthu <a href="TA_Tools_Replication_DS.html">replication dataset</a>. This illustrative dataset reflects the likely real-world circumstance in which the prediction dataset uses a different naming convention to that of the dataset we used to estimate the youth models.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">data_tb</span> <span class="op">&lt;-</span> <span class="fu">youthu</span><span class="fu">::</span><span class="va"><a href="../reference/replication_popl_tb.html">replication_popl_tb</a></span> <span class="op">%&gt;%</span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">fkClientID</span>,<span class="va">round</span>,<span class="va">PHQ9</span>, <span class="va">SOFAS</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="co">#</span>
@@ -399,7 +399,7 @@ Follow-up
 </td>
 </tr></tfoot>
 </table>
-<p>A visual inspection of the illustrative prediction dataset we have created reveals that the only predictors that match those included in youthu models are PHQ9 and SOFAS (the fifth and seventh rows of the <code class="sourceCode r">predictors_lup</code> lookup table. We can create a character vector to store this information as we will need it later. Note, the names stored in <code>mdl_predrs_in_ds_chr</code> must use the naming convention specified in the <code class="sourceCode r">predictors_lup</code> lookup table and not any different naming convention that may be used in the prediction dataset for the equivalent variables (in this case <code>PHQ_total</code> and <code>SOFAS_total</code>).</p>
+<p>A visual inspection of the illustrative prediction dataset we have created reveals that the only predictors that match those included in youthu models are PHQ9 and SOFAS (the fifth and seventh rows of the <code class="sourceCode r">predictors_lup</code> lookup table). We can create a character vector to store this information as we will need it later. Note, the names stored in <code>mdl_predrs_in_ds_chr</code> must use the naming convention specified in the <code class="sourceCode r">predictors_lup</code> lookup table and not any different naming convention that may be used in the prediction dataset for the equivalent variables (in this case <code>PHQ_total</code> and <code>SOFAS_total</code>).</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mdl_predrs_in_ds_chr</span> <span class="op">&lt;-</span> <span class="va">predictors_lup</span><span class="op">$</span><span class="va">short_name_chr</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">7</span><span class="op">)</span><span class="op">]</span>
 <span class="va">mdl_predrs_in_ds_chr</span></code></pre></div>
@@ -408,7 +408,7 @@ Follow-up
 <div id="predictor-data-integrity-checks" class="section level2">
 <h2 class="hasAnchor">
 <a href="#predictor-data-integrity-checks" class="anchor"></a>Predictor data integrity checks</h2>
-<p>Another requirement is that the predictor variables in the prediction dataset must contain no missing values and conform to the requirements of class (in this case <code class="sourceCode r">integer</code>) and minimum and maximum values that are specified in the <code class="sourceCode r">predictors_lup</code> lookup table. We can confirm that these conditions hold by either visually inspecting the output of calls to base R <code class="sourceCode r">summary</code> and <code class="sourceCode r">class</code> functions or by using youthu’s classes.</p>
+<p>Another requirement is that the predictor variables in the prediction dataset must contain no missing values and conform to the requirements of class (in this case <code class="sourceCode r">integer</code>) and minimum and maximum values that are specified in the <code class="sourceCode r">predictors_lup</code> lookup table. We can confirm that these conditions hold by either visually inspecting the output of calls to base R <code class="sourceCode r">summary</code> and <code class="sourceCode r">class</code> functions or by using youthu’s <a href="TA_Tools_Data_Integrity.html">data integrity tools</a>.</p>
 <div id="visual-inspection-checks" class="section level3">
 <h3 class="hasAnchor">
 <a href="#visual-inspection-checks" class="anchor"></a>Visual inspection checks</h3>
@@ -430,7 +430,7 @@ Follow-up
 <div id="checks-using-youthu-classes" class="section level3">
 <h3 class="hasAnchor">
 <a href="#checks-using-youthu-classes" class="anchor"></a>Checks using youthu classes</h3>
-<p>We can pass the values of the <code>PHQ9_total</code> and <code>SOFAS_total</code> variables in our dataset to the <code>firstbounce_phq9</code> and <code>firstbounce_sofas</code> classes respectively. If no error message is thrown, then the data is consistent with the requirements for variable.</p>
+<p>We can pass the values of the <code>PHQ9_total</code> and <code>SOFAS_total</code> variables in our dataset to the functions for creating instances of the <code>firstbounce_phq9</code> and <code>firstbounce_sofas</code> classes respectively. If no error message is thrown, then the data is consistent with the requirements for variable.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">phq9_test</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/firstbounce_phq9.html">firstbounce_phq9</a></span><span class="op">(</span><span class="va">data_tb</span><span class="op">$</span><span class="va">PHQ_total</span><span class="op">)</span> 
 <span class="va">phq9_test</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
@@ -459,7 +459,7 @@ Follow-up
 <div id="identify-candidate-models-for-available-predictors" class="section level1">
 <h1 class="hasAnchor">
 <a href="#identify-candidate-models-for-available-predictors" class="anchor"></a>Identify candidate models for available predictors</h1>
-<p>We can use the <code class="sourceCode r">get_mdls_using_predrs</code> to identify which models can be used with the predictors present in the prediction dataset. The only argument that we need to pass to that function is our previously created <code class="sourceCode r">mdl_predrs_in_ds_chr</code> vector of predictors that are common to both our prediction dataset and youthu models</p>
+<p>We can use the <code class="sourceCode r">get_mdls_using_predrs</code> function to identify which models can be used with the predictors present in the prediction dataset. The only argument that we need to pass to that function is our previously created <code class="sourceCode r">mdl_predrs_in_ds_chr</code> vector of predictors that are common to both our prediction dataset and youthu models.</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"mdls_lup"</span>, package <span class="op">=</span><span class="st">"youthu"</span><span class="op">)</span>
 <span class="va">candidate_mdls_tb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_mdls_using_predrs.html">get_mdls_using_predrs</a></span><span class="op">(</span><span class="va">mdl_predrs_in_ds_chr</span><span class="op">)</span></code></pre></div>
@@ -554,7 +554,14 @@ CLL
 <p>All youthu models are publicly available in a Dataverse repository (<a href="https://doi.org/10.7910/DVN/JC6PTV" class="uri">https://doi.org/10.7910/DVN/JC6PTV</a>). The following function call will download the desired model from the data repository. To download a choosen model, use the <code class="sourceCode r">get_mdl_from_dv</code> function. In the below example we have selected the fourth model in the candidate models table (PHQ9_SOFAS_1_OLS_CLL). We suggest consulting the scientific summary of the study that produced the youthu models to help guide your choice of which candidate model to select.</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model_mdl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_mdl_from_dv.html">get_mdl_from_dv</a></span><span class="op">(</span><span class="va">candidate_mdls_tb</span><span class="op">$</span><span class="va">mdl_nms_chr</span><span class="op">[</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<pre><code>## Warning: namespace 'ready4u' is not available and has been replaced
+## by .GlobalEnv when processing object '&lt;unknown&gt;'</code></pre>
+</div>
+<div id="r-includef-model_mdl---readrdssystem-filemodelsexample_mdl-rds-package-youthu" class="section level1">
+<h1 class="hasAnchor">
+<a href="#r-includef-model_mdl---readrdssystem-filemodelsexample_mdl-rds-package-youthu" class="anchor"></a><code>{r include=F} # model_mdl &lt;- readRDS(system.file("models/example_mdl.RDS", package = "youthu")) #</code>
+</h1>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model_mdl</span> </code></pre></div>
 <pre><code>## 
 ## Call:
@@ -568,8 +575,8 @@ CLL
 <div id="predict-utility" class="section level1">
 <h1 class="hasAnchor">
 <a href="#predict-utility" class="anchor"></a>Predict utility</h1>
-<p>To generate utility predictions we use the <code class="sourceCode r">add_aqol6d_predn_to_ds</code> function. The function needs to be supplied with the prediction dataset (the value passed to argument <code>data_tb</code>), the model we are applying to that dataset (<code>model_mdl</code>), the transformation associated with that model (<code>tfmn_1L_chr</code>, which can be identified by passing the name of the selected model to the <code class="sourceCode r">get_tfmn_from_lup</code> function) and details of the variable names used in the prediction dataset for the unique identifier (<code>id_var_nm_1L_chr</code>) and measurement timepoint (<code>round_var_nm_1L_chr</code>) and, for the later, the factor level that represents the Baseline timepoint (<code>round_bl_val_1L_chr</code>). Additionally, if the prediction dataset uses different variable names for the predictors to those specified in the <code class="sourceCode r">predictors_lup</code> lookup table, a named vector detailing the correspondence between the two sets of variable names needs to be passed to the <code>predr_vars_nms_chr</code> argument. Finally, if you wish to specify the desired variable name to use for the predicted utility values generated by the function, you can do this by passing this name to the <code>utl_var_nm_1L_chr</code> argument.</p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<p>To generate utility predictions we use the <code class="sourceCode r">add_aqol6d_predn_to_ds</code> function. The function needs to be supplied with the prediction dataset (the value passed to argument <code>data_tb</code>), the model we are applying to that dataset (<code>model_mdl</code>), the transformation associated with that model (<code>tfmn_1L_chr</code>, which can be identified by passing the name of the selected model to the <code class="sourceCode r">get_tfmn_from_lup</code> function) and details of the variable names used in the prediction dataset for the unique identifier (<code>id_var_nm_1L_chr</code>) and measurement timepoint (<code>round_var_nm_1L_chr</code>) and, for the later, the factor level that represents the baseline timepoint (<code>round_bl_val_1L_chr</code>). Additionally, if the prediction dataset uses different variable names for the predictors to those specified in the <code class="sourceCode r">predictors_lup</code> lookup table, a named vector detailing the correspondence between the two sets of variable names needs to be passed to the <code>predr_vars_nms_chr</code> argument. Finally, if you wish to specify the desired variable name to use for the predicted utility values generated by the function, you can do this by passing this name to the <code>utl_var_nm_1L_chr</code> argument.</p>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">updated_data_tb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/add_aqol6d_predn_to_ds.html">add_aqol6d_predn_to_ds</a></span><span class="op">(</span>data_tb <span class="op">=</span> <span class="va">data_tb</span>,
                                    model_mdl <span class="op">=</span> <span class="va">model_mdl</span>,
                                    predr_vars_nms_chr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>PHQ9 <span class="op">=</span> <span class="st">"PHQ_total"</span>, SOFAS <span class="op">=</span> <span class="st">"SOFAS_total"</span><span class="op">)</span>,
@@ -578,7 +585,7 @@ CLL
                                    id_var_nm_1L_chr <span class="op">=</span> <span class="st">"UID"</span>,
                                    round_var_nm_1L_chr <span class="op">=</span> <span class="st">"Timepoint"</span>,
                                    round_bl_val_1L_chr <span class="op">=</span> <span class="st">"Baseline"</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">updated_data_tb</span></code></pre></div>
 <table class="table  lightable-paper lightable-hover">
 <caption>
@@ -600,9 +607,6 @@ SOFAS_total
 <th style="text-align:right;">
 AQoL6D_HU
 </th>
-<th style="text-align:right;">
-aqol6d_total_w_CLL_cloglog
-</th>
 </tr></thead>
 <tbody>
 <tr>
@@ -621,9 +625,6 @@ Baseline
 <td style="text-align:right;">
 0.7809854
 </td>
-<td style="text-align:right;">
-NA
-</td>
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -640,9 +641,6 @@ Baseline
 </td>
 <td style="text-align:right;">
 0.5227502
-</td>
-<td style="text-align:right;">
-NA
 </td>
 </tr>
 <tr>
@@ -661,9 +659,6 @@ Follow-up
 <td style="text-align:right;">
 0.5158909
 </td>
-<td style="text-align:right;">
-NA
-</td>
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -681,9 +676,6 @@ Baseline
 <td style="text-align:right;">
 0.9208520
 </td>
-<td style="text-align:right;">
-NA
-</td>
 </tr>
 <tr>
 <td style="text-align:left;">
@@ -700,9 +692,6 @@ Baseline
 </td>
 <td style="text-align:right;">
 0.9065902
-</td>
-<td style="text-align:right;">
-NA
 </td>
 </tr>
 <tr>
@@ -721,9 +710,6 @@ Follow-up
 <td style="text-align:right;">
 0.9065902
 </td>
-<td style="text-align:right;">
-NA
-</td>
 </tr>
 </tbody>
 <tfoot><tr>
@@ -733,7 +719,7 @@ NA
 </tr></tfoot>
 </table>
 <p>Our health utility predictions are now available for use and are summarised below.</p>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">updated_data_tb</span><span class="op">$</span><span class="va">AQoL6D_HU</span><span class="op">)</span></code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##  0.2171  0.5133  0.6361  0.6314  0.7495  0.9687</code></pre>
