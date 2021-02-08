@@ -1,0 +1,65 @@
+---
+title: "Interpreting Cost-Effectiveness"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Interpreting Cost-Effectiveness}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+params:
+  output_type_1L_chr: HTML
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Dominant is easy, if not dominant we need a willingness to pay threshold.
+
+```{r}
+make_fake_trial_ds <- function(ds_tb,
+                               UID_var_nm_1L_chr = "UID_chr",
+                               timepoint_var_nm_1L_chr = "Timepoint_chr"){
+ ds_tb <- ds_tb %>%
+  dplyr::group_by(!!rlang::sym(UID_var_nm_1L_chr)) %>%
+  dplyr::mutate(n_measures_int = dplyr::n()) %>%
+  dplyr::ungroup() %>%
+  dplyr::filter(n_measures_int == 2)
+  UIDs_with_FUP_data_chr <- ds_tb  %>% dplyr::pull(!!rlang::sym(UID_var_nm_1L_chr)) %>% unique()
+group_1_IDs <- sample(UIDs_with_FUP_data_chr, floor(length(UIDs_with_FUP_data_chr)/2))
+group_2_IDs <- setdiff(UIDs_with_FUP_data_chr,group_1_IDs)[1:length(group_1_IDs)]
+ds_tb <- ds_tb %>% dplyr::mutate(study_arm_chr = dplyr::case_when(!!rlang::sym(UID_var_nm_1L_chr) %in% group_1_IDs ~ "Intervention",
+                                                                  !!rlang::sym(UID_var_nm_1L_chr) %in% group_2_IDs ~ "Control",
+                                                                  T ~ NA_character_
+                                                                  ))
+ds_tb <- ds_tb %>%
+  dplyr::select(-n_measures_int) %>%
+  dplyr::filter(study_arm_chr %in% c("Intervention", "Control"))
+return(ds_tb)
+}
+match_ds_arms <- function(ds_tb,
+                             timepoint_var_nm_1L_chr = "Timepoint_chr",
+                             timepoint_bl_val_1L_chr = "Baseline",
+                             study_arm_var_nm_1L_chr = "study_arm_chr",
+                             active_arm_val_1L_chr = "Intervention"){
+  match_ds <- ds_tb %>% dplyr::filter(!!rlang::sym(timepoint_var_nm_1L_chr) == timepoint_bl_val_1L_chr) %>%
+  dplyr::mutate(Intervention_lgl = dplyr::case_when(!!rlang::sym(study_arm_var_nm_1L_chr) == active_arm_val_1L_chr ~ T,
+                                                    T ~ F)) 
+matched_ls <- MatchIt::matchit(formula(Intervention_lgl ~ PHQ_total + SOFAS_total), data = match_ds, method = "nearest", ratio=1)
+summary(matched_ds)
+matched_ds_tb <- MatchIt::match.data(matched_ls) 
+match_key_ds_tb <- c(F,T) %>% purrr::map_dfr(~matched_ds_tb %>% dplyr::filter(Intervention_lgl == .x) %>% dplyr::arrange(distance) %>% dplyr::mutate(match_idx_int = 1:dplyr::n())) %>% dplyr::arrange(match_idx_int) %>% dplyr::select(UID, study_arm_chr, match_idx_int)
+matched_ds_tb <- dplyr::right_join(ds_tb,match_key_ds_tb) %>% dplyr::arrange(match_idx_int)
+return(matched_ds_tb)
+}
+## Add make formula fn
+## Add costs to ds and to psm formula
+```
+```{r}
+trial_ds_tb <- updated_data_tb %>% make_fake_trial_ds(UID_var_nm_1L_chr = "UID", 
+                                                      timepoint_var_nm_1L_chr = "Timepoint") %>%
+  match_ds_arms(timepoint_var_nm_1L_chr = "Timepoint",
+                             timepoint_bl_val_1L_chr = "Baseline",
+                             study_arm_var_nm_1L_chr = "study_arm_chr",
+                             active_arm_val_1L_chr = "Intervention")
+```
+

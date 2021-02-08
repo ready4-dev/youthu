@@ -159,7 +159,7 @@ updated_data_tb <- add_aqol6d_predn_to_ds(data_tb = data_tb,
 
 ```
 ```{r results='hide'}
-updated_data_tb
+updated_data_tb %>% head()
 ```
 ```{r updtb, echo = F, tab.cap='Prediction dataset with predicted utilities', tab.id = 'updtb', results="asis"}
 updated_data_tb %>% 
