@@ -11,13 +11,73 @@ params:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(youthu)
 ```
 
 Dominant is easy, if not dominant we need a willingness to pay threshold.
 
 ```{r}
-make_fake_trial_ds <- function(ds_tb,
-                               predictors_chr,
+add_costs_by_tmpt <- function(ds_tb,
+                              timepoint_var_nm_1L_chr,
+                              timepoint_lvls_chr = c("Baseline","Follow-up"),
+                              costs_mean_dbl,
+                              costs_sd_dbl,
+                              fn = add_costs_from_gamma_dist){
+  updated_ds_tb <- purrr::pmap_dfr(list(timepoint_lvls_chr,
+                     costs_mean_dbl,
+                     costs_sd_dbl),
+            ~ {
+              args_ls <- list(ds_tb %>%
+              dplyr::filter(!!rlang::sym(timepoint_var_nm_1L_chr) == ..1),..2,..3)
+              rlang::exec(.fn = fn, !!!args_ls)
+              })
+  return(updated_ds_tb)
+}
+add_costs_from_gamma_dist <- function(ds_tb,
+                                      costs_mean_dbl,
+                                      costs_sd_dbl,
+                                      costs_var_nm_1L_dbl = "costs_dbl"){
+
+   updated_ds_tb <- dplyr::mutate(ds_tb, 
+                                  !!rlang::sym(costs_var_nm_1L_dbl) := make_costs_vec_from_gamma_dist(n_int  =nrow(ds_tb),
+                                           costs_mean_dbl = costs_mean_dbl,
+                                           costs_sd_dbl = costs_sd_dbl))
+   return(updated_ds_tb)
+  
+}
+add_diffs_by_group_and_tmpt <- function(ds_tb = trial_ds_tb,
+                            cmprsn_var_nm_1L_chr = "study_arm_chr",
+                            cmprsn_group_match_val_chr = c("Intervention"),
+                            timepoint_var_nm_1L_chr = "round",
+                            timepoint_match_val_1L_chr = "Follow-up",
+                            match_idx_var_nm_1L_chr = "match_idx_int",
+                            var_nms_chr, # From this point on should be a tibble and moved to become second arg
+                            fns_ls,
+                            abs_mean_diff_dbl,
+                            diff_sd_dbl,
+                            multiplier_dbl,
+                            min_dbl,
+                            max_dbl){
+  unchanged_vals_tb <- ds_tb %>%
+    dplyr::filter(!(!!rlang::sym(cmprsn_var_nm_1L_chr) == cmprsn_group_match_val_chr & 
+                    !!rlang::sym(timepoint_var_nm_1L_chr) == timepoint_match_val_1L_chr))
+  updated_vals_tb <- ds_tb %>%
+    dplyr::filter(!!rlang::sym(cmprsn_var_nm_1L_chr) == cmprsn_group_match_val_chr & 
+                    !!rlang::sym(timepoint_var_nm_1L_chr) == timepoint_match_val_1L_chr) %>%
+    update_multpl_cols_with_diffs(var_nms_chr = var_nms_chr,
+                                  fns_ls = fns_ls,
+                                  abs_mean_diff_dbl = abs_mean_diff_dbl,
+                                  diff_sd_dbl = diff_sd_dbl,
+                                  multiplier_dbl = multiplier_dbl,
+                                  min_dbl = min_dbl,
+                                  max_dbl = max_dbl)
+  updated_ds_tb <- dplyr::bind_rows(unchanged_vals_tb,
+                   updated_vals_tb) %>%
+    dplyr::arrange(!!rlang::sym(match_idx_var_nm_1L_chr))
+  return(updated_ds_tb)
+                            }
+make_balanced_fake_ds <- function(ds_tb,
+                               match_on_vars_chr,
                                UID_var_nm_1L_chr = "UID_chr",
                                timepoint_var_nm_1L_chr = "Timepoint_chr",
                                timepoint_bl_val_1L_chr = "Baseline",
@@ -33,7 +93,8 @@ make_fake_trial_ds <- function(ds_tb,
                              timepoint_bl_val_1L_chr = timepoint_bl_val_1L_chr,
                              cmprsn_var_nm_1L_chr = cmprsn_var_nm_1L_chr,
                              active_arm_val_1L_chr = cmprsn_groups_chr[1],
-                predictors_chr = predictors_chr)
+                UID_var_nm_1L_chr = UID_var_nm_1L_chr, 
+                match_on_vars_chr = match_on_vars_chr)
 return(ds_tb)
 }
 match_ds_arms <- function(ds_tb,
@@ -41,15 +102,16 @@ match_ds_arms <- function(ds_tb,
                           timepoint_bl_val_1L_chr = "Baseline",
                           cmprsn_var_nm_1L_chr = "study_arm_chr",
                           active_arm_val_1L_chr = "Intervention",
-                          predictors_chr){
+                          UID_var_nm_1L_chr = "fkClientID",
+                          match_on_vars_chr){
   match_ds <- ds_tb %>% dplyr::filter(!!rlang::sym(timepoint_var_nm_1L_chr) == timepoint_bl_val_1L_chr) %>%
   dplyr::mutate(Intervention_lgl = dplyr::case_when(!!rlang::sym(cmprsn_var_nm_1L_chr) == active_arm_val_1L_chr ~ T,
                                                     T ~ F)) 
 matched_ls <- make_formula("Intervention_lgl",
-                           predictors_chr = predictors_chr) %>%
+                           predictors_chr = match_on_vars_chr) %>%
   MatchIt::matchit(data = match_ds, method = "nearest", ratio = 1)
 matched_ds_tb <- MatchIt::match.data(matched_ls) 
-match_key_ds_tb <- c(F,T) %>% purrr::map_dfr(~matched_ds_tb %>% dplyr::filter(Intervention_lgl == .x) %>% dplyr::arrange(distance) %>% dplyr::mutate(match_idx_int = 1:dplyr::n())) %>% dplyr::arrange(match_idx_int) %>% dplyr::select(UID, study_arm_chr, match_idx_int)
+match_key_ds_tb <- c(F,T) %>% purrr::map_dfr(~matched_ds_tb %>% dplyr::filter(Intervention_lgl == .x) %>% dplyr::arrange(distance) %>% dplyr::mutate(match_idx_int = 1:dplyr::n())) %>% dplyr::arrange(match_idx_int) %>% dplyr::select(!!rlang::sym(UID_var_nm_1L_chr), study_arm_chr, match_idx_int)
 matched_ds_tb <- dplyr::right_join(ds_tb,match_key_ds_tb) %>% dplyr::arrange(match_idx_int)
 return(matched_ds_tb)
 }
@@ -82,18 +144,6 @@ ds_tb <- ds_tb %>% dplyr::mutate(!!rlang::sym(cmprsn_var_nm_1L_chr) := dplyr::ca
   dplyr::filter(!!rlang::sym(cmprsn_var_nm_1L_chr) %in% cmprsn_groups_chr) 
 return(ds_tb)
 }
-add_costs_from_gamma_dist <- function(ds_tb,
-                                      costs_mean_dbl,
-                                      costs_sd_dbl,
-                                      costs_var_nm_1L_dbl = "costs_dbl"){
-
-   updated_ds_tb <- dplyr::mutate(ds_tb, 
-                                  !!rlang::sym(costs_var_nm_1L_dbl) := make_costs_vec_from_gamma_dist(n_int  =nrow(ds_tb),
-                                           costs_mean_dbl = costs_mean_dbl,
-                                           costs_sd_dbl = costs_sd_dbl))
-   return(updated_ds_tb)
-  
-}
 make_costs_vec_from_gamma_dist <- function(n_int,
                                            costs_mean_dbl,
                                            costs_sd_dbl){
@@ -102,10 +152,45 @@ make_costs_vec_from_gamma_dist <- function(n_int,
    costs_dbl <- rgamma(n_int,shape = shape_1L_dbl, scale = scale_1L_dbl)
    return(costs_dbl)
 }
+make_fake_trial_ds <- function(ds_tb,
+                               UID_var_nm_1L_chr = "fkClientID",
+                               timepoint_var_nm_1L_chr = "round",
+                               timepoint_lvls_chr = c("Baseline","Follow-up"),
+                               match_on_vars_chr,
+                               cmprsn_var_nm_1L_chr = "study_arm_chr",
+                               cmprsn_groups_chr = c("Intervention","Control"),
+                               fns_ls,
+                               abs_mean_diff_dbl,
+                               diff_sd_dbl,
+                               multiplier_dbl,
+                               min_dbl,
+                               max_dbl,
+                               match_idx_var_nm_1L_chr = "match_idx_int"){
+    updated_ds_tb <- ds_tb %>%
+      make_balanced_fake_ds(UID_var_nm_1L_chr = UID_var_nm_1L_chr,
+                     timepoint_var_nm_1L_chr = timepoint_var_nm_1L_chr,
+                     timepoint_bl_val_1L_chr = timepoint_lvls_chr[1],
+                     match_on_vars_chr = match_on_vars_chr,
+                     cmprsn_var_nm_1L_chr = cmprsn_var_nm_1L_chr ,
+                     cmprsn_groups_chr = cmprsn_groups_chr) %>%
+  add_diffs_by_group_and_tmpt(cmprsn_var_nm_1L_chr = cmprsn_var_nm_1L_chr ,
+                            cmprsn_group_match_val_chr = cmprsn_groups_chr[1],
+                            timepoint_var_nm_1L_chr = timepoint_var_nm_1L_chr,
+                            timepoint_match_val_1L_chr = timepoint_lvls_chr[2],
+                            var_nms_chr = match_on_vars_chr,
+                            fns_ls = list(rnorm,rnorm,make_costs_vec_from_gamma_dist),
+                            abs_mean_diff_dbl = abs_mean_diff_dbl,
+                            diff_sd_dbl = diff_sd_dbl,
+                            multiplier_dbl = multiplier_dbl,
+                            min_dbl = min_dbl,
+                            max_dbl = max_dbl,
+                            match_idx_var_nm_1L_chr = match_idx_var_nm_1L_chr)
+    return(updated_ds_tb)
+                               }
 update_col_with_diff <- function(ds_tb,
                                  var_nm_1L_chr,
                                  fn,
-                                 abs_mean_diff_1L_dbl,
+                                 abs_mean_diff_1L_dbl, # NB - Population mean, not sample mean
                                  diff_sd_1L_dbl,
                                  multiplier_1L_dbl,
                                  min_1L_dbl,
@@ -124,7 +209,7 @@ update_col_with_diff <- function(ds_tb,
 update_multpl_cols_with_diffs <- function(ds_tb,
                                           var_nms_chr,
                                           fns_ls,
-                                          abs_mean_diff_dbl,
+                                          abs_mean_diff_dbl, # NB - Population mean, not sample mean
                                           diff_sd_dbl,
                                           multiplier_dbl,
                                           min_dbl,
@@ -152,34 +237,76 @@ update_multpl_cols_with_diffs <- function(ds_tb,
 ## Add costs to ds and to psm formula
 ```
 ```{r}
-trial_ds_tb <- updated_data_tb 
-timepoint_var_nm_1L_chr <- "Timepoint"
-trial_ds_tb <- purrr::pmap_dfr(list(c("Baseline","Follow-up"),
-                     c(300,1500),
-                     c(100,120)),
-            ~ {
-              args_ls <- list(trial_ds_tb %>%
-              dplyr::filter(!!rlang::sym(timepoint_var_nm_1L_chr) == ..1),..2,..3)
-              rlang::exec(.fn = add_costs_from_gamma_dist, !!!args_ls)
-              }) 
+set.seed(1234)
+UID_var_nm_1L_chr <- "fkClientID"
+timepoint_var_nm_1L_chr <- "round"
+cmprsn_var_nm_1L_chr <- "study_arm_chr"
+cmprsn_groups_chr <- c("Intervention","Control")
+timepoint_lvls_chr <- c("Baseline","Follow-up")
+match_on_vars_chr <- c("PHQ9","SOFAS","costs_dbl")
+trial_ds_tb <- youthu::replication_popl_tb %>%
+  dplyr::select(fkClientID,round,PHQ9, SOFAS) %>% #
+  na.omit() %>%
+  dplyr::mutate(SOFAS = as.integer(round(SOFAS,0))) %>%
+  tibble::as_tibble() %>%
+  add_costs_by_tmpt(timepoint_var_nm_1L_chr = timepoint_var_nm_1L_chr,
+                    timepoint_lvls_chr = timepoint_lvls_chr,
+                    costs_mean_dbl = c(300,1500),
+                    costs_sd_dbl = c(100,120),
+                    fn = add_costs_from_gamma_dist) %>%
+make_fake_trial_ds(UID_var_nm_1L_chr = UID_var_nm_1L_chr,
+                   timepoint_var_nm_1L_chr = timepoint_var_nm_1L_chr,
+                   timepoint_lvls_chr = timepoint_lvls_chr,
+                   match_on_vars_chr = match_on_vars_chr,
+                   cmprsn_var_nm_1L_chr = cmprsn_var_nm_1L_chr,
+                   cmprsn_groups_chr = cmprsn_groups_chr,
+                   fns_ls = list(rnorm,rnorm,make_costs_vec_from_gamma_dist),
+                   abs_mean_diff_dbl = c(3,8,300),
+                   diff_sd_dbl = c(7,10,400),
+                   multiplier_dbl = c(1,1,1),
+                   min_dbl = c(0,0,0),
+                   max_dbl = c(27,100,Inf),
+                   match_idx_var_nm_1L_chr = "match_idx_int")
 trial_ds_tb <- trial_ds_tb %>%
-  make_fake_trial_ds(UID_var_nm_1L_chr = "UID", 
-                     timepoint_var_nm_1L_chr = timepoint_var_nm_1L_chr,
-                     timepoint_bl_val_1L_chr = "Baseline",
-                     predictors_chr = c("PHQ_total","SOFAS_total","costs_dbl"),
-                     cmprsn_var_nm_1L_chr = "study_arm_chr",
-                     cmprsn_groups_chr = c("Intervention","Control")) 
+  dplyr::mutate(PHQ9 =as.integer(round(PHQ9,0)),
+                SOFAS = as.integer(round(SOFAS,0)))
 
-updated_trial_ds_tb <- update_multpl_cols_with_diffs(ds_tb = trial_ds_tb,
-                                                     var_nms_chr = c("PHQ_total","SOFAS_total","costs_dbl"),
-     fns_ls = list(rnorm,rnorm,make_costs_vec_from_gamma_dist),
-     abs_mean_diff_dbl = c(3,8,300),
-     diff_sd_dbl = c(7,10,400),
-     multiplier_dbl = c(1,1,1),
-     min_dbl = c(0,0,0),
-     max_dbl = c(27,100,Inf))
+```
 
-trial_ds_tb 
+```{r}
+trial_ds_tb %>% head()
+```
 
+```{r}
+summary((trial_ds_tb %>% dplyr::filter(study_arm_chr == "Control" & round == "Baseline"))[2:5])
+```
+```{r}
+summary((trial_ds_tb %>% dplyr::filter(study_arm_chr == "Intervention" & round == "Baseline"))[2:5])
+```
+```{r}
+summary((trial_ds_tb %>% dplyr::filter(study_arm_chr == "Control" & round == "Follow-up"))[2:5])
+```
+```{r}
+summary((trial_ds_tb %>% dplyr::filter(study_arm_chr == "Intervention" & round == "Follow-up"))[2:5])
+```
+
+```{r}
+candidate_mdls_tb <- get_mdls_using_predrs(predictors_lup$short_name_chr[c(5,7)])
+model_mdl <- get_mdl_from_dv(candidate_mdls_tb$mdl_nms_chr[4])
+```
+
+```{r}
+updated_data_tb <- add_aqol6d_predn_to_ds(data_tb = trial_ds_tb,
+                                   model_mdl = model_mdl,
+                                   #predr_vars_nms_chr = c(PHQ9 = "PHQ_total", SOFAS = "SOFAS_total"),
+                                   tfmn_1L_chr = get_tfmn_from_lup(candidate_mdls_tb$mdl_nms_chr[4]),
+                                   utl_var_nm_1L_chr = "AQoL6D_HU",
+                                   id_var_nm_1L_chr = UID_var_nm_1L_chr,
+                                   round_var_nm_1L_chr = timepoint_var_nm_1L_chr,
+                                   round_bl_val_1L_chr = timepoint_lvls_chr[1])
+```
+
+```{r}
+updated_data_tb %>% head()
 ```
 
