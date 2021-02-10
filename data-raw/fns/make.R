@@ -120,11 +120,13 @@ make_fake_trial_ds <- function(ds_tb,
                                cmprsn_var_nm_1L_chr = "study_arm_chr",
                                cmprsn_groups_chr = c("Intervention","Control"),
                                fns_ls,
+                               var_nms_chr,
                                abs_mean_diff_dbl,
                                diff_sd_dbl,
                                multiplier_dbl,
                                min_dbl,
                                max_dbl,
+                               integer_lgl,
                                match_idx_var_nm_1L_chr = "match_idx_int"){
     updated_ds_tb <- ds_tb %>%
         make_balanced_fake_ds(id_var_nm_1L_chr = id_var_nm_1L_chr,
@@ -137,14 +139,16 @@ make_fake_trial_ds <- function(ds_tb,
                                     cmprsn_group_match_val_chr = cmprsn_groups_chr[1],
                                     round_var_nm_1L_chr = round_var_nm_1L_chr,
                                     timepoint_match_val_1L_chr = round_lvls_chr[2],
-                                    var_nms_chr = match_on_vars_chr,
-                                    fns_ls = list(rnorm,rnorm,make_costs_vec_from_gamma_dist),
+                                    match_idx_var_nm_1L_chr = match_idx_var_nm_1L_chr,
+                                    var_nms_chr = var_nms_chr,
+                                    fns_ls = fns_ls,
                                     abs_mean_diff_dbl = abs_mean_diff_dbl,
                                     diff_sd_dbl = diff_sd_dbl,
                                     multiplier_dbl = multiplier_dbl,
                                     min_dbl = min_dbl,
                                     max_dbl = max_dbl,
-                                    match_idx_var_nm_1L_chr = match_idx_var_nm_1L_chr)
+                                    integer_lgl = integer_lgl
+                                    )
     return(updated_ds_tb)
 }
 make_formula <- function(dep_var_nm_1L_chr,

@@ -195,7 +195,8 @@ add_diffs_by_group_and_tmpt <- function(ds_tb = trial_ds_tb,
                                         diff_sd_dbl,
                                         multiplier_dbl,
                                         min_dbl,
-                                        max_dbl){
+                                        max_dbl,
+                                        integer_lgl){
   unchanged_vals_tb <- ds_tb %>%
     dplyr::filter(!(!!rlang::sym(cmprsn_var_nm_1L_chr) == cmprsn_group_match_val_chr &
                       !!rlang::sym(round_var_nm_1L_chr) == timepoint_match_val_1L_chr))
@@ -208,7 +209,8 @@ add_diffs_by_group_and_tmpt <- function(ds_tb = trial_ds_tb,
                                   diff_sd_dbl = diff_sd_dbl,
                                   multiplier_dbl = multiplier_dbl,
                                   min_dbl = min_dbl,
-                                  max_dbl = max_dbl)
+                                  max_dbl = max_dbl,
+                                  integer_lgl = integer_lgl)
   updated_ds_tb <- dplyr::bind_rows(unchanged_vals_tb,
                                     updated_vals_tb) %>%
     dplyr::arrange(!!rlang::sym(match_idx_var_nm_1L_chr))

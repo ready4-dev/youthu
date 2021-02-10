@@ -33,7 +33,7 @@ predictors_lup[,1:5] %>%
 ```
 
 ## Match model predictors to the prediction dataset
-Next, we can identify which of the above variables are present in the dataset we plan to use for prediction. To illustrate this step, we have created a prediction dataset that is a simplified version of the youthu [replication dataset](Replication_DS.html). This illustrative dataset reflects the likely real-world circumstance in which the prediction dataset uses a different naming convention to that of the dataset we used to estimate the youth models. 
+Next, we can identify which of the above variables are present in the dataset we plan to use for prediction. To illustrate this step, we have created a prediction dataset that is a modified and simplified version of the youthu [replication dataset](Replication_DS.html). This illustrative dataset reflects the likely real-world circumstance in which the prediction dataset uses a different naming convention to that of the dataset we used to estimate the youth models. 
 
 ```{r }
 data_tb <- youthu::replication_popl_tb %>%
