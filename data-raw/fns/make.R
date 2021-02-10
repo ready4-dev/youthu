@@ -46,6 +46,27 @@ make_aqol6d_items_tb <- function (aqol_tb, old_pfx_1L_chr, new_pfx_1L_chr)
         })
     return(aqol6d_items_tb)
 }
+make_balanced_fake_ds <- function(ds_tb,
+                                  match_on_vars_chr,
+                                  id_var_nm_1L_chr = "UID_chr",
+                                  round_var_nm_1L_chr = "Timepoint_chr",
+                                  timepoint_bl_val_1L_chr = "Baseline",
+                                  cmprsn_var_nm_1L_chr = "study_arm_chr",
+                                  cmprsn_groups_chr = c("Intervention","Control")
+){
+    ds_tb <- ds_tb %>%
+        transform_ds_for_cmprsn(id_var_nm_1L_chr = id_var_nm_1L_chr,
+                                round_var_nm_1L_chr = round_var_nm_1L_chr,
+                                cmprsn_var_nm_1L_chr = cmprsn_var_nm_1L_chr,
+                                cmprsn_groups_chr = cmprsn_groups_chr) %>%
+        make_matched_ds(round_var_nm_1L_chr = round_var_nm_1L_chr,
+                        timepoint_bl_val_1L_chr = timepoint_bl_val_1L_chr,
+                        cmprsn_var_nm_1L_chr = cmprsn_var_nm_1L_chr,
+                        active_arm_val_1L_chr = cmprsn_groups_chr[1],
+                        id_var_nm_1L_chr = id_var_nm_1L_chr,
+                        match_on_vars_chr = match_on_vars_chr)
+    return(ds_tb)
+}
 make_complete_props_tbs_ls <- function (raw_props_tbs_ls, question_var_nm_1L_chr = "Question")
 {
     complete_props_tbs_ls <- raw_props_tbs_ls %>% purrr::map(~{
@@ -67,6 +88,14 @@ make_correlated_data_tb <- function (synth_data_spine_ls, synth_data_idx_1L_dbl 
         min_max_ls = synth_data_spine_ls$min_max_ls, discrete_lgl = synth_data_spine_ls$discrete_lgl)
     return(correlated_data_tb)
 }
+make_costs_vec_from_gamma_dist <- function(n_int,
+                                           costs_mean_dbl,
+                                           costs_sd_dbl){
+    scale_1L_dbl <- costs_sd_dbl^2/costs_mean_dbl
+    shape_1L_dbl <- costs_mean_dbl / scale_1L_dbl
+    costs_dbl <- rgamma(n_int,shape = shape_1L_dbl, scale = scale_1L_dbl)
+    return(costs_dbl)
+}
 make_dim_sclg_cons_dbl <- function (domains_chr, dim_sclg_con_lup_tb)
 {
     dim_sclg_cons_dbl <- purrr::map_dbl(domains_chr, ~ready4fun::get_from_lup_obj(dim_sclg_con_lup_tb,
@@ -83,16 +112,77 @@ make_domain_items_ls <- function (domain_qs_lup_tb, item_pfx_1L_chr)
         .x)) %>% stats::setNames(domains_chr)
     return(domain_items_ls)
 }
+make_fake_trial_ds <- function(ds_tb,
+                               id_var_nm_1L_chr = "fkClientID",
+                               round_var_nm_1L_chr = "round",
+                               round_lvls_chr = c("Baseline","Follow-up"),
+                               match_on_vars_chr,
+                               cmprsn_var_nm_1L_chr = "study_arm_chr",
+                               cmprsn_groups_chr = c("Intervention","Control"),
+                               fns_ls,
+                               abs_mean_diff_dbl,
+                               diff_sd_dbl,
+                               multiplier_dbl,
+                               min_dbl,
+                               max_dbl,
+                               match_idx_var_nm_1L_chr = "match_idx_int"){
+    updated_ds_tb <- ds_tb %>%
+        make_balanced_fake_ds(id_var_nm_1L_chr = id_var_nm_1L_chr,
+                              round_var_nm_1L_chr = round_var_nm_1L_chr,
+                              timepoint_bl_val_1L_chr = round_lvls_chr[1],
+                              match_on_vars_chr = match_on_vars_chr,
+                              cmprsn_var_nm_1L_chr = cmprsn_var_nm_1L_chr ,
+                              cmprsn_groups_chr = cmprsn_groups_chr) %>%
+        add_diffs_by_group_and_tmpt(cmprsn_var_nm_1L_chr = cmprsn_var_nm_1L_chr ,
+                                    cmprsn_group_match_val_chr = cmprsn_groups_chr[1],
+                                    round_var_nm_1L_chr = round_var_nm_1L_chr,
+                                    timepoint_match_val_1L_chr = round_lvls_chr[2],
+                                    var_nms_chr = match_on_vars_chr,
+                                    fns_ls = list(rnorm,rnorm,make_costs_vec_from_gamma_dist),
+                                    abs_mean_diff_dbl = abs_mean_diff_dbl,
+                                    diff_sd_dbl = diff_sd_dbl,
+                                    multiplier_dbl = multiplier_dbl,
+                                    min_dbl = min_dbl,
+                                    max_dbl = max_dbl,
+                                    match_idx_var_nm_1L_chr = match_idx_var_nm_1L_chr)
+    return(updated_ds_tb)
+}
+make_formula <- function(dep_var_nm_1L_chr,
+                         predictors_chr,
+                         environment_env = parent.frame()){
+    formula_fml <- formula(paste0(dep_var_nm_1L_chr,
+                                  " ~ ",
+                                  paste0(predictors_chr, collapse = " + ")), env = environment_env)
+    return(formula_fml)
+}
 make_item_wrst_wghts_ls_ls <- function (domain_items_ls, itm_wrst_wghts_lup_tb)
 {
     item_wrst_wghts_ls_ls <- domain_items_ls %>% purrr::map(~{
         purrr::map_dbl(.x, ~{
             ready4fun::get_from_lup_obj(itm_wrst_wghts_lup_tb,
-                match_var_nm_1L_chr = "Question_chr", match_value_xx = .x,
-                target_var_nm_1L_chr = "Worst_Weight_dbl", evaluate_lgl = F)
+                                        match_var_nm_1L_chr = "Question_chr", match_value_xx = .x,
+                                        target_var_nm_1L_chr = "Worst_Weight_dbl", evaluate_lgl = F)
         })
     })
     return(item_wrst_wghts_ls_ls)
+}
+make_matched_ds <- function(ds_tb,
+                            round_var_nm_1L_chr = "Timepoint_chr",
+                            timepoint_bl_val_1L_chr = "Baseline",
+                            cmprsn_var_nm_1L_chr = "study_arm_chr",
+                            active_arm_val_1L_chr = "Intervention",
+                            id_var_nm_1L_chr = "fkClientID",
+                            match_on_vars_chr){
+    match_ds <- ds_tb %>% dplyr::filter(!!rlang::sym(round_var_nm_1L_chr) == timepoint_bl_val_1L_chr) %>%
+        dplyr::mutate(Intervention_lgl = dplyr::case_when(!!rlang::sym(cmprsn_var_nm_1L_chr) == active_arm_val_1L_chr ~ T,
+                                                          T ~ F))
+    matched_ls <- make_formula("Intervention_lgl",
+                               predictors_chr = match_on_vars_chr) %>%
+        MatchIt::matchit(data = match_ds, method = "nearest", ratio = 1)
+    matched_ds_tb <- MatchIt::match.data(matched_ls)
+    match_key_ds_tb <- c(F,T) %>% purrr::map_dfr(~matched_ds_tb %>% dplyr::filter(Intervention_lgl == .x) %>% dplyr::arrange(distance) %>% dplyr::mutate(match_idx_int = 1:dplyr::n())) %>% dplyr::arrange(match_idx_int) %>% dplyr::select(!!rlang::sym(id_var_nm_1L_chr), study_arm_chr, match_idx_int)
+    matched_ds_tb <- dplyr::right_join(ds_tb,match_key_ds_tb) %>% dplyr::arrange(match_idx_int)
+    return(matched_ds_tb)
 }
 make_pdef_cor_mat_mat <- function (lower_diag_mat)
 {

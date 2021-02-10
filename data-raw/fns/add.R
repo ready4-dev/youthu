@@ -65,6 +65,7 @@ add_aqol6d_predn_to_ds <- function(data_tb,
                                    nmd_vec_chr = predr_vars_nms_chr,
                                    vec_nms_as_new_1L_lgl = T)
   }
+
   terms_ls <- model_mdl$terms
   mdl_dep_var_1L_chr <- terms_ls[[2]] %>% as.character()
   mdl_predr_terms_chr <- terms_ls[[3]] %>% as.character()
@@ -72,6 +73,10 @@ add_aqol6d_predn_to_ds <- function(data_tb,
   mdl_predr_terms_chr <- mdl_predr_terms_chr[mdl_predr_terms_chr!="+"]
   mdl_predr_terms_chr <- mdl_predr_terms_chr %>% purrr::map_chr(~stringr::str_replace(.x,"_baseline","") %>%                                                         stringr::str_replace("_change","")
   ) %>% unique()
+  original_ds_vars_chr <- names(data_tb)[!names(data_tb) %in% c(mdl_predr_terms_chr,
+                                        ifelse(!is.null(utl_var_nm_1L_chr),
+                                               utl_var_nm_1L_chr,
+                                               mdl_dep_var_1L_chr))]
   updated_tb <- data_tb %>%
     transform_ds_to_predn_ds(predr_vars_nms_chr = mdl_predr_terms_chr,
                              tfmn_1L_chr = tfmn_1L_chr,
@@ -98,6 +103,9 @@ add_aqol6d_predn_to_ds <- function(data_tb,
   if("aqol6d_total_w_CLL_cloglog" %in% names(updated_tb))
     updated_tb <- updated_tb %>%
     dplyr::select(-aqol6d_total_w_CLL_cloglog)
+  updated_tb <- dplyr::left_join(data_tb %>% dplyr::select(original_ds_vars_chr),
+                                 updated_tb) %>%
+    dplyr::select(c(names(updated_tb),setdiff(names(data_tb),names(updated_tb))))
   return(updated_tb)
 }
 add_adol6d_scores <- function (unscored_aqol_tb, prefix_1L_chr = "aqol6d_q", id_var_nm_1L_chr = "fkClientID",
@@ -146,6 +154,65 @@ add_cors_and_uts_to_aqol6d_tbs_ls <- function (aqol6d_tbs_ls, aqol_scores_pars_l
         prefix_chr = prefix_chr, aqol_tots_var_nms_chr = aqol_tots_var_nms_chr,
         id_var_nm_1L_chr = id_var_nm_1L_chr)
     return(aqol6d_tbs_ls)
+}
+add_costs_by_tmpt <- function(ds_tb,
+                              round_var_nm_1L_chr,
+                              round_lvls_chr = c("Baseline","Follow-up"),
+                              costs_mean_dbl,
+                              costs_sd_dbl,
+                              fn = add_costs_from_gamma_dist){
+  updated_ds_tb <- purrr::pmap_dfr(list(round_lvls_chr,
+                                        costs_mean_dbl,
+                                        costs_sd_dbl),
+                                   ~ {
+                                     args_ls <- list(ds_tb %>%
+                                                       dplyr::filter(!!rlang::sym(round_var_nm_1L_chr) == ..1),..2,..3)
+                                     rlang::exec(.fn = fn, !!!args_ls)
+                                   })
+  return(updated_ds_tb)
+}
+add_costs_from_gamma_dist <- function(ds_tb,
+                                      costs_mean_dbl,
+                                      costs_sd_dbl,
+                                      costs_var_nm_1L_dbl = "costs_dbl"){
+
+  updated_ds_tb <- dplyr::mutate(ds_tb,
+                                 !!rlang::sym(costs_var_nm_1L_dbl) := make_costs_vec_from_gamma_dist(n_int  =nrow(ds_tb),
+                                                                                                     costs_mean_dbl = costs_mean_dbl,
+                                                                                                     costs_sd_dbl = costs_sd_dbl))
+  return(updated_ds_tb)
+
+}
+add_diffs_by_group_and_tmpt <- function(ds_tb = trial_ds_tb,
+                                        cmprsn_var_nm_1L_chr = "study_arm_chr",
+                                        cmprsn_group_match_val_chr = c("Intervention"),
+                                        round_var_nm_1L_chr = "round",
+                                        timepoint_match_val_1L_chr = "Follow-up",
+                                        match_idx_var_nm_1L_chr = "match_idx_int",
+                                        var_nms_chr, # From this point on should be a tibble and moved to become second arg
+                                        fns_ls,
+                                        abs_mean_diff_dbl,
+                                        diff_sd_dbl,
+                                        multiplier_dbl,
+                                        min_dbl,
+                                        max_dbl){
+  unchanged_vals_tb <- ds_tb %>%
+    dplyr::filter(!(!!rlang::sym(cmprsn_var_nm_1L_chr) == cmprsn_group_match_val_chr &
+                      !!rlang::sym(round_var_nm_1L_chr) == timepoint_match_val_1L_chr))
+  updated_vals_tb <- ds_tb %>%
+    dplyr::filter(!!rlang::sym(cmprsn_var_nm_1L_chr) == cmprsn_group_match_val_chr &
+                    !!rlang::sym(round_var_nm_1L_chr) == timepoint_match_val_1L_chr) %>%
+    update_multpl_cols_with_diffs(var_nms_chr = var_nms_chr,
+                                  fns_ls = fns_ls,
+                                  abs_mean_diff_dbl = abs_mean_diff_dbl,
+                                  diff_sd_dbl = diff_sd_dbl,
+                                  multiplier_dbl = multiplier_dbl,
+                                  min_dbl = min_dbl,
+                                  max_dbl = max_dbl)
+  updated_ds_tb <- dplyr::bind_rows(unchanged_vals_tb,
+                                    updated_vals_tb) %>%
+    dplyr::arrange(!!rlang::sym(match_idx_var_nm_1L_chr))
+  return(updated_ds_tb)
 }
 add_dim_disv_to_aqol6d_items_tb <- function (aqol6d_items_tb, domain_items_ls, domains_chr, dim_sclg_con_lup_tb = aqol6d_dim_sclg_con_lup_tb,
     itm_wrst_wghts_lup_tb = aqol6d_adult_itm_wrst_wghts_lup_tb)

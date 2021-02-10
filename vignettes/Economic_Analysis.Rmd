@@ -1,0 +1,111 @@
+---
+title: "Economic analysis"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Economic analysis}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+params:
+  output_type_1L_chr: HTML
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r}
+library(youthu)
+set.seed(1234)
+```
+
+# Types of economic analysis facilitated by youthu
+There are four types of economic analysis in youth mental health that youthu can help with:
+
+- Extending cost-consequence and cost-effectiveness economic evaluations to include cost-utility analyses that are easier for healthcare policy-makers to interpret;
+- Extending efficacy trials with a modelled analysis exploring the plausibility of the potential cost-effectiveness of study interventions;
+- Extending single group datasets (e.g. health service records, pilot studys) with a modelled analysis of the potential for hypothethised interventions being cost-effective; and
+- Assessing the potential economic value of alternative intervention research proposals.
+
+# Extending cost-consequence and cost-effectiveness economic evaluations
+There are multiple types of economic evaluations of healthcare interventions that a study may choose to adopt. If an intervention trial measures differences in clinical, functional and healthcare resource use outcomes, the two most straightforward and useful analyses to undertake are cost-consequence analysis (where a synopsis of the differences in a range of measures are presented alongside cost differences for a decision maker to interpret subjectively) and cost-effectiveness analysis (where a ratio statistic of differences in costs to differences in a single outcome measure is calculated).
+
+The policy implications of these two types of economic studies can be relatively simple to interpret if either the intervention or control arm is simultaneously cheaper and more effective across all included outcome measures. However, frequently a new intervention proves to be both more effective and more costly, in which case the policy message of such studies is much less clear due to the following limitations of each evaluation type:
+
+- In cost consequence analyses, the lack of any formal weighting for each of the included outcome measures makes it harder to interpret situations where an intervention has different directions of impact across different outcomes (e.g. improved functional outcomes alongside minor clinical deterioration).
+- In cost effectiveness analyses, the probable lack of any consensus willingness to pay benchmark.
+```{r}
+
+ds_smry_ls <- list(cmprsn_var_nm_1L_chr = "study_arm_chr",
+cmprsn_groups_chr = c("Intervention","Control"),
+id_var_nm_1L_chr = "fkClientID",
+round_var_nm_1L_chr = "round",
+round_lvls_chr = c("Baseline","Follow-up"),
+match_idx_var_nm_1L_chr = "match_idx_int",
+match_on_vars_chr = c("PHQ9","SOFAS","costs_dbl"),
+utl_var_nm_1L_chr = "AQoL6D_HU")
+```
+```{r}
+trial_ds_tb <- youthu::replication_popl_tb %>%
+  dplyr::select(fkClientID,round,PHQ9, SOFAS) %>% #
+  na.omit() %>%
+  dplyr::mutate(SOFAS = as.integer(round(SOFAS,0))) %>%
+  tibble::as_tibble() %>%
+  add_costs_by_tmpt(round_var_nm_1L_chr = ds_smry_ls$round_var_nm_1L_chr,
+                    round_lvls_chr = ds_smry_ls$round_lvls_chr,
+                    costs_mean_dbl = c(300,1500),
+                    costs_sd_dbl = c(100,120),
+                    fn = add_costs_from_gamma_dist) %>%
+make_fake_trial_ds(id_var_nm_1L_chr = ds_smry_ls$id_var_nm_1L_chr,
+                   round_var_nm_1L_chr = ds_smry_ls$round_var_nm_1L_chr,
+                   round_lvls_chr = ds_smry_ls$round_lvls_chr,
+                   match_on_vars_chr = ds_smry_ls$match_on_vars_chr,
+                   cmprsn_var_nm_1L_chr = ds_smry_ls$cmprsn_var_nm_1L_chr,
+                   cmprsn_groups_chr = ds_smry_ls$cmprsn_groups_chr,
+                   fns_ls = list(rnorm,rnorm,rnorm),
+                   abs_mean_diff_dbl = c(3,8,300),
+                   diff_sd_dbl = c(7,10,400),
+                   multiplier_dbl = c(-1,1,1),
+                   min_dbl = c(0,0,0),
+                   max_dbl = c(27,100,Inf),
+                   match_idx_var_nm_1L_chr = ds_smry_ls$match_idx_var_nm_1L_chr)
+trial_ds_tb <- trial_ds_tb %>%
+  dplyr::mutate(PHQ9 = as.integer(round(PHQ9,0)),
+                SOFAS = as.integer(round(SOFAS,0)))
+
+```
+
+```{r}
+trial_ds_tb %>% head()
+```
+
+```{r}
+candidate_mdls_tb <- get_mdls_using_predrs(predictors_lup$short_name_chr[c(5,7)])
+model_mdl <- get_mdl_from_dv(candidate_mdls_tb$mdl_nms_chr[4])
+```
+
+```{r}
+trial_ds_tb <- add_aqol6d_predn_to_ds(data_tb = trial_ds_tb,
+                                   model_mdl = model_mdl,
+                                   tfmn_1L_chr = get_tfmn_from_lup(candidate_mdls_tb$mdl_nms_chr[4]),
+                                   utl_var_nm_1L_chr = ds_smry_ls$utl_var_nm_1L_chr,
+                                   id_var_nm_1L_chr = ds_smry_ls$id_var_nm_1L_chr,
+                                   round_var_nm_1L_chr = ds_smry_ls$round_var_nm_1L_chr,
+                                   round_bl_val_1L_chr = ds_smry_ls$round_lvls_chr[1])
+```
+
+```{r}
+trial_ds_tb %>% head()
+```
+```{r}
+summary((trial_ds_tb %>% dplyr::filter(study_arm_chr == "Control" & round == "Baseline"))[3:6])
+```
+```{r}
+summary((trial_ds_tb %>% dplyr::filter(study_arm_chr == "Intervention" & round == "Baseline"))[3:6])
+```
+```{r}
+summary((trial_ds_tb %>% dplyr::filter(study_arm_chr == "Control" & round == "Follow-up"))[3:6])
+```
+```{r}
+summary((trial_ds_tb %>% dplyr::filter(study_arm_chr == "Intervention" & round == "Follow-up"))[3:6])
+```
+
+Dominant is easy, if not dominant we need a willingness to pay threshold.

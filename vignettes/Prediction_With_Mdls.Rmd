@@ -33,7 +33,7 @@ predictors_lup[,1:5] %>%
 ```
 
 ## Match model predictors to the prediction dataset
-Next, we can identify which of the above variables are present in the dataset we plan to use for prediction. To illustrate this step, we have created a prediction dataset that is a simplified version of the youthu [replication dataset](TA_Tools_Replication_DS.html). This illustrative dataset reflects the likely real-world circumstance in which the prediction dataset uses a different naming convention to that of the dataset we used to estimate the youth models. 
+Next, we can identify which of the above variables are present in the dataset we plan to use for prediction. To illustrate this step, we have created a prediction dataset that is a simplified version of the youthu [replication dataset](Replication_DS.html). This illustrative dataset reflects the likely real-world circumstance in which the prediction dataset uses a different naming convention to that of the dataset we used to estimate the youth models. 
 
 ```{r }
 data_tb <- youthu::replication_popl_tb %>%
@@ -66,7 +66,7 @@ mdl_predrs_in_ds_chr <- predictors_lup$short_name_chr[c(5,7)]
 mdl_predrs_in_ds_chr
 ```
 ## Predictor data integrity checks
-Another requirement is that the predictor variables in the prediction dataset must contain no missing values and conform to the requirements of class (in this case `integer`{.R}) and minimum and maximum values that are specified in the `predictors_lup`{.R} lookup table. We can confirm that these conditions hold by either visually inspecting the output of calls to base R `summary`{.R} and `class`{.R} functions or by using youthu's [data integrity tools](TA_Tools_Data_Integrity.html).
+Another requirement is that the predictor variables in the prediction dataset must contain no missing values and conform to the requirements of class (in this case `integer`{.R}) and minimum and maximum values that are specified in the `predictors_lup`{.R} lookup table. We can confirm that these conditions hold by either visually inspecting the output of calls to base R `summary`{.R} and `class`{.R} functions or by using youthu's [data integrity tools](Data_Integrity.html).
 
 ### Visual inspection checks
  
