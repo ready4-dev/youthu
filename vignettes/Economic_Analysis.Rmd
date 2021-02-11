@@ -16,108 +16,118 @@ knitr::opts_chunk$set(echo = TRUE)
 library(youthu)
 set.seed(1234)
 ```
-
-# Types of economic analysis facilitated by youthu
-There are four types of economic analysis in youth mental health that youthu can help with:
-
-- Extending cost-consequence and cost-effectiveness economic evaluations to include cost-utility analyses that are easier for healthcare policy-makers to interpret;
-- Extending efficacy trials with a modelled analysis exploring the plausibility of the potential cost-effectiveness of study interventions;
-- Extending single group datasets (e.g. health service records, pilot studys) with a modelled analysis of the potential for hypothethised interventions being cost-effective; and
-- Assessing the potential economic value of alternative intervention research proposals.
+# Motivation
+The main motivation behind the youthu package is to extend the types of economic analysis that can be undertaken with both single group (e.g. pilot study, health service records) and matched groups (e.g. trial) datasets that do not include measures of health utility.
 
 # Data requirements
-## Trial dataset
-For illustrative purposes, we can create a synthetic (fake) trial dataset. To create this dataset, we first summarise the key features of our new dataset such as :
+To use youthu to predict health utility for for records in a dataset, it is necessary for that dataset to [include one or more of the predictors used in the youthu models](Prediction_With_Mdls.html). In the examples illustrated in this article, we have selected PHQ9 and SOFAS predictors.
 
- - the name of variables for unique unit identifier, comparison group, comparison number, data collection round, data collection date and health utility measure;
- - the allowed values of comparison group and data collection variables,
- - the variables that we want to match on to create comparable intervention and control groups; and
- - the variables which we will manipulate in order to create differences between the intervention and control groups.
+Furthermore, to use health utility predictions in economic analysis, a dataset requires some additional features: 
+ - a single group dataset must also include unique unit identifier, data collection round, data collection date and duration of study participation variables;
+ - a matched group dataset needs all of the required variables for a single group dataset plus variables specifying group membership and match identifier.
  
+For both single group and matched group datasets, inclusion of a cost variable will extend the types of economic analysis that can be undertaken. 
+
+To illustrate the application of youthu functions to each type of dataset, we create synthetic (fake) data. To do so, we first make a list object that summarises the desired features of these datasets, such as:
+ - the name of variables for unique unit identifier, data collection round, data collection date and health utility measure;
+ - the allowed values of the data collection round variable,
+
 ```{r}
-ds_smry_ls <- list(cmprsn_var_nm_1L_chr = "study_arm_chr",
-cmprsn_groups_chr = c("Intervention","Control"),
-date_var_nm_1L_chr = "date_psx",
+ds_smry_ls <- list(date_var_nm_1L_chr = "date_psx",
 id_var_nm_1L_chr = "fkClientID",
 round_var_nm_1L_chr = "round",
-round_lvls_chr = c("Baseline","Follow-up"),
-match_idx_var_nm_1L_chr = "match_idx_int",
-match_on_vars_chr = c("PHQ9","SOFAS","costs_dbl"),
-utl_var_nm_1L_chr = "AQoL6D_HU",
-var_nms_chr = c("PHQ9","SOFAS","costs_dbl"))
+round_lvls_chr = c("Baseline","Follow-up"), 
+utl_var_nm_1L_chr = "AQoL6D_HU")
 ```
-
-We then pass these list of dataset descriptors, along with a four variable (PHQ9, SOFAS, record identified and data collection round) subset of the youthu `replication_popl_tb` [replication dataset](Replication_DS.html), to three youthu helper functions for working with synthetic data. The first helper function is `add_dates_from_dist`{.R}, which we use to add the dates at which each participant entered the study (randomly sampled from a sequence of 180 consecutive days from the last year), the duration of study participation for each individual (sampled from a truncated normal distribution, bounded between 80 and 110 days) and the dates of each participant's follow-up assessment. The next helper function is `add_costs_by_tmpt`{.R}, which we use to add a cost variable with gamma distributed costs that have mean values of \$300 and \$1500 at baseline and follow-up respectively. The final helper function is `make_fake_trial_ds`{.R}, which we use to split our single group dataset into two propensity score matched groups - one each for intervention and control. We also use this function to build in our assumptions about the **population** (not sample) distributions for group differences in changes in PHQ9, SOFAS and costs between baseline and follow-up.
+## Single group dataset
+We pass these list of dataset parameters, along with a four variable (PHQ9, SOFAS, record identified and data collection round) subset of the youthu `replication_popl_tb` [replication dataset](Replication_DS.html), to two youthu helper functions for working with synthetic data. The first helper function is `add_dates_from_dist`{.R}, which we use to add the dates at which each participant entered the study (randomly sampled from a sequence of 180 consecutive days from the last year), the duration of study participation for each individual (sampled from a truncated normal distribution, bounded between 80 and 110 days) and the dates of each participant's follow-up assessment. 
 
 ```{r}
-sngl_grp_outc_ds_tb <- youthu::replication_popl_tb %>%
+sngl_grp_ds_tb <- youthu::replication_popl_tb %>%
   dplyr::select(fkClientID,round,PHQ9, SOFAS) %>% #
   na.omit() %>%
   dplyr::mutate(SOFAS = as.integer(round(SOFAS,0))) %>%
   tibble::as_tibble() %>%
   add_dates_from_dist(bl_start_date_dtm = Sys.Date() - lubridate::days(300),
                        bl_end_date_dtm = Sys.Date() - lubridate::days(120),
-                       duration_args_ls = list(a=80, b=110, mean = 90, sd = 7),
+                       duration_args_ls = list(a = 80, b = 110, mean = 90, sd = 7),
                        duration_fn = truncnorm::rtruncnorm,
                        date_var_nm_1L_chr = ds_smry_ls$date_var_nm_1L_chr,
                        id_var_nm_1L_chr = ds_smry_ls$id_var_nm_1L_chr,
                        round_var_nm_1L_chr = ds_smry_ls$round_var_nm_1L_chr,
                        round_bl_val_1L_chr = ds_smry_ls$round_lvls_chr[1]) 
+```
+The second helper function is `add_costs_by_tmpt`{.R}, which we use to add a cost variable with gamma distributed costs that have **population** (not sample) mean values of \$300 for a defined period up to baseline and \$1500 for the costs accrued between baseline and follow-up. 
 
-sngl_grp_econ_ds_tb <- sngl_grp_outc_ds_tb  %>%
+```{r}
+sngl_grp_ds_tb <- sngl_grp_ds_tb  %>%
   add_costs_by_tmpt(round_var_nm_1L_chr = ds_smry_ls$round_var_nm_1L_chr,
                     round_lvls_chr = ds_smry_ls$round_lvls_chr,
                     costs_mean_dbl = c(300,1500),
                     costs_sd_dbl = c(100,120),
                     fn = add_costs_from_gamma_dist) 
+```
 
-econ_cmprsn_ds_tb <- sngl_grp_econ_ds_tb %>%
+The resulting single group dataset contains `r nrow(sngl_grp_ds_tb)` records, with a snapshot provided below.
+
+```{r}
+sngl_grp_ds_tb %>% dplyr::arrange(fkClientID) %>% head()
+```
+The `r sngl_grp_ds_tb %>% dplyr::filter(round == "Baseline") %>% nrow()` baseline records are summarised below.
+```{r}
+(sngl_grp_ds_tb %>% dplyr::filter(round == "Baseline"))[3:7] %>% summary()
+```
+The summary of `r sngl_grp_ds_tb %>% dplyr::filter(round == "Follow-up") %>% nrow()` follow-up records:
+```{r}
+(sngl_grp_ds_tb %>% dplyr::filter(round == "Follow-up"))[3:7] %>% summary()
+```
+## Matched group dataset
+To create a matched group dataset
+The final helper function is `make_fake_trial_ds`{.R}, which we use to split our single group dataset into two propensity score matched groups - one each for intervention and control. We also use this function to build in our assumptions about the **population** (not sample) distributions for group differences in changes in PHQ9, SOFAS and costs between baseline and follow-up.
+
+ -comparison group variable name and allowed values,
+ - the variables that we want to match on to create comparable intervention and control groups; and
+  - the variables which we will manipulate in order to create differences between the intervention and control groups.
+```{r}
+matched_ds_tb <- sngl_grp_ds_tb %>%
 make_fake_trial_ds(id_var_nm_1L_chr = ds_smry_ls$id_var_nm_1L_chr,
                    round_var_nm_1L_chr = ds_smry_ls$round_var_nm_1L_chr,
                    round_lvls_chr = ds_smry_ls$round_lvls_chr,
-                   match_on_vars_chr = ds_smry_ls$match_on_vars_chr,
-                   cmprsn_var_nm_1L_chr = ds_smry_ls$cmprsn_var_nm_1L_chr,
-                   cmprsn_groups_chr = ds_smry_ls$cmprsn_groups_chr,
+                   match_on_vars_chr = c("PHQ9","SOFAS","costs_dbl"),
+                   cmprsn_var_nm_1L_chr = "study_arm_chr",
+                   cmprsn_groups_chr = c("Intervention","Control"),
                    fns_ls = list(rnorm,rnorm,rnorm),
-                   var_nms_chr = ds_smry_ls$var_nms_chr,
+                   var_nms_chr = c("PHQ9","SOFAS","costs_dbl"),
                    abs_mean_diff_dbl = c(2,8,300),
                    diff_sd_dbl = c(7,10,400),
                    multiplier_dbl = c(1,1,1),
                    min_dbl = c(0,0,0),
                    max_dbl = c(27,100,Inf),
-                   integer_lgl = c(T,T,F),
-                   match_idx_var_nm_1L_chr = ds_smry_ls$match_idx_var_nm_1L_chr)
-
-effcy_cmprsn_ds_tb <- econ_cmprsn_ds_tb %>% dplyr::select(-costs_dbl)
-
+                   integer_lgl = c(T,T,F))
 ```
 
-The resulting dataset includes `r trial_ds_tb$match_idx_int %>% unique() %>% length()` matched comparisons, with each comparison containing baseline and follow-up records for one intervention arm participant and one control arm participant. The first few records are as follows.
+The resulting dataset includes `r matched_ds_tb$match_idx_int %>% unique() %>% length()` matched comparisons, with each comparison containing baseline and follow-up records for one intervention arm participant and one control arm participant. The first few records are as follows.
 
 ```{r}
-trial_ds_tb %>% head()
+matched_ds_tb %>% head()
 ```
 
 
 ```{r}
-summary((trial_ds_tb %>% dplyr::filter(study_arm_chr == "Control" & round == "Baseline"))[3:7])
+summary((econ_cmprsn_ds_tb %>% dplyr::filter(study_arm_chr == "Control" & round == "Baseline"))[3:7])
 ```
 ```{r}
-summary((trial_ds_tb %>% dplyr::filter(study_arm_chr == "Intervention" & round == "Baseline"))[3:7])
+summary((econ_cmprsn_ds_tb %>% dplyr::filter(study_arm_chr == "Intervention" & round == "Baseline"))[3:7])
 ```
 ```{r}
-summary((trial_ds_tb %>% dplyr::filter(study_arm_chr == "Control" & round == "Follow-up"))[3:7])
+summary((econ_cmprsn_ds_tb %>% dplyr::filter(study_arm_chr == "Control" & round == "Follow-up"))[3:7])
 ```
 ```{r}
-summary((trial_ds_tb %>% dplyr::filter(study_arm_chr == "Intervention" & round == "Follow-up"))[3:6])
+summary((econ_cmprsn_ds_tb %>% dplyr::filter(study_arm_chr == "Intervention" & round == "Follow-up"))[3:6])
 ```
 
-
-
-# Extending cost-consequence and cost-effectiveness economic evaluations
-
-## Background
-There are multiple types of economic evaluations of healthcare interventions that a study may choose to adopt. If an intervention trial measures differences in clinical, functional and healthcare resource use outcomes, the two most straightforward and useful analyses to undertake are cost-consequence analysis (where a synopsis of the differences in a range of measures are presented alongside cost differences for a decision maker to interpret subjectively) and cost-effectiveness analysis (where a statistic - the incremental cost-effectivess ratio or ICER - is calculated by dividing differences in costs by differences in a single outcome measure).
+## The usefulness of health utility for economic analyses
+Firstly, consider the case of a trial dataset examining differences in clinical, functional and healthcare resource use outcomes between intervention and control arms but containing no measure of health utility. The most feasible economic evaluation types to apply to this dataset are cost-consequence analysis (where a synopsis of the differences in a range of measures are presented alongside cost differences for a decision maker to interpret subjectively) and cost-effectiveness analysis (where a statistic - the incremental cost-effectiveness ratio or ICER - is calculated by dividing differences in costs by differences in a single outcome measure).
 
 The policy implications of these two types of economic studies can be relatively simple to interpret if either the intervention or control arm is simultaneously cheaper and more effective across all included outcome measures. However, frequently a new intervention proves to be both more effective and more costly, in which case the policy message of such studies is much less clear due to the following limitations of each evaluation type:
 
@@ -129,16 +139,33 @@ These types of short-comings can be significantly addressed by undertaking cost-
 - it uses a measure of benefit - quality adjusted life years (QALYs) - that captures multiple, weighted domains of health in a single index measure that can be applied across health conditions;
 - there are published benchmark willingness to pay values for use by decision makers in many countries to make ICER statistics readily interpretable.
 
-This example illustrates how youthu can be used to undertake cost-utility analysis in an economic evaluation dataset that does not contain any measure of health utility.
 
+# Prediction model
 
 ```{r}
 candidate_mdls_tb <- get_mdls_using_predrs(predictors_lup$short_name_chr[c(5,7)])
 model_mdl <- get_mdl_from_dv(candidate_mdls_tb$mdl_nms_chr[4])
 ```
 
+# Types of economic analysis facilitated by youthu
+There are four types of economic analysis in youth mental health that youthu can help with:
+
+- Extending cost-consequence and cost-effectiveness economic evaluations to include cost-utility analyses that are easier for healthcare policy-makers to interpret;
+- Extending efficacy trials with a modelled analysis exploring the plausibility of the potential cost-effectiveness of study interventions;
+- Extending single group datasets (e.g. health service records, pilot studys) with a modelled analysis of the potential for hypothethised interventions being cost-effective; and
+- Assessing the potential economic value of alternative intervention research proposals.
+
+## Extending cost-consequence and cost-effectiveness economic evaluations
+
+
+
+This example illustrates how youthu can be used to undertake cost-utility analysis in an economic evaluation dataset that does not contain any measure of health utility.
+
+
+
+
 ```{r}
-trial_ds_tb <- add_aqol6d_predn_to_ds(data_tb = trial_ds_tb,
+econ_cmprsn_ds_tb <- add_aqol6d_predn_to_ds(data_tb = econ_cmprsn_ds_tb,
                                    model_mdl = model_mdl,
                                    tfmn_1L_chr = get_tfmn_from_lup(candidate_mdls_tb$mdl_nms_chr[4]),
                                    utl_var_nm_1L_chr = ds_smry_ls$utl_var_nm_1L_chr,
@@ -148,7 +175,6 @@ trial_ds_tb <- add_aqol6d_predn_to_ds(data_tb = trial_ds_tb,
 ```
 
 ```{r}
-trial_ds_tb %>% head()
+econ_cmprsn_ds_tb %>% head()
 ```
 
-Dominant is easy, if not dominant we need a willingness to pay threshold.
