@@ -183,6 +183,36 @@ add_costs_from_gamma_dist <- function(ds_tb,
   return(updated_ds_tb)
 
 }
+add_dates_from_dist <- function(ds_tb,
+                                bl_start_date_dtm,
+                                bl_end_date_dtm,
+                                duration_args_ls,
+                                duration_fn = rnorm,
+                                date_var_nm_1L_chr = "date_psx",
+                                id_var_nm_1L_chr = "fkClientID",
+                                round_var_nm_1L_chr = "round",
+                                round_bl_val_1L_chr = "Baseline",
+                                origin_1L_chr = '1970-01-01'){
+  args_ls <- append(list(n=nrow(ds_tb)), duration_args_ls)
+  days_of_fup_int <- rlang::exec(.fn = duration_fn, !!!args_ls) %>% round(0) %>% as.integer()
+  updated_ds_tb <- ds_tb %>%
+    dplyr::mutate(duration_prd = dplyr::case_when(!!rlang::sym(round_var_nm_1L_chr) != round_bl_val_1L_chr ~lubridate::days(days_of_fup_int),
+                                                  T ~ lubridate::days(0))) %>%
+    dplyr::mutate(!!rlang::sym(date_var_nm_1L_chr) := dplyr::case_when(!!rlang::sym(round_var_nm_1L_chr) == round_bl_val_1L_chr ~ as.Date(sample(as.numeric(bl_start_date_dtm):as.numeric(bl_end_date_dtm),
+                                                                                                                                                 dplyr::n(),
+                                                                                                                                                 replace = T),
+                                                                                                                                          origin = origin_1L_chr ))) %>%
+    dplyr::group_by(!!rlang::sym(id_var_nm_1L_chr)) %>%
+    dplyr::mutate(!!rlang::sym(date_var_nm_1L_chr) := dplyr::case_when(!!rlang::sym(round_var_nm_1L_chr) == round_bl_val_1L_chr ~ !!rlang::sym(date_var_nm_1L_chr),
+                                                                       T ~ dplyr::lag(!!rlang::sym(date_var_nm_1L_chr)) + duration_prd)) %>%
+    dplyr::ungroup()  %>%
+    dplyr::select(!!rlang::sym(id_var_nm_1L_chr),
+                  !!rlang::sym(round_var_nm_1L_chr),
+                  !!rlang::sym(date_var_nm_1L_chr),
+                  duration_prd,
+                  dplyr::everything())
+  return(updated_ds_tb)
+}
 add_diffs_by_group_and_tmpt <- function(ds_tb = trial_ds_tb,
                                         cmprsn_var_nm_1L_chr = "study_arm_chr",
                                         cmprsn_group_match_val_chr = c("Intervention"),
