@@ -55,3 +55,5 @@
 ^data-raw/fns/rename\.R$
 ^data-raw/candidate_predrs_lup\.csv$
 ^data-raw/inst/models/example_mdl\.RDS$
+^data-raw/fns/update\.R$
+^data-raw/vignettes/_AQoL_6D_Syn_Pop\.Rmd$

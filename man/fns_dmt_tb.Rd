@@ -5,7 +5,7 @@
 \alias{fns_dmt_tb}
 \title{youthu function documentation table}
 \format{
-An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 62 rows and 10 columns.
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 74 rows and 10 columns.
 }
 \source{
 \url{https://ready4-dev.github.io/youthu/}

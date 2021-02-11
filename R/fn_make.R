@@ -89,6 +89,33 @@ make_aqol6d_items_tb <- function (aqol_tb, old_pfx_1L_chr, new_pfx_1L_chr)
         })
     return(aqol6d_items_tb)
 }
+#' Make balanced fake dataset
+#' @description make_balanced_fake_ds() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make balanced fake dataset. The function returns Dataset (a tibble).
+#' @param ds_tb Dataset (a tibble)
+#' @param match_on_vars_chr Match on vars (a character vector)
+#' @param id_var_nm_1L_chr Id var name (a character vector of length one), Default: 'UID_chr'
+#' @param round_var_nm_1L_chr Round var name (a character vector of length one), Default: 'Timepoint_chr'
+#' @param timepoint_bl_val_1L_chr Timepoint bl value (a character vector of length one), Default: 'Baseline'
+#' @param cmprsn_var_nm_1L_chr Cmprsn var name (a character vector of length one), Default: 'study_arm_chr'
+#' @param cmprsn_groups_chr Cmprsn groups (a character vector), Default: c("Intervention", "Control")
+#' @return Dataset (a tibble)
+#' @rdname make_balanced_fake_ds
+#' @export 
+
+#' @keywords internal
+make_balanced_fake_ds <- function (ds_tb, match_on_vars_chr, id_var_nm_1L_chr = "UID_chr", 
+    round_var_nm_1L_chr = "Timepoint_chr", timepoint_bl_val_1L_chr = "Baseline", 
+    cmprsn_var_nm_1L_chr = "study_arm_chr", cmprsn_groups_chr = c("Intervention", 
+        "Control")) 
+{
+    ds_tb <- ds_tb %>% transform_ds_for_cmprsn(id_var_nm_1L_chr = id_var_nm_1L_chr, 
+        round_var_nm_1L_chr = round_var_nm_1L_chr, cmprsn_var_nm_1L_chr = cmprsn_var_nm_1L_chr, 
+        cmprsn_groups_chr = cmprsn_groups_chr) %>% make_matched_ds(round_var_nm_1L_chr = round_var_nm_1L_chr, 
+        timepoint_bl_val_1L_chr = timepoint_bl_val_1L_chr, cmprsn_var_nm_1L_chr = cmprsn_var_nm_1L_chr, 
+        active_arm_val_1L_chr = cmprsn_groups_chr[1], id_var_nm_1L_chr = id_var_nm_1L_chr, 
+        match_on_vars_chr = match_on_vars_chr)
+    return(ds_tb)
+}
 #' Make complete props tibbles
 #' @description make_complete_props_tbs_ls() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make complete props tibbles list. The function returns Complete props tibbles (a list).
 #' @param raw_props_tbs_ls Raw props tibbles (a list)
@@ -129,6 +156,23 @@ make_correlated_data_tb <- function (synth_data_spine_ls, synth_data_idx_1L_dbl 
         min_max_ls = synth_data_spine_ls$min_max_ls, discrete_lgl = synth_data_spine_ls$discrete_lgl)
     return(correlated_data_tb)
 }
+#' Make costs vec from gamma dist
+#' @description make_costs_vec_from_gamma_dist() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make costs vec from gamma dist. The function returns Costs (a double vector).
+#' @param n_int N (an integer vector)
+#' @param costs_mean_dbl Costs mean (a double vector)
+#' @param costs_sd_dbl Costs sd (a double vector)
+#' @return Costs (a double vector)
+#' @rdname make_costs_vec_from_gamma_dist
+#' @export 
+
+#' @keywords internal
+make_costs_vec_from_gamma_dist <- function (n_int, costs_mean_dbl, costs_sd_dbl) 
+{
+    scale_1L_dbl <- costs_sd_dbl^2/costs_mean_dbl
+    shape_1L_dbl <- costs_mean_dbl/scale_1L_dbl
+    costs_dbl <- rgamma(n_int, shape = shape_1L_dbl, scale = scale_1L_dbl)
+    return(costs_dbl)
+}
 #' Make dimension sclg cons
 #' @description make_dim_sclg_cons_dbl() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make dimension sclg cons double vector. The function returns Dimension sclg cons (a double vector).
 #' @param domains_chr Domains (a character vector)
@@ -164,6 +208,62 @@ make_domain_items_ls <- function (domain_qs_lup_tb, item_pfx_1L_chr)
         .x)) %>% stats::setNames(domains_chr)
     return(domain_items_ls)
 }
+#' Make fake trial dataset
+#' @description make_fake_trial_ds() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make fake trial dataset. The function returns Updated dataset (a tibble).
+#' @param ds_tb Dataset (a tibble)
+#' @param id_var_nm_1L_chr Id var name (a character vector of length one), Default: 'fkClientID'
+#' @param round_var_nm_1L_chr Round var name (a character vector of length one), Default: 'round'
+#' @param round_lvls_chr Round lvls (a character vector), Default: c("Baseline", "Follow-up")
+#' @param match_on_vars_chr Match on vars (a character vector)
+#' @param cmprsn_var_nm_1L_chr Cmprsn var name (a character vector of length one), Default: 'study_arm_chr'
+#' @param cmprsn_groups_chr Cmprsn groups (a character vector), Default: c("Intervention", "Control")
+#' @param fns_ls Functions (a list)
+#' @param var_nms_chr Var names (a character vector)
+#' @param abs_mean_diff_dbl Abs mean diff (a double vector)
+#' @param diff_sd_dbl Diff sd (a double vector)
+#' @param multiplier_dbl Multiplier (a double vector)
+#' @param min_dbl Min (a double vector)
+#' @param max_dbl Max (a double vector)
+#' @param integer_lgl Integer (a logical vector)
+#' @param match_idx_var_nm_1L_chr Match index var name (a character vector of length one), Default: 'match_idx_int'
+#' @return Updated dataset (a tibble)
+#' @rdname make_fake_trial_ds
+#' @export 
+
+#' @keywords internal
+make_fake_trial_ds <- function (ds_tb, id_var_nm_1L_chr = "fkClientID", round_var_nm_1L_chr = "round", 
+    round_lvls_chr = c("Baseline", "Follow-up"), match_on_vars_chr, 
+    cmprsn_var_nm_1L_chr = "study_arm_chr", cmprsn_groups_chr = c("Intervention", 
+        "Control"), fns_ls, var_nms_chr, abs_mean_diff_dbl, diff_sd_dbl, 
+    multiplier_dbl, min_dbl, max_dbl, integer_lgl, match_idx_var_nm_1L_chr = "match_idx_int") 
+{
+    updated_ds_tb <- ds_tb %>% make_balanced_fake_ds(id_var_nm_1L_chr = id_var_nm_1L_chr, 
+        round_var_nm_1L_chr = round_var_nm_1L_chr, timepoint_bl_val_1L_chr = round_lvls_chr[1], 
+        match_on_vars_chr = match_on_vars_chr, cmprsn_var_nm_1L_chr = cmprsn_var_nm_1L_chr, 
+        cmprsn_groups_chr = cmprsn_groups_chr) %>% add_diffs_by_group_and_tmpt(cmprsn_var_nm_1L_chr = cmprsn_var_nm_1L_chr, 
+        cmprsn_group_match_val_chr = cmprsn_groups_chr[1], round_var_nm_1L_chr = round_var_nm_1L_chr, 
+        timepoint_match_val_1L_chr = round_lvls_chr[2], match_idx_var_nm_1L_chr = match_idx_var_nm_1L_chr, 
+        var_nms_chr = var_nms_chr, fns_ls = fns_ls, abs_mean_diff_dbl = abs_mean_diff_dbl, 
+        diff_sd_dbl = diff_sd_dbl, multiplier_dbl = multiplier_dbl, 
+        min_dbl = min_dbl, max_dbl = max_dbl, integer_lgl = integer_lgl)
+    return(updated_ds_tb)
+}
+#' Make formula
+#' @description make_formula() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make formula. The function is called for its side effects and does not return a value.
+#' @param dep_var_nm_1L_chr Dep var name (a character vector of length one)
+#' @param predictors_chr Predictors (a character vector)
+#' @param environment_env PARAM_DESCRIPTION, Default: parent.frame()
+#' @return NA ()
+#' @rdname make_formula
+#' @export 
+
+#' @keywords internal
+make_formula <- function (dep_var_nm_1L_chr, predictors_chr, environment_env = parent.frame()) 
+{
+    formula_fml <- formula(paste0(dep_var_nm_1L_chr, " ~ ", paste0(predictors_chr, 
+        collapse = " + ")), env = environment_env)
+    return(formula_fml)
+}
 #' Make item wrst wghts
 #' @description make_item_wrst_wghts_ls_ls() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make item wrst wghts list list. The function returns Item wrst wghts (a list of lists).
 #' @param domain_items_ls Domain items (a list)
@@ -183,6 +283,43 @@ make_item_wrst_wghts_ls_ls <- function (domain_items_ls, itm_wrst_wghts_lup_tb)
         })
     })
     return(item_wrst_wghts_ls_ls)
+}
+#' Make matched dataset
+#' @description make_matched_ds() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make matched dataset. The function returns Matched dataset (a tibble).
+#' @param ds_tb Dataset (a tibble)
+#' @param round_var_nm_1L_chr Round var name (a character vector of length one), Default: 'Timepoint_chr'
+#' @param timepoint_bl_val_1L_chr Timepoint bl value (a character vector of length one), Default: 'Baseline'
+#' @param cmprsn_var_nm_1L_chr Cmprsn var name (a character vector of length one), Default: 'study_arm_chr'
+#' @param active_arm_val_1L_chr Active arm value (a character vector of length one), Default: 'Intervention'
+#' @param id_var_nm_1L_chr Id var name (a character vector of length one), Default: 'fkClientID'
+#' @param match_on_vars_chr Match on vars (a character vector)
+#' @return Matched dataset (a tibble)
+#' @rdname make_matched_ds
+#' @export 
+#' @importFrom dplyr filter mutate case_when arrange n select right_join
+#' @importFrom rlang sym
+#' @importFrom MatchIt matchit match.data
+#' @importFrom purrr map_dfr
+#' @keywords internal
+make_matched_ds <- function (ds_tb, round_var_nm_1L_chr = "Timepoint_chr", timepoint_bl_val_1L_chr = "Baseline", 
+    cmprsn_var_nm_1L_chr = "study_arm_chr", active_arm_val_1L_chr = "Intervention", 
+    id_var_nm_1L_chr = "fkClientID", match_on_vars_chr) 
+{
+    match_ds <- ds_tb %>% dplyr::filter(!!rlang::sym(round_var_nm_1L_chr) == 
+        timepoint_bl_val_1L_chr) %>% dplyr::mutate(Intervention_lgl = dplyr::case_when(!!rlang::sym(cmprsn_var_nm_1L_chr) == 
+        active_arm_val_1L_chr ~ T, T ~ F))
+    matched_ls <- make_formula("Intervention_lgl", predictors_chr = match_on_vars_chr) %>% 
+        MatchIt::matchit(data = match_ds, method = "nearest", 
+            ratio = 1)
+    matched_ds_tb <- MatchIt::match.data(matched_ls)
+    match_key_ds_tb <- c(F, T) %>% purrr::map_dfr(~matched_ds_tb %>% 
+        dplyr::filter(Intervention_lgl == .x) %>% dplyr::arrange(distance) %>% 
+        dplyr::mutate(match_idx_int = 1:dplyr::n())) %>% dplyr::arrange(match_idx_int) %>% 
+        dplyr::select(!!rlang::sym(id_var_nm_1L_chr), study_arm_chr, 
+            match_idx_int)
+    matched_ds_tb <- dplyr::right_join(ds_tb, match_key_ds_tb) %>% 
+        dplyr::arrange(match_idx_int)
+    return(matched_ds_tb)
 }
 #' Make pdef cor matrix
 #' @description make_pdef_cor_mat_mat() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make pdef cor matrix matrix. The function returns Pdef cor (a matrix).
