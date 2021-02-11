@@ -98,12 +98,13 @@ make_fake_trial_ds(id_var_nm_1L_chr = ds_smry_ls$id_var_nm_1L_chr,
                    cmprsn_groups_chr = c("Intervention","Control"),
                    fns_ls = list(rnorm,rnorm,rnorm),
                    var_nms_chr = c("PHQ9","SOFAS","costs_dbl"),
-                   abs_mean_diff_dbl = c(2,8,300),
+                   abs_mean_diff_dbl = c(6,8,300),
                    diff_sd_dbl = c(7,10,400),
-                   multiplier_dbl = c(1,1,1),
+                   multiplier_dbl = c(1,-1,1),
                    min_dbl = c(0,0,0),
                    max_dbl = c(27,100,Inf),
-                   integer_lgl = c(T,T,F))
+                   integer_lgl = c(T,T,F)) %>%
+  dplyr::mutate(dplyr::across(c("PHQ9","SOFAS"),as.integer))
 ```
 
 The resulting dataset includes `r matched_ds_tb$match_idx_int %>% unique() %>% length()` matched comparisons, with each comparison containing baseline and follow-up records for one intervention arm participant and one control arm participant. The first few records are as follows.
@@ -114,16 +115,16 @@ matched_ds_tb %>% head()
 
 
 ```{r}
-summary((econ_cmprsn_ds_tb %>% dplyr::filter(study_arm_chr == "Control" & round == "Baseline"))[3:7])
+summary((matched_ds_tb %>% dplyr::filter(study_arm_chr == "Control" & round == "Baseline"))[3:7])
 ```
 ```{r}
-summary((econ_cmprsn_ds_tb %>% dplyr::filter(study_arm_chr == "Intervention" & round == "Baseline"))[3:7])
+summary((matched_ds_tb %>% dplyr::filter(study_arm_chr == "Intervention" & round == "Baseline"))[3:7])
 ```
 ```{r}
-summary((econ_cmprsn_ds_tb %>% dplyr::filter(study_arm_chr == "Control" & round == "Follow-up"))[3:7])
+summary((matched_ds_tb %>% dplyr::filter(study_arm_chr == "Control" & round == "Follow-up"))[3:7])
 ```
 ```{r}
-summary((econ_cmprsn_ds_tb %>% dplyr::filter(study_arm_chr == "Intervention" & round == "Follow-up"))[3:6])
+summary((matched_ds_tb %>% dplyr::filter(study_arm_chr == "Intervention" & round == "Follow-up"))[3:6])
 ```
 
 ## The usefulness of health utility for economic analyses
@@ -165,16 +166,64 @@ This example illustrates how youthu can be used to undertake cost-utility analys
 
 
 ```{r}
-econ_cmprsn_ds_tb <- add_aqol6d_predn_to_ds(data_tb = econ_cmprsn_ds_tb,
+econ_cmprsn_ds_tb <- add_aqol6d_predn_to_ds(data_tb = matched_ds_tb,
                                    model_mdl = model_mdl,
                                    tfmn_1L_chr = get_tfmn_from_lup(candidate_mdls_tb$mdl_nms_chr[4]),
                                    utl_var_nm_1L_chr = ds_smry_ls$utl_var_nm_1L_chr,
                                    id_var_nm_1L_chr = ds_smry_ls$id_var_nm_1L_chr,
                                    round_var_nm_1L_chr = ds_smry_ls$round_var_nm_1L_chr,
-                                   round_bl_val_1L_chr = ds_smry_ls$round_lvls_chr[1])
+                                   round_bl_val_1L_chr = ds_smry_ls$round_lvls_chr[1]) %>%
+  dplyr::select(fkClientID, round, study_arm_chr, date_psx, duration_prd, dplyr::everything())
 ```
 
 ```{r}
 econ_cmprsn_ds_tb %>% head()
+```
+```{r}
+add_change_in_utl <- function(ds_tb,
+                             id_var_nm_1L_chr = "fkClientID",
+                             round_var_nm_1L_chr = "round",
+                             round_bl_val_1L_chr = "Baseline",
+                             utl_change_var_nm_1L_chr = "utl_change_dbl",
+                             utl_var_nm_1L_chr = "utility_dbl",
+                             arrange_by_id_lgl = T){
+ updated_ds_tb <-  ds_tb %>%
+  dplyr::group_by(!!rlang::sym(id_var_nm_1L_chr)) %>%
+  dplyr::mutate(!!rlang::sym(utl_change_var_nm_1L_chr) := dplyr::case_when(!!rlang::sym(round_var_nm_1L_chr ) == round_bl_val_1L_chr ~ 0,
+                                        T ~ (as.numeric(!!rlang::sym(utl_var_nm_1L_chr)) - dplyr::lag(as.numeric(!!rlang::sym(utl_var_nm_1L_chr)))))) %>% dplyr::ungroup() 
+ if(arrange_by_id_lgl)
+ updated_ds_tb <-  updated_ds_tb %>%
+  dplyr::arrange(!!rlang::sym(id_var_nm_1L_chr))
+ return(updated_ds_tb)
+}
+add_qalys <- function(ds_tb,
+                      utl_change_var_nm_1L_chr = "utl_change_dbl",
+                      utl_var_nm_1L_chr = "utility_dbl",
+                      duration_var_nm_1L_chr = "duration_prd",
+                      qalys_var_nm = "qalys_dbl"){
+ updated_ds_tb <- ds_tb %>%
+    dplyr::mutate(!!rlang::sym(qalys_var_nm) := (!!rlang::sym(utl_var_nm_1L_chr)-(!!rlang::sym(utl_change_var_nm_1L_chr) * 0.5)) * (duration_prd / lubridate::years(1)))
+  return(updated_ds_tb)
+}
+econ_cmprsn_ds_tb <- econ_cmprsn_ds_tb %>% add_change_in_utl(utl_var_nm_1L_chr = ds_smry_ls$utl_var_nm_1L_chr) %>% 
+  add_qalys(utl_change_var_nm_1L_chr = "utl_change_dbl", 
+            utl_var_nm_1L_chr = ds_smry_ls$utl_var_nm_1L_chr,
+            duration_var_nm_1L_chr = "duration_prd",
+                      qalys_var_nm = "qalys_dbl")
+
+```
+```{r}
+econ_cmprsn_ds_tb %>% head()
+```
+
+```{r}
+econ_cmprsn_ds_tb %>% dplyr::filter(round == "Follow-up", study_arm_chr == "Control") %>% summary()
+```
+
+```{r}
+econ_cmprsn_ds_tb %>% dplyr::filter(round == "Follow-up", study_arm_chr == "Intervention") %>% summary()
+```
+```{r}
+300/(0.1647-0.15505)
 ```
 
