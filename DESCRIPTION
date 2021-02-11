@@ -1,6 +1,6 @@
 Package: youthu
 Title: Youth Outcomes to Health Utility
-Version: 0.0.0.9039
+Version: 0.0.0.9040
 Authors@R: 
     c(person(given = "Matthew",
              family = "Hamilton",
@@ -54,8 +54,10 @@ Imports:
     ggplot2,
     Hmisc,
     hutils,
+    lubridate,
     magrittr,
     MASS,
+    MatchIt,
     Matrix,
     matrixcalc,
     methods,
