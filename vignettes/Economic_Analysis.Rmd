@@ -213,15 +213,17 @@ add_qalys <- function(ds_tb,
 }
 make_ce_smry <- function(ds_tb,
                          indices,
-                                      benefits_pfx_chr = "qalys_dbl",
-                                      costs_pfx_1L_chr = "costs_dbl",
-                                      iter_1L_int = 1L,
-                                      cmprsn_groups_chr = c("Intervention","Control"),
-                                      cmprsn_var_nm_1L_chr = "study_arm_chr",
-                                      benefits_var_nm_1L_chr = "qalys",
-                                      costs_var_nm_1L_chr = "costs"){
+                         benefits_pfx_chr = "qalys_dbl",
+                         costs_pfx_1L_chr = "costs_dbl",
+                         #iter_1L_int = 1L,
+                         vars_to_incl_chr, # New
+                         cmprsn_groups_chr = c("Intervention","Control"),
+                         cmprsn_var_nm_1L_chr = "study_arm_chr",
+                         benefits_var_nm_1L_chr = "qalys",
+                         costs_var_nm_1L_chr = "costs"){
   costs_vars_chr <- paste0(costs_var_nm_1L_chr,"_",cmprsn_groups_chr)
 benefits_vars_chr <- paste0(benefits_var_nm_1L_chr,"_",cmprsn_groups_chr)
+new_nms_chr <- vars_to_incl_chr %>% purrr::map(~paste0(.x,"_",cmprsn_groups_chr)) # Pick up here
 round_fup_1L_chr <- ds_smry_ls$round_lvls_chr[2]
 selected_cols_chr <- c(costs_pfx_1L_chr, benefits_pfx_chr) %>% paste0("_",round_fup_1L_chr) 
 summary_tb <- ds_tb[indices,] %>% 
@@ -242,30 +244,6 @@ summary_tb <- ds_tb[indices,] %>%
 summary_dbl <- summary_tb[,1]
 return(summary_dbl)
 }
-```
-```{r}
-args_ls_ls <- purrr::map(c(c("PHQ9","SOFAS"),
-             ds_smry_ls$utl_var_nm_1L_chr),
-           ~ list(change_var_nm_1L_chr = paste0(.x,"_change_dbl"),
-                       var_nm_1L_chr = .x))
-econ_cmprsn_ds_tb <- purrr::reduce(1:length(args_ls_ls),
-                                   .init = econ_cmprsn_ds_tb,
-                                   ~ add_change_in_ds_var(.x,
-                                                          var_nm_1L_chr = args_ls_ls[[.y]]$var_nm_1L_chr,
-                                                          change_var_nm_1L_chr = args_ls_ls[[.y]]$change_var_nm_1L_chr)) %>%
-# econ_cmprsn_ds_tb %>% 
-  # add_change_in_ds_var(var_nm_1L_chr = ds_smry_ls$utl_var_nm_1L_chr) %>% 
-  add_qalys(utl_change_var_nm_1L_chr = paste0(ds_smry_ls$utl_var_nm_1L_chr,"_change_dbl"), 
-            utl_var_nm_1L_chr = ds_smry_ls$utl_var_nm_1L_chr,
-            duration_var_nm_1L_chr = "duration_prd",
-                      qalys_var_nm = "qalys_dbl")
-```
-
-```{r}
-econ_cmprsn_ds_tb %>% head()
-```
-
-```{r}
 make_he_smry <- function(ds_tb,
                          cmprsn_groups_chr = c("Intervention","Control"),
                          wtp_dbl =  50000){
@@ -289,6 +267,35 @@ he_smry_ls <- list(ce_res_ls = ce_res_ls,
                    )
 return(he_smry_ls)
 }
+```
+```{r}
+args_ls_ls <- purrr::map(c(c("PHQ9","SOFAS"),
+             ds_smry_ls$utl_var_nm_1L_chr),
+           ~ list(change_var_nm_1L_chr = paste0(.x,"_change_dbl"),
+                       var_nm_1L_chr = .x))
+econ_cmprsn_ds_tb <- purrr::reduce(1:length(args_ls_ls),
+                                   .init = econ_cmprsn_ds_tb,
+                                   ~ add_change_in_ds_var(.x,
+                                                          var_nm_1L_chr = args_ls_ls[[.y]]$var_nm_1L_chr,
+                                                          change_var_nm_1L_chr = args_ls_ls[[.y]]$change_var_nm_1L_chr)) %>%
+  add_qalys(utl_change_var_nm_1L_chr = paste0(ds_smry_ls$utl_var_nm_1L_chr,"_change_dbl"), 
+            utl_var_nm_1L_chr = ds_smry_ls$utl_var_nm_1L_chr,
+            duration_var_nm_1L_chr = "duration_prd",
+                      qalys_var_nm = "qalys_dbl")
+```
+```{r}
+# econ_cmprsn_ds_tb <-econ_cmprsn_ds_tb %>%
+#   add_qalys(utl_change_var_nm_1L_chr = paste0(ds_smry_ls$utl_var_nm_1L_chr,"_change_dbl"), 
+#             utl_var_nm_1L_chr = ds_smry_ls$utl_var_nm_1L_chr,
+#             duration_var_nm_1L_chr = "duration_prd",
+#                       qalys_var_nm = "qalys_dbl")
+```
+
+```{r}
+econ_cmprsn_ds_tb %>% head()
+```
+
+```{r}
 he_smry_ls <- econ_cmprsn_ds_tb %>% make_he_smry(cmprsn_groups_chr = c("Intervention","Control"),
                          wtp_dbl =  50000)
 ```
@@ -311,14 +318,10 @@ BCEA::plot.evppi(evpi_ls, graph = "ggplot2")
 BCEA::eib.plot(he_smry_ls$ce_res_ls)
 ```
 
-
 ```{r}
 BCEA::evi.plot(he_smry_ls$ce_res_ls,
                graph = "ggplot2")
 ```
-
-
-
 
 ```{r}
 BCEA::ceac.plot(he_smry_ls$ce_res_ls,
