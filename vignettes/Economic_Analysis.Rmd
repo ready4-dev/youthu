@@ -58,7 +58,6 @@ sngl_grp_ds_tb <- youthu::replication_popl_tb %>%
                        round_bl_val_1L_chr = ds_smry_ls$round_lvls_chr[1]) 
 ```
 The second helper function is `add_costs_by_tmpt`{.R}, which we use to add a cost variable with gamma distributed costs that have **population** (not sample) mean values of \$300 for a defined period up to baseline and \$1500 for the costs accrued between baseline and follow-up. 
-
 ```{r}
 sngl_grp_ds_tb <- sngl_grp_ds_tb  %>%
   add_costs_by_tmpt(round_var_nm_1L_chr = ds_smry_ls$round_var_nm_1L_chr,
@@ -75,11 +74,11 @@ sngl_grp_ds_tb %>% dplyr::arrange(fkClientID) %>% head()
 ```
 The `r sngl_grp_ds_tb %>% dplyr::filter(round == "Baseline") %>% nrow()` baseline records are summarised below.
 ```{r}
-(sngl_grp_ds_tb %>% dplyr::filter(round == "Baseline"))[3:7] %>% summary()
+(sngl_grp_ds_tb %>% dplyr::filter(round == "Baseline"))[4:7] %>% summary()
 ```
 The summary of `r sngl_grp_ds_tb %>% dplyr::filter(round == "Follow-up") %>% nrow()` follow-up records:
 ```{r}
-(sngl_grp_ds_tb %>% dplyr::filter(round == "Follow-up"))[3:7] %>% summary()
+(sngl_grp_ds_tb %>% dplyr::filter(round == "Follow-up"))[4:7] %>% summary()
 ```
 ## Matched group dataset
 To create a matched group dataset
@@ -158,12 +157,7 @@ There are four types of economic analysis in youth mental health that youthu can
 
 ## Extending cost-consequence and cost-effectiveness economic evaluations
 
-
-
 This example illustrates how youthu can be used to undertake cost-utility analysis in an economic evaluation dataset that does not contain any measure of health utility.
-
-
-
 
 ```{r}
 econ_cmprsn_ds_tb <- add_aqol6d_predn_to_ds(data_tb = matched_ds_tb,
@@ -175,55 +169,171 @@ econ_cmprsn_ds_tb <- add_aqol6d_predn_to_ds(data_tb = matched_ds_tb,
                                    round_bl_val_1L_chr = ds_smry_ls$round_lvls_chr[1]) %>%
   dplyr::select(fkClientID, round, study_arm_chr, date_psx, duration_prd, dplyr::everything())
 ```
-
 ```{r}
 econ_cmprsn_ds_tb %>% head()
 ```
 ```{r}
-add_change_in_utl <- function(ds_tb,
+add_change_in_ds_var <- function(ds_tb,
                              id_var_nm_1L_chr = "fkClientID",
                              round_var_nm_1L_chr = "round",
                              round_bl_val_1L_chr = "Baseline",
-                             utl_change_var_nm_1L_chr = "utl_change_dbl",
-                             utl_var_nm_1L_chr = "utility_dbl",
+                             change_var_nm_1L_chr,
+                             var_nm_1L_chr,
                              arrange_by_id_lgl = T){
  updated_ds_tb <-  ds_tb %>%
   dplyr::group_by(!!rlang::sym(id_var_nm_1L_chr)) %>%
-  dplyr::mutate(!!rlang::sym(utl_change_var_nm_1L_chr) := dplyr::case_when(!!rlang::sym(round_var_nm_1L_chr ) == round_bl_val_1L_chr ~ 0,
-                                        T ~ (as.numeric(!!rlang::sym(utl_var_nm_1L_chr)) - dplyr::lag(as.numeric(!!rlang::sym(utl_var_nm_1L_chr)))))) %>% dplyr::ungroup() 
+  dplyr::mutate(!!rlang::sym(change_var_nm_1L_chr) := dplyr::case_when(!!rlang::sym(round_var_nm_1L_chr) == round_bl_val_1L_chr ~ 0,
+                                        T ~ (as.numeric(!!rlang::sym(var_nm_1L_chr)) - dplyr::lag(as.numeric(!!rlang::sym(var_nm_1L_chr)))))) %>% dplyr::ungroup() 
  if(arrange_by_id_lgl)
  updated_ds_tb <-  updated_ds_tb %>%
   dplyr::arrange(!!rlang::sym(id_var_nm_1L_chr))
  return(updated_ds_tb)
 }
 add_qalys <- function(ds_tb,
+                      cmprsn_var_nm_1L_chr = "study_arm_chr",
+                      duration_var_nm_1L_chr = "duration_prd",
+                      id_var_nm_1L_chr = "fkClientID",
+                      match_idx_var_nm_1L_chr = "match_idx_int",
+                      qalys_var_nm = "qalys_dbl",
+                      round_var_nm_1L_chr = "round",
                       utl_change_var_nm_1L_chr = "utl_change_dbl",
                       utl_var_nm_1L_chr = "utility_dbl",
-                      duration_var_nm_1L_chr = "duration_prd",
-                      qalys_var_nm = "qalys_dbl"){
+                      reshape_1L_lgl = T){
  updated_ds_tb <- ds_tb %>%
     dplyr::mutate(!!rlang::sym(qalys_var_nm) := (!!rlang::sym(utl_var_nm_1L_chr)-(!!rlang::sym(utl_change_var_nm_1L_chr) * 0.5)) * (duration_prd / lubridate::years(1)))
+ if(reshape_1L_lgl){
+   vars_to_spread_chr <- names(updated_ds_tb)[!names(updated_ds_tb) %in% c(cmprsn_var_nm_1L_chr,
+                                                                           id_var_nm_1L_chr,
+                                                                           match_idx_var_nm_1L_chr,
+                                                                           round_var_nm_1L_chr)]
+   updated_ds_tb <- updated_ds_tb %>% tidyr::pivot_wider(names_from = !!rlang::sym(round_var_nm_1L_chr),
+                                                 values_from = vars_to_spread_chr)
+ }
   return(updated_ds_tb)
 }
-econ_cmprsn_ds_tb <- econ_cmprsn_ds_tb %>% add_change_in_utl(utl_var_nm_1L_chr = ds_smry_ls$utl_var_nm_1L_chr) %>% 
-  add_qalys(utl_change_var_nm_1L_chr = "utl_change_dbl", 
+make_ce_smry <- function(ds_tb,
+                         indices,
+                                      benefits_pfx_chr = "qalys_dbl",
+                                      costs_pfx_1L_chr = "costs_dbl",
+                                      iter_1L_int = 1L,
+                                      cmprsn_groups_chr = c("Intervention","Control"),
+                                      cmprsn_var_nm_1L_chr = "study_arm_chr",
+                                      benefits_var_nm_1L_chr = "qalys",
+                                      costs_var_nm_1L_chr = "costs"){
+  costs_vars_chr <- paste0(costs_var_nm_1L_chr,"_",cmprsn_groups_chr)
+benefits_vars_chr <- paste0(benefits_var_nm_1L_chr,"_",cmprsn_groups_chr)
+round_fup_1L_chr <- ds_smry_ls$round_lvls_chr[2]
+selected_cols_chr <- c(costs_pfx_1L_chr, benefits_pfx_chr) %>% paste0("_",round_fup_1L_chr) 
+summary_tb <- ds_tb[indices,] %>% 
+  dplyr::group_by(!!rlang::sym(cmprsn_var_nm_1L_chr)) %>%
+  dplyr::select(dplyr::all_of(c(selected_cols_chr, cmprsn_var_nm_1L_chr))) %>%
+    dplyr::rename_with(.cols = selected_cols_chr,
+                       ~ifelse(startsWith(.x,costs_pfx_1L_chr),costs_var_nm_1L_chr,
+                             ifelse(startsWith(.x,benefits_pfx_chr),benefits_var_nm_1L_chr,
+                                    .x))) %>%
+  dplyr::summarise(dplyr::across(.fns = mean)) %>%
+  dplyr::ungroup()  %>%
+  tidyr::pivot_wider(names_from = cmprsn_var_nm_1L_chr,
+                      values_from = c(costs_var_nm_1L_chr, benefits_var_nm_1L_chr)) %>%
+  dplyr::mutate(ICER = (`costs_Intervention` - `costs_Control`) / ## NEED TO CHANGE
+                  (`qalys_Intervention` - `qalys_Control`)) %>%
+      dplyr::rename_with(~paste0(.x,"_dbl")) %>%
+  t() 
+summary_dbl <- summary_tb[,1]
+return(summary_dbl)
+}
+```
+```{r}
+args_ls_ls <- purrr::map(c(c("PHQ9","SOFAS"),
+             ds_smry_ls$utl_var_nm_1L_chr),
+           ~ list(change_var_nm_1L_chr = paste0(.x,"_change_dbl"),
+                       var_nm_1L_chr = .x))
+econ_cmprsn_ds_tb <- purrr::reduce(1:length(args_ls_ls),
+                                   .init = econ_cmprsn_ds_tb,
+                                   ~ add_change_in_ds_var(.x,
+                                                          var_nm_1L_chr = args_ls_ls[[.y]]$var_nm_1L_chr,
+                                                          change_var_nm_1L_chr = args_ls_ls[[.y]]$change_var_nm_1L_chr)) %>%
+# econ_cmprsn_ds_tb %>% 
+  # add_change_in_ds_var(var_nm_1L_chr = ds_smry_ls$utl_var_nm_1L_chr) %>% 
+  add_qalys(utl_change_var_nm_1L_chr = paste0(ds_smry_ls$utl_var_nm_1L_chr,"_change_dbl"), 
             utl_var_nm_1L_chr = ds_smry_ls$utl_var_nm_1L_chr,
             duration_var_nm_1L_chr = "duration_prd",
                       qalys_var_nm = "qalys_dbl")
-
 ```
+
 ```{r}
 econ_cmprsn_ds_tb %>% head()
 ```
 
 ```{r}
-econ_cmprsn_ds_tb %>% dplyr::filter(round == "Follow-up", study_arm_chr == "Control") %>% summary()
+make_he_smry <- function(ds_tb,
+                         cmprsn_groups_chr = c("Intervention","Control"),
+                         wtp_dbl =  50000){
+  bootstraps_ls <- boot::boot(ds_tb, make_ce_smry, R=100)
+costs_mat <- bootstraps_ls$t[,1:2]
+benefits_mat <- bootstraps_ls$t[,3:4]
+reordered_cmprsns_chr <- cmprsn_groups_chr[cmprsn_groups_chr %>% purrr::map_int(~which(endsWith(names(bootstraps_ls$t0)[1:2],                                                                       paste0(.x,"_dbl"))))]
+ce_res_ls <- BCEA::bcea(e = benefits_mat,
+                        c = costs_mat,
+                        ref = which(reordered_cmprsns_chr == cmprsn_groups_chr[1]),
+                        interventions = reordered_cmprsns_chr,
+                        #wtp = NULL,
+                        Kmax = wtp_dbl*2)
+named_mat <- bootstraps_ls$t
+colnames(named_mat) <- names(bootstraps_ls$t0)
+he_smry_ls <- list(ce_res_ls = ce_res_ls,
+                   bootstraps_ls = bootstraps_ls,
+                   benefits_mat = benefits_mat,
+                   costs_mat = costs_mat,
+                   named_mat = named_mat
+                   )
+return(he_smry_ls)
+}
+he_smry_ls <- econ_cmprsn_ds_tb %>% make_he_smry(cmprsn_groups_chr = c("Intervention","Control"),
+                         wtp_dbl =  50000)
 ```
 
 ```{r}
-econ_cmprsn_ds_tb %>% dplyr::filter(round == "Follow-up", study_arm_chr == "Intervention") %>% summary()
+# named_mat <- bootstraps_ls$t
+# colnames(named_mat) <- names(bootstraps_ls$t0)
+```
+
+```{r}
+evpi_ls <- BCEA::evppi(names(he_smry_ls$bootstraps_ls$t0)[c(1,3)],
+            input = he_smry_ls$named_mat,
+            he = he_smry_ls$ce_res_ls)
 ```
 ```{r}
-300/(0.1647-0.15505)
+BCEA::plot.evppi(evpi_ls, graph = "ggplot2")
 ```
+
+```{r}
+BCEA::eib.plot(he_smry_ls$ce_res_ls)
+```
+
+
+```{r}
+BCEA::evi.plot(he_smry_ls$ce_res_ls,
+               graph = "ggplot2")
+```
+
+
+
+
+```{r}
+BCEA::ceac.plot(he_smry_ls$ce_res_ls,
+                graph = "ggplot2",
+          #title = "my title",
+          line_colors = "green",
+          theme = ggplot2::theme_dark())
+
+```
+```{r fig.width=6}
+BCEA::ceplane.plot(he_smry_ls$ce_res_ls, wtp =50000,    
+                   # line = list(colors = "green"),
+                   area_color = "green",
+                    graph = "ggplot2",
+          theme = ggplot2::theme_light())
+```
+
 
