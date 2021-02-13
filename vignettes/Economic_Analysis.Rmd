@@ -72,14 +72,6 @@ The resulting single group dataset contains `r nrow(sngl_grp_ds_tb)` records, wi
 ```{r}
 sngl_grp_ds_tb %>% dplyr::arrange(fkClientID) %>% head()
 ```
-The `r sngl_grp_ds_tb %>% dplyr::filter(round == "Baseline") %>% nrow()` baseline records are summarised below.
-```{r}
-(sngl_grp_ds_tb %>% dplyr::filter(round == "Baseline"))[4:7] %>% summary()
-```
-The summary of `r sngl_grp_ds_tb %>% dplyr::filter(round == "Follow-up") %>% nrow()` follow-up records:
-```{r}
-(sngl_grp_ds_tb %>% dplyr::filter(round == "Follow-up"))[4:7] %>% summary()
-```
 ## Matched group dataset
 To create a matched group dataset
 The final helper function is `make_fake_trial_ds`{.R}, which we use to split our single group dataset into two propensity score matched groups - one each for intervention and control. We also use this function to build in our assumptions about the **population** (not sample) distributions for group differences in changes in PHQ9, SOFAS and costs between baseline and follow-up.
@@ -110,20 +102,6 @@ The resulting dataset includes `r matched_ds_tb$match_idx_int %>% unique() %>% l
 
 ```{r}
 matched_ds_tb %>% head()
-```
-
-
-```{r}
-summary((matched_ds_tb %>% dplyr::filter(study_arm_chr == "Control" & round == "Baseline"))[3:7])
-```
-```{r}
-summary((matched_ds_tb %>% dplyr::filter(study_arm_chr == "Intervention" & round == "Baseline"))[3:7])
-```
-```{r}
-summary((matched_ds_tb %>% dplyr::filter(study_arm_chr == "Control" & round == "Follow-up"))[3:7])
-```
-```{r}
-summary((matched_ds_tb %>% dplyr::filter(study_arm_chr == "Intervention" & round == "Follow-up"))[3:6])
 ```
 
 ## The usefulness of health utility for economic analyses
@@ -194,60 +172,94 @@ add_qalys <- function(ds_tb,
                       duration_var_nm_1L_chr = "duration_prd",
                       id_var_nm_1L_chr = "fkClientID",
                       match_idx_var_nm_1L_chr = "match_idx_int",
-                      qalys_var_nm = "qalys_dbl",
+                      qalys_var_nm_1L_chr = "qalys_dbl",
                       round_var_nm_1L_chr = "round",
                       utl_change_var_nm_1L_chr = "utl_change_dbl",
                       utl_var_nm_1L_chr = "utility_dbl",
                       reshape_1L_lgl = T){
  updated_ds_tb <- ds_tb %>%
-    dplyr::mutate(!!rlang::sym(qalys_var_nm) := (!!rlang::sym(utl_var_nm_1L_chr)-(!!rlang::sym(utl_change_var_nm_1L_chr) * 0.5)) * (duration_prd / lubridate::years(1)))
+    dplyr::mutate(!!rlang::sym(qalys_var_nm_1L_chr) := (!!rlang::sym(utl_var_nm_1L_chr)-(!!rlang::sym(utl_change_var_nm_1L_chr) * 0.5)) * (duration_prd / lubridate::years(1)))
  if(reshape_1L_lgl){
    vars_to_spread_chr <- names(updated_ds_tb)[!names(updated_ds_tb) %in% c(cmprsn_var_nm_1L_chr,
                                                                            id_var_nm_1L_chr,
                                                                            match_idx_var_nm_1L_chr,
                                                                            round_var_nm_1L_chr)]
    updated_ds_tb <- updated_ds_tb %>% tidyr::pivot_wider(names_from = !!rlang::sym(round_var_nm_1L_chr),
-                                                 values_from = vars_to_spread_chr)
+                                                 values_from = tidyselect::all_of(vars_to_spread_chr))
  }
   return(updated_ds_tb)
 }
 make_ce_smry <- function(ds_tb,
                          indices,
-                         benefits_pfx_chr = "qalys_dbl",
+                         change_types_chr = "dbl",
+                         benefits_pfx_1L_chr = "qalys_dbl",
+                         benefits_var_nm_1L_chr = "qalys",
                          costs_pfx_1L_chr = "costs_dbl",
-                         #iter_1L_int = 1L,
-                         vars_to_incl_chr, # New
+                         costs_var_nm_1L_chr = "costs",
+                         change_sfx_1L_chr = "change",
+                         change_vars_chr = NA_character_,
                          cmprsn_groups_chr = c("Intervention","Control"),
                          cmprsn_var_nm_1L_chr = "study_arm_chr",
-                         benefits_var_nm_1L_chr = "qalys",
-                         costs_var_nm_1L_chr = "costs"){
-  costs_vars_chr <- paste0(costs_var_nm_1L_chr,"_",cmprsn_groups_chr)
-benefits_vars_chr <- paste0(benefits_var_nm_1L_chr,"_",cmprsn_groups_chr)
-new_nms_chr <- vars_to_incl_chr %>% purrr::map(~paste0(.x,"_",cmprsn_groups_chr)) # Pick up here
-round_fup_1L_chr <- ds_smry_ls$round_lvls_chr[2]
-selected_cols_chr <- c(costs_pfx_1L_chr, benefits_pfx_chr) %>% paste0("_",round_fup_1L_chr) 
+                         round_fup_1L_chr = "Follow-up"){
+if(!is.na(change_vars_chr[1])){
+  change_vars_with_sfx_chr <- paste0(change_vars_chr, "_", change_sfx_1L_chr,"_", change_types_chr)
+  replacements_chr <- paste0(change_vars_chr, "_", change_sfx_1L_chr)
+}else{
+  change_vars_with_sfx_chr <- replacements_chr <-character(0)
+}
+selected_cols_chr <- c(costs_pfx_1L_chr, 
+                       benefits_pfx_1L_chr,
+                       change_vars_with_sfx_chr) %>% paste0("_",round_fup_1L_chr) 
+rename_lup <- tibble::tibble(old_name_chr = selected_cols_chr, new_name_chr = c(costs_var_nm_1L_chr, benefits_var_nm_1L_chr, replacements_chr))
+new_nms_ls <- rename_lup$new_name_chr %>% purrr::map(~paste0(.x,"_",cmprsn_groups_chr))
 summary_tb <- ds_tb[indices,] %>% 
   dplyr::group_by(!!rlang::sym(cmprsn_var_nm_1L_chr)) %>%
   dplyr::select(dplyr::all_of(c(selected_cols_chr, cmprsn_var_nm_1L_chr))) %>%
     dplyr::rename_with(.cols = selected_cols_chr,
-                       ~ifelse(startsWith(.x,costs_pfx_1L_chr),costs_var_nm_1L_chr,
-                             ifelse(startsWith(.x,benefits_pfx_chr),benefits_var_nm_1L_chr,
-                                    .x))) %>%
+                       ~ ready4fun::get_from_lup_obj(rename_lup,
+                                                     match_var_nm_1L_chr = "old_name_chr",
+                                                     match_value_xx = .x,
+                                                     target_var_nm_1L_chr = "new_name_chr",
+                                                     evaluate_lgl = F)) %>%
   dplyr::summarise(dplyr::across(.fns = mean)) %>%
   dplyr::ungroup()  %>%
   tidyr::pivot_wider(names_from = cmprsn_var_nm_1L_chr,
-                      values_from = c(costs_var_nm_1L_chr, benefits_var_nm_1L_chr)) %>%
-  dplyr::mutate(ICER = (`costs_Intervention` - `costs_Control`) / ## NEED TO CHANGE
-                  (`qalys_Intervention` - `qalys_Control`)) %>%
+                      values_from = rename_lup$new_name_chr) %>%
+  dplyr::mutate(ICER = (!!rlang::sym(new_nms_ls[[1]][1]) - !!rlang::sym(new_nms_ls[[1]][2])) /
+                  (!!rlang::sym(new_nms_ls[[2]][1]) - !!rlang::sym(new_nms_ls[[2]][2]))) %>%
       dplyr::rename_with(~paste0(.x,"_dbl")) %>%
   t() 
 summary_dbl <- summary_tb[,1]
 return(summary_dbl)
 }
 make_he_smry <- function(ds_tb,
+                         change_vars_chr = NA_character_,
+                         wtp_dbl = 50000,
+                         bootstrap_iters_1L_int = 1000,
+                         change_types_chr = "dbl",
+                         benefits_pfx_1L_chr = "qalys_dbl",
+                         benefits_var_nm_1L_chr = "qalys",
+                         costs_pfx_1L_chr = "costs_dbl",
+                         costs_var_nm_1L_chr = "costs",
+                         change_sfx_1L_chr = "change",
                          cmprsn_groups_chr = c("Intervention","Control"),
-                         wtp_dbl =  50000){
-  bootstraps_ls <- boot::boot(ds_tb, make_ce_smry, R=100)
+                         cmprsn_var_nm_1L_chr = "study_arm_chr",
+                         round_fup_1L_chr = "Follow-up"
+                         ){
+  bootstraps_ls <- boot::boot(ds_tb, 
+                              make_ce_smry, 
+                              R = bootstrap_iters_1L_int,
+                              benefits_pfx_1L_chr = benefits_pfx_1L_chr,
+                              costs_pfx_1L_chr = costs_pfx_1L_chr,
+                              change_vars_chr = change_vars_chr,
+                              change_sfx_1L_chr = change_sfx_1L_chr,
+                              change_types_chr = change_types_chr,
+                              cmprsn_groups_chr = cmprsn_groups_chr,
+                              cmprsn_var_nm_1L_chr = cmprsn_var_nm_1L_chr,
+                              round_fup_1L_chr = round_fup_1L_chr, 
+                              benefits_var_nm_1L_chr = benefits_var_nm_1L_chr,
+                              costs_var_nm_1L_chr = costs_var_nm_1L_chr
+                              ) # round_fup_1L_chr = "Follow-up", ds_smry_ls$round_lvls_chr[2]
 costs_mat <- bootstraps_ls$t[,1:2]
 benefits_mat <- bootstraps_ls$t[,3:4]
 reordered_cmprsns_chr <- cmprsn_groups_chr[cmprsn_groups_chr %>% purrr::map_int(~which(endsWith(names(bootstraps_ls$t0)[1:2],                                                                       paste0(.x,"_dbl"))))]
@@ -268,6 +280,7 @@ he_smry_ls <- list(ce_res_ls = ce_res_ls,
 return(he_smry_ls)
 }
 ```
+
 ```{r}
 args_ls_ls <- purrr::map(c(c("PHQ9","SOFAS"),
              ds_smry_ls$utl_var_nm_1L_chr),
@@ -281,23 +294,30 @@ econ_cmprsn_ds_tb <- purrr::reduce(1:length(args_ls_ls),
   add_qalys(utl_change_var_nm_1L_chr = paste0(ds_smry_ls$utl_var_nm_1L_chr,"_change_dbl"), 
             utl_var_nm_1L_chr = ds_smry_ls$utl_var_nm_1L_chr,
             duration_var_nm_1L_chr = "duration_prd",
-                      qalys_var_nm = "qalys_dbl")
-```
-```{r}
-# econ_cmprsn_ds_tb <-econ_cmprsn_ds_tb %>%
-#   add_qalys(utl_change_var_nm_1L_chr = paste0(ds_smry_ls$utl_var_nm_1L_chr,"_change_dbl"), 
-#             utl_var_nm_1L_chr = ds_smry_ls$utl_var_nm_1L_chr,
-#             duration_var_nm_1L_chr = "duration_prd",
-#                       qalys_var_nm = "qalys_dbl")
+                      qalys_var_nm_1L_chr = "qalys_dbl")
 ```
 
 ```{r}
 econ_cmprsn_ds_tb %>% head()
 ```
+```{r}
+var_nms_chr <- paste0(c("costs_dbl","qalys_dbl", paste0(c("PHQ9","SOFAS","AQOL6D_HU"), "_change_dbl")),"_Follow-up")
+  
+```
 
 ```{r}
-he_smry_ls <- econ_cmprsn_ds_tb %>% make_he_smry(cmprsn_groups_chr = c("Intervention","Control"),
-                         wtp_dbl =  50000)
+he_smry_ls <- econ_cmprsn_ds_tb %>% make_he_smry(change_vars_chr = c("PHQ9","SOFAS","AQoL6D_HU"),
+                                                 wtp_dbl = 50000,
+                                                 bootstrap_iters_1L_int = 100,
+                                                 change_types_chr = c("dbl","dbl","dbl"),
+                                                 benefits_pfx_1L_chr = "qalys_dbl",
+                                                 benefits_var_nm_1L_chr = "qalys",
+                                                 costs_pfx_1L_chr = "costs_dbl",
+                                                 costs_var_nm_1L_chr = "costs",
+                                                 change_sfx_1L_chr = "change",
+                                                 cmprsn_groups_chr = c("Intervention","Control"),
+                                                 cmprsn_var_nm_1L_chr = "study_arm_chr",
+                                                 round_fup_1L_chr = "Follow-up")
 ```
 
 ```{r}
@@ -338,5 +358,27 @@ BCEA::ceplane.plot(he_smry_ls$ce_res_ls, wtp =50000,
                     graph = "ggplot2",
           theme = ggplot2::theme_light())
 ```
+## Matched groups details
 
+```{r}
+summary((matched_ds_tb %>% dplyr::filter(study_arm_chr == "Control" & round == "Baseline"))[3:7])
+```
+```{r}
+summary((matched_ds_tb %>% dplyr::filter(study_arm_chr == "Intervention" & round == "Baseline"))[3:7])
+```
+```{r}
+summary((matched_ds_tb %>% dplyr::filter(study_arm_chr == "Control" & round == "Follow-up"))[3:7])
+```
+```{r}
+summary((matched_ds_tb %>% dplyr::filter(study_arm_chr == "Intervention" & round == "Follow-up"))[3:6])
+```
+## Single group details
+The `r sngl_grp_ds_tb %>% dplyr::filter(round == "Baseline") %>% nrow()` baseline records are summarised below.
+```{r}
+(sngl_grp_ds_tb %>% dplyr::filter(round == "Baseline"))[4:7] %>% summary()
+```
+The summary of `r sngl_grp_ds_tb %>% dplyr::filter(round == "Follow-up") %>% nrow()` follow-up records:
+```{r}
+(sngl_grp_ds_tb %>% dplyr::filter(round == "Follow-up"))[4:7] %>% summary()
+```
 
