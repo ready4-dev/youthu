@@ -8,7 +8,7 @@ add_costs_from_gamma_dist(
   ds_tb,
   costs_mean_dbl,
   costs_sd_dbl,
-  costs_var_nm_1L_dbl = "costs_dbl"
+  costs_var_nm_1L_chr = "costs_dbl"
 )
 }
 \arguments{
@@ -18,7 +18,7 @@ add_costs_from_gamma_dist(
 
 \item{costs_sd_dbl}{Costs sd (a double vector)}
 
-\item{costs_var_nm_1L_dbl}{Costs var name (a double vector of length one), Default: 'costs_dbl'}
+\item{costs_var_nm_1L_chr}{Costs var name (a character vector of length one), Default: 'costs_dbl'}
 }
 \value{
 Updated dataset (a tibble)

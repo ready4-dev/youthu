@@ -33,44 +33,39 @@ To illustrate the application of youthu functions to each type of dataset, we cr
  - the allowed values of the data collection round variable,
 
 ```{r}
-ds_smry_ls <- list(date_var_nm_1L_chr = "date_psx",
-id_var_nm_1L_chr = "fkClientID",
-round_var_nm_1L_chr = "round",
-round_lvls_chr = c("Baseline","Follow-up"), 
-utl_var_nm_1L_chr = "AQoL6D_HU")
+ds_smry_ls <- list(bl_start_date_dtm = Sys.Date() - lubridate::days(300),
+                   bl_end_date_dtm = Sys.Date() - lubridate::days(120),
+                   cmprsn_var_nm_1L_chr = "study_arm_chr",
+                   cmprsn_groups_chr = c("Intervention","Control"),
+                   costs_mean_dbl = c(300,1500),
+                   costs_sd_dbl = c(100,120),
+                   costs_var_nm_1L_chr = "costs_dbl",
+                   date_var_nm_1L_chr = "date_psx",
+                   duration_args_ls = list(a = 80, b = 110, mean = 90, sd = 7),
+                   duration_fn = truncnorm::rtruncnorm,
+                   id_var_nm_1L_chr = "fkClientID",
+                   predr_var_nms = c("PHQ9", "SOFAS"),
+                   round_var_nm_1L_chr = "round",
+                   round_lvls_chr = c("Baseline","Follow-up"), 
+                   utl_var_nm_1L_chr = "AQoL6D_HU")
+
 ```
 ## Single group dataset
-We pass these list of dataset parameters, along with a four variable (PHQ9, SOFAS, record identified and data collection round) subset of the youthu `replication_popl_tb` [replication dataset](Replication_DS.html), to two youthu helper functions for working with synthetic data. The first helper function is `add_dates_from_dist`{.R}, which we use to add the dates at which each participant entered the study (randomly sampled from a sequence of 180 consecutive days from the last year), the duration of study participation for each individual (sampled from a truncated normal distribution, bounded between 80 and 110 days) and the dates of each participant's follow-up assessment. 
+We pass these list of dataset parameters, along with a four variable (PHQ9, SOFAS, record identified and data collection round) subset of the youthu `replication_popl_tb` [replication dataset](Replication_DS.html), to ....
+We add the dates at which each participant entered the study (randomly sampled from a sequence of 180 consecutive days from the last year), the duration of study participation for each individual (sampled from a truncated normal distribution, bounded between 80 and 110 days) and the dates of each participant's follow-up assessment. 
 
 ```{r}
-sngl_grp_ds_tb <- youthu::replication_popl_tb %>%
-  dplyr::select(fkClientID,round,PHQ9, SOFAS) %>% #
-  na.omit() %>%
-  dplyr::mutate(SOFAS = as.integer(round(SOFAS,0))) %>%
-  tibble::as_tibble() %>%
-  add_dates_from_dist(bl_start_date_dtm = Sys.Date() - lubridate::days(300),
-                       bl_end_date_dtm = Sys.Date() - lubridate::days(120),
-                       duration_args_ls = list(a = 80, b = 110, mean = 90, sd = 7),
-                       duration_fn = truncnorm::rtruncnorm,
-                       date_var_nm_1L_chr = ds_smry_ls$date_var_nm_1L_chr,
-                       id_var_nm_1L_chr = ds_smry_ls$id_var_nm_1L_chr,
-                       round_var_nm_1L_chr = ds_smry_ls$round_var_nm_1L_chr,
-                       round_bl_val_1L_chr = ds_smry_ls$round_lvls_chr[1]) 
+sngl_grp_ds <- youthu::replication_popl_tb %>%
+  make_sngl_grp_ds(ds_smry_ls = ds_smry_ls)
 ```
-The second helper function is `add_costs_by_tmpt`{.R}, which we use to add a cost variable with gamma distributed costs that have **population** (not sample) mean values of \$300 for a defined period up to baseline and \$1500 for the costs accrued between baseline and follow-up. 
-```{r}
-sngl_grp_ds_tb <- sngl_grp_ds_tb  %>%
-  add_costs_by_tmpt(round_var_nm_1L_chr = ds_smry_ls$round_var_nm_1L_chr,
-                    round_lvls_chr = ds_smry_ls$round_lvls_chr,
-                    costs_mean_dbl = c(300,1500),
-                    costs_sd_dbl = c(100,120),
-                    fn = add_costs_from_gamma_dist) 
-```
+
+
+We add a cost variable with gamma distributed costs that have **population** (not sample) mean values of \$300 for a defined period up to baseline and \$1500 for the costs accrued between baseline and follow-up. 
 
 The resulting single group dataset contains `r nrow(sngl_grp_ds_tb)` records, with a snapshot provided below.
 
 ```{r}
-sngl_grp_ds_tb %>% dplyr::arrange(fkClientID) %>% head()
+sngl_grp_ds_tb  %>% head()
 ```
 ## Matched group dataset
 To create a matched group dataset
@@ -80,22 +75,16 @@ The final helper function is `make_fake_trial_ds`{.R}, which we use to split our
  - the variables that we want to match on to create comparable intervention and control groups; and
   - the variables which we will manipulate in order to create differences between the intervention and control groups.
 ```{r}
-matched_ds_tb <- sngl_grp_ds_tb %>%
-make_fake_trial_ds(id_var_nm_1L_chr = ds_smry_ls$id_var_nm_1L_chr,
-                   round_var_nm_1L_chr = ds_smry_ls$round_var_nm_1L_chr,
-                   round_lvls_chr = ds_smry_ls$round_lvls_chr,
-                   match_on_vars_chr = c("PHQ9","SOFAS","costs_dbl"),
-                   cmprsn_var_nm_1L_chr = "study_arm_chr",
-                   cmprsn_groups_chr = c("Intervention","Control"),
-                   fns_ls = list(rnorm,rnorm,rnorm),
-                   var_nms_chr = c("PHQ9","SOFAS","costs_dbl"),
-                   abs_mean_diff_dbl = c(6,8,300),
-                   diff_sd_dbl = c(7,10,400),
-                   multiplier_dbl = c(1,-1,1),
-                   min_dbl = c(0,0,0),
-                   max_dbl = c(27,100,Inf),
-                   integer_lgl = c(T,T,F)) %>%
-  dplyr::mutate(dplyr::across(c("PHQ9","SOFAS"),as.integer))
+cmprsn_smry_tb <- tibble::tibble(var_nms_chr = c(ds_smry_ls$predr_var_nms,ds_smry_ls$costs_var_nm_1L_chr),
+                                 fns_ls = list(rnorm,rnorm,rnorm),
+                                 abs_mean_diff_dbl = c(6,8,300),
+                                 diff_sd_dbl = c(7,10,400),
+                                 multiplier_dbl = c(1,-1,1),
+                                 min_dbl = c(0,0,0),
+                                 max_dbl = c(27,100,Inf),
+                                 integer_lgl = c(T,T,F))
+
+make_matched_ds(sngl_grp_ds, cmprsn_smry_tb = cmprsn_smry_tb, ds_smry_ls = ds_smry_ls)
 ```
 
 The resulting dataset includes `r matched_ds_tb$match_idx_int %>% unique() %>% length()` matched comparisons, with each comparison containing baseline and follow-up records for one intervention arm participant and one control arm participant. The first few records are as follows.
@@ -150,136 +139,6 @@ econ_cmprsn_ds_tb <- add_aqol6d_predn_to_ds(data_tb = matched_ds_tb,
 ```{r}
 econ_cmprsn_ds_tb %>% head()
 ```
-```{r}
-add_change_in_ds_var <- function(ds_tb,
-                             id_var_nm_1L_chr = "fkClientID",
-                             round_var_nm_1L_chr = "round",
-                             round_bl_val_1L_chr = "Baseline",
-                             change_var_nm_1L_chr,
-                             var_nm_1L_chr,
-                             arrange_by_id_lgl = T){
- updated_ds_tb <-  ds_tb %>%
-  dplyr::group_by(!!rlang::sym(id_var_nm_1L_chr)) %>%
-  dplyr::mutate(!!rlang::sym(change_var_nm_1L_chr) := dplyr::case_when(!!rlang::sym(round_var_nm_1L_chr) == round_bl_val_1L_chr ~ 0,
-                                        T ~ (as.numeric(!!rlang::sym(var_nm_1L_chr)) - dplyr::lag(as.numeric(!!rlang::sym(var_nm_1L_chr)))))) %>% dplyr::ungroup() 
- if(arrange_by_id_lgl)
- updated_ds_tb <-  updated_ds_tb %>%
-  dplyr::arrange(!!rlang::sym(id_var_nm_1L_chr))
- return(updated_ds_tb)
-}
-add_qalys <- function(ds_tb,
-                      cmprsn_var_nm_1L_chr = "study_arm_chr",
-                      duration_var_nm_1L_chr = "duration_prd",
-                      id_var_nm_1L_chr = "fkClientID",
-                      match_idx_var_nm_1L_chr = "match_idx_int",
-                      qalys_var_nm_1L_chr = "qalys_dbl",
-                      round_var_nm_1L_chr = "round",
-                      utl_change_var_nm_1L_chr = "utl_change_dbl",
-                      utl_var_nm_1L_chr = "utility_dbl",
-                      reshape_1L_lgl = T){
- updated_ds_tb <- ds_tb %>%
-    dplyr::mutate(!!rlang::sym(qalys_var_nm_1L_chr) := (!!rlang::sym(utl_var_nm_1L_chr)-(!!rlang::sym(utl_change_var_nm_1L_chr) * 0.5)) * (duration_prd / lubridate::years(1)))
- if(reshape_1L_lgl){
-   vars_to_spread_chr <- names(updated_ds_tb)[!names(updated_ds_tb) %in% c(cmprsn_var_nm_1L_chr,
-                                                                           id_var_nm_1L_chr,
-                                                                           match_idx_var_nm_1L_chr,
-                                                                           round_var_nm_1L_chr)]
-   updated_ds_tb <- updated_ds_tb %>% tidyr::pivot_wider(names_from = !!rlang::sym(round_var_nm_1L_chr),
-                                                 values_from = tidyselect::all_of(vars_to_spread_chr))
- }
-  return(updated_ds_tb)
-}
-make_ce_smry <- function(ds_tb,
-                         indices,
-                         change_types_chr = "dbl",
-                         benefits_pfx_1L_chr = "qalys_dbl",
-                         benefits_var_nm_1L_chr = "qalys",
-                         costs_pfx_1L_chr = "costs_dbl",
-                         costs_var_nm_1L_chr = "costs",
-                         change_sfx_1L_chr = "change",
-                         change_vars_chr = NA_character_,
-                         cmprsn_groups_chr = c("Intervention","Control"),
-                         cmprsn_var_nm_1L_chr = "study_arm_chr",
-                         round_fup_1L_chr = "Follow-up"){
-if(!is.na(change_vars_chr[1])){
-  change_vars_with_sfx_chr <- paste0(change_vars_chr, "_", change_sfx_1L_chr,"_", change_types_chr)
-  replacements_chr <- paste0(change_vars_chr, "_", change_sfx_1L_chr)
-}else{
-  change_vars_with_sfx_chr <- replacements_chr <-character(0)
-}
-selected_cols_chr <- c(costs_pfx_1L_chr, 
-                       benefits_pfx_1L_chr,
-                       change_vars_with_sfx_chr) %>% paste0("_",round_fup_1L_chr) 
-rename_lup <- tibble::tibble(old_name_chr = selected_cols_chr, new_name_chr = c(costs_var_nm_1L_chr, benefits_var_nm_1L_chr, replacements_chr))
-new_nms_ls <- rename_lup$new_name_chr %>% purrr::map(~paste0(.x,"_",cmprsn_groups_chr))
-summary_tb <- ds_tb[indices,] %>% 
-  dplyr::group_by(!!rlang::sym(cmprsn_var_nm_1L_chr)) %>%
-  dplyr::select(dplyr::all_of(c(selected_cols_chr, cmprsn_var_nm_1L_chr))) %>%
-    dplyr::rename_with(.cols = selected_cols_chr,
-                       ~ ready4fun::get_from_lup_obj(rename_lup,
-                                                     match_var_nm_1L_chr = "old_name_chr",
-                                                     match_value_xx = .x,
-                                                     target_var_nm_1L_chr = "new_name_chr",
-                                                     evaluate_lgl = F)) %>%
-  dplyr::summarise(dplyr::across(.fns = mean)) %>%
-  dplyr::ungroup()  %>%
-  tidyr::pivot_wider(names_from = cmprsn_var_nm_1L_chr,
-                      values_from = rename_lup$new_name_chr) %>%
-  dplyr::mutate(ICER = (!!rlang::sym(new_nms_ls[[1]][1]) - !!rlang::sym(new_nms_ls[[1]][2])) /
-                  (!!rlang::sym(new_nms_ls[[2]][1]) - !!rlang::sym(new_nms_ls[[2]][2]))) %>%
-      dplyr::rename_with(~paste0(.x,"_dbl")) %>%
-  t() 
-summary_dbl <- summary_tb[,1]
-return(summary_dbl)
-}
-make_he_smry <- function(ds_tb,
-                         change_vars_chr = NA_character_,
-                         wtp_dbl = 50000,
-                         bootstrap_iters_1L_int = 1000,
-                         change_types_chr = "dbl",
-                         benefits_pfx_1L_chr = "qalys_dbl",
-                         benefits_var_nm_1L_chr = "qalys",
-                         costs_pfx_1L_chr = "costs_dbl",
-                         costs_var_nm_1L_chr = "costs",
-                         change_sfx_1L_chr = "change",
-                         cmprsn_groups_chr = c("Intervention","Control"),
-                         cmprsn_var_nm_1L_chr = "study_arm_chr",
-                         round_fup_1L_chr = "Follow-up"
-                         ){
-  bootstraps_ls <- boot::boot(ds_tb, 
-                              make_ce_smry, 
-                              R = bootstrap_iters_1L_int,
-                              benefits_pfx_1L_chr = benefits_pfx_1L_chr,
-                              costs_pfx_1L_chr = costs_pfx_1L_chr,
-                              change_vars_chr = change_vars_chr,
-                              change_sfx_1L_chr = change_sfx_1L_chr,
-                              change_types_chr = change_types_chr,
-                              cmprsn_groups_chr = cmprsn_groups_chr,
-                              cmprsn_var_nm_1L_chr = cmprsn_var_nm_1L_chr,
-                              round_fup_1L_chr = round_fup_1L_chr, 
-                              benefits_var_nm_1L_chr = benefits_var_nm_1L_chr,
-                              costs_var_nm_1L_chr = costs_var_nm_1L_chr
-                              ) # round_fup_1L_chr = "Follow-up", ds_smry_ls$round_lvls_chr[2]
-costs_mat <- bootstraps_ls$t[,1:2]
-benefits_mat <- bootstraps_ls$t[,3:4]
-reordered_cmprsns_chr <- cmprsn_groups_chr[cmprsn_groups_chr %>% purrr::map_int(~which(endsWith(names(bootstraps_ls$t0)[1:2],                                                                       paste0(.x,"_dbl"))))]
-ce_res_ls <- BCEA::bcea(e = benefits_mat,
-                        c = costs_mat,
-                        ref = which(reordered_cmprsns_chr == cmprsn_groups_chr[1]),
-                        interventions = reordered_cmprsns_chr,
-                        #wtp = NULL,
-                        Kmax = wtp_dbl*2)
-named_mat <- bootstraps_ls$t
-colnames(named_mat) <- names(bootstraps_ls$t0)
-he_smry_ls <- list(ce_res_ls = ce_res_ls,
-                   bootstraps_ls = bootstraps_ls,
-                   benefits_mat = benefits_mat,
-                   costs_mat = costs_mat,
-                   named_mat = named_mat
-                   )
-return(he_smry_ls)
-}
-```
 
 ```{r}
 args_ls_ls <- purrr::map(c(c("PHQ9","SOFAS"),
@@ -301,7 +160,7 @@ econ_cmprsn_ds_tb <- purrr::reduce(1:length(args_ls_ls),
 econ_cmprsn_ds_tb %>% head()
 ```
 ```{r}
-var_nms_chr <- paste0(c("costs_dbl","qalys_dbl", paste0(c("PHQ9","SOFAS","AQOL6D_HU"), "_change_dbl")),"_Follow-up")
+# var_nms_chr <- paste0(c("costs_dbl","qalys_dbl", paste0(c("PHQ9","SOFAS","AQOL6D_HU"), "_change_dbl")),"_Follow-up")
   
 ```
 
@@ -330,20 +189,20 @@ evpi_ls <- BCEA::evppi(names(he_smry_ls$bootstraps_ls$t0)[c(1,3)],
             input = he_smry_ls$named_mat,
             he = he_smry_ls$ce_res_ls)
 ```
-```{r}
+```{r fig.width=6}
 BCEA::plot.evppi(evpi_ls, graph = "ggplot2")
 ```
 
-```{r}
+```{r fig.width=6}
 BCEA::eib.plot(he_smry_ls$ce_res_ls)
 ```
 
-```{r}
+```{r fig.width=6}
 BCEA::evi.plot(he_smry_ls$ce_res_ls,
                graph = "ggplot2")
 ```
 
-```{r}
+```{r fig.width=6}
 BCEA::ceac.plot(he_smry_ls$ce_res_ls,
                 graph = "ggplot2",
           #title = "my title",

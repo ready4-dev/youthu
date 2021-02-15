@@ -103,7 +103,7 @@ add_aqol6d_predn_to_ds <- function(data_tb,
   if("aqol6d_total_w_CLL_cloglog" %in% names(updated_tb))
     updated_tb <- updated_tb %>%
     dplyr::select(-aqol6d_total_w_CLL_cloglog)
-  updated_tb <- dplyr::left_join(data_tb %>% dplyr::select(original_ds_vars_chr),
+  updated_tb <- dplyr::left_join(data_tb %>% dplyr::select(tidyselect::all_of(original_ds_vars_chr)),
                                  updated_tb) %>%
     dplyr::select(c(names(updated_tb),setdiff(names(data_tb),names(updated_tb))))
   return(updated_tb)
@@ -143,6 +143,22 @@ add_aqol6dU_to_aqol6d_tbs_ls <- function (aqol6d_tbs_ls, prefix_1L_chr = "aqol6d
         prefix_1L_chr = prefix_1L_chr, id_var_nm_1L_chr = id_var_nm_1L_chr)))
     return(aqol6d_tbs_ls)
 }
+add_change_in_ds_var <- function(ds_tb,
+                                 id_var_nm_1L_chr = "fkClientID",
+                                 round_var_nm_1L_chr = "round",
+                                 round_bl_val_1L_chr = "Baseline",
+                                 change_var_nm_1L_chr,
+                                 var_nm_1L_chr,
+                                 arrange_by_id_lgl = T){
+  updated_ds_tb <-  ds_tb %>%
+    dplyr::group_by(!!rlang::sym(id_var_nm_1L_chr)) %>%
+    dplyr::mutate(!!rlang::sym(change_var_nm_1L_chr) := dplyr::case_when(!!rlang::sym(round_var_nm_1L_chr) == round_bl_val_1L_chr ~ 0,
+                                                                         T ~ (as.numeric(!!rlang::sym(var_nm_1L_chr)) - dplyr::lag(as.numeric(!!rlang::sym(var_nm_1L_chr)))))) %>% dplyr::ungroup()
+  if(arrange_by_id_lgl)
+    updated_ds_tb <-  updated_ds_tb %>%
+      dplyr::arrange(!!rlang::sym(id_var_nm_1L_chr))
+  return(updated_ds_tb)
+}
 add_cors_and_uts_to_aqol6d_tbs_ls <- function (aqol6d_tbs_ls, aqol_scores_pars_ls, aqol_items_props_tbs_ls,
     temporal_cors_ls, prefix_chr, aqol_tots_var_nms_chr, id_var_nm_1L_chr = "fkClientID")
 {
@@ -160,6 +176,7 @@ add_costs_by_tmpt <- function(ds_tb,
                               round_lvls_chr = c("Baseline","Follow-up"),
                               costs_mean_dbl,
                               costs_sd_dbl,
+                              extra_cost_args_ls = list(costs_var_nm_1L_chr = "costs_dbl"),
                               fn = add_costs_from_gamma_dist){
   updated_ds_tb <- purrr::pmap_dfr(list(round_lvls_chr,
                                         costs_mean_dbl,
@@ -167,6 +184,8 @@ add_costs_by_tmpt <- function(ds_tb,
                                    ~ {
                                      args_ls <- list(ds_tb %>%
                                                        dplyr::filter(!!rlang::sym(round_var_nm_1L_chr) == ..1),..2,..3)
+                                     if(!is.null(extra_cost_args_ls))
+                                       args_ls <- append(args_ls, extra_cost_args_ls)
                                      rlang::exec(.fn = fn, !!!args_ls)
                                    })
   return(updated_ds_tb)
@@ -174,10 +193,10 @@ add_costs_by_tmpt <- function(ds_tb,
 add_costs_from_gamma_dist <- function(ds_tb,
                                       costs_mean_dbl,
                                       costs_sd_dbl,
-                                      costs_var_nm_1L_dbl = "costs_dbl"){
+                                      costs_var_nm_1L_chr = "costs_dbl"){
 
   updated_ds_tb <- dplyr::mutate(ds_tb,
-                                 !!rlang::sym(costs_var_nm_1L_dbl) := make_costs_vec_from_gamma_dist(n_int  =nrow(ds_tb),
+                                 !!rlang::sym(costs_var_nm_1L_chr) := make_costs_vec_from_gamma_dist(n_int = nrow(ds_tb),
                                                                                                      costs_mean_dbl = costs_mean_dbl,
                                                                                                      costs_sd_dbl = costs_sd_dbl))
   return(updated_ds_tb)
@@ -317,6 +336,28 @@ add_labels_to_aqol6d_tb <- function (aqol6d_tb, labels_chr = NA_character_)
     Hmisc::label(aqol6d_tb) = as.list(labels_chr[match(names(aqol6d_tb),
         names(labels_chr))])
     return(aqol6d_tb)
+}
+add_qalys <- function(ds_tb,
+                      cmprsn_var_nm_1L_chr = "study_arm_chr",
+                      duration_var_nm_1L_chr = "duration_prd",
+                      id_var_nm_1L_chr = "fkClientID",
+                      match_idx_var_nm_1L_chr = "match_idx_int",
+                      qalys_var_nm_1L_chr = "qalys_dbl",
+                      round_var_nm_1L_chr = "round",
+                      utl_change_var_nm_1L_chr = "utl_change_dbl",
+                      utl_var_nm_1L_chr = "utility_dbl",
+                      reshape_1L_lgl = T){
+  updated_ds_tb <- ds_tb %>%
+    dplyr::mutate(!!rlang::sym(qalys_var_nm_1L_chr) := (!!rlang::sym(utl_var_nm_1L_chr)-(!!rlang::sym(utl_change_var_nm_1L_chr) * 0.5)) * (duration_prd / lubridate::years(1)))
+  if(reshape_1L_lgl){
+    vars_to_spread_chr <- names(updated_ds_tb)[!names(updated_ds_tb) %in% c(cmprsn_var_nm_1L_chr,
+                                                                            id_var_nm_1L_chr,
+                                                                            match_idx_var_nm_1L_chr,
+                                                                            round_var_nm_1L_chr)]
+    updated_ds_tb <- updated_ds_tb %>% tidyr::pivot_wider(names_from = !!rlang::sym(round_var_nm_1L_chr),
+                                                          values_from = tidyselect::all_of(vars_to_spread_chr))
+  }
+  return(updated_ds_tb)
 }
 add_uids_to_tbs_ls <- function (tbs_ls, prefix_1L_chr, id_var_nm_1L_chr = "fkClientID")
 {

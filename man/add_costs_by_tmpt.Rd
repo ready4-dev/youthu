@@ -10,6 +10,7 @@ add_costs_by_tmpt(
   round_lvls_chr = c("Baseline", "Follow-up"),
   costs_mean_dbl,
   costs_sd_dbl,
+  extra_cost_args_ls = list(costs_var_nm_1L_chr = "costs_dbl"),
   fn = add_costs_from_gamma_dist
 )
 }
@@ -23,6 +24,8 @@ add_costs_by_tmpt(
 \item{costs_mean_dbl}{Costs mean (a double vector)}
 
 \item{costs_sd_dbl}{Costs sd (a double vector)}
+
+\item{extra_cost_args_ls}{Extra cost arguments (a list), Default: list(costs_var_nm_1L_chr = "costs_dbl")}
 
 \item{fn}{Function (a function), Default: add_costs_from_gamma_dist}
 }
