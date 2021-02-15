@@ -1,6 +1,6 @@
 Package: youthu
 Title: Youth Outcomes to Health Utility
-Version: 0.0.0.9040
+Version: 0.0.0.9041
 Authors@R: 
     c(person(given = "Matthew",
              family = "Hamilton",
@@ -42,11 +42,14 @@ RoxygenNote: 7.1.1
 Imports: 
     testthat,
     knitr,
+    lifecycle,
     knitrBootstrap,
     ready4show (>= 0.0.0.9008),
     ready4use (>= 0.0.0.9107),
     TTU (>= 0.0.0.9102),
     ready4fun (>= 0.0.0.9268),
+    BCEA,
+    boot,
     brms,
     dataverse,
     dplyr,
