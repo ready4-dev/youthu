@@ -35,15 +35,6 @@ get_mdls_using_predrs <- function(mdl_predrs_in_ds_chr,
   filtered_mdls_lup <- mdls_lup %>% dplyr::filter(include_lgl)
   return(filtered_mdls_lup)
 }
-get_signft_covars <- function (mdls_with_covars_smry_tb, covar_var_nms_chr)
-{
-    signif_vars_chr <- mdls_with_covars_smry_tb$Significant %>%
-        purrr::map(~strsplit(.x, " ")) %>% purrr::flatten() %>%
-        purrr::flatten_chr() %>% unique()
-    signt_covars_chr <- covar_var_nms_chr[covar_var_nms_chr %in%
-        signif_vars_chr]
-    return(signt_covars_chr)
-}
 get_tfmn_from_lup <- function(mdl_nm_1L_chr, mdls_lup = NULL){
   if (is.null(mdls_lup))
     utils::data("mdls_lup", envir = environment())

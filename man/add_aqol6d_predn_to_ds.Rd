@@ -2,7 +2,7 @@
 % Please edit documentation in R/fn_add.R
 \name{add_aqol6d_predn_to_ds}
 \alias{add_aqol6d_predn_to_ds}
-\title{Add Assessment of Quality of Life Six Dimension predn to dataset}
+\title{Add aqol6d predn to dataset}
 \usage{
 add_aqol6d_predn_to_ds(
   data_tb,
@@ -42,6 +42,6 @@ add_aqol6d_predn_to_ds(
 Updated (a tibble)
 }
 \description{
-add_aqol6d_predn_to_ds() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add assessment of quality of life six dimension predn to dataset. Function argument data_tb specifies the object to be updated. The function returns Updated (a tibble).
+add_aqol6d_predn_to_ds() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add aqol6d predn to dataset. Function argument data_tb specifies the object to be updated. The function returns Updated (a tibble).
 }
 \keyword{internal}

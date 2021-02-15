@@ -19,9 +19,7 @@ library(youthu)
 ```
 This development version of the youthu package has been made available as part of the process of testing and documenting the package. 
 
-Vignettes that demonstrate some of the tools currently included in the youthu package:
+The following vignettes demonstrate some of the tools currently included in the youthu package:
 
 - [Data integrity tools](Data_Integrity.html)
-- [Replication dataset](Replication_DS.html)
-- [Health utility scoring tools](Utility_Scoring.html)
 - [Predict Adolescent AQoL-6D](Prediction_With_Mdls.html)

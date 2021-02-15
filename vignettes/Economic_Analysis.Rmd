@@ -12,26 +12,24 @@ params:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-```{r}
+```{r message=FALSE}
 library(youthu)
 set.seed(1234)
 ```
-# Motivation
+# Introduction
+
+## Motivation
 The main motivation behind the youthu package is to extend the types of economic analysis that can be undertaken with both single group (e.g. pilot study, health service records) and matched groups (e.g. trial) datasets that do not include measures of health utility.
 
-# Data requirements
-To use youthu to predict health utility for for records in a dataset, it is necessary for that dataset to [include one or more of the predictors used in the youthu models](Prediction_With_Mdls.html). In the examples illustrated in this article, we have selected PHQ9 and SOFAS predictors.
+## Example datasets
+To illustrate the input data requirements and the practical application of youthu functions, we adapt the youthu `replication_popl_tb` [replication dataset](Replication_DS.html) to create synthetic (fake) single group and matched group datasets. To do so, we first make a list object `ds_smry_ls` that summarises the desired features of these datasets, such as:
 
-Furthermore, to use health utility predictions in economic analysis, a dataset requires some additional features: 
- - a single group dataset must also include unique unit identifier, data collection round, data collection date and duration of study participation variables;
- - a matched group dataset needs all of the required variables for a single group dataset plus variables specifying group membership and match identifier.
+ - the names of the predictors for utility to be included in the dataset;
+ - the name of variables for unique unit identifier, data collection round, data collection date, costs and health utility measure;
+ - (for matched dataset only) the name of the variable for comparison group and the allowable values for that variable;
+ - the allowed values of the data collection round variable, the dates during which baseline data measures are collected (randomly sampled from a sequence of 180 consecutive days from the last year) and distribution parameters for the duration between baseline and follow-up timepoints (sampled from a truncated normal distribution, bounded between 80 and 110 days);
+ - **population** (not sample) parameters to generate gamma distributed costs for periods prior to study entry(mean \$300) and between baseline and follow-up measurements (mean \$1500) for the whole single group dataset or the control arm of a matched dataset;
  
-For both single group and matched group datasets, inclusion of a cost variable will extend the types of economic analysis that can be undertaken. 
-
-To illustrate the application of youthu functions to each type of dataset, we create synthetic (fake) data. To do so, we first make a list object that summarises the desired features of these datasets, such as:
- - the name of variables for unique unit identifier, data collection round, data collection date and health utility measure;
- - the allowed values of the data collection round variable,
-
 ```{r}
 ds_smry_ls <- list(bl_start_date_dtm = Sys.Date() - lubridate::days(300),
                    bl_end_date_dtm = Sys.Date() - lubridate::days(120),
@@ -50,53 +48,62 @@ ds_smry_ls <- list(bl_start_date_dtm = Sys.Date() - lubridate::days(300),
                    utl_var_nm_1L_chr = "AQoL6D_HU")
 
 ```
-## Single group dataset
-We pass these list of dataset parameters, along with a four variable (PHQ9, SOFAS, record identified and data collection round) subset of the youthu `replication_popl_tb` [replication dataset](Replication_DS.html), to ....
-We add the dates at which each participant entered the study (randomly sampled from a sequence of 180 consecutive days from the last year), the duration of study participation for each individual (sampled from a truncated normal distribution, bounded between 80 and 110 days) and the dates of each participant's follow-up assessment. 
-
+We pass both the `ds_smry_ls` summary list and `replication_popl_tb` replication dataset to the `make_sngl_grp_ds`{.R} function to create an example single group dataset.
 ```{r}
-sngl_grp_ds <- youthu::replication_popl_tb %>%
-  make_sngl_grp_ds(ds_smry_ls = ds_smry_ls)
+sngl_grp_ds_tb <- make_sngl_grp_ds(replication_popl_tb,ds_smry_ls = ds_smry_ls)
 ```
-
-
-We add a cost variable with gamma distributed costs that have **population** (not sample) mean values of \$300 for a defined period up to baseline and \$1500 for the costs accrued between baseline and follow-up. 
-
-The resulting single group dataset contains `r nrow(sngl_grp_ds_tb)` records, with a snapshot provided below.
+We can split a subset of our single group dataset into two propensity score matched groups - one each for intervention and control - using the `make_matched_ds`{.R} function. We also use this function to build in our assumptions about group differences in changes in PHQ9, SOFAS and costs measured at follow-up. The below example assumes **population** (not sample) mean differences between Intervention and Control arms of -2 for PHQ9, +4 for SOFAS and +$300 for costs.
 
 ```{r}
-sngl_grp_ds_tb  %>% head()
-```
-## Matched group dataset
-To create a matched group dataset
-The final helper function is `make_fake_trial_ds`{.R}, which we use to split our single group dataset into two propensity score matched groups - one each for intervention and control. We also use this function to build in our assumptions about the **population** (not sample) distributions for group differences in changes in PHQ9, SOFAS and costs between baseline and follow-up.
-
- -comparison group variable name and allowed values,
- - the variables that we want to match on to create comparable intervention and control groups; and
-  - the variables which we will manipulate in order to create differences between the intervention and control groups.
-```{r}
-cmprsn_smry_tb <- tibble::tibble(var_nms_chr = c(ds_smry_ls$predr_var_nms,ds_smry_ls$costs_var_nm_1L_chr),
+matched_ds_tb <- make_matched_ds(sngl_grp_ds, 
+                                 cmprsn_smry_tb = tibble::tibble(var_nms_chr = c(ds_smry_ls$predr_var_nms, ds_smry_ls$costs_var_nm_1L_chr),
                                  fns_ls = list(rnorm,rnorm,rnorm),
-                                 abs_mean_diff_dbl = c(6,8,300),
-                                 diff_sd_dbl = c(7,10,400),
-                                 multiplier_dbl = c(1,-1,1),
+                                 abs_mean_diff_dbl = c(3,2,300),
+                                 diff_sd_dbl = c(2,2,200),
+                                 multiplier_dbl = c(-1,1,1),
                                  min_dbl = c(0,0,0),
                                  max_dbl = c(27,100,Inf),
-                                 integer_lgl = c(T,T,F))
-
-make_matched_ds(sngl_grp_ds, cmprsn_smry_tb = cmprsn_smry_tb, ds_smry_ls = ds_smry_ls)
+                                 integer_lgl = c(T,T,F)), 
+                                 ds_smry_ls = ds_smry_ls)
 ```
 
-The resulting dataset includes `r matched_ds_tb$match_idx_int %>% unique() %>% length()` matched comparisons, with each comparison containing baseline and follow-up records for one intervention arm participant and one control arm participant. The first few records are as follows.
+# Economic analysis of matched group datasets
+
+## Data requirements
+The synthetic matched dataset we generated includes `r matched_ds_tb$match_idx_int %>% unique() %>% length()` matched comparisons, with each comparison containing baseline and follow-up records for one intervention arm participant and one control arm participant. The first few records are as follows.
 
 ```{r}
 matched_ds_tb %>% head()
 ```
+This dataset contains features that make it possible to use in conjunction with youthu's economic analysis functions. Specifically these requirements are that the dataset must:
 
-## The usefulness of health utility for economic analyses
-Firstly, consider the case of a trial dataset examining differences in clinical, functional and healthcare resource use outcomes between intervention and control arms but containing no measure of health utility. The most feasible economic evaluation types to apply to this dataset are cost-consequence analysis (where a synopsis of the differences in a range of measures are presented alongside cost differences for a decision maker to interpret subjectively) and cost-effectiveness analysis (where a statistic - the incremental cost-effectiveness ratio or ICER - is calculated by dividing differences in costs by differences in a single outcome measure).
+- [include one or more of the predictors used in the youthu models](Prediction_With_Mdls.html) (in this case PHQ9 and SOFAS);
+ - include variables for unique study participant identifier, data collection round, data collection date, interval between baseline and follow-up, study arm assignment and record matching; and
+ - be in long format where each row represents ***either*** a baseline or follow-up measurement for a unique study participant.
+ 
+The synthetic matched dataset also contains a cost variable, which is a requirement for most, though not all, of the economic analyses that can be undertaken with youthu. 
 
-The policy implications of these two types of economic studies can be relatively simple to interpret if either the intervention or control arm is simultaneously cheaper and more effective across all included outcome measures. However, frequently a new intervention proves to be both more effective and more costly, in which case the policy message of such studies is much less clear due to the following limitations of each evaluation type:
+## Limitations of datasets without measures of health utility
+A notable omission from the fake study dataset is any measure of utility. This omission means that, in the absence of using mapping algorithms such as those included with youthu, the most feasible types of economic evaluation to apply to this dataset would likely be cost-consequence analysis (where a synopsis of the differences in a range of measures are presented alongside cost differences for a decision maker to interpret subjectively) and cost-effectiveness analysis (where a statistic - the incremental cost-effectiveness ratio or ICER - is calculated by dividing differences in costs by differences in a single outcome measure).
+
+These types of economic analyses can be relatively simple to interpret if either the intervention or control arm is simultaneously cheaper and more effective across all included outcome measures. However, these conditions don't hold in our sample data.
+
+```{r}
+summary((matched_ds_tb %>% dplyr::filter(study_arm_chr == "Control" & round == "Baseline"))[5:6])
+```
+```{r}
+summary((matched_ds_tb %>% dplyr::filter(study_arm_chr == "Control" & round == "Follow-up"))[5:7])
+```
+
+```{r}
+summary((matched_ds_tb %>% dplyr::filter(study_arm_chr == "Intervention" & round == "Baseline"))[5:6])
+```
+
+```{r}
+summary((matched_ds_tb %>% dplyr::filter(study_arm_chr == "Intervention" & round == "Follow-up"))[5:7])
+```
+
+However, frequently a new intervention proves to be both more effective and more costly, in which case the policy message of such studies is much less clear due to the following limitations of each evaluation type:
 
 - In cost consequence analyses, the lack of any formal weighting for each of the included outcome measures makes it harder to interpret situations where an intervention has different directions of impact across different outcomes (e.g. greater improvements in functional outcomes than the comparator, but not as much clinical improvement as in the control arm).
 - In cost effectiveness analyses, the (probable) lack of any consensus value for a decision-maker's willingness to pay for improvements in the selected benefit measure mean the ICER statistic is not especially informative (e.g. is it good or bad value for money if it is necessary to pay \$100 for each unit of improvement on a clinical scale; is that intervention a better use of a decision maker's budget than an intervention that costs \$100 for a one point improvement on a different clinical scale for a different patient population?). 
@@ -219,18 +226,7 @@ BCEA::ceplane.plot(he_smry_ls$ce_res_ls, wtp =50000,
 ```
 ## Matched groups details
 
-```{r}
-summary((matched_ds_tb %>% dplyr::filter(study_arm_chr == "Control" & round == "Baseline"))[3:7])
-```
-```{r}
-summary((matched_ds_tb %>% dplyr::filter(study_arm_chr == "Intervention" & round == "Baseline"))[3:7])
-```
-```{r}
-summary((matched_ds_tb %>% dplyr::filter(study_arm_chr == "Control" & round == "Follow-up"))[3:7])
-```
-```{r}
-summary((matched_ds_tb %>% dplyr::filter(study_arm_chr == "Intervention" & round == "Follow-up"))[3:6])
-```
+
 ## Single group details
 The `r sngl_grp_ds_tb %>% dplyr::filter(round == "Baseline") %>% nrow()` baseline records are summarised below.
 ```{r}
@@ -240,4 +236,9 @@ The summary of `r sngl_grp_ds_tb %>% dplyr::filter(round == "Follow-up") %>% nro
 ```{r}
 (sngl_grp_ds_tb %>% dplyr::filter(round == "Follow-up"))[4:7] %>% summary()
 ```
+We add a cost variable with gamma distributed costs that have  mean values of \$300 for a defined period up to baseline and \$1500 for the costs accrued between baseline and follow-up. 
+The resulting single group dataset contains `r nrow(sngl_grp_ds_tb)` records, with a snapshot provided below.
 
+```{r}
+sngl_grp_ds_tb  %>% head()
+```
