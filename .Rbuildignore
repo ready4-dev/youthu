@@ -57,3 +57,5 @@
 ^data-raw/inst/models/example_mdl\.RDS$
 ^data-raw/fns/update\.R$
 ^data-raw/vignettes/_AQoL_6D_Syn_Pop\.Rmd$
+^doc$
+^Meta$

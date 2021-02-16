@@ -52,19 +52,22 @@ add_aqol6d_predn_to_ds <- function (data_tb, model_mdl, tfmn_1L_chr, predr_vars_
         TTU::add_utility_predn_to_ds(model_mdl = model_mdl, tfmn_1L_chr = tfmn_1L_chr, 
             dep_var_nm_1L_chr = mdl_dep_var_1L_chr, predr_vars_nms_chr = mdl_predr_terms_chr, 
             utl_cls_fn = firstbounce_aqol6d_adol, rmv_tfmd_dep_var_1L_lgl = T)
-    if (!is.null(names(predr_vars_nms_chr))) {
-        updated_tb <- rename_from_nmd_vec(updated_tb, nmd_vec_chr = predr_vars_nms_chr, 
-            vec_nms_as_new_1L_lgl = F)
-    }
     if (!is.null(utl_var_nm_1L_chr)) {
         updated_tb <- updated_tb %>% dplyr::rename(`:=`(!!rlang::sym(utl_var_nm_1L_chr), 
             tidyselect::all_of(mdl_dep_var_1L_chr)))
     }
+    if (!is.null(names(predr_vars_nms_chr))) {
+        updated_tb <- rename_from_nmd_vec(updated_tb, nmd_vec_chr = predr_vars_nms_chr, 
+            vec_nms_as_new_1L_lgl = F)
+    }
     if ("aqol6d_total_w_CLL_cloglog" %in% names(updated_tb)) 
         updated_tb <- updated_tb %>% dplyr::select(-aqol6d_total_w_CLL_cloglog)
+    names_to_incl_chr <- c(names(updated_tb), setdiff(names(data_tb), 
+        names(updated_tb)))
     updated_tb <- dplyr::left_join(data_tb %>% dplyr::select(tidyselect::all_of(original_ds_vars_chr)), 
-        updated_tb) %>% dplyr::select(c(names(updated_tb), setdiff(names(data_tb), 
-        names(updated_tb))))
+        updated_tb)
+    updated_tb <- updated_tb %>% dplyr::select(tidyselect::all_of(names_to_incl_chr[names_to_incl_chr %in% 
+        names(updated_tb)]))
     return(updated_tb)
 }
 #' Add change in dataset var
