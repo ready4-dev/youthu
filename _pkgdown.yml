@@ -32,4 +32,11 @@ reference:
   - firstbounce_sofas
 - title: "Functions"
 - contents:
-  - extract_guide_box_lgd
+  - add_aqol6d_predn_to_ds
+  - add_qalys_to_ds
+  - get_mdl_from_dv
+  - get_mdls_using_predrs
+  - get_tfmn_from_lup
+  - make_he_smry
+  - make_matched_ds
+  - make_sngl_grp_ds

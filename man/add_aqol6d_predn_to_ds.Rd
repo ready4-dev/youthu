@@ -44,4 +44,3 @@ Updated (a tibble)
 \description{
 add_aqol6d_predn_to_ds() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add aqol6d predn to dataset. Function argument data_tb specifies the object to be updated. The function returns Updated (a tibble).
 }
-\keyword{internal}

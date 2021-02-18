@@ -194,3 +194,20 @@ add_qalys <- function(ds_tb,
   }
   return(updated_ds_tb)
 }
+add_qalys_to_ds <- function(ds_tb,
+                            ds_smry_ls){
+  args_ls_ls <- purrr::map(c(ds_smry_ls$predr_var_nms,
+                             ds_smry_ls$utl_var_nm_1L_chr),
+                           ~ list(change_var_nm_1L_chr = paste0(.x,"_change_dbl"),
+                                  var_nm_1L_chr = .x))
+  ds_tb <- purrr::reduce(1:length(args_ls_ls),
+                         .init = ds_tb,
+                         ~ add_change_in_ds_var(.x,
+                                                var_nm_1L_chr = args_ls_ls[[.y]]$var_nm_1L_chr,
+                                                change_var_nm_1L_chr = args_ls_ls[[.y]]$change_var_nm_1L_chr)) %>%
+    add_qalys(utl_change_var_nm_1L_chr = paste0(ds_smry_ls$utl_var_nm_1L_chr,"_change_dbl"),
+              utl_var_nm_1L_chr = ds_smry_ls$utl_var_nm_1L_chr,
+              duration_var_nm_1L_chr = "duration_prd",
+              qalys_var_nm_1L_chr = "qalys_dbl")
+  return(ds_tb)
+}

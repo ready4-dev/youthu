@@ -20,7 +20,6 @@
 #' @importFrom dplyr rename select left_join
 #' @importFrom rlang sym
 #' @importFrom tidyselect all_of
-#' @keywords internal
 add_aqol6d_predn_to_ds <- function (data_tb, model_mdl, tfmn_1L_chr, predr_vars_nms_chr = NULL, 
     utl_var_nm_1L_chr = NULL, id_var_nm_1L_chr = "fkClientID", 
     round_var_nm_1L_chr = "round", round_bl_val_1L_chr = "Baseline", 
@@ -269,4 +268,25 @@ add_qalys <- function (ds_tb, cmprsn_var_nm_1L_chr = "study_arm_chr", duration_v
             values_from = tidyselect::all_of(vars_to_spread_chr))
     }
     return(updated_ds_tb)
+}
+#' Add qalys to dataset
+#' @description add_qalys_to_ds() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add qalys to dataset. Function argument ds_tb specifies the object to be updated. The function returns Dataset (a tibble).
+#' @param ds_tb Dataset (a tibble)
+#' @param ds_smry_ls Dataset smry (a list)
+#' @return Dataset (a tibble)
+#' @rdname add_qalys_to_ds
+#' @export 
+#' @importFrom purrr map reduce
+add_qalys_to_ds <- function (ds_tb, ds_smry_ls) 
+{
+    args_ls_ls <- purrr::map(c(ds_smry_ls$predr_var_nms, ds_smry_ls$utl_var_nm_1L_chr), 
+        ~list(change_var_nm_1L_chr = paste0(.x, "_change_dbl"), 
+            var_nm_1L_chr = .x))
+    ds_tb <- purrr::reduce(1:length(args_ls_ls), .init = ds_tb, 
+        ~add_change_in_ds_var(.x, var_nm_1L_chr = args_ls_ls[[.y]]$var_nm_1L_chr, 
+            change_var_nm_1L_chr = args_ls_ls[[.y]]$change_var_nm_1L_chr)) %>% 
+        add_qalys(utl_change_var_nm_1L_chr = paste0(ds_smry_ls$utl_var_nm_1L_chr, 
+            "_change_dbl"), utl_var_nm_1L_chr = ds_smry_ls$utl_var_nm_1L_chr, 
+            duration_var_nm_1L_chr = "duration_prd", qalys_var_nm_1L_chr = "qalys_dbl")
+    return(ds_tb)
 }

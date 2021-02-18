@@ -183,7 +183,6 @@ make_formula <- function (dep_var_nm_1L_chr, predictors_chr, environment_env = p
 #' @importFrom boot boot
 #' @importFrom purrr map_int
 #' @importFrom BCEA bcea
-#' @keywords internal
 make_he_smry <- function (ds_tb, change_vars_chr = NA_character_, wtp_dbl = 50000, 
     bootstrap_iters_1L_int = 1000, change_types_chr = "dbl", 
     benefits_pfx_1L_chr = "qalys_dbl", benefits_var_nm_1L_chr = "qalys", 
@@ -221,7 +220,6 @@ make_he_smry <- function (ds_tb, change_vars_chr = NA_character_, wtp_dbl = 5000
 #' @rdname make_matched_ds
 #' @export 
 #' @importFrom dplyr mutate across
-#' @keywords internal
 make_matched_ds <- function (sngl_grp_ds, cmprsn_smry_tb, ds_smry_ls) 
 {
     matched_ds_tb <- sngl_grp_ds_tb %>% make_fake_trial_ds(id_var_nm_1L_chr = ds_smry_ls$id_var_nm_1L_chr, 
@@ -284,7 +282,6 @@ make_matched_ds_spine <- function (ds_tb, round_var_nm_1L_chr = "Timepoint_chr",
 #' @export 
 #' @importFrom dplyr select mutate arrange
 #' @importFrom tibble as_tibble
-#' @keywords internal
 make_sngl_grp_ds <- function (seed_ds_tb = NULL, ds_smry_ls) 
 {
     sngl_grp_ds_tb <- seed_ds_tb %>% dplyr::select(ds_smry_ls$id_var_nm_1L_chr, 

@@ -26,4 +26,3 @@ NA ()
 \description{
 get_mdl_from_dv() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get mdl from dataverse. Function argument mdl_nm_1L_chr specifies the where to look for the required object. The function is called for its side effects and does not return a value.
 }
-\keyword{internal}

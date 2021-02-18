@@ -17,4 +17,3 @@ Sngl grp dataset (a tibble)
 \description{
 make_sngl_grp_ds() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make sngl grp dataset. The function returns Sngl grp dataset (a tibble).
 }
-\keyword{internal}

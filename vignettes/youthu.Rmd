@@ -23,3 +23,4 @@ The following vignettes demonstrate some of the tools currently included in the 
 
 - [Data integrity tools](Data_Integrity.html)
 - [Predict Adolescent AQoL-6D](Prediction_With_Mdls.html)
+- [Economic analysis](Economic_Analysis.html)

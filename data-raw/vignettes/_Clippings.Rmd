@@ -1,0 +1,69 @@
+---
+title: "_Clipplings"
+author: "Matthew Hamilton"
+date: "18/02/2021"
+output: html_document
+---
+
+## Matched groups details
+
+
+## Single group details
+The `r sngl_grp_ds_tb %>% dplyr::filter(round == "Baseline") %>% nrow()` baseline records are summarised below.
+```{r}
+(sngl_grp_ds_tb %>% dplyr::filter(round == "Baseline"))[4:7] %>% summary()
+```
+The summary of `r sngl_grp_ds_tb %>% dplyr::filter(round == "Follow-up") %>% nrow()` follow-up records:
+```{r}
+(sngl_grp_ds_tb %>% dplyr::filter(round == "Follow-up"))[4:7] %>% summary()
+```
+We add a cost variable with gamma distributed costs that have  mean values of \$300 for a defined period up to baseline and \$1500 for the costs accrued between baseline and follow-up. 
+The resulting single group dataset contains `r nrow(sngl_grp_ds_tb)` records, with a snapshot provided below.
+
+```{r}
+sngl_grp_ds_tb  %>% head()
+```
+
+# Types of economic analysis facilitated by youthu
+There are four types of economic analysis in youth mental health that youthu can help with:
+
+- Extending cost-consequence and cost-effectiveness economic evaluations to include cost-utility analyses that are easier for healthcare policy-makers to interpret;
+- Extending efficacy trials with a modelled analysis exploring the plausibility of the potential cost-effectiveness of study interventions;
+- Extending single group datasets (e.g. health service records, pilot studys) with a modelled analysis of the potential for hypothethised interventions being cost-effective; and
+- Assessing the potential economic value of alternative intervention research proposals.
+```{r}
+# var_nms_chr <- paste0(c("costs_dbl","qalys_dbl", paste0(c("PHQ9","SOFAS","AQOL6D_HU"), "_change_dbl")),"_Follow-up")
+  
+```
+
+```{r}
+# named_mat <- bootstraps_ls$t
+# colnames(named_mat) <- names(bootstraps_ls$t0)
+```
+
+```{r}
+evpi_ls <- BCEA::evppi(names(he_smry_ls$bootstraps_ls$t0)[c(1,3)],
+            input = he_smry_ls$named_mat,
+            he = he_smry_ls$ce_res_ls)
+```
+```{r fig.width=6}
+BCEA::plot.evppi(evpi_ls, graph = "ggplot2")
+```
+
+```{r fig.width=6}
+BCEA::eib.plot(he_smry_ls$ce_res_ls)
+```
+
+```{r fig.width=6}
+BCEA::evi.plot(he_smry_ls$ce_res_ls,
+               graph = "ggplot2")
+```
+
+```{r fig.width=6}
+BCEA::ceac.plot(he_smry_ls$ce_res_ls,
+                graph = "ggplot2",
+          #title = "my title",
+          line_colors = "green",
+          theme = ggplot2::theme_dark())
+
+```

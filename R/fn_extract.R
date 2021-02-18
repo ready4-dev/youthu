@@ -5,6 +5,7 @@
 #' @rdname extract_guide_box_lgd
 #' @export 
 #' @importFrom ggplot2 ggplot_gtable ggplot_build
+#' @keywords internal
 extract_guide_box_lgd <- function (a.gplot) 
 {
     tmp <- ggplot2::ggplot_gtable(ggplot2::ggplot_build(a.gplot))

@@ -17,4 +17,3 @@ Filtered mdls (a lookup table)
 \description{
 get_mdls_using_predrs() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get mdls using predrs. Function argument mdl_predrs_in_ds_chr specifies the where to look for the required object. The function returns Filtered mdls (a lookup table).
 }
-\keyword{internal}

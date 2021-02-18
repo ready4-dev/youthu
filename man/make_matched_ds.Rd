@@ -19,4 +19,3 @@ Matched dataset (a tibble)
 \description{
 make_matched_ds() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make matched dataset. The function returns Matched dataset (a tibble).
 }
-\keyword{internal}

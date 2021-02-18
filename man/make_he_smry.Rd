@@ -53,4 +53,3 @@ He smry (a list)
 \description{
 make_he_smry() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make he smry. The function returns He smry (a list).
 }
-\keyword{internal}

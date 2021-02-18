@@ -9,7 +9,6 @@
 #' @export 
 #' @importFrom dataverse dataset_files
 #' @importFrom purrr map_chr
-#' @keywords internal
 get_mdl_from_dv <- function (mdl_nm_1L_chr, dv_ds_nm_1L_chr = "https://doi.org/10.7910/DVN/JC6PTV", 
     server_1L_chr = "dataverse.harvard.edu", key_1L_chr = NULL) 
 {
@@ -37,7 +36,6 @@ get_mdl_from_dv <- function (mdl_nm_1L_chr, dv_ds_nm_1L_chr = "https://doi.org/1
 #' @importFrom dplyr filter mutate across everything pull
 #' @importFrom stringr str_trim
 #' @importFrom tibble as_tibble
-#' @keywords internal
 get_mdls_using_predrs <- function (mdl_predrs_in_ds_chr, mdls_lup = NULL) 
 {
     if (is.null(mdls_lup)) 
@@ -69,7 +67,6 @@ get_mdls_using_predrs <- function (mdl_predrs_in_ds_chr, mdls_lup = NULL)
 #' @export 
 #' @importFrom utils data
 #' @importFrom ready4fun get_from_lup_obj
-#' @keywords internal
 get_tfmn_from_lup <- function (mdl_nm_1L_chr, mdls_lup = NULL) 
 {
     if (is.null(mdls_lup)) 
