@@ -183,6 +183,7 @@ pkg_dss_tb <- tibble::tibble(mdl_nms_chr = mdls_smry_tb$Model %>% unique()) %>%
 ## 8. Document functions.
 usethis::use_build_ignore("initial_setup.R")
 usethis::use_package("knitrBootstrap")
+usethis::use_package("truncnorm")
 usethis::use_dev_package("ready4show")
 usethis::use_dev_package("ready4use")
 usethis::use_dev_package("TTU")
