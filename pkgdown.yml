@@ -2,10 +2,9 @@ pandoc: 2.7.3
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
-  TA_Tools_Data_Integrity: TA_Tools_Data_Integrity.html
-  TA_Tools_Prediction_With_Mdls: TA_Tools_Prediction_With_Mdls.html
-  TA_Tools_Replication_DS: TA_Tools_Replication_DS.html
-  TA_Tools_Scoring: TA_Tools_Scoring.html
+  Data_Integrity: Data_Integrity.html
+  Economic_Analysis: Economic_Analysis.html
+  Prediction_With_Mdls: Prediction_With_Mdls.html
   youthu: youthu.html
-last_built: 2021-02-05T06:18Z
+last_built: 2021-02-18T12:41Z
 
