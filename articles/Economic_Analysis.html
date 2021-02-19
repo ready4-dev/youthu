@@ -115,12 +115,16 @@
 <div id="motivation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#motivation" class="anchor"></a>Motivation</h2>
-<p>The main motivation behind the youthu package is to extend the types of economic analysis that can be undertaken with both single group (e.g. pilot study, health service records) and matched groups (e.g. trial) datasets that do not include measures of health utility.</p>
+<p>The main motivation behind the youthu package is to extend the types of economic analysis that can be undertaken with both single group (e.g. pilot study, health service records) and matched groups (e.g. trial) longitudinal datasets that do not include measures of health utility. This article focuses on its application to matched group datasets.</p>
 </div>
 <div id="example-datasets" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example-datasets" class="anchor"></a>Example datasets</h2>
-<p>To illustrate the input data requirements and the practical application of youthu functions, we adapt a <a href="https://ready4-dev.github.io/TTU/articles/Replication_DS.html">replication dataset from the youthu’s sister package TTU</a> to create synthetic (fake) single group and matched group datasets. To do so, we first make a list object <code>ds_smry_ls</code> that summarises the desired features of these datasets, such as:</p>
+<p>To illustrate the input data requirements and the practical application of youthu functions, we adapt a <a href="https://ready4-dev.github.io/TTU/articles/Replication_DS.html">replication dataset from the youthu’s sister package TTU</a> to create synthetic (fake) single group and matched group datasets. For our purposes we are going to use those records where a study participants had a baseline PHQ9 score of under 20.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"replication_popl_tb"</span>, package <span class="op">=</span> <span class="st">"TTU"</span><span class="op">)</span>
+<span class="va">seed_ds_tb</span> <span class="op">&lt;-</span> <span class="va">replication_popl_tb</span> <span class="op">%&gt;%</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">fkClientID</span> <span class="op">%in%</span> <span class="op">(</span><span class="va">replication_popl_tb</span> <span class="op">%&gt;%</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">round</span><span class="op">==</span><span class="st">"Baseline"</span> <span class="op">&amp;</span> <span class="va">PHQ9</span><span class="op">&lt;</span><span class="fl">20</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">fkClientID</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p>We need to further adapt this dataset. To to so, we first make a list object <code>ds_smry_ls</code> that summarises the desired features of these datasets, such as:</p>
 <ul>
 <li>the names of the predictors for utility to be included in the dataset;</li>
 <li>the name of variables for unique unit identifier, data collection round, data collection date, costs and health utility measure;</li>
@@ -130,7 +134,7 @@
 <strong>population</strong> (not sample) parameters to generate gamma distributed costs for periods prior to study entry and between baseline and follow-up measurements for the whole single group dataset or the control arm of a matched dataset.</li>
 </ul>
 <p>In the below example, our fake baseline data collection times are randomly sampled from a sequence of 180 consecutive days from the last year, the time spent in the study for each participant is sampled from a truncated normal distribution, bounded between 160 and 220 days with a mean of 180 days, and mean costs in the period prior to study entry were $300, while the costs of resources consumed by participants over the lifetime of the study have a mean of $1500. The names of the predictor variables we will be using are specified as PHQ9 and SOFAS.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ds_smry_ls</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>bl_start_date_dtm <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/period.html">days</a></span><span class="op">(</span><span class="fl">300</span><span class="op">)</span>,
                    bl_end_date_dtm <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/period.html">days</a></span><span class="op">(</span><span class="fl">120</span><span class="op">)</span>,
                    cmprsn_var_nm_1L_chr <span class="op">=</span> <span class="st">"study_arm_chr"</span>,
@@ -146,16 +150,15 @@
                    round_var_nm_1L_chr <span class="op">=</span> <span class="st">"round"</span>,
                    round_lvls_chr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Baseline"</span>,<span class="st">"Follow-up"</span><span class="op">)</span>, 
                    utl_var_nm_1L_chr <span class="op">=</span> <span class="st">"AQoL6D_HU"</span><span class="op">)</span></code></pre></div>
-<p>We pass both the <code>ds_smry_ls</code> summary list and the <code>replication_popl_tb</code> replication dataset to the <code class="sourceCode r">make_sngl_grp_ds</code> function to create an example single group dataset.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"replication_popl_tb"</span>, package <span class="op">=</span> <span class="st">"TTU"</span><span class="op">)</span>
-<span class="va">sngl_grp_ds_tb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/make_sngl_grp_ds.html">make_sngl_grp_ds</a></span><span class="op">(</span><span class="fu">TTU</span><span class="fu">::</span><span class="va"><a href="https://ready4-dev.github.io/TTU/reference/replication_popl_tb.html">replication_popl_tb</a></span>,ds_smry_ls <span class="op">=</span> <span class="va">ds_smry_ls</span><span class="op">)</span></code></pre></div>
-<p>We can split a subset of our single group dataset into two propensity score matched groups - one each for intervention and control - using the <code class="sourceCode r">make_matched_ds</code> function. We also use this function to build in our assumptions about group differences in changes in PHQ9, SOFAS and costs measured at follow-up. The below example assumes <strong>population</strong> (not sample) mean change differences between Intervention and Control arms of -3 for PHQ9, -1 for SOFAS and +$300 for costs.</p>
+<p>We pass both the <code>ds_smry_ls</code> summary list and the <code>seed_ds_tb</code> seed dataset to the <code class="sourceCode r">make_sngl_grp_ds</code> function to create an example single group dataset.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">sngl_grp_ds_tb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/make_sngl_grp_ds.html">make_sngl_grp_ds</a></span><span class="op">(</span><span class="va">seed_ds_tb</span>,ds_smry_ls <span class="op">=</span> <span class="va">ds_smry_ls</span><span class="op">)</span></code></pre></div>
+<p>We can split a subset of our single group dataset into two propensity score matched groups - one each for intervention and control - using the <code class="sourceCode r">make_matched_ds</code> function. We also use this function to build in our assumptions about group differences in changes in PHQ9, SOFAS and costs measured at follow-up. The below example assumes <strong>population</strong> (not sample) mean change differences between Intervention and Control arms of -2 for PHQ9, -2 for SOFAS and +$300 for costs.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">matched_ds_tb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/make_matched_ds.html">make_matched_ds</a></span><span class="op">(</span><span class="va">sngl_grp_ds</span>, 
                                  cmprsn_smry_tb <span class="op">=</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>var_nms_chr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">ds_smry_ls</span><span class="op">$</span><span class="va">predr_var_nms</span>, <span class="va">ds_smry_ls</span><span class="op">$</span><span class="va">costs_var_nm_1L_chr</span><span class="op">)</span>,
                                  fns_ls <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu">stats</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>,<span class="fu">stats</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>,<span class="fu">stats</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">)</span>,
-                                 abs_mean_diff_dbl <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">1</span>,<span class="fl">300</span><span class="op">)</span>,
+                                 abs_mean_diff_dbl <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">2</span>,<span class="fl">300</span><span class="op">)</span>,
                                  diff_sd_dbl <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">2</span>,<span class="fl">200</span><span class="op">)</span>,
                                  multiplier_dbl <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>,<span class="op">-</span><span class="fl">1</span>,<span class="fl">1</span><span class="op">)</span>,
                                  min_dbl <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0</span>,<span class="fl">0</span><span class="op">)</span>,
@@ -171,8 +174,8 @@
 <div id="data-requirements" class="section level2">
 <h2 class="hasAnchor">
 <a href="#data-requirements" class="anchor"></a>Data requirements</h2>
-<p>The synthetic matched dataset we generated includes 319 matched comparisons, with each comparison containing baseline and follow-up records for one intervention arm participant and one control arm participant. The first few records are as follows.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<p>The synthetic matched dataset we generated includes 268 matched comparisons, with each comparison containing baseline and follow-up records for one intervention arm participant and one control arm participant. The first few records are as follows.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">matched_ds_tb</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">ready4show</span><span class="fu">::</span><span class="fu"><a href="https://ready4-dev.github.io/ready4show/reference/print_table.html">print_table</a></span><span class="op">(</span>output_type_1L_chr <span class="op">=</span> <span class="st">"HTML"</span>,
@@ -213,25 +216,25 @@ match_idx_int
 <tbody>
 <tr>
 <td style="text-align:left;">
-Participant_744
+Participant_177
 </td>
 <td style="text-align:right;">
 Baseline
 </td>
 <td style="text-align:right;">
-2020-09-09
+2020-08-02
 </td>
 <td style="text-align:right;">
 0S
 </td>
 <td style="text-align:right;">
-0
+3
 </td>
 <td style="text-align:right;">
-87
+50
 </td>
 <td style="text-align:left;">
-164.4814
+300.9679
 </td>
 <td style="text-align:right;">
 Control
@@ -242,25 +245,25 @@ Control
 </tr>
 <tr>
 <td style="text-align:left;">
-Participant_932
+Participant_455
 </td>
 <td style="text-align:right;">
 Baseline
 </td>
 <td style="text-align:right;">
-2020-05-22
+2020-07-24
 </td>
 <td style="text-align:right;">
 0S
 </td>
 <td style="text-align:right;">
-1
+3
 </td>
 <td style="text-align:right;">
-84
+51
 </td>
 <td style="text-align:left;">
-180.8960
+321.8856
 </td>
 <td style="text-align:right;">
 Intervention
@@ -271,25 +274,25 @@ Intervention
 </tr>
 <tr>
 <td style="text-align:left;">
-Participant_744
+Participant_177
 </td>
 <td style="text-align:right;">
 Follow-up
 </td>
 <td style="text-align:right;">
-2021-02-26
+2021-02-01
 </td>
 <td style="text-align:right;">
-170d 0H 0M 0S
+183d 0H 0M 0S
 </td>
 <td style="text-align:right;">
-0
+6
 </td>
 <td style="text-align:right;">
-83
+63
 </td>
 <td style="text-align:left;">
-1548.9738
+1477.5078
 </td>
 <td style="text-align:right;">
 Control
@@ -300,25 +303,25 @@ Control
 </tr>
 <tr>
 <td style="text-align:left;">
-Participant_932
+Participant_455
 </td>
 <td style="text-align:right;">
 Follow-up
 </td>
 <td style="text-align:right;">
-2020-11-23
+2021-01-25
 </td>
 <td style="text-align:right;">
 185d 0H 0M 0S
 </td>
 <td style="text-align:right;">
-0
+8
 </td>
 <td style="text-align:right;">
-72
+89
 </td>
 <td style="text-align:left;">
-1625.0345
+1627.9757
 </td>
 <td style="text-align:right;">
 Intervention
@@ -329,28 +332,28 @@ Intervention
 </tr>
 <tr>
 <td style="text-align:left;">
-Participant_199
+Participant_848
 </td>
 <td style="text-align:right;">
 Baseline
 </td>
 <td style="text-align:right;">
-2020-08-04
+2020-05-13
 </td>
 <td style="text-align:right;">
 0S
 </td>
 <td style="text-align:right;">
-9
+6
 </td>
 <td style="text-align:right;">
-88
+48
 </td>
 <td style="text-align:left;">
-362.9324
+279.2191
 </td>
 <td style="text-align:right;">
-Control
+Intervention
 </td>
 <td style="text-align:right;">
 2
@@ -358,28 +361,28 @@ Control
 </tr>
 <tr>
 <td style="text-align:left;">
-Participant_715
+Participant_1043
 </td>
 <td style="text-align:right;">
 Baseline
 </td>
 <td style="text-align:right;">
-2020-07-14
+2020-06-09
 </td>
 <td style="text-align:right;">
 0S
 </td>
 <td style="text-align:right;">
-0
+1
 </td>
 <td style="text-align:right;">
-86
+57
 </td>
 <td style="text-align:left;">
-495.7539
+199.7418
 </td>
 <td style="text-align:right;">
-Intervention
+Control
 </td>
 <td style="text-align:right;">
 2
@@ -406,45 +409,45 @@ Intervention
 <a href="#limitations-of-datasets-without-measures-of-health-utility" class="anchor"></a>Limitations of datasets without measures of health utility</h2>
 <p>A notable omission from the fake study dataset is any measure of utility. This omission means that, in the absence of using mapping algorithms such as those included with youthu, the most feasible types of economic evaluation to apply to this dataset would likely be cost-consequence analysis (where a synopsis of the differences in a range of measures are presented alongside cost differences) and cost-effectiveness analysis (where a summary statistic - the incremental cost-effectiveness ratio or ICER - is calculated by dividing differences in costs by differences in a single outcome measure).</p>
 <p>These types of economic analyses can be relatively simple to interpret if either the intervention or control arm is simultaneously cheaper and more effective across all included outcome measures. However, these conditions don’t hold in our sample data.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="op">(</span><span class="va">matched_ds_tb</span> <span class="op">%&gt;%</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">study_arm_chr</span> <span class="op">==</span> <span class="st">"Control"</span> <span class="op">&amp;</span> <span class="va">round</span> <span class="op">==</span> <span class="st">"Baseline"</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fl">5</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span><span class="op">)</span></code></pre></div>
 <pre><code>##       PHQ9           SOFAS      
 ##  Min.   : 0.00   Min.   :39.00  
-##  1st Qu.: 8.00   1st Qu.:60.00  
-##  Median :12.00   Median :66.00  
-##  Mean   :12.31   Mean   :66.16  
-##  3rd Qu.:17.00   3rd Qu.:72.00  
-##  Max.   :27.00   Max.   :88.00</code></pre>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+##  1st Qu.: 7.00   1st Qu.:60.00  
+##  Median :11.50   Median :66.00  
+##  Mean   :10.73   Mean   :66.08  
+##  3rd Qu.:15.00   3rd Qu.:72.00  
+##  Max.   :19.00   Max.   :89.00</code></pre>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="op">(</span><span class="va">matched_ds_tb</span> <span class="op">%&gt;%</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">study_arm_chr</span> <span class="op">==</span> <span class="st">"Control"</span> <span class="op">&amp;</span> <span class="va">round</span> <span class="op">==</span> <span class="st">"Follow-up"</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fl">5</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span><span class="op">)</span></code></pre></div>
-<pre><code>##       PHQ9            SOFAS         costs_dbl   
-##  Min.   : 0.000   Min.   :43.00   Min.   :1214  
-##  1st Qu.: 5.000   1st Qu.:63.50   1st Qu.:1411  
-##  Median : 9.000   Median :71.00   Median :1487  
-##  Mean   : 9.307   Mean   :70.08   Mean   :1493  
-##  3rd Qu.:14.000   3rd Qu.:77.00   3rd Qu.:1576  
-##  Max.   :27.000   Max.   :98.00   Max.   :1822</code></pre>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<pre><code>##       PHQ9            SOFAS      costs_dbl   
+##  Min.   : 0.000   Min.   :39   Min.   :1134  
+##  1st Qu.: 4.000   1st Qu.:65   1st Qu.:1415  
+##  Median : 8.000   Median :71   Median :1482  
+##  Mean   : 8.489   Mean   :71   Mean   :1492  
+##  3rd Qu.:13.000   3rd Qu.:77   3rd Qu.:1572  
+##  Max.   :27.000   Max.   :98   Max.   :1831</code></pre>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="op">(</span><span class="va">matched_ds_tb</span> <span class="op">%&gt;%</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">study_arm_chr</span> <span class="op">==</span> <span class="st">"Intervention"</span> <span class="op">&amp;</span> <span class="va">round</span> <span class="op">==</span> <span class="st">"Baseline"</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fl">5</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span><span class="op">)</span></code></pre></div>
 <pre><code>##       PHQ9           SOFAS      
 ##  Min.   : 0.00   Min.   :36.00  
-##  1st Qu.: 9.00   1st Qu.:58.00  
-##  Median :13.00   Median :65.00  
-##  Mean   :12.98   Mean   :64.71  
-##  3rd Qu.:18.00   3rd Qu.:71.00  
-##  Max.   :27.00   Max.   :89.00</code></pre>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+##  1st Qu.: 7.00   1st Qu.:61.00  
+##  Median :12.00   Median :67.00  
+##  Mean   :10.97   Mean   :66.79  
+##  3rd Qu.:15.00   3rd Qu.:72.25  
+##  Max.   :19.00   Max.   :88.00</code></pre>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="op">(</span><span class="va">matched_ds_tb</span> <span class="op">%&gt;%</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">study_arm_chr</span> <span class="op">==</span> <span class="st">"Intervention"</span> <span class="op">&amp;</span> <span class="va">round</span> <span class="op">==</span> <span class="st">"Follow-up"</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fl">5</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span><span class="op">)</span></code></pre></div>
 <pre><code>##       PHQ9            SOFAS         costs_dbl   
-##  Min.   : 0.000   Min.   :35.00   Min.   :1116  
-##  1st Qu.: 3.000   1st Qu.:60.50   1st Qu.:1630  
-##  Median : 8.000   Median :68.00   Median :1810  
-##  Mean   : 7.925   Mean   :68.24   Mean   :1792  
-##  3rd Qu.:12.000   3rd Qu.:76.00   3rd Qu.:1958  
-##  Max.   :26.000   Max.   :98.00   Max.   :2382</code></pre>
+##  Min.   : 0.000   Min.   :41.00   Min.   :1131  
+##  1st Qu.: 2.750   1st Qu.:59.75   1st Qu.:1672  
+##  Median : 7.000   Median :69.00   Median :1811  
+##  Mean   : 7.045   Mean   :68.00   Mean   :1818  
+##  3rd Qu.:11.000   3rd Qu.:76.00   3rd Qu.:1982  
+##  Max.   :25.000   Max.   :99.00   Max.   :2588</code></pre>
 <p>The pattern of results summarised above create some significant barriers to meaningfully interpreting economic evaluations that are based on cost-consequence or cost-effectiveness analysis:</p>
 <ul>
-<li><p>A cost-effectiveness analysis in which change in PHQ-9 was the benefit measure would be difficult to interpret as the Intervention arm is both more effective and more costly, which begs the question is it worth paying the extra dollars for this improvement? Also - would a judgment of cost-effectiveness remain the same if the study had measured a slightly different incremental benefit or recorded change over a longer or shorter time horizon? It is likely that there is no commonly used value for money benchmark for improvements measured in PHQ-9, nor is there any time weighting associated with the measure. Furthermore, if the potential funding for the intervention is from a budget that is allocated to non-depressive illnesses (e.g. physical health), results from a cost-effectiveness analysis using PHQ-9 as its benefit measure are not readily comparable with economic evaluations from other illness groups using different benefit measures of interventions potentially competing for the same scarce funding.</p></li>
+<li><p>A cost-effectiveness analysis in which change in PHQ-9 was the benefit measure would be difficult to interpret as the Intervention arm is both more effective and more costly, which begs the question is it worth paying the extra dollars for this improvement? Also - would a judgment of cost-effectiveness remain the same if the study had measured a slightly different incremental benefit or recorded change over a longer or shorter time horizon? It is likely that there is no commonly used value for money benchmark for improvements measured in PHQ-9, nor is there any time weighting associated with the measure. Furthermore, if the potential funding for the intervention is from a budget that is allocated to non-depressive illnesses (e.g. physical health), results from a cost-effectiveness analysis using PHQ-9 as its benefit measure are not readily comparable with economic evaluations of interventions from other illness groups using different benefit measures that are potentially competing for the same scarce funding.</p></li>
 <li><p>A cost consequence analyses that summarised the differences in costs with the differences in changes in PHQ-9 and SOFAS score would be difficult to interpret because while the intervention is more effective than control for improvements measured on PHQ-9 (where lower scores are better), the control group is superior if benefits are based on functioning improvements as measured by SOFAS scores (where higher scores are better). The lack of any formal weighting for how to trade off clinical symptoms and functioning means that interpretation of this analysis will be highly subjective and likely to change across potential decision makers.</p></li>
 </ul>
 <p>These types of short-comings can be significantly addressed by undertaking cost-utility analyses (CUAs) as:</p>
@@ -462,16 +465,16 @@ Intervention
 <a href="#predict-adolescent-aqol-6d-health-utility" class="anchor"></a>Predict adolescent AQoL-6D health utility</h3>
 <p>Our first step is to identify which youthu models we will use to predict adolescent AQoL-6D and apply these models to our data. This step was explained in more detail in <a href="Prediction_With_Mdls.html">another vignette article</a>, so will be dealt with briefly here.</p>
 <p>First we retrieve the model we wish to use.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">candidate_mdls_tb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_mdls_using_predrs.html">get_mdls_using_predrs</a></span><span class="op">(</span><span class="va">predictors_lup</span><span class="op">$</span><span class="va">short_name_chr</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">7</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></code></pre></div>
 <pre><code>## New names:
 ## * `` -&gt; ...1
 ## * `` -&gt; ...2
 ## * `` -&gt; ...3</code></pre>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model_mdl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_mdl_from_dv.html">get_mdl_from_dv</a></span><span class="op">(</span><span class="va">candidate_mdls_tb</span><span class="op">$</span><span class="va">mdl_nms_chr</span><span class="op">[</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span></code></pre></div>
 <p>We then use that model to predict health utility from the measures in our dataset.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">econ_cmprsn_ds_tb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/add_aqol6d_predn_to_ds.html">add_aqol6d_predn_to_ds</a></span><span class="op">(</span>data_tb <span class="op">=</span> <span class="va">matched_ds_tb</span>,
                                    model_mdl <span class="op">=</span> <span class="va">model_mdl</span>,
                                    tfmn_1L_chr <span class="op">=</span> <span class="fu"><a href="../reference/get_tfmn_from_lup.html">get_tfmn_from_lup</a></span><span class="op">(</span><span class="va">candidate_mdls_tb</span><span class="op">$</span><span class="va">mdl_nms_chr</span><span class="op">[</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span>,
@@ -486,9 +489,9 @@ Intervention
 <h3 class="hasAnchor">
 <a href="#calculate-qalys" class="anchor"></a>Calculate QALYs</h3>
 <p>Next we combine the health utility data with the interval between measurement data to calculate QALYs and add them to the dataset.</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">econ_cmprsn_ds_tb</span>  <span class="op">&lt;-</span> <span class="va">econ_cmprsn_ds_tb</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/add_qalys_to_ds.html">add_qalys_to_ds</a></span><span class="op">(</span>ds_smry_ls <span class="op">=</span> <span class="va">ds_smry_ls</span><span class="op">)</span></code></pre></div>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">econ_cmprsn_ds_tb</span>  <span class="op">&lt;-</span> <span class="va">econ_cmprsn_ds_tb</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/add_qalys_to_ds.html">add_qalys_to_ds</a></span><span class="op">(</span>ds_smry_ls <span class="op">=</span> <span class="va">ds_smry_ls</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">econ_cmprsn_ds_tb</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
     <span class="fu">ready4show</span><span class="fu">::</span><span class="fu"><a href="https://ready4-dev.github.io/ready4show/reference/print_table.html">print_table</a></span><span class="op">(</span>output_type_1L_chr <span class="op">=</span> <span class="st">"HTML"</span>,
                           caption_1L_chr <span class="op">=</span> <span class="st">"Updated dataset with QALYs"</span>, 
@@ -577,19 +580,19 @@ Participant_10
 Control
 </td>
 <td style="text-align:right;">
-263
+175
 </td>
 <td style="text-align:right;">
-2020-10-13
+2020-04-30
 </td>
 <td style="text-align:right;">
-2021-03-30
+2020-10-24
 </td>
 <td style="text-align:right;">
 0S
 </td>
 <td style="text-align:left;">
-168d 0H 0M 0S
+177d 0H 0M 0S
 </td>
 <td style="text-align:right;">
 17
@@ -610,10 +613,10 @@ Control
 0.4995956
 </td>
 <td style="text-align:right;">
-409.4131
+554.8798
 </td>
 <td style="text-align:right;">
-1685.687
+1496.780
 </td>
 <td style="text-align:right;">
 0
@@ -637,7 +640,7 @@ Control
 0
 </td>
 <td style="text-align:right;">
-0.2264881
+0.2386214
 </td>
 </tr>
 <tr>
@@ -648,19 +651,19 @@ Participant_1000
 Control
 </td>
 <td style="text-align:right;">
-57
+39
 </td>
 <td style="text-align:right;">
-2020-09-28
+2020-06-26
 </td>
 <td style="text-align:right;">
-2021-04-05
+2020-12-27
 </td>
 <td style="text-align:right;">
 0S
 </td>
 <td style="text-align:left;">
-189d 0H 0M 0S
+184d 0H 0M 0S
 </td>
 <td style="text-align:right;">
 0
@@ -681,10 +684,10 @@ Control
 0.9138357
 </td>
 <td style="text-align:right;">
-390.1047
+263.1323
 </td>
 <td style="text-align:right;">
-1602.317
+1440.271
 </td>
 <td style="text-align:right;">
 0
@@ -708,7 +711,7 @@ Control
 0
 </td>
 <td style="text-align:right;">
-0.4728678
+0.4603580
 </td>
 </tr>
 <tr>
@@ -716,16 +719,16 @@ Control
 Participant_1001
 </td>
 <td style="text-align:right;">
-Control
+Intervention
 </td>
 <td style="text-align:right;">
-16
+104
 </td>
 <td style="text-align:right;">
-2020-08-09
+2020-05-21
 </td>
 <td style="text-align:right;">
-2021-02-04
+2020-11-16
 </td>
 <td style="text-align:right;">
 0S
@@ -737,49 +740,49 @@ Control
 0
 </td>
 <td style="text-align:right;">
-1
+0
 </td>
 <td style="text-align:right;">
 79
 </td>
 <td style="text-align:right;">
-79
+78
 </td>
 <td style="text-align:right;">
 0.9365455
 </td>
 <td style="text-align:left;">
-0.9289212
+0.9347021
 </td>
 <td style="text-align:right;">
-342.9299
+415.2369
 </td>
 <td style="text-align:right;">
-1539.491
+2110.432
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-1
+0
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:left;">
-0
+-1
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
--0.0076243
+-0.0018435
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-0.4571096
+0.4585261
 </td>
 </tr>
 <tr>
@@ -790,67 +793,67 @@ Participant_1003
 Intervention
 </td>
 <td style="text-align:right;">
-203
+205
 </td>
 <td style="text-align:right;">
-2020-07-17
+2020-06-19
 </td>
 <td style="text-align:right;">
-2021-01-17
+2020-12-18
 </td>
 <td style="text-align:right;">
 0S
 </td>
 <td style="text-align:left;">
-184d 0H 0M 0S
+182d 0H 0M 0S
 </td>
 <td style="text-align:right;">
 17
 </td>
 <td style="text-align:right;">
-14
+16
 </td>
 <td style="text-align:right;">
 64
 </td>
 <td style="text-align:right;">
-56
+58
 </td>
 <td style="text-align:right;">
 0.5055144
 </td>
 <td style="text-align:left;">
-0.5204187
+0.4983560
 </td>
 <td style="text-align:right;">
-293.4306
+358.5544
 </td>
 <td style="text-align:right;">
-1848.681
+1739.738
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
--3
+-1
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:left;">
--8
+-6
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-0.0149043
+-0.0071584
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-0.2584144
+0.2501087
 </td>
 </tr>
 <tr>
@@ -861,19 +864,19 @@ Participant_1005
 Control
 </td>
 <td style="text-align:right;">
-128
+249
 </td>
 <td style="text-align:right;">
-2020-10-15
+2020-09-20
 </td>
 <td style="text-align:right;">
-2021-04-18
+2021-03-25
 </td>
 <td style="text-align:right;">
 0S
 </td>
 <td style="text-align:left;">
-185d 0H 0M 0S
+186d 0H 0M 0S
 </td>
 <td style="text-align:right;">
 17
@@ -894,10 +897,10 @@ Control
 0.7811849
 </td>
 <td style="text-align:right;">
-339.8279
+317.7327
 </td>
 <td style="text-align:right;">
-1551.163
+1479.245
 </td>
 <td style="text-align:right;">
 0
@@ -921,7 +924,7 @@ Control
 0
 </td>
 <td style="text-align:right;">
-0.3363941
+0.3382125
 </td>
 </tr>
 <tr>
@@ -932,19 +935,19 @@ Participant_1006
 Control
 </td>
 <td style="text-align:right;">
-181
+236
 </td>
 <td style="text-align:right;">
-2020-05-15
+2020-10-16
 </td>
 <td style="text-align:right;">
-2020-11-08
+2021-04-13
 </td>
 <td style="text-align:right;">
 0S
 </td>
 <td style="text-align:left;">
-177d 0H 0M 0S
+179d 0H 0M 0S
 </td>
 <td style="text-align:right;">
 18
@@ -965,10 +968,10 @@ Control
 0.5455681
 </td>
 <td style="text-align:right;">
-273.4401
+414.2257
 </td>
 <td style="text-align:right;">
-1370.934
+1464.738
 </td>
 <td style="text-align:right;">
 0
@@ -992,7 +995,7 @@ Control
 0
 </td>
 <td style="text-align:right;">
-0.2527247
+0.2555803
 </td>
 </tr>
 </tbody>
@@ -1008,7 +1011,7 @@ Control
 <a href="#analyse-results" class="anchor"></a>Analyse results</h3>
 <p>Now we can run the main economic analysis. This is implemented by the <code class="sourceCode r">make_he_smry</code> function, which first bootstraps the dataset (implemented by the <code>boot</code> function from the <code>boot</code> package) before passing the mean values for costs and QALYs from each bootstrap sample to with <code>bcea</code> function of the <code>BCEA</code> package to calculate a range of health economic statistics. For this example we pass a value of 50,000 for the willingness to pay parameter, as this is the dollar amount commonly used in Australia as a benchmark for the value of a QALY.</p>
 <p>Note, for this illustrative example we only request 1000 bootstrap iterations - in practice this number may be higher.</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">he_smry_ls</span> <span class="op">&lt;-</span> <span class="va">econ_cmprsn_ds_tb</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/make_he_smry.html">make_he_smry</a></span><span class="op">(</span>change_vars_chr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">ds_smry_ls</span><span class="op">$</span><span class="va">predr_var_nms</span>,
                                                                      <span class="va">ds_smry_ls</span><span class="op">$</span><span class="va">utl_var_nm_1L_chr</span><span class="op">)</span>,
                                                  wtp_dbl <span class="op">=</span> <span class="fl">50000</span>,
@@ -1022,13 +1025,13 @@ Control
                                                  cmprsn_groups_chr <span class="op">=</span> <span class="va">ds_smry_ls</span><span class="op">$</span><span class="va">cmprsn_groups_chr</span>,
                                                  cmprsn_var_nm_1L_chr <span class="op">=</span> <span class="va">ds_smry_ls</span><span class="op">$</span><span class="va">cmprsn_var_nm_1L_chr</span>,
                                                  round_fup_1L_chr <span class="op">=</span> <span class="va">ds_smry_ls</span><span class="op">$</span><span class="va">round_lvls_chr</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></code></pre></div>
-<p>As part of the output of the <code class="sourceCode r">make_he_smry</code> function is a BCEA object, we can use the BCEA package to produce a number of graphical summaries of economic results. One of the most important is the production of a cost-effectiveness plane. This plot highlights that, with an ICER of $-86,541.92, less than half of the bootstrapped iteration incremental cost and QALY pairs fall within the zone of cost-effectiveness (green). In fact at the cost-effectiveness threshold we supplied, the results suggest there is a 5% probability that the intervention is cost-effective.</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<p>As part of the output of the <code class="sourceCode r">make_he_smry</code> function is a BCEA object, we can use the BCEA package to produce a number of graphical summaries of economic results. One of the most important is the production of a cost-effectiveness plane. This plot highlights that, with an ICER of $223,041.3, less than half of the bootstrapped iteration incremental cost and QALY pairs fall within the zone of cost-effectiveness (green). In fact, at the cost-effectiveness threshold we supplied, the results suggest there is a 18.1% probability that the intervention is cost-effective.</p>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">BCEA</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BCEA/man/ceplane.plot.html">ceplane.plot</a></span><span class="op">(</span><span class="va">he_smry_ls</span><span class="op">$</span><span class="va">ce_res_ls</span>, wtp <span class="op">=</span><span class="fl">50000</span>,    
                    area_color <span class="op">=</span> <span class="st">"green"</span>,
                     graph <span class="op">=</span> <span class="st">"ggplot2"</span>,
           theme <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_light</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="Economic_Analysis_files/figure-html/unnamed-chunk-15-1.png" width="576"></p>
+<p><img src="Economic_Analysis_files/figure-html/unnamed-chunk-16-1.png" width="576"></p>
 </div>
 </div>
 </div>
