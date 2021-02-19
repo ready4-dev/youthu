@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">youthu</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9051</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9052</span>
       </span>
     </div>
 
@@ -133,14 +133,14 @@
 <li>
 <strong>population</strong> (not sample) parameters to generate gamma distributed costs for periods prior to study entry and between baseline and follow-up measurements for the whole single group dataset or the control arm of a matched dataset.</li>
 </ul>
-<p>In the below example, our fake baseline data collection times are randomly sampled from a sequence of 180 consecutive days from the last year, the time spent in the study for each participant is sampled from a truncated normal distribution, bounded between 160 and 220 days with a mean of 180 days, and mean costs in the period prior to study entry were $300, while the costs of resources consumed by participants over the lifetime of the study have a mean of $1500. The names of the predictor variables we will be using are specified as PHQ9 and SOFAS.</p>
+<p>In the below example, our fake baseline data collection times are randomly sampled from a sequence of 180 consecutive days from the last year, the time spent in the study for each participant is sampled from a truncated normal distribution, bounded between 160 and 220 days with a mean of 180 days, and mean costs in the period prior to study entry were $400, while the costs of resources consumed by participants over the lifetime of the study have a mean of $1500. The names of the predictor variables we will be using are specified as PHQ9 and SOFAS.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ds_smry_ls</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>bl_start_date_dtm <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/period.html">days</a></span><span class="op">(</span><span class="fl">300</span><span class="op">)</span>,
                    bl_end_date_dtm <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.Date</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/period.html">days</a></span><span class="op">(</span><span class="fl">120</span><span class="op">)</span>,
                    cmprsn_var_nm_1L_chr <span class="op">=</span> <span class="st">"study_arm_chr"</span>,
                    cmprsn_groups_chr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Intervention"</span>,<span class="st">"Control"</span><span class="op">)</span>,
-                   costs_mean_dbl <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">300</span>,<span class="fl">1500</span><span class="op">)</span>,
-                   costs_sd_dbl <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">100</span>,<span class="fl">120</span><span class="op">)</span>,
+                   costs_mean_dbl <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">400</span>,<span class="fl">1500</span><span class="op">)</span>,
+                   costs_sd_dbl <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">100</span>,<span class="fl">220</span><span class="op">)</span>,
                    costs_var_nm_1L_chr <span class="op">=</span> <span class="st">"costs_dbl"</span>,
                    date_var_nm_1L_chr <span class="op">=</span> <span class="st">"date_psx"</span>,
                    duration_args_ls <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">160</span>, b <span class="op">=</span> <span class="fl">2200</span>, mean <span class="op">=</span> <span class="fl">180</span>, sd <span class="op">=</span> <span class="fl">7</span><span class="op">)</span>,
@@ -216,25 +216,54 @@ match_idx_int
 <tbody>
 <tr>
 <td style="text-align:left;">
-Participant_177
+Participant_20
 </td>
 <td style="text-align:right;">
 Baseline
 </td>
 <td style="text-align:right;">
-2020-08-02
+2020-07-15
 </td>
 <td style="text-align:right;">
 0S
 </td>
 <td style="text-align:right;">
-3
+16
 </td>
 <td style="text-align:right;">
-50
+41
 </td>
 <td style="text-align:left;">
-300.9679
+301.1868
+</td>
+<td style="text-align:right;">
+Intervention
+</td>
+<td style="text-align:right;">
+1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Participant_593
+</td>
+<td style="text-align:right;">
+Baseline
+</td>
+<td style="text-align:right;">
+2020-05-22
+</td>
+<td style="text-align:right;">
+0S
+</td>
+<td style="text-align:right;">
+19
+</td>
+<td style="text-align:right;">
+43
+</td>
+<td style="text-align:left;">
+259.3190
 </td>
 <td style="text-align:right;">
 Control
@@ -245,54 +274,25 @@ Control
 </tr>
 <tr>
 <td style="text-align:left;">
-Participant_455
-</td>
-<td style="text-align:right;">
-Baseline
-</td>
-<td style="text-align:right;">
-2020-07-24
-</td>
-<td style="text-align:right;">
-0S
-</td>
-<td style="text-align:right;">
-3
-</td>
-<td style="text-align:right;">
-51
-</td>
-<td style="text-align:left;">
-321.8856
-</td>
-<td style="text-align:right;">
-Intervention
-</td>
-<td style="text-align:right;">
-1
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-Participant_177
+Participant_593
 </td>
 <td style="text-align:right;">
 Follow-up
 </td>
 <td style="text-align:right;">
-2021-02-01
+2020-11-13
 </td>
 <td style="text-align:right;">
-183d 0H 0M 0S
+175d 0H 0M 0S
 </td>
 <td style="text-align:right;">
-6
+16
 </td>
 <td style="text-align:right;">
-63
+65
 </td>
 <td style="text-align:left;">
-1477.5078
+1290.4220
 </td>
 <td style="text-align:right;">
 Control
@@ -303,25 +303,25 @@ Control
 </tr>
 <tr>
 <td style="text-align:left;">
-Participant_455
+Participant_20
 </td>
 <td style="text-align:right;">
 Follow-up
 </td>
 <td style="text-align:right;">
-2021-01-25
+2021-01-09
 </td>
 <td style="text-align:right;">
-185d 0H 0M 0S
+178d 0H 0M 0S
 </td>
 <td style="text-align:right;">
-8
+15
 </td>
 <td style="text-align:right;">
-89
+74
 </td>
 <td style="text-align:left;">
-1627.9757
+1787.4242
 </td>
 <td style="text-align:right;">
 Intervention
@@ -332,28 +332,28 @@ Intervention
 </tr>
 <tr>
 <td style="text-align:left;">
-Participant_848
+Participant_259
 </td>
 <td style="text-align:right;">
 Baseline
 </td>
 <td style="text-align:right;">
-2020-05-13
+2020-09-09
 </td>
 <td style="text-align:right;">
 0S
 </td>
 <td style="text-align:right;">
-6
+19
 </td>
 <td style="text-align:right;">
-48
+39
 </td>
 <td style="text-align:left;">
-279.2191
+311.0018
 </td>
 <td style="text-align:right;">
-Intervention
+Control
 </td>
 <td style="text-align:right;">
 2
@@ -361,28 +361,28 @@ Intervention
 </tr>
 <tr>
 <td style="text-align:left;">
-Participant_1043
+Participant_962
 </td>
 <td style="text-align:right;">
 Baseline
 </td>
 <td style="text-align:right;">
-2020-06-09
+2020-10-22
 </td>
 <td style="text-align:right;">
 0S
 </td>
 <td style="text-align:right;">
-1
+10
 </td>
 <td style="text-align:right;">
-57
+45
 </td>
 <td style="text-align:left;">
-199.7418
+276.2181
 </td>
 <td style="text-align:right;">
-Control
+Intervention
 </td>
 <td style="text-align:right;">
 2
@@ -411,40 +411,40 @@ Control
 <p>These types of economic analyses can be relatively simple to interpret if either the intervention or control arm is simultaneously cheaper and more effective across all included outcome measures. However, these conditions don’t hold in our sample data.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="op">(</span><span class="va">matched_ds_tb</span> <span class="op">%&gt;%</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">study_arm_chr</span> <span class="op">==</span> <span class="st">"Control"</span> <span class="op">&amp;</span> <span class="va">round</span> <span class="op">==</span> <span class="st">"Baseline"</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fl">5</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span><span class="op">)</span></code></pre></div>
-<pre><code>##       PHQ9           SOFAS      
-##  Min.   : 0.00   Min.   :39.00  
-##  1st Qu.: 7.00   1st Qu.:60.00  
-##  Median :11.50   Median :66.00  
-##  Mean   :10.73   Mean   :66.08  
-##  3rd Qu.:15.00   3rd Qu.:72.00  
-##  Max.   :19.00   Max.   :89.00</code></pre>
+<pre><code>##       PHQ9          SOFAS      
+##  Min.   : 0.0   Min.   :39.00  
+##  1st Qu.: 7.0   1st Qu.:60.00  
+##  Median :12.0   Median :66.00  
+##  Mean   :10.9   Mean   :66.13  
+##  3rd Qu.:15.0   3rd Qu.:72.00  
+##  Max.   :19.0   Max.   :89.00</code></pre>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="op">(</span><span class="va">matched_ds_tb</span> <span class="op">%&gt;%</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">study_arm_chr</span> <span class="op">==</span> <span class="st">"Control"</span> <span class="op">&amp;</span> <span class="va">round</span> <span class="op">==</span> <span class="st">"Follow-up"</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fl">5</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span><span class="op">)</span></code></pre></div>
-<pre><code>##       PHQ9            SOFAS      costs_dbl   
-##  Min.   : 0.000   Min.   :39   Min.   :1134  
-##  1st Qu.: 4.000   1st Qu.:65   1st Qu.:1415  
-##  Median : 8.000   Median :71   Median :1482  
-##  Mean   : 8.489   Mean   :71   Mean   :1492  
-##  3rd Qu.:13.000   3rd Qu.:77   3rd Qu.:1572  
-##  Max.   :27.000   Max.   :98   Max.   :1831</code></pre>
+<pre><code>##       PHQ9            SOFAS         costs_dbl     
+##  Min.   : 0.000   Min.   :39.00   Min.   : 889.9  
+##  1st Qu.: 4.000   1st Qu.:64.00   1st Qu.:1321.1  
+##  Median : 8.000   Median :71.00   Median :1486.7  
+##  Mean   : 8.493   Mean   :70.65   Mean   :1489.0  
+##  3rd Qu.:13.000   3rd Qu.:77.00   3rd Qu.:1627.0  
+##  Max.   :27.000   Max.   :98.00   Max.   :2216.5</code></pre>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="op">(</span><span class="va">matched_ds_tb</span> <span class="op">%&gt;%</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">study_arm_chr</span> <span class="op">==</span> <span class="st">"Intervention"</span> <span class="op">&amp;</span> <span class="va">round</span> <span class="op">==</span> <span class="st">"Baseline"</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fl">5</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span><span class="op">)</span></code></pre></div>
 <pre><code>##       PHQ9           SOFAS      
 ##  Min.   : 0.00   Min.   :36.00  
 ##  1st Qu.: 7.00   1st Qu.:61.00  
-##  Median :12.00   Median :67.00  
-##  Mean   :10.97   Mean   :66.79  
+##  Median :11.00   Median :67.00  
+##  Mean   :10.81   Mean   :66.74  
 ##  3rd Qu.:15.00   3rd Qu.:72.25  
 ##  Max.   :19.00   Max.   :88.00</code></pre>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="op">(</span><span class="va">matched_ds_tb</span> <span class="op">%&gt;%</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">study_arm_chr</span> <span class="op">==</span> <span class="st">"Intervention"</span> <span class="op">&amp;</span> <span class="va">round</span> <span class="op">==</span> <span class="st">"Follow-up"</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fl">5</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span><span class="op">)</span></code></pre></div>
-<pre><code>##       PHQ9            SOFAS         costs_dbl   
-##  Min.   : 0.000   Min.   :41.00   Min.   :1131  
-##  1st Qu.: 2.750   1st Qu.:59.75   1st Qu.:1672  
-##  Median : 7.000   Median :69.00   Median :1811  
-##  Mean   : 7.045   Mean   :68.00   Mean   :1818  
-##  3rd Qu.:11.000   3rd Qu.:76.00   3rd Qu.:1982  
-##  Max.   :25.000   Max.   :99.00   Max.   :2588</code></pre>
+<pre><code>##       PHQ9            SOFAS      costs_dbl     
+##  Min.   : 0.000   Min.   :40   Min.   : 923.4  
+##  1st Qu.: 2.000   1st Qu.:60   1st Qu.:1625.6  
+##  Median : 6.500   Median :68   Median :1777.3  
+##  Mean   : 6.851   Mean   :68   Mean   :1807.8  
+##  3rd Qu.:11.000   3rd Qu.:77   3rd Qu.:1996.0  
+##  Max.   :25.000   Max.   :93   Max.   :2872.7</code></pre>
 <p>The pattern of results summarised above create some significant barriers to meaningfully interpreting economic evaluations that are based on cost-consequence or cost-effectiveness analysis:</p>
 <ul>
 <li><p>A cost-effectiveness analysis in which change in PHQ-9 was the benefit measure would be difficult to interpret as the Intervention arm is both more effective and more costly, which begs the question is it worth paying the extra dollars for this improvement? Also - would a judgment of cost-effectiveness remain the same if the study had measured a slightly different incremental benefit or recorded change over a longer or shorter time horizon? It is likely that there is no commonly used value for money benchmark for improvements measured in PHQ-9, nor is there any time weighting associated with the measure. Furthermore, if the potential funding for the intervention is from a budget that is allocated to non-depressive illnesses (e.g. physical health), results from a cost-effectiveness analysis using PHQ-9 as its benefit measure are not readily comparable with economic evaluations of interventions from other illness groups using different benefit measures that are potentially competing for the same scarce funding.</p></li>
@@ -580,7 +580,7 @@ Participant_10
 Control
 </td>
 <td style="text-align:right;">
-175
+243
 </td>
 <td style="text-align:right;">
 2020-04-30
@@ -613,10 +613,10 @@ Control
 0.4995956
 </td>
 <td style="text-align:right;">
-554.8798
+647.9386
 </td>
 <td style="text-align:right;">
-1496.780
+1696.235
 </td>
 <td style="text-align:right;">
 0
@@ -651,7 +651,7 @@ Participant_1000
 Control
 </td>
 <td style="text-align:right;">
-39
+191
 </td>
 <td style="text-align:right;">
 2020-06-26
@@ -684,10 +684,10 @@ Control
 0.9138357
 </td>
 <td style="text-align:right;">
-263.1323
+428.9205
 </td>
 <td style="text-align:right;">
-1440.271
+1619.037
 </td>
 <td style="text-align:right;">
 0
@@ -722,7 +722,7 @@ Participant_1001
 Intervention
 </td>
 <td style="text-align:right;">
-104
+230
 </td>
 <td style="text-align:right;">
 2020-05-21
@@ -746,19 +746,19 @@ Intervention
 79
 </td>
 <td style="text-align:right;">
-78
+77
 </td>
 <td style="text-align:right;">
 0.9365455
 </td>
 <td style="text-align:left;">
-0.9347021
+0.9328250
 </td>
 <td style="text-align:right;">
-415.2369
+429.3703
 </td>
 <td style="text-align:right;">
-2110.432
+1844.219
 </td>
 <td style="text-align:right;">
 0
@@ -770,19 +770,19 @@ Intervention
 0
 </td>
 <td style="text-align:left;">
--1
+-2
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
--0.0018435
+-0.0037205
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-0.4585261
+0.4580662
 </td>
 </tr>
 <tr>
@@ -793,7 +793,7 @@ Participant_1003
 Intervention
 </td>
 <td style="text-align:right;">
-205
+115
 </td>
 <td style="text-align:right;">
 2020-06-19
@@ -811,49 +811,49 @@ Intervention
 17
 </td>
 <td style="text-align:right;">
-16
+15
 </td>
 <td style="text-align:right;">
 64
 </td>
 <td style="text-align:right;">
-58
+59
 </td>
 <td style="text-align:right;">
 0.5055144
 </td>
 <td style="text-align:left;">
-0.4983560
+0.5166532
 </td>
 <td style="text-align:right;">
-358.5544
+395.1637
 </td>
 <td style="text-align:right;">
-1739.738
+1537.365
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
--1
+-2
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:left;">
--6
+-5
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
--0.0071584
+0.0111388
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-0.2501087
+0.2546674
 </td>
 </tr>
 <tr>
@@ -861,10 +861,10 @@ Intervention
 Participant_1005
 </td>
 <td style="text-align:right;">
-Control
+Intervention
 </td>
 <td style="text-align:right;">
-249
+183
 </td>
 <td style="text-align:right;">
 2020-09-20
@@ -882,49 +882,49 @@ Control
 17
 </td>
 <td style="text-align:right;">
-1
+0
 </td>
 <td style="text-align:right;">
 72
 </td>
 <td style="text-align:right;">
-70
+67
 </td>
 <td style="text-align:right;">
 0.5471172
 </td>
 <td style="text-align:left;">
-0.7811849
+0.7847327
 </td>
 <td style="text-align:right;">
-317.7327
+402.9910
 </td>
 <td style="text-align:right;">
-1479.245
+1826.511
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
--16
+-17
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:left;">
--2
+-5
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-0.2340677
+0.2376155
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-0.3382125
+0.3391158
 </td>
 </tr>
 <tr>
@@ -932,10 +932,10 @@ Control
 Participant_1006
 </td>
 <td style="text-align:right;">
-Control
+Intervention
 </td>
 <td style="text-align:right;">
-236
+219
 </td>
 <td style="text-align:right;">
 2020-10-16
@@ -953,49 +953,49 @@ Control
 18
 </td>
 <td style="text-align:right;">
-15
+11
 </td>
 <td style="text-align:right;">
 67
 </td>
 <td style="text-align:right;">
-68
+67
 </td>
 <td style="text-align:right;">
 0.4974566
 </td>
 <td style="text-align:left;">
-0.5455681
+0.6028236
 </td>
 <td style="text-align:right;">
-414.2257
+534.2285
 </td>
 <td style="text-align:right;">
-1464.738
+2401.478
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
--3
+-7
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:left;">
-1
+0
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-0.0481116
+0.1053671
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-0.2555803
+0.2696101
 </td>
 </tr>
 </tbody>
@@ -1025,7 +1025,7 @@ Control
                                                  cmprsn_groups_chr <span class="op">=</span> <span class="va">ds_smry_ls</span><span class="op">$</span><span class="va">cmprsn_groups_chr</span>,
                                                  cmprsn_var_nm_1L_chr <span class="op">=</span> <span class="va">ds_smry_ls</span><span class="op">$</span><span class="va">cmprsn_var_nm_1L_chr</span>,
                                                  round_fup_1L_chr <span class="op">=</span> <span class="va">ds_smry_ls</span><span class="op">$</span><span class="va">round_lvls_chr</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></code></pre></div>
-<p>As part of the output of the <code class="sourceCode r">make_he_smry</code> function is a BCEA object, we can use the BCEA package to produce a number of graphical summaries of economic results. One of the most important is the production of a cost-effectiveness plane. This plot highlights that, with an ICER of $223,041.3, less than half of the bootstrapped iteration incremental cost and QALY pairs fall within the zone of cost-effectiveness (green). In fact, at the cost-effectiveness threshold we supplied, the results suggest there is a 18.1% probability that the intervention is cost-effective.</p>
+<p>As part of the output of the <code class="sourceCode r">make_he_smry</code> function is a BCEA object, we can use the BCEA package to produce a number of graphical summaries of economic results. One of the most important is the production of a cost-effectiveness plane. This plot highlights that, with an ICER of $56,247.19, less than half of the bootstrapped iteration incremental cost and QALY pairs fall within the zone of cost-effectiveness (green). In fact, at the cost-effectiveness threshold we supplied, the results suggest there is a 45% probability that the intervention is cost-effective.</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">BCEA</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BCEA/man/ceplane.plot.html">ceplane.plot</a></span><span class="op">(</span><span class="va">he_smry_ls</span><span class="op">$</span><span class="va">ce_res_ls</span>, wtp <span class="op">=</span><span class="fl">50000</span>,    
                    area_color <span class="op">=</span> <span class="st">"green"</span>,

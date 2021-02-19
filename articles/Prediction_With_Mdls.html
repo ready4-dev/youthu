@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">youthu</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9051</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9052</span>
       </span>
     </div>
 
@@ -109,13 +109,13 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ready4-dev.github.io/youthu/">youthu</a></span><span class="op">)</span></code></pre></div>
-<div id="determining-if-youthu-models-can-be-applied-to-a-dataset" class="section level1">
-<h1 class="hasAnchor">
-<a href="#determining-if-youthu-models-can-be-applied-to-a-dataset" class="anchor"></a>Determining if youthu models can be applied to a dataset</h1>
-<p>To use youthu to predict health utility values for records in a dataset, it is necessary for that dataset to include one or more of the predictors used in the youthu models. To verify that this is the case it is necessary to identify the predictors used in youthu models and to then compare these to the variables in the dataset being used for prediction.</p>
-<div id="identify-measures-that-can-be-used-to-predict-health-utility-with-youthu-models" class="section level2">
+<div id="determining-if-youthu-models-can-be-applied-to-a-dataset" class="section level2">
 <h2 class="hasAnchor">
-<a href="#identify-measures-that-can-be-used-to-predict-health-utility-with-youthu-models" class="anchor"></a>Identify measures that can be used to predict health utility with youthu models</h2>
+<a href="#determining-if-youthu-models-can-be-applied-to-a-dataset" class="anchor"></a>Determining if youthu models can be applied to a dataset</h2>
+<p>To use youthu to predict health utility values for records in a dataset, it is necessary for that dataset to include one or more of the predictors used in the youthu models. To verify that this is the case it is necessary to identify the predictors used in youthu models and to then compare these to the variables in the dataset being used for prediction.</p>
+<div id="identify-measures-that-can-be-used-to-predict-health-utility-with-youthu-models" class="section level3">
+<h3 class="hasAnchor">
+<a href="#identify-measures-that-can-be-used-to-predict-health-utility-with-youthu-models" class="anchor"></a>Identify measures that can be used to predict health utility with youthu models</h3>
 <p>To identify the predictors in youthu models consult the <code class="sourceCode r">predictors_lup</code> lookup table.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"predictors_lup"</span><span class="op">)</span>
@@ -269,9 +269,9 @@ integer
 </tr></tfoot>
 </table>
 </div>
-<div id="match-model-predictors-to-the-prediction-dataset" class="section level2">
-<h2 class="hasAnchor">
-<a href="#match-model-predictors-to-the-prediction-dataset" class="anchor"></a>Match model predictors to the prediction dataset</h2>
+<div id="match-model-predictors-to-the-prediction-dataset" class="section level3">
+<h3 class="hasAnchor">
+<a href="#match-model-predictors-to-the-prediction-dataset" class="anchor"></a>Match model predictors to the prediction dataset</h3>
 <p>Next, we can identify which of the above variables are present in the dataset we plan to use for prediction. To illustrate this step, we have created a prediction dataset that is a modified and simplified version of the study <a href="https://ready4-dev.github.io/TTU/articles/Replication_DS.html">replication dataset</a> distributed with the TTU package. This illustrative dataset reflects the likely real-world circumstance in which the prediction dataset uses a different naming convention to that of the dataset we used to estimate the youth models.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">data_tb</span> <span class="op">&lt;-</span> <span class="fu">TTU</span><span class="fu">::</span><span class="va"><a href="https://ready4-dev.github.io/TTU/reference/replication_popl_tb.html">replication_popl_tb</a></span> <span class="op">%&gt;%</span>
@@ -402,13 +402,13 @@ Follow-up
 <span class="va">mdl_predrs_in_ds_chr</span></code></pre></div>
 <pre><code>## [1] "PHQ9"  "SOFAS"</code></pre>
 </div>
-<div id="predictor-data-integrity-checks" class="section level2">
-<h2 class="hasAnchor">
-<a href="#predictor-data-integrity-checks" class="anchor"></a>Predictor data integrity checks</h2>
-<p>Another requirement is that the predictor variables in the prediction dataset must contain no missing values and conform to the requirements of class (in this case <code class="sourceCode r">integer</code>) and minimum and maximum values that are specified in the <code class="sourceCode r">predictors_lup</code> lookup table. We can confirm that these conditions hold by either visually inspecting the output of calls to base R <code class="sourceCode r">summary</code> and <code class="sourceCode r">class</code> functions or by using youthu’s <a href="Data_Integrity.html">data integrity tools</a>.</p>
-<div id="visual-inspection-checks" class="section level3">
+<div id="predictor-data-integrity-checks" class="section level3">
 <h3 class="hasAnchor">
-<a href="#visual-inspection-checks" class="anchor"></a>Visual inspection checks</h3>
+<a href="#predictor-data-integrity-checks" class="anchor"></a>Predictor data integrity checks</h3>
+<p>Another requirement is that the predictor variables in the prediction dataset must contain no missing values and conform to the requirements of class (in this case <code class="sourceCode r">integer</code>) and minimum and maximum values that are specified in the <code class="sourceCode r">predictors_lup</code> lookup table. We can confirm that these conditions hold by either visually inspecting the output of calls to base R <code class="sourceCode r">summary</code> and <code class="sourceCode r">class</code> functions or by using youthu’s <a href="Data_Integrity.html">data integrity tools</a>.</p>
+<div id="visual-inspection-checks" class="section level4">
+<h4 class="hasAnchor">
+<a href="#visual-inspection-checks" class="anchor"></a>Visual inspection checks</h4>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">data_tb</span><span class="op">$</span><span class="va">PHQ_total</span><span class="op">)</span></code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
@@ -424,9 +424,9 @@ Follow-up
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">data_tb</span><span class="op">$</span><span class="va">SOFAS_total</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] "integer"</code></pre>
 </div>
-<div id="checks-using-youthu-classes" class="section level3">
-<h3 class="hasAnchor">
-<a href="#checks-using-youthu-classes" class="anchor"></a>Checks using youthu classes</h3>
+<div id="checks-using-youthu-classes" class="section level4">
+<h4 class="hasAnchor">
+<a href="#checks-using-youthu-classes" class="anchor"></a>Checks using youthu classes</h4>
 <p>We can pass the values of the <code>PHQ9_total</code> and <code>SOFAS_total</code> variables in our dataset to the functions for creating instances of the <code>firstbounce_phq9</code> and <code>firstbounce_sofas</code> classes respectively. If no error message is thrown, then the data is consistent with the requirements for variable.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">phq9_test</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/firstbounce_phq9.html">firstbounce_phq9</a></span><span class="op">(</span><span class="va">data_tb</span><span class="op">$</span><span class="va">PHQ_total</span><span class="op">)</span> 
@@ -438,9 +438,9 @@ Follow-up
 <pre><code>## [1] "firstbounce_sofas" "integer"</code></pre>
 </div>
 </div>
-<div id="confirm-dataset-meets-other-structural-requirements" class="section level2">
-<h2 class="hasAnchor">
-<a href="#confirm-dataset-meets-other-structural-requirements" class="anchor"></a>Confirm dataset meets other structural requirements</h2>
+<div id="confirm-dataset-meets-other-structural-requirements" class="section level3">
+<h3 class="hasAnchor">
+<a href="#confirm-dataset-meets-other-structural-requirements" class="anchor"></a>Confirm dataset meets other structural requirements</h3>
 <p>In addition to containing at least one match for the predictors used in youthu models, the prediction dataset must include both a unique client identifier variable (<code class="sourceCode r">character</code> class) and a measurement time-point identifier variable (<code class="sourceCode r">factor</code> class, with two levels). The dataset also needs to be in long format (ie where measures at different time-points for the same individual are stacked on top of each other in separate rows). We can confirm these conditions hold both by visual inspection of the dataset and investigation of the classes of the unique identified and measurement timepoint variables.</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">data_tb</span><span class="op">$</span><span class="va">UID</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
@@ -453,9 +453,9 @@ Follow-up
 <pre><code>## [1] "Baseline"  "Follow-up"</code></pre>
 </div>
 </div>
-<div id="identify-candidate-models-for-available-predictors" class="section level1">
-<h1 class="hasAnchor">
-<a href="#identify-candidate-models-for-available-predictors" class="anchor"></a>Identify candidate models for available predictors</h1>
+<div id="identify-candidate-models-for-available-predictors" class="section level2">
+<h2 class="hasAnchor">
+<a href="#identify-candidate-models-for-available-predictors" class="anchor"></a>Identify candidate models for available predictors</h2>
 <p>We can use the <code class="sourceCode r">get_mdls_using_predrs</code> function to identify which models can be used with the predictors present in the prediction dataset. The only argument that we need to pass to that function is our previously created <code class="sourceCode r">mdl_predrs_in_ds_chr</code> vector of predictors that are common to both our prediction dataset and youthu models.</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"mdls_lup"</span>, package <span class="op">=</span><span class="st">"youthu"</span><span class="op">)</span>
@@ -545,9 +545,9 @@ CLL
 </tr></tfoot>
 </table>
 </div>
-<div id="select-and-download-preferred-model" class="section level1">
-<h1 class="hasAnchor">
-<a href="#select-and-download-preferred-model" class="anchor"></a>Select and download preferred model</h1>
+<div id="select-and-download-preferred-model" class="section level2">
+<h2 class="hasAnchor">
+<a href="#select-and-download-preferred-model" class="anchor"></a>Select and download preferred model</h2>
 <p>All youthu models are publicly available in a Dataverse repository (<a href="https://doi.org/10.7910/DVN/JC6PTV" class="uri">https://doi.org/10.7910/DVN/JC6PTV</a>). The following function call will download the desired model from the data repository. To download a choosen model, use the <code class="sourceCode r">get_mdl_from_dv</code> function. In the below example we have selected the fourth model in the candidate models table (PHQ9_SOFAS_1_OLS_CLL). We suggest consulting the scientific summary of the study that produced the youthu models to help guide your choice of which candidate model to select.</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model_mdl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_mdl_from_dv.html">get_mdl_from_dv</a></span><span class="op">(</span><span class="va">candidate_mdls_tb</span><span class="op">$</span><span class="va">mdl_nms_chr</span><span class="op">[</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span></code></pre></div>
@@ -562,9 +562,9 @@ CLL
 ##    (Intercept)   PHQ9_baseline     PHQ9_change  SOFAS_baseline    SOFAS_change  
 ##         -0.147          -6.732          -4.202           1.470           1.044</code></pre>
 </div>
-<div id="predict-utility" class="section level1">
-<h1 class="hasAnchor">
-<a href="#predict-utility" class="anchor"></a>Predict utility</h1>
+<div id="predict-utility" class="section level2">
+<h2 class="hasAnchor">
+<a href="#predict-utility" class="anchor"></a>Predict utility</h2>
 <p>To generate utility predictions we use the <code class="sourceCode r">add_aqol6d_predn_to_ds</code> function. The function needs to be supplied with the prediction dataset (the value passed to argument <code>data_tb</code>), the model we are applying to that dataset (<code>model_mdl</code>), the transformation associated with that model (<code>tfmn_1L_chr</code>, which can be identified by passing the name of the selected model to the <code class="sourceCode r">get_tfmn_from_lup</code> function) and details of the variable names used in the prediction dataset for the unique identifier (<code>id_var_nm_1L_chr</code>) and measurement timepoint (<code>round_var_nm_1L_chr</code>) and, for the later, the factor level that represents the baseline timepoint (<code>round_bl_val_1L_chr</code>). Additionally, if the prediction dataset uses different variable names for the predictors to those specified in the <code class="sourceCode r">predictors_lup</code> lookup table, a named vector detailing the correspondence between the two sets of variable names needs to be passed to the <code>predr_vars_nms_chr</code> argument. Finally, if you wish to specify the desired variable name to use for the predicted utility values generated by the function, you can do this by passing this name to the <code>utl_var_nm_1L_chr</code> argument.</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">updated_data_tb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/add_aqol6d_predn_to_ds.html">add_aqol6d_predn_to_ds</a></span><span class="op">(</span>data_tb <span class="op">=</span> <span class="va">data_tb</span>,
