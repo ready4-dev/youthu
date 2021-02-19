@@ -2,7 +2,7 @@
 % Please edit documentation in R/fn_make.R
 \name{make_ce_smry}
 \alias{make_ce_smry}
-\title{Make ce smry}
+\title{Make ce summary}
 \usage{
 make_ce_smry(
   ds_tb,
@@ -48,6 +48,6 @@ make_ce_smry(
 Summary (a double vector)
 }
 \description{
-make_ce_smry() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make ce smry. The function returns Summary (a double vector).
+make_ce_smry() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make ce summary. The function returns Summary (a double vector).
 }
 \keyword{internal}

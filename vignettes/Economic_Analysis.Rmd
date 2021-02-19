@@ -37,15 +37,15 @@ We need to further adapt this dataset. To to so, we first make a list object `ds
  - the allowed values of the data collection round variable, the dates during which baseline data measures are collected and distribution parameters for the duration between baseline and follow-up timepoints;
  - **population** (not sample) parameters to generate gamma distributed costs for periods prior to study entry and between baseline and follow-up measurements for the whole single group dataset or the control arm of a matched dataset.
 
-In the below example, our fake baseline data collection times are randomly sampled from a sequence of 180 consecutive days from the last year, the time spent in the study for each participant is sampled from a truncated normal distribution, bounded between 160 and 220 days with a mean of 180 days, and mean costs in the period prior to study entry were \$300, while the costs of resources consumed by participants over the lifetime of the study have a mean of \$1500. The names of the predictor variables we will be using are specified as PHQ9 and SOFAS.
+In the below example, our fake baseline data collection times are randomly sampled from a sequence of 180 consecutive days from the last year, the time spent in the study for each participant is sampled from a truncated normal distribution, bounded between 160 and 220 days with a mean of 180 days, and mean costs in the period prior to study entry were \$400, while the costs of resources consumed by participants over the lifetime of the study have a mean of \$1500. The names of the predictor variables we will be using are specified as PHQ9 and SOFAS.
 
 ```{r}
 ds_smry_ls <- list(bl_start_date_dtm = Sys.Date() - lubridate::days(300),
                    bl_end_date_dtm = Sys.Date() - lubridate::days(120),
                    cmprsn_var_nm_1L_chr = "study_arm_chr",
                    cmprsn_groups_chr = c("Intervention","Control"),
-                   costs_mean_dbl = c(300,1500),
-                   costs_sd_dbl = c(100,120),
+                   costs_mean_dbl = c(400,1500),
+                   costs_sd_dbl = c(100,220),
                    costs_var_nm_1L_chr = "costs_dbl",
                    date_var_nm_1L_chr = "date_psx",
                    duration_args_ls = list(a = 160, b = 2200, mean = 180, sd = 7),

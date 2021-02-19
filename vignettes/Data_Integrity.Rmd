@@ -15,7 +15,7 @@ library(youthu)
 ```{r eval=FALSE}
 library(youthu)
 ```
-# The role of classes in assuring data integrity
+## The role of classes in assuring data integrity
 The youthu package defines a number of classes that can be used to help assure the quality of input data used for deriving or applying transfer to utility algorithms. Within the R scripting language, a class is a named data structure that comprises a definition of required properties (e.g. whether numeric, minimum or maximum values) and tools for creating and validating instances of this data structure. These classes have two main purposes:
 
 1) to facilitate automated data integrity checks that verify no impermissible values (e.g. utility scores greater than one) are present in source data, within calculation transformed data or results;
@@ -23,11 +23,11 @@ The youthu package defines a number of classes that can be used to help assure t
 
 All of the classes included in the youthu package are prefixed with "firstbounce" as youthu has been developped as part of the First Bounce model.
 
-# Included classes
+## Included classes
 
 The classes included in the youthu package include one class for Assessment of Quality of Life (Adolescent) health utility and one for each of the six predictors used in youthu transfer to utility algorithms. 
 
-## Assessment of Quality of Life Six Dimension (Adolescent) Health Utility 
+### Assessment of Quality of Life Six Dimension (Adolescent) Health Utility 
 
 The `firstbounce_aqol6d_adol`{.R} class is defined for numeric vectors with a minimum value of 0.03 and maximum value of 1.0.
 
@@ -53,7 +53,7 @@ firstbounce_aqol6d_adol(-0.1)
 firstbounce_aqol6d_adol(1.2)
 ```
 
-## Behavioural Activation for Depression Scale (BADS)
+### Behavioural Activation for Depression Scale (BADS)
 
 The `firstbounce_bads`{.R} class is defined for integer vectors with a minimum value of 0 and maximum value of 150.
 
@@ -79,7 +79,7 @@ firstbounce_bads(-1L)
 firstbounce_bads(160L)
 ```
 
-## Generalised Anxiety Disorder Scale (GAD-7)
+### Generalised Anxiety Disorder Scale (GAD-7)
 
 The `firstbounce_gad7`{.R} class is defined for integer vectors with a minimum value of 0 and a maximum value of 21.
 
@@ -104,7 +104,7 @@ firstbounce_gad7(-1L)
 ```{r error = T}
 firstbounce_gad7(22L)
 ```
-## Kessler Psychological Distress Scale (K6) - US Scoring System
+### Kessler Psychological Distress Scale (K6) - US Scoring System
 
 The `firstbounce_k6`{.R} class is defined for integer vectors with a minimum value of 0 and a maximum value of 24.
 
@@ -129,7 +129,7 @@ firstbounce_k6(-1L)
 ```{r error = T}
 firstbounce_k6(25L)
 ```
-## Overall Anxiety Severity and Impairment Scale (OASIS)
+### Overall Anxiety Severity and Impairment Scale (OASIS)
 
 The `firstbounce_oasis`{.R} class is defined for integer vectors with a minimum value of 0 and a maximum value of 20.
 
@@ -154,7 +154,7 @@ firstbounce_oasis(-1L)
 ```{r error = T}
 firstbounce_oasis(21L)
 ```
-## Patient Health Questionnaire (PHQ-9)
+### Patient Health Questionnaire (PHQ-9)
 
 The `firstbounce_phq9`{.R} class is defined for integer vectors with a minimum value of 0 and a maximum value of 27.
 
@@ -178,7 +178,7 @@ firstbounce_phq9(-1L)
 firstbounce_phq9(28L)
 ```
 
-##  Screen for Child Anxiety Related Disorders (SCARED)
+###  Screen for Child Anxiety Related Disorders (SCARED)
 
 The `firstbounce_scared`{.R} class is defined for integer vectors with a minimum value of 0 and a maximum value of 82.
 
@@ -201,7 +201,7 @@ firstbounce_scared(-1L)
 ```{r error = T}
 firstbounce_scared(83)
 ```
-##  Social and Occupational Functioning Assessment Scale (SOFAS)
+###  Social and Occupational Functioning Assessment Scale (SOFAS)
 
 The `firstbounce_sofas`{.R} class is defined for integer vectors with a minimum value of 0 and a maximum value of 100.
 

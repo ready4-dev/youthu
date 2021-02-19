@@ -2,7 +2,7 @@
 % Please edit documentation in R/fn_make.R
 \name{make_he_smry}
 \alias{make_he_smry}
-\title{Make he smry}
+\title{Make he summary}
 \usage{
 make_he_smry(
   ds_tb,
@@ -48,8 +48,8 @@ make_he_smry(
 \item{round_fup_1L_chr}{Round fup (a character vector of length one), Default: 'Follow-up'}
 }
 \value{
-He smry (a list)
+He summary (a list)
 }
 \description{
-make_he_smry() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make he smry. The function returns He smry (a list).
+make_he_smry() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make he summary. The function returns He summary (a list).
 }

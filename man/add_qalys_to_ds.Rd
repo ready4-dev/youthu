@@ -9,7 +9,7 @@ add_qalys_to_ds(ds_tb, ds_smry_ls)
 \arguments{
 \item{ds_tb}{Dataset (a tibble)}
 
-\item{ds_smry_ls}{Dataset smry (a list)}
+\item{ds_smry_ls}{Dataset summary (a list)}
 }
 \value{
 Dataset (a tibble)

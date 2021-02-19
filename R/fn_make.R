@@ -25,8 +25,8 @@ make_balanced_fake_ds <- function (ds_tb, match_on_vars_chr, id_var_nm_1L_chr = 
         match_on_vars_chr = match_on_vars_chr)
     return(ds_tb)
 }
-#' Make ce smry
-#' @description make_ce_smry() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make ce smry. The function returns Summary (a double vector).
+#' Make ce summary
+#' @description make_ce_smry() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make ce summary. The function returns Summary (a double vector).
 #' @param ds_tb Dataset (a tibble)
 #' @param indices PARAM_DESCRIPTION
 #' @param change_types_chr Change types (a character vector), Default: 'dbl'
@@ -162,8 +162,8 @@ make_formula <- function (dep_var_nm_1L_chr, predictors_chr, environment_env = p
         paste0(predictors_chr, collapse = " + ")), env = environment_env)
     return(formula_fml)
 }
-#' Make he smry
-#' @description make_he_smry() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make he smry. The function returns He smry (a list).
+#' Make he summary
+#' @description make_he_smry() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make he summary. The function returns He summary (a list).
 #' @param ds_tb Dataset (a tibble)
 #' @param change_vars_chr Change vars (a character vector), Default: 'NA'
 #' @param wtp_dbl Wtp (a double vector), Default: 50000
@@ -177,7 +177,7 @@ make_formula <- function (dep_var_nm_1L_chr, predictors_chr, environment_env = p
 #' @param cmprsn_groups_chr Cmprsn groups (a character vector), Default: c("Intervention", "Control")
 #' @param cmprsn_var_nm_1L_chr Cmprsn var name (a character vector of length one), Default: 'study_arm_chr'
 #' @param round_fup_1L_chr Round fup (a character vector of length one), Default: 'Follow-up'
-#' @return He smry (a list)
+#' @return He summary (a list)
 #' @rdname make_he_smry
 #' @export 
 #' @importFrom boot boot
@@ -214,8 +214,8 @@ make_he_smry <- function (ds_tb, change_vars_chr = NA_character_, wtp_dbl = 5000
 #' Make matched dataset
 #' @description make_matched_ds() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make matched dataset. The function returns Matched dataset (a tibble).
 #' @param sngl_grp_ds PARAM_DESCRIPTION
-#' @param cmprsn_smry_tb Cmprsn smry (a tibble)
-#' @param ds_smry_ls Dataset smry (a list)
+#' @param cmprsn_smry_tb Cmprsn summary (a tibble)
+#' @param ds_smry_ls Dataset summary (a list)
 #' @return Matched dataset (a tibble)
 #' @rdname make_matched_ds
 #' @export 
@@ -276,7 +276,7 @@ make_matched_ds_spine <- function (ds_tb, round_var_nm_1L_chr = "Timepoint_chr",
 #' Make sngl grp dataset
 #' @description make_sngl_grp_ds() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make sngl grp dataset. The function returns Sngl grp dataset (a tibble).
 #' @param seed_ds_tb Seed dataset (a tibble), Default: NULL
-#' @param ds_smry_ls Dataset smry (a list)
+#' @param ds_smry_ls Dataset summary (a list)
 #' @return Sngl grp dataset (a tibble)
 #' @rdname make_sngl_grp_ds
 #' @export 

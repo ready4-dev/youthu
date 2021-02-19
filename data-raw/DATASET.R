@@ -51,10 +51,12 @@ classes_to_make_tb <- ready4class::ready4_constructor_tbl() %>%
   )
 name_pfx_1L_chr <- "firstbounce_"
 
-pkg_dss_tb <- ready4fun::write_abbr_lup(short_name_chr = c(paste0(name_pfx_1L_chr,classes_to_make_tb$name_stub_chr)),
-                                        long_name_chr = c(classes_to_make_tb$class_desc_chr),
+pkg_dss_tb <- ready4fun::write_abbr_lup(short_name_chr = c(paste0(name_pfx_1L_chr,classes_to_make_tb$name_stub_chr),
+                                                           "smry"),
+                                        long_name_chr = c(classes_to_make_tb$class_desc_chr,
+                                                          "summary"),
                                         #no_plural_chr = ,
-                                        #custom_plural_ls = list(utility = "utilities"),
+                                        custom_plural_ls = list(summary = "summaries"),
                                         url_1L_chr = NA_character_,
                                         seed_lup = TTU::abbreviations_lup) # CHANGE
 utils::data("abbreviations_lup")

@@ -273,7 +273,7 @@ add_qalys <- function (ds_tb, cmprsn_var_nm_1L_chr = "study_arm_chr", duration_v
 #' Add qalys to dataset
 #' @description add_qalys_to_ds() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add qalys to dataset. Function argument ds_tb specifies the object to be updated. The function returns Dataset (a tibble).
 #' @param ds_tb Dataset (a tibble)
-#' @param ds_smry_ls Dataset smry (a list)
+#' @param ds_smry_ls Dataset summary (a list)
 #' @return Dataset (a tibble)
 #' @rdname add_qalys_to_ds
 #' @export 

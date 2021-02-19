@@ -7,7 +7,7 @@
 predict_from_mdl_coefs(smry_of_mdl_tb, new_data_tb)
 }
 \arguments{
-\item{smry_of_mdl_tb}{Smry of model (a tibble)}
+\item{smry_of_mdl_tb}{Summary of model (a tibble)}
 
 \item{new_data_tb}{New data (a tibble)}
 }

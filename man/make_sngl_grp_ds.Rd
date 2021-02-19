@@ -9,7 +9,7 @@ make_sngl_grp_ds(seed_ds_tb = NULL, ds_smry_ls)
 \arguments{
 \item{seed_ds_tb}{Seed dataset (a tibble), Default: NULL}
 
-\item{ds_smry_ls}{Dataset smry (a list)}
+\item{ds_smry_ls}{Dataset summary (a list)}
 }
 \value{
 Sngl grp dataset (a tibble)
