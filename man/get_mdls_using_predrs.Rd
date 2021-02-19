@@ -2,18 +2,18 @@
 % Please edit documentation in R/fn_get.R
 \name{get_mdls_using_predrs}
 \alias{get_mdls_using_predrs}
-\title{Get mdls using predrs}
+\title{Get models using predrs}
 \usage{
 get_mdls_using_predrs(mdl_predrs_in_ds_chr, mdls_lup = NULL)
 }
 \arguments{
-\item{mdl_predrs_in_ds_chr}{Mdl predrs in dataset (a character vector)}
+\item{mdl_predrs_in_ds_chr}{Model predrs in dataset (a character vector)}
 
-\item{mdls_lup}{Mdls (a lookup table), Default: NULL}
+\item{mdls_lup}{Models (a lookup table), Default: NULL}
 }
 \value{
-Filtered mdls (a lookup table)
+Filtered models (a lookup table)
 }
 \description{
-get_mdls_using_predrs() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get mdls using predrs. Function argument mdl_predrs_in_ds_chr specifies the where to look for the required object. The function returns Filtered mdls (a lookup table).
+get_mdls_using_predrs() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get models using predrs. Function argument mdl_predrs_in_ds_chr specifies the where to look for the required object. The function returns Filtered models (a lookup table).
 }

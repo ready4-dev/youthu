@@ -1,5 +1,5 @@
-#' Extract guide box lgd
-#' @description extract_guide_box_lgd() is an Extract function that extracts data from an object. Specifically, this function implements an algorithm to extract guide box lgd. The function is called for its side effects and does not return a value.
+#' Extract guide box legend
+#' @description extract_guide_box_lgd() is an Extract function that extracts data from an object. Specifically, this function implements an algorithm to extract guide box legend. The function is called for its side effects and does not return a value.
 #' @param a.gplot PARAM_DESCRIPTION
 #' @return NA ()
 #' @rdname extract_guide_box_lgd

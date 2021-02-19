@@ -12,7 +12,7 @@
 #'   \item{class_chr}{Class (a character vector)}
 #'   \item{increment_dbl}{Increment (a double vector)}
 #'   \item{class_fn_chr}{Class function (a character vector)}
-#'   \item{mdl_scaling_dbl}{Mdl scaling (a double vector)}
+#'   \item{mdl_scaling_dbl}{Model scaling (a double vector)}
 #'   \item{covariate_lgl}{Covariate (a logical vector)}
 #' }
 "predictors_lup"

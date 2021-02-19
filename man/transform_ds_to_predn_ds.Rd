@@ -2,7 +2,7 @@
 % Please edit documentation in R/fn_transform.R
 \name{transform_ds_to_predn_ds}
 \alias{transform_ds_to_predn_ds}
-\title{Transform dataset to predn dataset}
+\title{Transform dataset to prediction dataset}
 \usage{
 transform_ds_to_predn_ds(
   data_tb,
@@ -20,7 +20,7 @@ transform_ds_to_predn_ds(
 
 \item{predr_vars_nms_chr}{Predr vars names (a character vector)}
 
-\item{tfmn_1L_chr}{Tfmn (a character vector of length one)}
+\item{tfmn_1L_chr}{Transformation (a character vector of length one)}
 
 \item{dep_var_nm_1L_chr}{Dep var name (a character vector of length one), Default: 'aqol6d_total_w'}
 
@@ -36,6 +36,6 @@ transform_ds_to_predn_ds(
 Data (a tibble)
 }
 \description{
-transform_ds_to_predn_ds() is a Transform function that edits an object in such a way that core object attributes - e.g. shape, dimensions, elements, type - are altered. Specifically, this function implements an algorithm to transform dataset to predn dataset. Function argument data_tb specifies the object to be updated. Argument predr_vars_nms_chr provides the object to be updated. The function returns Data (a tibble).
+transform_ds_to_predn_ds() is a Transform function that edits an object in such a way that core object attributes - e.g. shape, dimensions, elements, type - are altered. Specifically, this function implements an algorithm to transform dataset to prediction dataset. Function argument data_tb specifies the object to be updated. Argument predr_vars_nms_chr provides the object to be updated. The function returns Data (a tibble).
 }
 \keyword{internal}

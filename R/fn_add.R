@@ -1,8 +1,8 @@
-#' Add aqol6d predn to dataset
-#' @description add_aqol6d_predn_to_ds() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add aqol6d predn to dataset. Function argument data_tb specifies the object to be updated. The function returns Updated (a tibble).
+#' Add Assessment of Quality of Life Six Dimension prediction to dataset
+#' @description add_aqol6d_predn_to_ds() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add assessment of quality of life six dimension prediction to dataset. Function argument data_tb specifies the object to be updated. The function returns Updated (a tibble).
 #' @param data_tb Data (a tibble)
 #' @param model_mdl PARAM_DESCRIPTION
-#' @param tfmn_1L_chr Tfmn (a character vector of length one)
+#' @param tfmn_1L_chr Transformation (a character vector of length one)
 #' @param predr_vars_nms_chr Predr vars names (a character vector), Default: NULL
 #' @param utl_var_nm_1L_chr Utl var name (a character vector of length one), Default: NULL
 #' @param id_var_nm_1L_chr Id var name (a character vector of length one), Default: 'fkClientID'
@@ -153,7 +153,7 @@ add_costs_from_gamma_dist <- function (ds_tb, costs_mean_dbl, costs_sd_dbl, cost
 #' @param bl_start_date_dtm PARAM_DESCRIPTION
 #' @param bl_end_date_dtm PARAM_DESCRIPTION
 #' @param duration_args_ls Duration arguments (a list)
-#' @param duration_fn Duration (a function), Default: rnorm
+#' @param duration_fn Duration (a function), Default: stats::rnorm
 #' @param date_var_nm_1L_chr Date var name (a character vector of length one), Default: 'date_psx'
 #' @param id_var_nm_1L_chr Id var name (a character vector of length one), Default: 'fkClientID'
 #' @param round_var_nm_1L_chr Round var name (a character vector of length one), Default: 'round'
@@ -162,14 +162,15 @@ add_costs_from_gamma_dist <- function (ds_tb, costs_mean_dbl, costs_sd_dbl, cost
 #' @return Updated dataset (a tibble)
 #' @rdname add_dates_from_dist
 #' @export 
+#' @importFrom stats rnorm
 #' @importFrom rlang exec sym
 #' @importFrom dplyr mutate case_when n group_by lag ungroup select everything
 #' @importFrom lubridate days
 #' @keywords internal
 add_dates_from_dist <- function (ds_tb, bl_start_date_dtm, bl_end_date_dtm, duration_args_ls, 
-    duration_fn = rnorm, date_var_nm_1L_chr = "date_psx", id_var_nm_1L_chr = "fkClientID", 
-    round_var_nm_1L_chr = "round", round_bl_val_1L_chr = "Baseline", 
-    origin_1L_chr = "1970-01-01") 
+    duration_fn = stats::rnorm, date_var_nm_1L_chr = "date_psx", 
+    id_var_nm_1L_chr = "fkClientID", round_var_nm_1L_chr = "round", 
+    round_bl_val_1L_chr = "Baseline", origin_1L_chr = "1970-01-01") 
 {
     args_ls <- append(list(n = nrow(ds_tb)), duration_args_ls)
     days_of_fup_int <- rlang::exec(.fn = duration_fn, !!!args_ls) %>% 
@@ -259,7 +260,7 @@ add_qalys <- function (ds_tb, cmprsn_var_nm_1L_chr = "study_arm_chr", duration_v
 {
     updated_ds_tb <- ds_tb %>% dplyr::mutate(`:=`(!!rlang::sym(qalys_var_nm_1L_chr), 
         (!!rlang::sym(utl_var_nm_1L_chr) - (!!rlang::sym(utl_change_var_nm_1L_chr) * 
-            0.5)) * (duration_prd/lubridate::years(1))))
+            0.5)) * (!!rlang::sym(duration_var_nm_1L_chr)/lubridate::years(1))))
     if (reshape_1L_lgl) {
         vars_to_spread_chr <- names(updated_ds_tb)[!names(updated_ds_tb) %in% 
             c(cmprsn_var_nm_1L_chr, id_var_nm_1L_chr, match_idx_var_nm_1L_chr, 

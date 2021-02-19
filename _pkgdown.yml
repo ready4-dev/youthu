@@ -4,22 +4,11 @@ reference:
 - title: "Datasets"
 - contents:
   - abbreviations_lup
-  - adol_dim_scalg_eqs_lup
-  - aqol_scrg_dict_r3
-  - aqol6d_adult_disv_lup_tb
-  - aqol6d_adult_itm_wrst_wghts_lup_tb
-  - aqol6d_adult_vldn_pop_with_STATA_scores_tb
-  - aqol6d_dim_sclg_con_lup_tb
-  - aqol6d_domain_qs_lup_tb
-  - aqol6d_from_8d_coeffs_lup_tb
   - fn_type_lup_tb
   - fns_dmt_tb
   - mdls_lup
-  - mdls_smry_tb
   - predictors_lup
   - prototype_lup
-  - replication_popl_tb
-  - repln_ds_dict_r3
 - title: "Classes"
 - contents:
   - firstbounce_aqol6d_adol
@@ -40,3 +29,4 @@ reference:
   - make_he_smry
   - make_matched_ds
   - make_sngl_grp_ds
+  - rename_from_nmd_vec

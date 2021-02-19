@@ -2,7 +2,7 @@
 % Please edit documentation in R/fn_get.R
 \name{get_mdl_from_dv}
 \alias{get_mdl_from_dv}
-\title{Get mdl from dataverse}
+\title{Get model from dataverse}
 \usage{
 get_mdl_from_dv(
   mdl_nm_1L_chr,
@@ -12,7 +12,7 @@ get_mdl_from_dv(
 )
 }
 \arguments{
-\item{mdl_nm_1L_chr}{Mdl name (a character vector of length one)}
+\item{mdl_nm_1L_chr}{Model name (a character vector of length one)}
 
 \item{dv_ds_nm_1L_chr}{Dataverse dataset name (a character vector of length one), Default: 'https://doi.org/10.7910/DVN/JC6PTV'}
 
@@ -21,8 +21,8 @@ get_mdl_from_dv(
 \item{key_1L_chr}{Key (a character vector of length one), Default: NULL}
 }
 \value{
-NA ()
+Model (a model)
 }
 \description{
-get_mdl_from_dv() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get mdl from dataverse. Function argument mdl_nm_1L_chr specifies the where to look for the required object. The function is called for its side effects and does not return a value.
+get_mdl_from_dv() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get model from dataverse. Function argument mdl_nm_1L_chr specifies the where to look for the required object. The function is called for its side effects and does not return a value.
 }

@@ -2,18 +2,18 @@
 % Please edit documentation in R/fn_get.R
 \name{get_tfmn_from_lup}
 \alias{get_tfmn_from_lup}
-\title{Get tfmn from}
+\title{Get transformation from}
 \usage{
 get_tfmn_from_lup(mdl_nm_1L_chr, mdls_lup = NULL)
 }
 \arguments{
-\item{mdl_nm_1L_chr}{Mdl name (a character vector of length one)}
+\item{mdl_nm_1L_chr}{Model name (a character vector of length one)}
 
-\item{mdls_lup}{Mdls (a lookup table), Default: NULL}
+\item{mdls_lup}{Models (a lookup table), Default: NULL}
 }
 \value{
-Tfmn (a character vector of length one)
+Transformation (a character vector of length one)
 }
 \description{
-get_tfmn_from_lup() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get tfmn from lookup table. Function argument mdl_nm_1L_chr specifies the where to look for the required object. The function returns Tfmn (a character vector of length one).
+get_tfmn_from_lup() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get transformation from lookup table. Function argument mdl_nm_1L_chr specifies the where to look for the required object. The function returns Transformation (a character vector of length one).
 }

@@ -9,7 +9,6 @@
 #' @importFrom purrr reduce
 #' @importFrom dplyr rename
 #' @importFrom rlang sym
-#' @keywords internal
 rename_from_nmd_vec <- function (data_tb, nmd_vec_chr, vec_nms_as_new_1L_lgl = T) 
 {
     if (vec_nms_as_new_1L_lgl) {

@@ -9,7 +9,7 @@ add_dates_from_dist(
   bl_start_date_dtm,
   bl_end_date_dtm,
   duration_args_ls,
-  duration_fn = rnorm,
+  duration_fn = stats::rnorm,
   date_var_nm_1L_chr = "date_psx",
   id_var_nm_1L_chr = "fkClientID",
   round_var_nm_1L_chr = "round",
@@ -26,7 +26,7 @@ add_dates_from_dist(
 
 \item{duration_args_ls}{Duration arguments (a list)}
 
-\item{duration_fn}{Duration (a function), Default: rnorm}
+\item{duration_fn}{Duration (a function), Default: stats::rnorm}
 
 \item{date_var_nm_1L_chr}{Date var name (a character vector of length one), Default: 'date_psx'}
 

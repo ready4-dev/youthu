@@ -27,9 +27,12 @@ To illustrate the input data requirements and the practical application of youth
  - the names of the predictors for utility to be included in the dataset;
  - the name of variables for unique unit identifier, data collection round, data collection date, costs and health utility measure;
  - (for matched dataset only) the name of the variable for comparison group and the allowable values for that variable;
- - the allowed values of the data collection round variable, the dates during which baseline data measures are collected (randomly sampled from a sequence of 180 consecutive days from the last year) and distribution parameters for the duration between baseline and follow-up timepoints (sampled from a truncated normal distribution, bounded between 80 and 110 days);
- - **population** (not sample) parameters to generate gamma distributed costs for periods prior to study entry(mean \$300) and between baseline and follow-up measurements (mean \$1500) for the whole single group dataset or the control arm of a matched dataset;
- 
+ - the allowed values of the data collection round variable, the dates during which baseline data measures are collected and distribution parameters for the duration between baseline and follow-up timepoints;
+ - **population** (not sample) parameters to generate gamma distributed costs for periods prior to study entry and between baseline and follow-up measurements for the whole single group dataset or the control arm of a matched dataset.
+
+In the below example, our fake baseline data collection times are randomly sampled from a sequence of 180 consecutive days from the last year, the time spent in the study for each participant is sampled from a truncated normal distribution, bounded between 160 and 220 days with a mean of 180 days, and mean costs in the period prior to study entry were \$300, while the costs of resources consumed by participants over the lifetime of the study have a mean of \$1500. The names of the predictor variables we will be using are specified as PHQ9 and SOFAS.
+
+
 ```{r}
 ds_smry_ls <- list(bl_start_date_dtm = Sys.Date() - lubridate::days(300),
                    bl_end_date_dtm = Sys.Date() - lubridate::days(120),
@@ -39,7 +42,7 @@ ds_smry_ls <- list(bl_start_date_dtm = Sys.Date() - lubridate::days(300),
                    costs_sd_dbl = c(100,120),
                    costs_var_nm_1L_chr = "costs_dbl",
                    date_var_nm_1L_chr = "date_psx",
-                   duration_args_ls = list(a = 80, b = 110, mean = 90, sd = 7),
+                   duration_args_ls = list(a = 160, b = 2200, mean = 180, sd = 7),
                    duration_fn = truncnorm::rtruncnorm,
                    id_var_nm_1L_chr = "fkClientID",
                    predr_var_nms = c("PHQ9", "SOFAS"),
@@ -48,18 +51,21 @@ ds_smry_ls <- list(bl_start_date_dtm = Sys.Date() - lubridate::days(300),
                    utl_var_nm_1L_chr = "AQoL6D_HU")
 
 ```
+
 We pass both the `ds_smry_ls` summary list and the `replication_popl_tb` replication dataset to the `make_sngl_grp_ds`{.R} function to create an example single group dataset.
+
 ```{r}
+data("replication_popl_tb", package = "TTU")
 sngl_grp_ds_tb <- make_sngl_grp_ds(TTU::replication_popl_tb,ds_smry_ls = ds_smry_ls)
 ```
 
-We can split a subset of our single group dataset into two propensity score matched groups - one each for intervention and control - using the `make_matched_ds`{.R} function. We also use this function to build in our assumptions about group differences in changes in PHQ9, SOFAS and costs measured at follow-up. The below example assumes **population** (not sample) mean change differences between Intervention and Control arms of -2 for PHQ9, -2 for SOFAS and +$300 for costs.
+We can split a subset of our single group dataset into two propensity score matched groups - one each for intervention and control - using the `make_matched_ds`{.R} function. We also use this function to build in our assumptions about group differences in changes in PHQ9, SOFAS and costs measured at follow-up. The below example assumes **population** (not sample) mean change differences between Intervention and Control arms of -3 for PHQ9, -1 for SOFAS and +$300 for costs.
 
 ```{r}
 matched_ds_tb <- make_matched_ds(sngl_grp_ds, 
                                  cmprsn_smry_tb = tibble::tibble(var_nms_chr = c(ds_smry_ls$predr_var_nms, ds_smry_ls$costs_var_nm_1L_chr),
-                                 fns_ls = list(rnorm,rnorm,rnorm),
-                                 abs_mean_diff_dbl = c(3,2,300),
+                                 fns_ls = list(stats::rnorm,stats::rnorm,stats::rnorm),
+                                 abs_mean_diff_dbl = c(2,1,300),
                                  diff_sd_dbl = c(2,2,200),
                                  multiplier_dbl = c(-1,-1,1),
                                  min_dbl = c(0,0,0),
@@ -74,18 +80,21 @@ matched_ds_tb <- make_matched_ds(sngl_grp_ds,
 The synthetic matched dataset we generated includes `r matched_ds_tb$match_idx_int %>% unique() %>% length()` matched comparisons, with each comparison containing baseline and follow-up records for one intervention arm participant and one control arm participant. The first few records are as follows.
 
 ```{r}
-matched_ds_tb %>% head()
+matched_ds_tb %>% 
+  head() %>%
+  ready4show::print_table(output_type_1L_chr = "HTML",
+                          caption_1L_chr = "Input dataset")
 ```
 This dataset contains features that make it possible to use in conjunction with youthu's economic analysis functions. Specifically these requirements are that the dataset must:
 
-- [include one or more of the predictors used in the youthu models](Prediction_With_Mdls.html) (in this case PHQ9 and SOFAS);
+- [include one or more of the predictors used in the youthu models](Prediction_With_Mdls.html);
  - include variables for unique study participant identifier, data collection round, data collection date, interval between baseline and follow-up, study arm assignment and record matching; and
  - be in long format where each row represents ***either*** a baseline or follow-up measurement for a unique study participant.
  
 The synthetic matched dataset also contains a cost variable, which is a requirement for most, though not all, of the economic analyses that can be undertaken with youthu. 
 
 ## Limitations of datasets without measures of health utility
-A notable omission from the fake study dataset is any measure of utility. This omission means that, in the absence of using mapping algorithms such as those included with youthu, the most feasible types of economic evaluation to apply to this dataset would likely be cost-consequence analysis (where a synopsis of the differences in a range of measures are presented alongside cost differences for a decision maker to interpret subjectively) and cost-effectiveness analysis (where a statistic - the incremental cost-effectiveness ratio or ICER - is calculated by dividing differences in costs by differences in a single outcome measure).
+A notable omission from the fake study dataset is any measure of utility. This omission means that, in the absence of using mapping algorithms such as those included with youthu, the most feasible types of economic evaluation to apply to this dataset would likely be cost-consequence analysis (where a synopsis of the differences in a range of measures are presented alongside cost differences) and cost-effectiveness analysis (where a summary statistic - the incremental cost-effectiveness ratio or ICER - is calculated by dividing differences in costs by differences in a single outcome measure).
 
 These types of economic analyses can be relatively simple to interpret if either the intervention or control arm is simultaneously cheaper and more effective across all included outcome measures. However, these conditions don't hold in our sample data.
 
@@ -104,21 +113,22 @@ summary((matched_ds_tb %>% dplyr::filter(study_arm_chr == "Intervention" & round
 summary((matched_ds_tb %>% dplyr::filter(study_arm_chr == "Intervention" & round == "Follow-up"))[5:7])
 ```
 
-The results summarised above create some significant barriers to meaningfully interpreting economic evaluations that are based on cost-consequence or cost-effectiveness analysis:
+The pattern of results summarised above create some significant barriers to meaningfully interpreting economic evaluations that are based on cost-consequence or cost-effectiveness analysis:
 
-- A cost-effectiveness analysis in which change in PHQ-9 was the benefit measure would be difficult to interpret as the Intervention arm is both more effective and more costly, which begs the question is it worth paying the extra dollars for the improvement as measured on the PHQ-9 scale? It is likely that, unlike the Quality Adjusted Life Year (QALY) outcome measure, there is no commonly used value for money benchmark for improvements measured in PHQ-9. Similarly, if the potential funding for the intervention is from a budget that is allocated to non-depressive illnesses (e.g. physical health), a PHQ-9 based cost-effectiveness analysis is not readily comparable with economic evaluations of other interventions potentially competing for these scarce funds.
+- A cost-effectiveness analysis in which change in PHQ-9 was the benefit measure would be difficult to interpret as the Intervention arm is both more effective and more costly, which begs the question is it worth paying the extra dollars for this improvement? Also - would a judgment of cost-effectiveness remain the same if the study had measured a slightly different incremental benefit or recorded change over a longer or shorter time horizon? It is likely that there is no commonly used value for money benchmark for improvements measured in PHQ-9, nor is there any time weighting associated with the measure. Furthermore, if the potential funding for the intervention is from a budget that is allocated to non-depressive illnesses (e.g. physical health), results from a cost-effectiveness analysis using PHQ-9 as its benefit measure are not readily comparable with economic evaluations from other illness groups using different benefit measures of interventions potentially competing for the same scarce funding.
 
 - A cost consequence analyses that summarised the differences in costs with the differences in changes in PHQ-9 and SOFAS score would be difficult to interpret because while the intervention is more effective than control for improvements measured on PHQ-9 (where lower scores are better), the control group is superior if benefits are based on functioning improvements as measured by SOFAS scores (where higher scores are better). The lack of any formal weighting for how to trade off clinical symptoms and functioning means that interpretation of this analysis will be highly subjective and likely to change across potential decision makers.
 
 These types of short-comings can be significantly addressed by undertaking cost-utility analyses (CUAs) as:
 
-- they use a measure of benefit - the QALY - that captures multiple domains of health, weighted by time and population preferences in a single index measure that can be applied across health conditions;
-- there are published benchmark willingness to pay values for use by decision makers in many countries to make ICER statistics readily interpretable.
+- they use a measure of benefit - the Quality Adjusted Life Year (QALY) - that captures multiple domains of health, weighted by time and population preferences in a single index measure that can be applied across health conditions;
+- there are published benchmark willingness to pay values for QALYs that are routinely used by decision makers in many countries to make ICER statistics readily interpretable in the context of health budget allocation.
 
 The rest of this article demonstrates how youthu functions can be used to undertake CUA based analyses on the type of data we have just profiled.
 
 ## Using youthu in a cost-utility analysis workflow
 
+### Predict adolescent AQoL-6D health utility
 Our first step is to identify which youthu models we will use to predict adolescent AQoL-6D  and apply these models to our data. This step was explained in more detail in [another vignette article](Prediction_With_Mdls.html), so will be dealt with briefly here.
 
 First we retrieve the model we wish to use.
@@ -139,12 +149,8 @@ econ_cmprsn_ds_tb <- add_aqol6d_predn_to_ds(data_tb = matched_ds_tb,
                                    round_bl_val_1L_chr = ds_smry_ls$round_lvls_chr[1]) %>%
   dplyr::select(fkClientID, round, study_arm_chr, date_psx, duration_prd, dplyr::everything())
 ```
-```{r}
-econ_cmprsn_ds_tb %>% head() %>%
-    ready4show::print_table(output_type_1L_chr = "HTML",
-                          caption_1L_chr = "Updated dataset with predicted utility", 
-                          use_lbls_as_col_nms_1L_lgl = T)
-```
+
+### Calculate QALYs
 Next we combine the health utility data with the interval between measurement data to calculate QALYs and add them to the dataset.
 
 ```{r}
@@ -157,15 +163,17 @@ econ_cmprsn_ds_tb %>% head() %>%
                           caption_1L_chr = "Updated dataset with QALYs", 
                           use_lbls_as_col_nms_1L_lgl = T)
 ```
-Now we can run the main economic analysis. This is implemented by the `make_he_smry`{.R} function, which first bootstraps the dataset (implemented by the `boot` function from the `boot` package) before passing the mean values for costs and qalys from each bootstrap sample to with `bcea` function of the `BCEA` package to calculate a range of health economic statistics. For this example we pass a value of 50,000 for the willingness to pay parameter, as this is the dollar amount commonly used in Australia as a benchmark for the value of a QALY.
 
-Note, for this illustrative example we only request 100 bootstrap iterations - in practice this number would be much higher.
+### Analyse results
+Now we can run the main economic analysis. This is implemented by the `make_he_smry`{.R} function, which first bootstraps the dataset (implemented by the `boot` function from the `boot` package) before passing the mean values for costs and QALYs from each bootstrap sample to with `bcea` function of the `BCEA` package to calculate a range of health economic statistics. For this example we pass a value of 50,000 for the willingness to pay parameter, as this is the dollar amount commonly used in Australia as a benchmark for the value of a QALY.
+
+Note, for this illustrative example we only request 1000 bootstrap iterations - in practice this number may be higher.
 
 ```{r}
 he_smry_ls <- econ_cmprsn_ds_tb %>% make_he_smry(change_vars_chr = c(ds_smry_ls$predr_var_nms,
                                                                      ds_smry_ls$utl_var_nm_1L_chr),
                                                  wtp_dbl = 50000,
-                                                 bootstrap_iters_1L_int = 100L,
+                                                 bootstrap_iters_1L_int = 1000L,
                                                  change_types_chr = c("dbl","dbl","dbl"),
                                                  benefits_pfx_1L_chr = "qalys_dbl",
                                                  benefits_var_nm_1L_chr = "qalys",
@@ -177,7 +185,7 @@ he_smry_ls <- econ_cmprsn_ds_tb %>% make_he_smry(change_vars_chr = c(ds_smry_ls$
                                                  round_fup_1L_chr = ds_smry_ls$round_lvls_chr[2])
 ```
 
-As part of the output of the `make_he_smry`{.R} function is a BCEA object, we can use the BCEA package to produce a number of graphical summaries of economic results. One of the most important is the production of a cost-effectiveness plane. This plot highlights that, with an ICER of \$`r he_smry_ls$ce_res_ls$ICER %>% format(big.mark =",")`, most of the bootstrapped iteration incremental cost and QALY pairs fall within the zone of cost-effectiveness (green). In fact at the cost-effectiveness threshold we supplied, our results suggest there is a `r he_smry_ls$ce_res_ls$ceac[he_smry_ls$ce_res_ls$k==50000] * 100`% probability that the intervention is cost-effective.
+As part of the output of the `make_he_smry`{.R} function is a BCEA object, we can use the BCEA package to produce a number of graphical summaries of economic results. One of the most important is the production of a cost-effectiveness plane. This plot highlights that, with an ICER of \$`r he_smry_ls$ce_res_ls$ICER %>% format(big.mark =",")`, `r ifelse(he_smry_ls$ce_res_ls$ceac[he_smry_ls$ce_res_ls$k==50000]==0.5,"half",ifelse(he_smry_ls$ce_res_ls$ceac[he_smry_ls$ce_res_ls$k==50000]<0.5,"less than half","most"))` of the bootstrapped iteration incremental cost and QALY pairs fall within the zone of cost-effectiveness (green). In fact at the cost-effectiveness threshold we supplied, the results suggest there is a `r he_smry_ls$ce_res_ls$ceac[he_smry_ls$ce_res_ls$k==50000] * 100`% probability that the intervention is cost-effective.
 
 ```{r fig.width=6}
 BCEA::ceplane.plot(he_smry_ls$ce_res_ls, wtp =50000,    

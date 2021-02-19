@@ -70,7 +70,7 @@ make_costs_vec_from_gamma_dist <- function(n_int,
                                            costs_sd_dbl){
     scale_1L_dbl <- costs_sd_dbl^2/costs_mean_dbl
     shape_1L_dbl <- costs_mean_dbl / scale_1L_dbl
-    costs_dbl <- rgamma(n_int,shape = shape_1L_dbl, scale = scale_1L_dbl)
+    costs_dbl <- stats::rgamma(n_int,shape = shape_1L_dbl, scale = scale_1L_dbl)
     return(costs_dbl)
 }
 make_fake_trial_ds <- function(ds_tb,
@@ -115,7 +115,7 @@ make_fake_trial_ds <- function(ds_tb,
 make_formula <- function(dep_var_nm_1L_chr,
                          predictors_chr,
                          environment_env = parent.frame()){
-    formula_fml <- formula(paste0(dep_var_nm_1L_chr,
+    formula_fml <- stats::formula(paste0(dep_var_nm_1L_chr,
                                   " ~ ",
                                   paste0(predictors_chr, collapse = " + ")), env = environment_env)
     return(formula_fml)
@@ -214,7 +214,7 @@ make_sngl_grp_ds <- function(seed_ds_tb = NULL,
         dplyr::select(ds_smry_ls$id_var_nm_1L_chr,
                       ds_smry_ls$round_var_nm_1L_chr,
                       ds_smry_ls$predr_var_nms) %>% #
-        na.omit()
+        stats::na.omit()
     if("SOFAS" %in% ds_smry_ls$predr_var_nms) # TEMPORARY
         sngl_grp_ds_tb <- sngl_grp_ds_tb %>%
             dplyr::mutate(SOFAS = as.integer(round(SOFAS,0)))

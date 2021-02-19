@@ -2,12 +2,12 @@
 % Please edit documentation in R/fn_predict.R
 \name{predict_from_mdl_coefs}
 \alias{predict_from_mdl_coefs}
-\title{Predict from mdl coefs}
+\title{Predict from model coefs}
 \usage{
 predict_from_mdl_coefs(smry_of_mdl_tb, new_data_tb)
 }
 \arguments{
-\item{smry_of_mdl_tb}{Smry of mdl (a tibble)}
+\item{smry_of_mdl_tb}{Smry of model (a tibble)}
 
 \item{new_data_tb}{New data (a tibble)}
 }
@@ -15,6 +15,6 @@ predict_from_mdl_coefs(smry_of_mdl_tb, new_data_tb)
 Pred (a double vector)
 }
 \description{
-predict_from_mdl_coefs() is a Predict function that makes predictions from data using a specified statistical model. Specifically, this function implements an algorithm to predict from mdl coefs. The function returns Pred (a double vector).
+predict_from_mdl_coefs() is a Predict function that makes predictions from data using a specified statistical model. Specifically, this function implements an algorithm to predict from model coefs. The function returns Pred (a double vector).
 }
 \keyword{internal}

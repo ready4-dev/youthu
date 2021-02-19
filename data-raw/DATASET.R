@@ -56,7 +56,7 @@ pkg_dss_tb <- ready4fun::write_abbr_lup(short_name_chr = c(paste0(name_pfx_1L_ch
                                         #no_plural_chr = ,
                                         #custom_plural_ls = list(utility = "utilities"),
                                         url_1L_chr = NA_character_,
-                                        seed_lup = ready4use::abbreviations_lup) # CHANGE
+                                        seed_lup = TTU::abbreviations_lup) # CHANGE
 utils::data("abbreviations_lup")
 pkg_dss_tb <- classes_to_make_tb %>%
   ready4class::write_classes_and_make_lup(dev_pkg_ns_1L_chr = ready4fun::get_dev_pkg_nm(),
@@ -72,23 +72,11 @@ pkg_dss_tb <- classes_to_make_tb %>%
 # 5. Create function types and generics look-up tables
 # 5.1 Create a lookup table of function types used in this package and save it as a package dataset (data gets saved in the data directory, documentation script is created in R directory).
 utils::data("fn_type_lup_tb",package = "TTU")
-# fn_type_lup_tb %>%
-#   ready4fun::write_dmtd_fn_type_lup(url_1L_chr = NA_character_,
-#                                     abbreviations_lup = abbreviations_lup,
-#                                     pkg_dss_tb = pkg_dss_tb)
-# data("fn_type_lup_tb")
-# utils::data("fn_type_lup_tb",package = "ready4use")
-# Adds rename to below
 pkg_dss_tb <- fn_type_lup_tb %>%
   ready4fun::add_rows_to_fn_type_lup(fn_type_nm_chr = ready4fun::get_new_fn_types(abbreviations_lup = abbreviations_lup,
                                                                                   fn_type_lup_tb = fn_type_lup_tb),
                                      fn_type_desc_chr = c("Extracts data from an object.",
-                                                          # "Imputes data.",
-                                                          # "Plots data",
-                                                          # "Randomly samples from data.",
-                                                          "Renames elements of an object based on a pre-speccified schema.",
-                                                          # "Reorders an object to conform to a pre-specified schema.",
-                                                          # "Randomly reorders an object."
+                                                          "Renames elements of an object based on a pre-speccified schema."
                                                           ),
                                      is_generic_lgl = F,
                                      is_method_lgl = F) %>% # Add to ready4fun template.
@@ -105,7 +93,8 @@ fns_dmt_tb <- ready4fun::make_dmt_for_all_fns(paths_ls = ready4fun::make_fn_nms(
                                               custom_dmt_ls = list(details_ls = NULL,
                                                                    inc_for_main_user_lgl_ls = list(force_true_chr = c("add_aqol6d_predn_to_ds","add_qalys_to_ds",
                                                                                                                       "get_mdl_from_dv","get_mdls_using_predrs","get_tfmn_from_lup",
-                                                                                                                      "make_he_smry","make_sngl_grp_ds","make_matched_ds"),
+                                                                                                                      "make_he_smry","make_sngl_grp_ds","make_matched_ds",
+                                                                                                                      "rename_from_nmd_vec"),
                                                                                                    force_false_chr = NA_character_),
                                                                    args_ls_ls = NULL),
                                               fn_type_lup_tb = fn_type_lup_tb,
@@ -133,18 +122,24 @@ pkg_dss_tb <- tibble::tibble(short_name_chr = c("BADS","GAD7","K6","OASIS","PHQ9
                               desc_1L_chr = "A lookup table of the short name and long name of each predictor used in the models included with the youthu package.",
                               abbreviations_lup = abbreviations_lup,
                               pkg_dss_tb = pkg_dss_tb)
-pkg_dss_tb <- ready4use::ready4_dv_import_lup() %>%
-  tibble::add_case(data_repo_db_ui = "https://doi.org/10.7910/DVN/JC6PTV",
+# pkg_dss_tb <- ready4use::ready4_dv_import_lup() %>%
+#   tibble::add_case(data_repo_db_ui = "https://doi.org/10.7910/DVN/JC6PTV",
+#                    file_name = "mdls_smry_tb",
+#                    file_type = ".csv",
+#                    data_repo_file_ext = ".tab") %>%
+#   ready4use::get_data() %>%
+#   ready4fun::write_and_doc_ds(db_1L_chr = "mdls_smry_tb",
+#                               title_1L_chr = "Summary coefficients for youthu transfer to utility models",
+#                               desc_1L_chr = "A summary of the models included in the youthu package that can be used to predict adolescent AQoL6D. Note this summary is a placeholder as all models have been estimated from synthetic data.",
+#                               abbreviations_lup = abbreviations_lup,
+#                               pkg_dss_tb = pkg_dss_tb)
+# utils::data("mdls_smry_tb")
+mdls_smry_tb <- ready4use::ready4_dv_import_lup() %>%
+  tibble::add_case(data_repo_db_ui = "https://doi.org/10.7910/DVN/JC6PTV", # NOT UP TO DATE
                    file_name = "mdls_smry_tb",
                    file_type = ".csv",
                    data_repo_file_ext = ".tab") %>%
-  ready4use::get_data() %>%
-  ready4fun::write_and_doc_ds(db_1L_chr = "mdls_smry_tb",
-                              title_1L_chr = "Summary coefficients for youthu transfer to utility models",
-                              desc_1L_chr = "A summary of the models included in the youthu package that can be used to predict adolescent AQoL6D. Note this summary is a placeholder as all models have been estimated from synthetic data.",
-                              abbreviations_lup = abbreviations_lup,
-                              pkg_dss_tb = pkg_dss_tb)
-utils::data("mdls_smry_tb")
+  ready4use::get_data()
 pkg_dss_tb <- tibble::tibble(mdl_nms_chr = mdls_smry_tb$Model %>% unique()) %>%
   dplyr::mutate(predrs_ls = mdl_nms_chr %>% strsplit("_") %>% purrr::map(~ .x[.x %in% c(predictors_lup$short_name_chr)]),
                 mdl_type_chr = mdl_nms_chr %>% strsplit("_") %>% purrr::map(~ .x[.x %in% c("GLM", "OLS")]) %>% purrr::flatten_chr(),

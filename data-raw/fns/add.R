@@ -113,7 +113,7 @@ add_dates_from_dist <- function(ds_tb,
                                 bl_start_date_dtm,
                                 bl_end_date_dtm,
                                 duration_args_ls,
-                                duration_fn = rnorm,
+                                duration_fn = stats::rnorm,
                                 date_var_nm_1L_chr = "date_psx",
                                 id_var_nm_1L_chr = "fkClientID",
                                 round_var_nm_1L_chr = "round",
@@ -183,7 +183,7 @@ add_qalys <- function(ds_tb,
                       utl_var_nm_1L_chr = "utility_dbl",
                       reshape_1L_lgl = T){
   updated_ds_tb <- ds_tb %>%
-    dplyr::mutate(!!rlang::sym(qalys_var_nm_1L_chr) := (!!rlang::sym(utl_var_nm_1L_chr)-(!!rlang::sym(utl_change_var_nm_1L_chr) * 0.5)) * (duration_prd / lubridate::years(1)))
+    dplyr::mutate(!!rlang::sym(qalys_var_nm_1L_chr) := (!!rlang::sym(utl_var_nm_1L_chr)-(!!rlang::sym(utl_change_var_nm_1L_chr) * 0.5)) * (!!rlang::sym(duration_var_nm_1L_chr) / lubridate::years(1)))
   if(reshape_1L_lgl){
     vars_to_spread_chr <- names(updated_ds_tb)[!names(updated_ds_tb) %in% c(cmprsn_var_nm_1L_chr,
                                                                             id_var_nm_1L_chr,

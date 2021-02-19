@@ -30,11 +30,11 @@ transform_ds_for_cmprsn <- function (ds_tb, cmprsn_var_nm_1L_chr, id_var_nm_1L_c
         cmprsn_groups_chr)
     return(ds_tb)
 }
-#' Transform dataset to predn dataset
-#' @description transform_ds_to_predn_ds() is a Transform function that edits an object in such a way that core object attributes - e.g. shape, dimensions, elements, type - are altered. Specifically, this function implements an algorithm to transform dataset to predn dataset. Function argument data_tb specifies the object to be updated. Argument predr_vars_nms_chr provides the object to be updated. The function returns Data (a tibble).
+#' Transform dataset to prediction dataset
+#' @description transform_ds_to_predn_ds() is a Transform function that edits an object in such a way that core object attributes - e.g. shape, dimensions, elements, type - are altered. Specifically, this function implements an algorithm to transform dataset to prediction dataset. Function argument data_tb specifies the object to be updated. Argument predr_vars_nms_chr provides the object to be updated. The function returns Data (a tibble).
 #' @param data_tb Data (a tibble)
 #' @param predr_vars_nms_chr Predr vars names (a character vector)
-#' @param tfmn_1L_chr Tfmn (a character vector of length one)
+#' @param tfmn_1L_chr Transformation (a character vector of length one)
 #' @param dep_var_nm_1L_chr Dep var name (a character vector of length one), Default: 'aqol6d_total_w'
 #' @param id_var_nm_1L_chr Id var name (a character vector of length one), Default: 'fkClientID'
 #' @param round_var_nm_1L_chr Round var name (a character vector of length one), Default: 'round'

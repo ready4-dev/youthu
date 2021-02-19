@@ -97,13 +97,13 @@ make_ce_smry <- function (ds_tb, indices, change_types_chr = "dbl", benefits_pfx
 #' @return Costs (a double vector)
 #' @rdname make_costs_vec_from_gamma_dist
 #' @export 
-
+#' @importFrom stats rgamma
 #' @keywords internal
 make_costs_vec_from_gamma_dist <- function (n_int, costs_mean_dbl, costs_sd_dbl) 
 {
     scale_1L_dbl <- costs_sd_dbl^2/costs_mean_dbl
     shape_1L_dbl <- costs_mean_dbl/scale_1L_dbl
-    costs_dbl <- rgamma(n_int, shape = shape_1L_dbl, scale = scale_1L_dbl)
+    costs_dbl <- stats::rgamma(n_int, shape = shape_1L_dbl, scale = scale_1L_dbl)
     return(costs_dbl)
 }
 #' Make fake trial dataset
@@ -154,12 +154,12 @@ make_fake_trial_ds <- function (ds_tb, id_var_nm_1L_chr = "fkClientID", round_va
 #' @return NA ()
 #' @rdname make_formula
 #' @export 
-
+#' @importFrom stats formula
 #' @keywords internal
 make_formula <- function (dep_var_nm_1L_chr, predictors_chr, environment_env = parent.frame()) 
 {
-    formula_fml <- formula(paste0(dep_var_nm_1L_chr, " ~ ", paste0(predictors_chr, 
-        collapse = " + ")), env = environment_env)
+    formula_fml <- stats::formula(paste0(dep_var_nm_1L_chr, " ~ ", 
+        paste0(predictors_chr, collapse = " + ")), env = environment_env)
     return(formula_fml)
 }
 #' Make he smry
@@ -281,12 +281,13 @@ make_matched_ds_spine <- function (ds_tb, round_var_nm_1L_chr = "Timepoint_chr",
 #' @rdname make_sngl_grp_ds
 #' @export 
 #' @importFrom dplyr select mutate arrange
+#' @importFrom stats na.omit
 #' @importFrom tibble as_tibble
 make_sngl_grp_ds <- function (seed_ds_tb = NULL, ds_smry_ls) 
 {
     sngl_grp_ds_tb <- seed_ds_tb %>% dplyr::select(ds_smry_ls$id_var_nm_1L_chr, 
         ds_smry_ls$round_var_nm_1L_chr, ds_smry_ls$predr_var_nms) %>% 
-        na.omit()
+        stats::na.omit()
     if ("SOFAS" %in% ds_smry_ls$predr_var_nms) 
         sngl_grp_ds_tb <- sngl_grp_ds_tb %>% dplyr::mutate(SOFAS = as.integer(round(SOFAS, 
             0)))

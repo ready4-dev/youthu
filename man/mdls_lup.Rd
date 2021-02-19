@@ -17,10 +17,10 @@ A summary of the key descriptive features of the prediction models included in t
 A tibble
 
 \describe{
-\item{mdl_nms_chr}{Mdl names (a character vector)}
+\item{mdl_nms_chr}{Model names (a character vector)}
 \item{predrs_ls}{Predrs (a list)}
-\item{mdl_type_chr}{Mdl type (a character vector)}
-\item{tfmn_chr}{Tfmn (a character vector)}
+\item{mdl_type_chr}{Model type (a character vector)}
+\item{tfmn_chr}{Transformation (a character vector)}
 }
 }
 \keyword{datasets}

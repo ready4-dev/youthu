@@ -1,10 +1,10 @@
-#' Get mdl from dataverse
-#' @description get_mdl_from_dv() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get mdl from dataverse. Function argument mdl_nm_1L_chr specifies the where to look for the required object. The function is called for its side effects and does not return a value.
-#' @param mdl_nm_1L_chr Mdl name (a character vector of length one)
+#' Get model from dataverse
+#' @description get_mdl_from_dv() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get model from dataverse. Function argument mdl_nm_1L_chr specifies the where to look for the required object. The function is called for its side effects and does not return a value.
+#' @param mdl_nm_1L_chr Model name (a character vector of length one)
 #' @param dv_ds_nm_1L_chr Dataverse dataset name (a character vector of length one), Default: 'https://doi.org/10.7910/DVN/JC6PTV'
 #' @param server_1L_chr Server (a character vector of length one), Default: 'dataverse.harvard.edu'
 #' @param key_1L_chr Key (a character vector of length one), Default: NULL
-#' @return NA ()
+#' @return Model (a model)
 #' @rdname get_mdl_from_dv
 #' @export 
 #' @importFrom dataverse dataset_files
@@ -21,11 +21,11 @@ get_mdl_from_dv <- function (mdl_nm_1L_chr, dv_ds_nm_1L_chr = "https://doi.org/1
         ds_ls[[idx_1L_int]]$dataFile$id)))
     return(model_mdl)
 }
-#' Get mdls using predrs
-#' @description get_mdls_using_predrs() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get mdls using predrs. Function argument mdl_predrs_in_ds_chr specifies the where to look for the required object. The function returns Filtered mdls (a lookup table).
-#' @param mdl_predrs_in_ds_chr Mdl predrs in dataset (a character vector)
-#' @param mdls_lup Mdls (a lookup table), Default: NULL
-#' @return Filtered mdls (a lookup table)
+#' Get models using predrs
+#' @description get_mdls_using_predrs() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get models using predrs. Function argument mdl_predrs_in_ds_chr specifies the where to look for the required object. The function returns Filtered models (a lookup table).
+#' @param mdl_predrs_in_ds_chr Model predrs in dataset (a character vector)
+#' @param mdls_lup Models (a lookup table), Default: NULL
+#' @return Filtered models (a lookup table)
 #' @rdname get_mdls_using_predrs
 #' @export 
 #' @importFrom utils data
@@ -58,11 +58,11 @@ get_mdls_using_predrs <- function (mdl_predrs_in_ds_chr, mdls_lup = NULL)
     filtered_mdls_lup <- mdls_lup %>% dplyr::filter(include_lgl)
     return(filtered_mdls_lup)
 }
-#' Get tfmn from
-#' @description get_tfmn_from_lup() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get tfmn from lookup table. Function argument mdl_nm_1L_chr specifies the where to look for the required object. The function returns Tfmn (a character vector of length one).
-#' @param mdl_nm_1L_chr Mdl name (a character vector of length one)
-#' @param mdls_lup Mdls (a lookup table), Default: NULL
-#' @return Tfmn (a character vector of length one)
+#' Get transformation from
+#' @description get_tfmn_from_lup() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get transformation from lookup table. Function argument mdl_nm_1L_chr specifies the where to look for the required object. The function returns Transformation (a character vector of length one).
+#' @param mdl_nm_1L_chr Model name (a character vector of length one)
+#' @param mdls_lup Models (a lookup table), Default: NULL
+#' @return Transformation (a character vector of length one)
 #' @rdname get_tfmn_from_lup
 #' @export 
 #' @importFrom utils data
