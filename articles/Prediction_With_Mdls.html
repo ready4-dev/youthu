@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">youthu</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9052</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9055</span>
       </span>
     </div>
 
@@ -64,9 +64,6 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/Data_Integrity.html">Data Integrity Tools</a>
-    </li>
-    <li>
       <a href="../articles/Economic_Analysis.html">Economic analysis</a>
     </li>
     <li>
@@ -272,9 +269,9 @@ integer
 <div id="match-model-predictors-to-the-prediction-dataset" class="section level3">
 <h3 class="hasAnchor">
 <a href="#match-model-predictors-to-the-prediction-dataset" class="anchor"></a>Match model predictors to the prediction dataset</h3>
-<p>Next, we can identify which of the above variables are present in the dataset we plan to use for prediction. To illustrate this step, we have created a prediction dataset that is a modified and simplified version of the study <a href="https://ready4-dev.github.io/TTU/articles/Replication_DS.html">replication dataset</a> distributed with the TTU package. This illustrative dataset reflects the likely real-world circumstance in which the prediction dataset uses a different naming convention to that of the dataset we used to estimate the youth models.</p>
+<p>Next, we can identify which of the above variables are present in the dataset we plan to use for prediction. To illustrate this step, we have created a prediction dataset that is a modified and simplified version of the study <a href="https://ready4-dev.github.io/youthvars/articles/Replication_DS.html">replication dataset</a> distributed with the youthvars package. This illustrative dataset reflects the likely real-world circumstance in which the prediction dataset uses a different naming convention to that of the dataset we used to estimate the youth models.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">data_tb</span> <span class="op">&lt;-</span> <span class="fu">TTU</span><span class="fu">::</span><span class="va"><a href="https://ready4-dev.github.io/TTU/reference/replication_popl_tb.html">replication_popl_tb</a></span> <span class="op">%&gt;%</span>
+<code class="sourceCode R"><span class="va">data_tb</span> <span class="op">&lt;-</span> <span class="fu">youthvars</span><span class="fu">::</span><span class="va"><a href="https://ready4-dev.github.io/youthvars/reference/replication_popl_tb.html">replication_popl_tb</a></span> <span class="op">%&gt;%</span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">fkClientID</span>,<span class="va">round</span>,<span class="va">PHQ9</span>, <span class="va">SOFAS</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="co">#</span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">fkClientID</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -424,18 +421,18 @@ Follow-up
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">data_tb</span><span class="op">$</span><span class="va">SOFAS_total</span><span class="op">)</span></code></pre></div>
 <pre><code>## [1] "integer"</code></pre>
 </div>
-<div id="checks-using-youthu-classes" class="section level4">
+<div id="checks-using-youthvars-classes" class="section level4">
 <h4 class="hasAnchor">
-<a href="#checks-using-youthu-classes" class="anchor"></a>Checks using youthu classes</h4>
-<p>We can pass the values of the <code>PHQ9_total</code> and <code>SOFAS_total</code> variables in our dataset to the functions for creating instances of the <code>firstbounce_phq9</code> and <code>firstbounce_sofas</code> classes respectively. If no error message is thrown, then the data is consistent with the requirements for variable.</p>
+<a href="#checks-using-youthvars-classes" class="anchor"></a>Checks using youthvars classes</h4>
+<p>We can pass the values of the <code>PHQ9_total</code> and <code>SOFAS_total</code> variables in our dataset to the functions for creating instances of the <code>youthvars_phq9</code> and <code>youthvars_sofas</code> classes from the <a href="https://ready4-dev.github.io/youthvars/">youthvars</a> package. If no error message is thrown, then the data is consistent with the requirements for variable.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">phq9_test</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/firstbounce_phq9.html">firstbounce_phq9</a></span><span class="op">(</span><span class="va">data_tb</span><span class="op">$</span><span class="va">PHQ_total</span><span class="op">)</span> 
+<code class="sourceCode R"><span class="va">phq9_test</span> <span class="op">&lt;-</span> <span class="fu">youthvars</span><span class="fu">::</span><span class="fu"><a href="https://ready4-dev.github.io/youthvars/reference/youthvars_phq9.html">youthvars_phq9</a></span><span class="op">(</span><span class="va">data_tb</span><span class="op">$</span><span class="va">PHQ_total</span><span class="op">)</span> 
 <span class="va">phq9_test</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "firstbounce_phq9" "integer"</code></pre>
+<pre><code>## [1] "youthvars_phq9" "integer"</code></pre>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">sofas_test</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/firstbounce_sofas.html">firstbounce_sofas</a></span><span class="op">(</span><span class="va">data_tb</span><span class="op">$</span><span class="va">SOFAS_total</span><span class="op">)</span> 
+<code class="sourceCode R"><span class="va">sofas_test</span> <span class="op">&lt;-</span> <span class="fu">youthvars</span><span class="fu">::</span><span class="fu"><a href="https://ready4-dev.github.io/youthvars/reference/youthvars_sofas.html">youthvars_sofas</a></span><span class="op">(</span><span class="va">data_tb</span><span class="op">$</span><span class="va">SOFAS_total</span><span class="op">)</span> 
 <span class="va">sofas_test</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code>## [1] "firstbounce_sofas" "integer"</code></pre>
+<pre><code>## [1] "youthvars_sofas" "integer"</code></pre>
 </div>
 </div>
 <div id="confirm-dataset-meets-other-structural-requirements" class="section level3">

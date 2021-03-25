@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">youthu</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9052</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9055</span>
       </span>
     </div>
 
@@ -64,9 +64,6 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/Data_Integrity.html">Data Integrity Tools</a>
-    </li>
-    <li>
       <a href="../articles/Economic_Analysis.html">Economic analysis</a>
     </li>
     <li>
@@ -120,9 +117,9 @@
 <div id="example-datasets" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example-datasets" class="anchor"></a>Example datasets</h2>
-<p>To illustrate the input data requirements and the practical application of youthu functions, we adapt a <a href="https://ready4-dev.github.io/TTU/articles/Replication_DS.html">replication dataset from the youthu’s sister package TTU</a> to create synthetic (fake) single group and matched group datasets. For our purposes we are going to use those records where a study participants had a baseline PHQ9 score of under 20.</p>
+<p>To illustrate the input data requirements and the practical application of youthu functions, we adapt a <a href="https://ready4-dev.github.io/youthvars/articles/Replication_DS.html">replication dataset from the youthu’s sister package youthvars</a> to create synthetic (fake) single group and matched group datasets. For our purposes we are going to use those records where a study participants had a baseline PHQ9 score of under 20.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"replication_popl_tb"</span>, package <span class="op">=</span> <span class="st">"TTU"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"replication_popl_tb"</span>, package <span class="op">=</span> <span class="st">"youthvars"</span><span class="op">)</span>
 <span class="va">seed_ds_tb</span> <span class="op">&lt;-</span> <span class="va">replication_popl_tb</span> <span class="op">%&gt;%</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">fkClientID</span> <span class="op">%in%</span> <span class="op">(</span><span class="va">replication_popl_tb</span> <span class="op">%&gt;%</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">round</span><span class="op">==</span><span class="st">"Baseline"</span> <span class="op">&amp;</span> <span class="va">PHQ9</span><span class="op">&lt;</span><span class="fl">20</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/pull.html">pull</a></span><span class="op">(</span><span class="va">fkClientID</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>We need to further adapt this dataset. To to so, we first make a list object <code>ds_smry_ls</code> that summarises the desired features of these datasets, such as:</p>
 <ul>
@@ -222,7 +219,7 @@ Participant_20
 Baseline
 </td>
 <td style="text-align:right;">
-2020-07-15
+2020-08-18
 </td>
 <td style="text-align:right;">
 0S
@@ -251,7 +248,7 @@ Participant_593
 Baseline
 </td>
 <td style="text-align:right;">
-2020-05-22
+2020-06-25
 </td>
 <td style="text-align:right;">
 0S
@@ -280,7 +277,7 @@ Participant_593
 Follow-up
 </td>
 <td style="text-align:right;">
-2020-11-13
+2020-12-17
 </td>
 <td style="text-align:right;">
 175d 0H 0M 0S
@@ -309,7 +306,7 @@ Participant_20
 Follow-up
 </td>
 <td style="text-align:right;">
-2021-01-09
+2021-02-12
 </td>
 <td style="text-align:right;">
 178d 0H 0M 0S
@@ -338,7 +335,7 @@ Participant_259
 Baseline
 </td>
 <td style="text-align:right;">
-2020-09-09
+2020-10-13
 </td>
 <td style="text-align:right;">
 0S
@@ -367,7 +364,7 @@ Participant_962
 Baseline
 </td>
 <td style="text-align:right;">
-2020-10-22
+2020-11-25
 </td>
 <td style="text-align:right;">
 0S
@@ -583,10 +580,10 @@ Control
 243
 </td>
 <td style="text-align:right;">
-2020-04-30
+2020-06-03
 </td>
 <td style="text-align:right;">
-2020-10-24
+2020-11-27
 </td>
 <td style="text-align:right;">
 0S
@@ -654,10 +651,10 @@ Control
 191
 </td>
 <td style="text-align:right;">
-2020-06-26
+2020-07-30
 </td>
 <td style="text-align:right;">
-2020-12-27
+2021-01-30
 </td>
 <td style="text-align:right;">
 0S
@@ -725,10 +722,10 @@ Intervention
 230
 </td>
 <td style="text-align:right;">
-2020-05-21
+2020-06-24
 </td>
 <td style="text-align:right;">
-2020-11-16
+2020-12-20
 </td>
 <td style="text-align:right;">
 0S
@@ -796,10 +793,10 @@ Intervention
 115
 </td>
 <td style="text-align:right;">
-2020-06-19
+2020-07-23
 </td>
 <td style="text-align:right;">
-2020-12-18
+2021-01-21
 </td>
 <td style="text-align:right;">
 0S
@@ -867,10 +864,10 @@ Intervention
 183
 </td>
 <td style="text-align:right;">
-2020-09-20
+2020-10-24
 </td>
 <td style="text-align:right;">
-2021-03-25
+2021-04-28
 </td>
 <td style="text-align:right;">
 0S
@@ -938,10 +935,10 @@ Intervention
 219
 </td>
 <td style="text-align:right;">
-2020-10-16
+2020-11-19
 </td>
 <td style="text-align:right;">
-2021-04-13
+2021-05-17
 </td>
 <td style="text-align:right;">
 0S

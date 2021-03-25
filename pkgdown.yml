@@ -2,9 +2,8 @@ pandoc: 2.7.3
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
-  Data_Integrity: Data_Integrity.html
   Economic_Analysis: Economic_Analysis.html
   Prediction_With_Mdls: Prediction_With_Mdls.html
   youthu: youthu.html
-last_built: 2021-02-19T22:00Z
+last_built: 2021-03-25T11:31Z
 
