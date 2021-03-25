@@ -22,10 +22,10 @@ set.seed(1234)
 The main motivation behind the youthu package is to extend the types of economic analysis that can be undertaken with both single group (e.g. pilot study, health service records) and matched groups (e.g. trial) longitudinal datasets that do not include measures of health utility. This article focuses on its application to matched group datasets.
 
 ## Example datasets
-To illustrate the input data requirements and the practical application of youthu functions, we adapt a   [replication dataset from the youthu's sister package TTU](https://ready4-dev.github.io/TTU/articles/Replication_DS.html) to create synthetic (fake) single group and matched group datasets.  For our purposes we are going to use those records where a study participants had a baseline PHQ9 score of under 20.
+To illustrate the input data requirements and the practical application of youthu functions, we adapt a   [replication dataset from the youthu's sister package youthvars](https://ready4-dev.github.io/youthvars/articles/Replication_DS.html) to create synthetic (fake) single group and matched group datasets.  For our purposes we are going to use those records where a study participants had a baseline PHQ9 score of under 20.
 
 ```{r}
-data("replication_popl_tb", package = "TTU")
+data("replication_popl_tb", package = "youthvars")
 seed_ds_tb <- replication_popl_tb %>% dplyr::filter(fkClientID %in% (replication_popl_tb %>% dplyr::filter(round=="Baseline" & PHQ9<20) %>% dplyr::pull(fkClientID)))
 ```
 

@@ -13,7 +13,7 @@ add_aqol6d_predn_to_ds(
   id_var_nm_1L_chr = "fkClientID",
   round_var_nm_1L_chr = "round",
   round_bl_val_1L_chr = "Baseline",
-  utl_cls_fn = firstbounce_aqol6d_adol,
+  utl_cls_fn = youthvars::youthvars_aqol6d_adol,
   predictors_lup = NULL
 )
 }
@@ -34,7 +34,7 @@ add_aqol6d_predn_to_ds(
 
 \item{round_bl_val_1L_chr}{Round bl value (a character vector of length one), Default: 'Baseline'}
 
-\item{utl_cls_fn}{Utl class (a function), Default: firstbounce_aqol6d_adol}
+\item{utl_cls_fn}{Utl class (a function), Default: youthvars::youthvars_aqol6d_adol}
 
 \item{predictors_lup}{Predictors (a lookup table), Default: NULL}
 }

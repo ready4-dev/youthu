@@ -33,10 +33,10 @@ predictors_lup[,1:5] %>%
 ```
 
 ### Match model predictors to the prediction dataset
-Next, we can identify which of the above variables are present in the dataset we plan to use for prediction. To illustrate this step, we have created a prediction dataset that is a modified and simplified version of the study [replication dataset](https://ready4-dev.github.io/TTU/articles/Replication_DS.html) distributed with the TTU package. This illustrative dataset reflects the likely real-world circumstance in which the prediction dataset uses a different naming convention to that of the dataset we used to estimate the youth models. 
+Next, we can identify which of the above variables are present in the dataset we plan to use for prediction. To illustrate this step, we have created a prediction dataset that is a modified and simplified version of the study [replication dataset](https://ready4-dev.github.io/youthvars/articles/Replication_DS.html) distributed with the youthvars package. This illustrative dataset reflects the likely real-world circumstance in which the prediction dataset uses a different naming convention to that of the dataset we used to estimate the youth models. 
 
 ```{r }
-data_tb <- TTU::replication_popl_tb %>%
+data_tb <- youthvars::replication_popl_tb %>%
   dplyr::select(fkClientID,round,PHQ9, SOFAS) %>% #
   dplyr::arrange(fkClientID) %>%
   na.omit() %>%
@@ -86,15 +86,15 @@ summary(data_tb$SOFAS_total)
 class(data_tb$SOFAS_total)
 ```
 
-#### Checks using youthu classes
-We can pass the values of the `PHQ9_total` and `SOFAS_total` variables in our dataset to the functions for creating instances of the `firstbounce_phq9` and `firstbounce_sofas` classes respectively. If no error message is thrown, then the data is consistent with the requirements for variable.
+#### Checks using youthvars classes
+We can pass the values of the `PHQ9_total` and `SOFAS_total` variables in our dataset to the functions for creating instances of the `youthvars_phq9` and `youthvars_sofas` classes from the [youthvars](https://ready4-dev.github.io/youthvars/) package. If no error message is thrown, then the data is consistent with the requirements for variable.
 
 ```{r}
-phq9_test <- firstbounce_phq9(data_tb$PHQ_total) 
+phq9_test <- youthvars::youthvars_phq9(data_tb$PHQ_total) 
 phq9_test %>% class()
 ```
 ```{r}
-sofas_test <- firstbounce_sofas(data_tb$SOFAS_total) 
+sofas_test <- youthvars::youthvars_sofas(data_tb$SOFAS_total) 
 sofas_test %>% class()
 ```
 ### Confirm dataset meets other structural requirements
