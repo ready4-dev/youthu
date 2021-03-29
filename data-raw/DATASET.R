@@ -98,18 +98,6 @@ pkg_dss_tb <- tibble::tibble(short_name_chr = c("BADS","GAD7","K6","OASIS","PHQ9
                               desc_1L_chr = "A lookup table of the short name and long name of each predictor used in the models included with the youthu package.",
                               abbreviations_lup = abbreviations_lup,
                               pkg_dss_tb = pkg_dss_tb)
-# pkg_dss_tb <- ready4use::ready4_dv_import_lup() %>%
-#   tibble::add_case(data_repo_db_ui = "https://doi.org/10.7910/DVN/JC6PTV",
-#                    file_name = "mdls_smry_tb",
-#                    file_type = ".csv",
-#                    data_repo_file_ext = ".tab") %>%
-#   ready4use::get_data() %>%
-#   ready4fun::write_and_doc_ds(db_1L_chr = "mdls_smry_tb",
-#                               title_1L_chr = "Summary coefficients for youthu transfer to utility models",
-#                               desc_1L_chr = "A summary of the models included in the youthu package that can be used to predict adolescent AQoL6D. Note this summary is a placeholder as all models have been estimated from synthetic data.",
-#                               abbreviations_lup = abbreviations_lup,
-#                               pkg_dss_tb = pkg_dss_tb)
-# utils::data("mdls_smry_tb")
 mdls_smry_tb <- ready4use::ready4_dv_import_lup() %>%
   tibble::add_case(data_repo_db_ui = "https://doi.org/10.7910/DVN/JC6PTV", # NOT UP TO DATE
                    file_name = "mdls_smry_tb",
