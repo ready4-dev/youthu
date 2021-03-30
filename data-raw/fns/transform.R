@@ -28,7 +28,7 @@ transform_ds_to_predn_ds <- function(data_tb,
                                      round_bl_val_1L_chr = "Baseline",
                                      predictors_lup = NULL){
   if(is.null(predictors_lup))
-    utils::data("predictors_lup", envir = environment())
+    utils::data("predictors_lup", package = "TTU", envir = environment())
   data_tb <- data_tb %>%
     dplyr::mutate(!!rlang::sym(dep_var_nm_1L_chr):= NA_real_)
   data_tb <- purrr::reduce(predr_vars_nms_chr,

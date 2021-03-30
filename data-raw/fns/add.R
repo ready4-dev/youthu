@@ -9,7 +9,7 @@ add_aqol6d_predn_to_ds <- function(data_tb,
                                    utl_cls_fn = youthvars::youthvars_aqol6d_adol,
                                    predictors_lup = NULL){
   if (is.null(predictors_lup))
-    utils::data("predictors_lup", envir = environment())
+    utils::data("predictors_lup", package = "TTU", envir = environment())
   if(!is.null(names(predr_vars_nms_chr))){
     data_tb <- rename_from_nmd_vec(data_tb,
                                    nmd_vec_chr = predr_vars_nms_chr,
