@@ -1,6 +1,6 @@
 Package: youthu
 Title: Youth Outcomes to Health Utility
-Version: 0.0.0.9060
+Version: 0.0.0.9061
 Authors@R: 
     c(person(given = "Matthew",
              family = "Hamilton",
@@ -68,9 +68,9 @@ Imports:
     tidyr,
     tidyselect,
     truncnorm,
-    TTU (>= 0.0.0.9128),
+    TTU (>= 0.0.0.9129),
     utils,
-    youthvars (>= 0.0.0.9009)
+    youthvars (>= 0.0.0.9011)
 VignetteBuilder: knitr
 Depends: 
     R (>= 2.10)
