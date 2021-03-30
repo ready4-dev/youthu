@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">youthu</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9060</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9061</span>
       </span>
     </div>
 
@@ -272,6 +272,7 @@ integer
 <p>Next, we can identify which of the above variables are present in the dataset we plan to use for prediction. To illustrate this step, we have created a prediction dataset that is a modified and simplified version of the study <a href="https://ready4-dev.github.io/youthvars/articles/Replication_DS.html">replication dataset</a> distributed with the youthvars package. This illustrative dataset reflects the likely real-world circumstance in which the prediction dataset uses a different naming convention to that of the dataset we used to estimate the youth models.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">data_tb</span> <span class="op">&lt;-</span> <span class="fu">youthvars</span><span class="fu">::</span><span class="va"><a href="https://ready4-dev.github.io/youthvars/reference/replication_popl_tb.html">replication_popl_tb</a></span> <span class="op">%&gt;%</span>
+  <span class="fu">youthvars</span><span class="fu">::</span><span class="fu"><a href="https://ready4-dev.github.io/youthvars/reference/transform_raw_ds_for_analysis.html">transform_raw_ds_for_analysis</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">fkClientID</span>,<span class="va">round</span>,<span class="va">PHQ9</span>, <span class="va">SOFAS</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="co">#</span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">fkClientID</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/stats/na.fail.html">na.omit</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
