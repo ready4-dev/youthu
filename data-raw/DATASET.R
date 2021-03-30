@@ -137,5 +137,5 @@ ready4fun::write_and_doc_fn_fls(fns_dmt_tb,
                                 update_pkgdown_1L_lgl = T,
                                 path_to_dvpr_dmt_dir_1L_chr = "../../../../../Documentation/Code/Developer",
                                 path_to_user_dmt_dir_1L_chr = "../../../../../Documentation/Code/User")
-devtools::build_vignettes()
+# devtools::build_vignettes()
 #
