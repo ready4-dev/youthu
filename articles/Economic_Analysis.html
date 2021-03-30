@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">youthu</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9061</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9062</span>
       </span>
     </div>
 
@@ -463,7 +463,8 @@ Intervention
 <p>Our first step is to identify which youthu models we will use to predict adolescent AQoL-6D and apply these models to our data. This step was explained in more detail in <a href="Prediction_With_Mdls.html">another vignette article</a>, so will be dealt with briefly here.</p>
 <p>First we retrieve the model we wish to use.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">candidate_mdls_tb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_mdls_using_predrs.html">get_mdls_using_predrs</a></span><span class="op">(</span><span class="va">predictors_lup</span><span class="op">$</span><span class="va">short_name_chr</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">7</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"predictors_lup"</span>, package <span class="op">=</span> <span class="st">"TTU"</span><span class="op">)</span>
+<span class="va">candidate_mdls_tb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_mdls_using_predrs.html">get_mdls_using_predrs</a></span><span class="op">(</span><span class="va">predictors_lup</span><span class="op">$</span><span class="va">short_name_chr</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">7</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></code></pre></div>
 <pre><code>## New names:
 ## * `` -&gt; ...1
 ## * `` -&gt; ...2
