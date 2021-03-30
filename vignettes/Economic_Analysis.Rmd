@@ -26,7 +26,7 @@ To illustrate the input data requirements and the practical application of youth
 
 ```{r}
 data("replication_popl_tb", package = "youthvars")
-seed_ds_tb <- replication_popl_tb %>% dplyr::filter(fkClientID %in% (replication_popl_tb %>% dplyr::filter(round=="Baseline" & PHQ9<20) %>% dplyr::pull(fkClientID)))
+seed_ds_tb <- replication_popl_tb %>% youthvars::transform_raw_ds_for_analysis() %>% dplyr::filter(fkClientID %in% (replication_popl_tb %>% dplyr::filter(round=="Baseline" & PHQ9<20) %>% dplyr::pull(fkClientID)))
 ```
 
 We need to further adapt this dataset. To to so, we first make a list object `ds_smry_ls` that summarises the desired features of these datasets, such as:

@@ -37,6 +37,7 @@ Next, we can identify which of the above variables are present in the dataset we
 
 ```{r }
 data_tb <- youthvars::replication_popl_tb %>%
+  youthvars::transform_raw_ds_for_analysis() %>%
   dplyr::select(fkClientID,round,PHQ9, SOFAS) %>% #
   dplyr::arrange(fkClientID) %>%
   na.omit() %>%
