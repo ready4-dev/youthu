@@ -1,6 +1,6 @@
 Package: youthu
 Title: Youth Outcomes to Health Utility
-Version: 0.0.0.9062
+Version: 0.0.0.9063
 Authors@R: 
     c(person(given = "Matthew",
              family = "Hamilton",
@@ -37,8 +37,7 @@ Description: Tools for mapping measures routinely collected in youth
     in 2021.
 License: GPL-3 + file LICENSE
 URL: https://ready4-dev.github.io/youthu/,
-    https://github.com/ready4-dev/youthu,
-    https://ready4-dev.github.io/ready4/
+    https://github.com/ready4-dev/youthu, https://www.ready4-dev.com/
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
@@ -57,9 +56,9 @@ Imports:
     MatchIt,
     methods,
     purrr,
-    ready4fun (>= 0.0.0.9270),
-    ready4show (>= 0.0.0.9013),
-    ready4use (>= 0.0.0.9111),
+    ready4fun (>= 0.0.0.9289),
+    ready4show (>= 0.0.0.9019),
+    ready4use (>= 0.0.0.9122),
     rlang,
     stats,
     stringr,
@@ -70,7 +69,7 @@ Imports:
     truncnorm,
     TTU (>= 0.0.0.9130),
     utils,
-    youthvars (>= 0.0.0.9011)
+    youthvars (>= 0.0.0.9018)
 VignetteBuilder: knitr
 Depends: 
     R (>= 2.10)
