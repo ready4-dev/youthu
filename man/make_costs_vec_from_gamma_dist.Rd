@@ -2,7 +2,7 @@
 % Please edit documentation in R/fn_make.R
 \name{make_costs_vec_from_gamma_dist}
 \alias{make_costs_vec_from_gamma_dist}
-\title{Make costs vec from gamma dist}
+\title{Make costs vector from gamma dist}
 \usage{
 make_costs_vec_from_gamma_dist(n_int, costs_mean_dbl, costs_sd_dbl)
 }
@@ -17,6 +17,6 @@ make_costs_vec_from_gamma_dist(n_int, costs_mean_dbl, costs_sd_dbl)
 Costs (a double vector)
 }
 \description{
-make_costs_vec_from_gamma_dist() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make costs vec from gamma dist. The function returns Costs (a double vector).
+make_costs_vec_from_gamma_dist() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make costs vector from gamma dist. The function returns Costs (a double vector).
 }
 \keyword{internal}

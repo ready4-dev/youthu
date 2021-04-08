@@ -1,0 +1,47 @@
+"fn_type_nm_chr","fn_type_desc_chr","first_arg_desc_chr","second_arg_desc_chr","is_generic_lgl","is_method_lgl"
+"Add","Updates an object by adding data to that object.","Object to be updated.",NA,FALSE,FALSE
+"Add Class","Adds information about a class.",NA,NA,TRUE,TRUE
+"Assert","Validates that an object conforms to required condition(s). If the object does not meet all required conditions, program execution will be stopped and an error message provided.","Object on which assert validation checks are to be performed.","Object containing values used for validation tests.",FALSE,FALSE
+"Bind Lups","Rowbinds lookup tables of the same class, removing duplicates based on priority.",NA,NA,TRUE,TRUE
+"Calculate","Performs a numeric calculation.",NA,NA,FALSE,FALSE
+"Close","Closes specified connections.",NA,NA,FALSE,FALSE
+"Download Data","Downloads data files.",NA,NA,TRUE,TRUE
+"Extract","Extracts data from an object.",NA,NA,FALSE,FALSE
+"Fit","Fits a model of a specified type to a dataset",NA,NA,FALSE,FALSE
+"Force","Checks if a specified local or global environmental condition is met and if not, updates the specified environment to comply with the condition.",NA,NA,FALSE,FALSE
+"Get","Retrieves a pre-existing data object from memory, local file system or online repository.","Where to look for the required object.",NA,FALSE,FALSE
+"Get Data","Retrieves data from R objects loaded in memory.",NA,NA,TRUE,TRUE
+"Get Import Type List","Retrieves data about the type of import to be processed.",NA,NA,TRUE,TRUE
+"Get Read Function","Retrieves a read function.",NA,NA,TRUE,TRUE
+"Import","Reads a data object in its native format and converts it to an R object.",NA,NA,FALSE,FALSE
+"Import Data","Imports data from saved files and loads them into memory as R objects.",NA,NA,TRUE,TRUE
+"Impute","Imputes data.",NA,NA,FALSE,FALSE
+"Knit","Knits a rmarkdown file",NA,NA,FALSE,FALSE
+"Make","Creates a new R object.",NA,NA,FALSE,FALSE
+"Make Dataverse Import Lookup Table","Makes a Dataverse import lookup table",NA,NA,TRUE,TRUE
+"Make Import Output Object of Multiple Potential Types","Makes an output object of multiple potential classes.",NA,NA,TRUE,TRUE
+"Make Lookup Table","Applies a Make method and then updates the output of that method.",NA,NA,TRUE,TRUE
+"Order Tibble","Orders a tibble.",NA,NA,TRUE,TRUE
+"Plot","Plots data",NA,NA,FALSE,FALSE
+"Predict","Makes predictions from data using a specified statistical model.",NA,NA,FALSE,FALSE
+"Print","Prints output to console",NA,NA,FALSE,FALSE
+"Randomise","Randomly samples from data.",NA,NA,FALSE,FALSE
+"Read","Reads an R script into memory.","Path to object.",NA,FALSE,FALSE
+"Remake List Columns","Remakes list columns.",NA,NA,TRUE,TRUE
+"Remove","Edits an object, removing a specified element or elements.","Object to be updated.","Object to be updated.",FALSE,FALSE
+"Rename","Renames elements of an object based on a pre-speccified schema.",NA,NA,FALSE,FALSE
+"Reorder","Reorders an object to conform to a pre-specified schema.",NA,NA,FALSE,FALSE
+"Replace","Edits an object, replacing a specified element with another specified element.","Object to be updated.","Object to be updated.",FALSE,FALSE
+"Reset","Edits an object, overwriting the current version with a default version.",NA,NA,FALSE,FALSE
+"Rowbind","Performs custom rowbind operations on table objects.",NA,NA,FALSE,FALSE
+"Save Raw","Saves the native version of a file format.",NA,NA,TRUE,TRUE
+"Scramble","Randomly reorders an object.",NA,NA,FALSE,FALSE
+"Transform","Edits an object in such a way that core object attributes - e.g. shape, dimensions, elements, type - are altered.","Object to be updated.","Object to be updated.",FALSE,FALSE
+"Unload","Performs a custom detaching of a package from the search path.","Package(s) to be detached from the search path.","Package(s) to be detached from the search path.",FALSE,FALSE
+"Update","Edits an object, while preserving core object attributes.","Object to be updated.","Object to be updated.",FALSE,FALSE
+"Update Lookup Table for Namespace","Updates a lookup table with namespace data.",NA,NA,TRUE,TRUE
+"Update Source Local to Url","Updates data from a local file reference to a URL",NA,NA,TRUE,TRUE
+"Update this","Updates and object",NA,NA,TRUE,TRUE
+"Write","Writes a file to a specified local directory.",NA,NA,FALSE,FALSE
+"Write Classes","Writes new classes.",NA,NA,TRUE,TRUE
+"Write Classes and Make Lookup Table","Makes new classes and creates or updates a class prototype lookup table.",NA,NA,TRUE,TRUE

@@ -112,10 +112,10 @@ make_fake_trial_ds <- function(ds_tb,
                                     )
     return(updated_ds_tb)
 }
-make_formula <- function(dep_var_nm_1L_chr,
+make_formula <- function(depnt_var_nm_1L_chr,
                          predictors_chr,
                          environment_env = parent.frame()){
-    formula_fml <- stats::formula(paste0(dep_var_nm_1L_chr,
+    formula_fml <- stats::formula(paste0(depnt_var_nm_1L_chr,
                                   " ~ ",
                                   paste0(predictors_chr, collapse = " + ")), env = environment_env)
     return(formula_fml)
@@ -150,11 +150,11 @@ make_he_smry <- function(ds_tb,
     ) # round_fup_1L_chr = "Follow-up", ds_smry_ls$round_lvls_chr[2]
     costs_mat <- bootstraps_ls$t[,1:2]
     benefits_mat <- bootstraps_ls$t[,3:4]
-    reordered_cmprsns_chr <- cmprsn_groups_chr[cmprsn_groups_chr %>% purrr::map_int(~which(endsWith(names(bootstraps_ls$t0)[1:2],                                                                       paste0(.x,"_dbl"))))]
+    reordered_cmprsn_chr <- cmprsn_groups_chr[cmprsn_groups_chr %>% purrr::map_int(~which(endsWith(names(bootstraps_ls$t0)[1:2],                                                                       paste0(.x,"_dbl"))))]
     ce_res_ls <- BCEA::bcea(e = benefits_mat,
                             c = costs_mat,
-                            ref = which(reordered_cmprsns_chr == cmprsn_groups_chr[1]),
-                            interventions = reordered_cmprsns_chr,
+                            ref = which(reordered_cmprsn_chr == cmprsn_groups_chr[1]),
+                            interventions = reordered_cmprsn_chr,
                             #wtp = NULL,
                             Kmax = wtp_dbl*2)
     named_mat <- bootstraps_ls$t

@@ -26,21 +26,21 @@ make_fake_trial_ds(
 \arguments{
 \item{ds_tb}{Dataset (a tibble)}
 
-\item{id_var_nm_1L_chr}{Id var name (a character vector of length one), Default: 'fkClientID'}
+\item{id_var_nm_1L_chr}{Identity variable name (a character vector of length one), Default: 'fkClientID'}
 
-\item{round_var_nm_1L_chr}{Round var name (a character vector of length one), Default: 'round'}
+\item{round_var_nm_1L_chr}{Round variable name (a character vector of length one), Default: 'round'}
 
 \item{round_lvls_chr}{Round lvls (a character vector), Default: c("Baseline", "Follow-up")}
 
-\item{match_on_vars_chr}{Match on vars (a character vector)}
+\item{match_on_vars_chr}{Match on variables (a character vector)}
 
-\item{cmprsn_var_nm_1L_chr}{Cmprsn var name (a character vector of length one), Default: 'study_arm_chr'}
+\item{cmprsn_var_nm_1L_chr}{Comparison variable name (a character vector of length one), Default: 'study_arm_chr'}
 
-\item{cmprsn_groups_chr}{Cmprsn groups (a character vector), Default: c("Intervention", "Control")}
+\item{cmprsn_groups_chr}{Comparison groups (a character vector), Default: c("Intervention", "Control")}
 
 \item{fns_ls}{Functions (a list)}
 
-\item{var_nms_chr}{Var names (a character vector)}
+\item{var_nms_chr}{Variable names (a character vector)}
 
 \item{abs_mean_diff_dbl}{Abs mean diff (a double vector)}
 
@@ -48,13 +48,13 @@ make_fake_trial_ds(
 
 \item{multiplier_dbl}{Multiplier (a double vector)}
 
-\item{min_dbl}{Min (a double vector)}
+\item{min_dbl}{Minimum (a double vector)}
 
-\item{max_dbl}{Max (a double vector)}
+\item{max_dbl}{Maximum (a double vector)}
 
 \item{integer_lgl}{Integer (a logical vector)}
 
-\item{match_idx_var_nm_1L_chr}{Match index var name (a character vector of length one), Default: 'match_idx_int'}
+\item{match_idx_var_nm_1L_chr}{Match index variable name (a character vector of length one), Default: 'match_idx_int'}
 }
 \value{
 Updated dataset (a tibble)

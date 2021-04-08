@@ -17,7 +17,7 @@ add_costs_by_tmpt(
 \arguments{
 \item{ds_tb}{Dataset (a tibble)}
 
-\item{round_var_nm_1L_chr}{Round var name (a character vector of length one)}
+\item{round_var_nm_1L_chr}{Round variable name (a character vector of length one)}
 
 \item{round_lvls_chr}{Round lvls (a character vector), Default: c("Baseline", "Follow-up")}
 

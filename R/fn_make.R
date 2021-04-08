@@ -1,12 +1,12 @@
 #' Make balanced fake dataset
 #' @description make_balanced_fake_ds() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make balanced fake dataset. The function returns Dataset (a tibble).
 #' @param ds_tb Dataset (a tibble)
-#' @param match_on_vars_chr Match on vars (a character vector)
-#' @param id_var_nm_1L_chr Id var name (a character vector of length one), Default: 'UID_chr'
-#' @param round_var_nm_1L_chr Round var name (a character vector of length one), Default: 'Timepoint_chr'
-#' @param timepoint_bl_val_1L_chr Timepoint bl value (a character vector of length one), Default: 'Baseline'
-#' @param cmprsn_var_nm_1L_chr Cmprsn var name (a character vector of length one), Default: 'study_arm_chr'
-#' @param cmprsn_groups_chr Cmprsn groups (a character vector), Default: c("Intervention", "Control")
+#' @param match_on_vars_chr Match on variables (a character vector)
+#' @param id_var_nm_1L_chr Identity variable name (a character vector of length one), Default: 'UID_chr'
+#' @param round_var_nm_1L_chr Round variable name (a character vector of length one), Default: 'Timepoint_chr'
+#' @param timepoint_bl_val_1L_chr Timepoint baseline value (a character vector of length one), Default: 'Baseline'
+#' @param cmprsn_var_nm_1L_chr Comparison variable name (a character vector of length one), Default: 'study_arm_chr'
+#' @param cmprsn_groups_chr Comparison groups (a character vector), Default: c("Intervention", "Control")
 #' @return Dataset (a tibble)
 #' @rdname make_balanced_fake_ds
 #' @export 
@@ -31,13 +31,13 @@ make_balanced_fake_ds <- function (ds_tb, match_on_vars_chr, id_var_nm_1L_chr = 
 #' @param indices PARAM_DESCRIPTION
 #' @param change_types_chr Change types (a character vector), Default: 'dbl'
 #' @param benefits_pfx_1L_chr Benefits prefix (a character vector of length one), Default: 'qalys_dbl'
-#' @param benefits_var_nm_1L_chr Benefits var name (a character vector of length one), Default: 'qalys'
+#' @param benefits_var_nm_1L_chr Benefits variable name (a character vector of length one), Default: 'qalys'
 #' @param costs_pfx_1L_chr Costs prefix (a character vector of length one), Default: 'costs_dbl'
-#' @param costs_var_nm_1L_chr Costs var name (a character vector of length one), Default: 'costs'
+#' @param costs_var_nm_1L_chr Costs variable name (a character vector of length one), Default: 'costs'
 #' @param change_sfx_1L_chr Change suffix (a character vector of length one), Default: 'change'
-#' @param change_vars_chr Change vars (a character vector), Default: 'NA'
-#' @param cmprsn_groups_chr Cmprsn groups (a character vector), Default: c("Intervention", "Control")
-#' @param cmprsn_var_nm_1L_chr Cmprsn var name (a character vector of length one), Default: 'study_arm_chr'
+#' @param change_vars_chr Change variables (a character vector), Default: 'NA'
+#' @param cmprsn_groups_chr Comparison groups (a character vector), Default: c("Intervention", "Control")
+#' @param cmprsn_var_nm_1L_chr Comparison variable name (a character vector of length one), Default: 'study_arm_chr'
 #' @param round_fup_1L_chr Round fup (a character vector of length one), Default: 'Follow-up'
 #' @return Summary (a double vector)
 #' @rdname make_ce_smry
@@ -89,8 +89,8 @@ make_ce_smry <- function (ds_tb, indices, change_types_chr = "dbl", benefits_pfx
     summary_dbl <- summary_tb[, 1]
     return(summary_dbl)
 }
-#' Make costs vec from gamma dist
-#' @description make_costs_vec_from_gamma_dist() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make costs vec from gamma dist. The function returns Costs (a double vector).
+#' Make costs vector from gamma dist
+#' @description make_costs_vec_from_gamma_dist() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make costs vector from gamma dist. The function returns Costs (a double vector).
 #' @param n_int N (an integer vector)
 #' @param costs_mean_dbl Costs mean (a double vector)
 #' @param costs_sd_dbl Costs sd (a double vector)
@@ -109,21 +109,21 @@ make_costs_vec_from_gamma_dist <- function (n_int, costs_mean_dbl, costs_sd_dbl)
 #' Make fake trial dataset
 #' @description make_fake_trial_ds() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make fake trial dataset. The function returns Updated dataset (a tibble).
 #' @param ds_tb Dataset (a tibble)
-#' @param id_var_nm_1L_chr Id var name (a character vector of length one), Default: 'fkClientID'
-#' @param round_var_nm_1L_chr Round var name (a character vector of length one), Default: 'round'
+#' @param id_var_nm_1L_chr Identity variable name (a character vector of length one), Default: 'fkClientID'
+#' @param round_var_nm_1L_chr Round variable name (a character vector of length one), Default: 'round'
 #' @param round_lvls_chr Round lvls (a character vector), Default: c("Baseline", "Follow-up")
-#' @param match_on_vars_chr Match on vars (a character vector)
-#' @param cmprsn_var_nm_1L_chr Cmprsn var name (a character vector of length one), Default: 'study_arm_chr'
-#' @param cmprsn_groups_chr Cmprsn groups (a character vector), Default: c("Intervention", "Control")
+#' @param match_on_vars_chr Match on variables (a character vector)
+#' @param cmprsn_var_nm_1L_chr Comparison variable name (a character vector of length one), Default: 'study_arm_chr'
+#' @param cmprsn_groups_chr Comparison groups (a character vector), Default: c("Intervention", "Control")
 #' @param fns_ls Functions (a list)
-#' @param var_nms_chr Var names (a character vector)
+#' @param var_nms_chr Variable names (a character vector)
 #' @param abs_mean_diff_dbl Abs mean diff (a double vector)
 #' @param diff_sd_dbl Diff sd (a double vector)
 #' @param multiplier_dbl Multiplier (a double vector)
-#' @param min_dbl Min (a double vector)
-#' @param max_dbl Max (a double vector)
+#' @param min_dbl Minimum (a double vector)
+#' @param max_dbl Maximum (a double vector)
 #' @param integer_lgl Integer (a logical vector)
-#' @param match_idx_var_nm_1L_chr Match index var name (a character vector of length one), Default: 'match_idx_int'
+#' @param match_idx_var_nm_1L_chr Match index variable name (a character vector of length one), Default: 'match_idx_int'
 #' @return Updated dataset (a tibble)
 #' @rdname make_fake_trial_ds
 #' @export 
@@ -148,7 +148,7 @@ make_fake_trial_ds <- function (ds_tb, id_var_nm_1L_chr = "fkClientID", round_va
 }
 #' Make formula
 #' @description make_formula() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make formula. The function is called for its side effects and does not return a value.
-#' @param dep_var_nm_1L_chr Dep var name (a character vector of length one)
+#' @param depnt_var_nm_1L_chr Dependent variable name (a character vector of length one)
 #' @param predictors_chr Predictors (a character vector)
 #' @param environment_env PARAM_DESCRIPTION, Default: parent.frame()
 #' @return NA ()
@@ -156,26 +156,26 @@ make_fake_trial_ds <- function (ds_tb, id_var_nm_1L_chr = "fkClientID", round_va
 #' @export 
 #' @importFrom stats formula
 #' @keywords internal
-make_formula <- function (dep_var_nm_1L_chr, predictors_chr, environment_env = parent.frame()) 
+make_formula <- function (depnt_var_nm_1L_chr, predictors_chr, environment_env = parent.frame()) 
 {
-    formula_fml <- stats::formula(paste0(dep_var_nm_1L_chr, " ~ ", 
-        paste0(predictors_chr, collapse = " + ")), env = environment_env)
+    formula_fml <- stats::formula(paste0(depnt_var_nm_1L_chr, 
+        " ~ ", paste0(predictors_chr, collapse = " + ")), env = environment_env)
     return(formula_fml)
 }
 #' Make he summary
 #' @description make_he_smry() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make he summary. The function returns He summary (a list).
 #' @param ds_tb Dataset (a tibble)
-#' @param change_vars_chr Change vars (a character vector), Default: 'NA'
+#' @param change_vars_chr Change variables (a character vector), Default: 'NA'
 #' @param wtp_dbl Wtp (a double vector), Default: 50000
-#' @param bootstrap_iters_1L_int Bootstrap iters (an integer vector of length one), Default: 1000
+#' @param bootstrap_iters_1L_int Bootstrap iterations (an integer vector of length one), Default: 1000
 #' @param change_types_chr Change types (a character vector), Default: 'dbl'
 #' @param benefits_pfx_1L_chr Benefits prefix (a character vector of length one), Default: 'qalys_dbl'
-#' @param benefits_var_nm_1L_chr Benefits var name (a character vector of length one), Default: 'qalys'
+#' @param benefits_var_nm_1L_chr Benefits variable name (a character vector of length one), Default: 'qalys'
 #' @param costs_pfx_1L_chr Costs prefix (a character vector of length one), Default: 'costs_dbl'
-#' @param costs_var_nm_1L_chr Costs var name (a character vector of length one), Default: 'costs'
+#' @param costs_var_nm_1L_chr Costs variable name (a character vector of length one), Default: 'costs'
 #' @param change_sfx_1L_chr Change suffix (a character vector of length one), Default: 'change'
-#' @param cmprsn_groups_chr Cmprsn groups (a character vector), Default: c("Intervention", "Control")
-#' @param cmprsn_var_nm_1L_chr Cmprsn var name (a character vector of length one), Default: 'study_arm_chr'
+#' @param cmprsn_groups_chr Comparison groups (a character vector), Default: c("Intervention", "Control")
+#' @param cmprsn_var_nm_1L_chr Comparison variable name (a character vector of length one), Default: 'study_arm_chr'
 #' @param round_fup_1L_chr Round fup (a character vector of length one), Default: 'Follow-up'
 #' @return He summary (a list)
 #' @rdname make_he_smry
@@ -198,12 +198,12 @@ make_he_smry <- function (ds_tb, change_vars_chr = NA_character_, wtp_dbl = 5000
         benefits_var_nm_1L_chr = benefits_var_nm_1L_chr, costs_var_nm_1L_chr = costs_var_nm_1L_chr)
     costs_mat <- bootstraps_ls$t[, 1:2]
     benefits_mat <- bootstraps_ls$t[, 3:4]
-    reordered_cmprsns_chr <- cmprsn_groups_chr[cmprsn_groups_chr %>% 
+    reordered_cmprsn_chr <- cmprsn_groups_chr[cmprsn_groups_chr %>% 
         purrr::map_int(~which(endsWith(names(bootstraps_ls$t0)[1:2], 
             paste0(.x, "_dbl"))))]
     ce_res_ls <- BCEA::bcea(e = benefits_mat, c = costs_mat, 
-        ref = which(reordered_cmprsns_chr == cmprsn_groups_chr[1]), 
-        interventions = reordered_cmprsns_chr, Kmax = wtp_dbl * 
+        ref = which(reordered_cmprsn_chr == cmprsn_groups_chr[1]), 
+        interventions = reordered_cmprsn_chr, Kmax = wtp_dbl * 
             2)
     named_mat <- bootstraps_ls$t
     colnames(named_mat) <- names(bootstraps_ls$t0)
@@ -214,7 +214,7 @@ make_he_smry <- function (ds_tb, change_vars_chr = NA_character_, wtp_dbl = 5000
 #' Make matched dataset
 #' @description make_matched_ds() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make matched dataset. The function returns Matched dataset (a tibble).
 #' @param sngl_grp_ds PARAM_DESCRIPTION
-#' @param cmprsn_smry_tb Cmprsn summary (a tibble)
+#' @param cmprsn_smry_tb Comparison summary (a tibble)
 #' @param ds_smry_ls Dataset summary (a list)
 #' @return Matched dataset (a tibble)
 #' @rdname make_matched_ds
@@ -239,12 +239,12 @@ make_matched_ds <- function (sngl_grp_ds, cmprsn_smry_tb, ds_smry_ls)
 #' Make matched dataset spine
 #' @description make_matched_ds_spine() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make matched dataset spine. The function returns Matched dataset (a tibble).
 #' @param ds_tb Dataset (a tibble)
-#' @param round_var_nm_1L_chr Round var name (a character vector of length one), Default: 'Timepoint_chr'
-#' @param timepoint_bl_val_1L_chr Timepoint bl value (a character vector of length one), Default: 'Baseline'
-#' @param cmprsn_var_nm_1L_chr Cmprsn var name (a character vector of length one), Default: 'study_arm_chr'
+#' @param round_var_nm_1L_chr Round variable name (a character vector of length one), Default: 'Timepoint_chr'
+#' @param timepoint_bl_val_1L_chr Timepoint baseline value (a character vector of length one), Default: 'Baseline'
+#' @param cmprsn_var_nm_1L_chr Comparison variable name (a character vector of length one), Default: 'study_arm_chr'
 #' @param active_arm_val_1L_chr Active arm value (a character vector of length one), Default: 'Intervention'
-#' @param id_var_nm_1L_chr Id var name (a character vector of length one), Default: 'fkClientID'
-#' @param match_on_vars_chr Match on vars (a character vector)
+#' @param id_var_nm_1L_chr Identity variable name (a character vector of length one), Default: 'fkClientID'
+#' @param match_on_vars_chr Match on variables (a character vector)
 #' @return Matched dataset (a tibble)
 #' @rdname make_matched_ds_spine
 #' @export 
@@ -273,11 +273,11 @@ make_matched_ds_spine <- function (ds_tb, round_var_nm_1L_chr = "Timepoint_chr",
         dplyr::arrange(match_idx_int)
     return(matched_ds_tb)
 }
-#' Make sngl grp dataset
-#' @description make_sngl_grp_ds() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make sngl grp dataset. The function returns Sngl grp dataset (a tibble).
+#' Make single group dataset
+#' @description make_sngl_grp_ds() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make single group dataset. The function returns Single group dataset (a tibble).
 #' @param seed_ds_tb Seed dataset (a tibble), Default: NULL
 #' @param ds_smry_ls Dataset summary (a list)
-#' @return Sngl grp dataset (a tibble)
+#' @return Single group dataset (a tibble)
 #' @rdname make_sngl_grp_ds
 #' @export 
 #' @importFrom dplyr select mutate arrange

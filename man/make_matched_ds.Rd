@@ -9,7 +9,7 @@ make_matched_ds(sngl_grp_ds, cmprsn_smry_tb, ds_smry_ls)
 \arguments{
 \item{sngl_grp_ds}{PARAM_DESCRIPTION}
 
-\item{cmprsn_smry_tb}{Cmprsn summary (a tibble)}
+\item{cmprsn_smry_tb}{Comparison summary (a tibble)}
 
 \item{ds_smry_ls}{Dataset summary (a list)}
 }

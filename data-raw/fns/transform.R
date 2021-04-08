@@ -22,7 +22,7 @@ transform_ds_for_cmprsn <- function(ds_tb,
 transform_ds_to_predn_ds <- function(data_tb,
                                      predr_vars_nms_chr,
                                      tfmn_1L_chr,
-                                     dep_var_nm_1L_chr = "aqol6d_total_w",
+                                     depnt_var_nm_1L_chr = "aqol6d_total_w",
                                      id_var_nm_1L_chr = "fkClientID",
                                      round_var_nm_1L_chr = "round",
                                      round_bl_val_1L_chr = "Baseline",
@@ -30,7 +30,7 @@ transform_ds_to_predn_ds <- function(data_tb,
   if(is.null(predictors_lup))
     utils::data("predictors_lup", package = "TTU", envir = environment())
   data_tb <- data_tb %>%
-    dplyr::mutate(!!rlang::sym(dep_var_nm_1L_chr):= NA_real_)
+    dplyr::mutate(!!rlang::sym(depnt_var_nm_1L_chr):= NA_real_)
   data_tb <- purrr::reduce(predr_vars_nms_chr,
                            .init = data_tb,
                            ~ {
@@ -42,7 +42,7 @@ transform_ds_to_predn_ds <- function(data_tb,
                              dplyr::mutate(.x,
                                            !!rlang::sym(.y) := !!rlang::sym(.y) %>% rlang::exec(.fn = predr_cls_fn))
                            })
-  data_tb <- data_tb %>% TTU::transform_tb_to_mdl_inp(dep_var_nm_1L_chr = dep_var_nm_1L_chr,
+  data_tb <- data_tb %>% TTU::transform_tb_to_mdl_inp(depnt_var_nm_1L_chr = depnt_var_nm_1L_chr,
                                                  predr_vars_nms_chr = predr_vars_nms_chr,
                                                  id_var_nm_1L_chr = id_var_nm_1L_chr,
                                                  round_var_nm_1L_chr = round_var_nm_1L_chr,

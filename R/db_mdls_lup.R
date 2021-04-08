@@ -6,7 +6,7 @@
 #' 
 #' \describe{
 #'   \item{mdl_nms_chr}{Model names (a character vector)}
-#'   \item{predrs_ls}{Predrs (a list)}
+#'   \item{predrs_ls}{Predictors (a list)}
 #'   \item{mdl_type_chr}{Model type (a character vector)}
 #'   \item{tfmn_chr}{Transformation (a character vector)}
 #' }

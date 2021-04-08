@@ -5,13 +5,13 @@
 \title{Make formula}
 \usage{
 make_formula(
-  dep_var_nm_1L_chr,
+  depnt_var_nm_1L_chr,
   predictors_chr,
   environment_env = parent.frame()
 )
 }
 \arguments{
-\item{dep_var_nm_1L_chr}{Dep var name (a character vector of length one)}
+\item{depnt_var_nm_1L_chr}{Dependent variable name (a character vector of length one)}
 
 \item{predictors_chr}{Predictors (a character vector)}
 

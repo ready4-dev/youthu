@@ -19,7 +19,7 @@ update_multpl_cols_with_diffs(
 \arguments{
 \item{ds_tb}{Dataset (a tibble)}
 
-\item{var_nms_chr}{Var names (a character vector)}
+\item{var_nms_chr}{Variable names (a character vector)}
 
 \item{fns_ls}{Functions (a list)}
 
@@ -29,9 +29,9 @@ update_multpl_cols_with_diffs(
 
 \item{multiplier_dbl}{Multiplier (a double vector)}
 
-\item{min_dbl}{Min (a double vector)}
+\item{min_dbl}{Minimum (a double vector)}
 
-\item{max_dbl}{Max (a double vector)}
+\item{max_dbl}{Maximum (a double vector)}
 
 \item{integer_lgl}{Integer (a logical vector)}
 }

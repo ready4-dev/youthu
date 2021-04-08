@@ -1,13 +1,13 @@
 #' Update column with diff
 #' @description update_col_with_diff() is an Update function that edits an object, while preserving core object attributes. Specifically, this function implements an algorithm to update column with diff. Function argument ds_tb specifies the object to be updated. Argument var_nm_1L_chr provides the object to be updated. The function is called for its side effects and does not return a value.
 #' @param ds_tb Dataset (a tibble)
-#' @param var_nm_1L_chr Var name (a character vector of length one)
+#' @param var_nm_1L_chr Variable name (a character vector of length one)
 #' @param fn Function (a function)
 #' @param abs_mean_diff_1L_dbl Abs mean diff (a double vector of length one)
 #' @param diff_sd_1L_dbl Diff sd (a double vector of length one)
 #' @param multiplier_1L_dbl Multiplier (a double vector of length one)
-#' @param min_1L_dbl Min (a double vector of length one)
-#' @param max_1L_dbl Max (a double vector of length one)
+#' @param min_1L_dbl Minimum (a double vector of length one)
+#' @param max_1L_dbl Maximum (a double vector of length one)
 #' @param integer_1L_lgl Integer (a logical vector of length one)
 #' @return New (a dataset)
 #' @rdname update_col_with_diff
@@ -37,13 +37,13 @@ update_col_with_diff <- function (ds_tb, var_nm_1L_chr, fn, abs_mean_diff_1L_dbl
 #' Update multpl columns with diffs
 #' @description update_multpl_cols_with_diffs() is an Update function that edits an object, while preserving core object attributes. Specifically, this function implements an algorithm to update multpl columns with diffs. Function argument ds_tb specifies the object to be updated. Argument var_nms_chr provides the object to be updated. The function returns Updated dataset (a tibble).
 #' @param ds_tb Dataset (a tibble)
-#' @param var_nms_chr Var names (a character vector)
+#' @param var_nms_chr Variable names (a character vector)
 #' @param fns_ls Functions (a list)
 #' @param abs_mean_diff_dbl Abs mean diff (a double vector)
 #' @param diff_sd_dbl Diff sd (a double vector)
 #' @param multiplier_dbl Multiplier (a double vector)
-#' @param min_dbl Min (a double vector)
-#' @param max_dbl Max (a double vector)
+#' @param min_dbl Minimum (a double vector)
+#' @param max_dbl Maximum (a double vector)
 #' @param integer_lgl Integer (a logical vector)
 #' @return Updated dataset (a tibble)
 #' @rdname update_multpl_cols_with_diffs

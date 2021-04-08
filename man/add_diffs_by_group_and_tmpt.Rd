@@ -24,17 +24,17 @@ add_diffs_by_group_and_tmpt(
 \arguments{
 \item{ds_tb}{Dataset (a tibble), Default: trial_ds_tb}
 
-\item{cmprsn_var_nm_1L_chr}{Cmprsn var name (a character vector of length one), Default: 'study_arm_chr'}
+\item{cmprsn_var_nm_1L_chr}{Comparison variable name (a character vector of length one), Default: 'study_arm_chr'}
 
-\item{cmprsn_group_match_val_chr}{Cmprsn group match value (a character vector), Default: c("Intervention")}
+\item{cmprsn_group_match_val_chr}{Comparison group match value (a character vector), Default: c("Intervention")}
 
-\item{round_var_nm_1L_chr}{Round var name (a character vector of length one), Default: 'round'}
+\item{round_var_nm_1L_chr}{Round variable name (a character vector of length one), Default: 'round'}
 
 \item{timepoint_match_val_1L_chr}{Timepoint match value (a character vector of length one), Default: 'Follow-up'}
 
-\item{match_idx_var_nm_1L_chr}{Match index var name (a character vector of length one), Default: 'match_idx_int'}
+\item{match_idx_var_nm_1L_chr}{Match index variable name (a character vector of length one), Default: 'match_idx_int'}
 
-\item{var_nms_chr}{Var names (a character vector)}
+\item{var_nms_chr}{Variable names (a character vector)}
 
 \item{fns_ls}{Functions (a list)}
 
@@ -44,9 +44,9 @@ add_diffs_by_group_and_tmpt(
 
 \item{multiplier_dbl}{Multiplier (a double vector)}
 
-\item{min_dbl}{Min (a double vector)}
+\item{min_dbl}{Minimum (a double vector)}
 
-\item{max_dbl}{Max (a double vector)}
+\item{max_dbl}{Maximum (a double vector)}
 
 \item{integer_lgl}{Integer (a logical vector)}
 }

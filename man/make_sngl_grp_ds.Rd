@@ -2,7 +2,7 @@
 % Please edit documentation in R/fn_make.R
 \name{make_sngl_grp_ds}
 \alias{make_sngl_grp_ds}
-\title{Make sngl grp dataset}
+\title{Make single group dataset}
 \usage{
 make_sngl_grp_ds(seed_ds_tb = NULL, ds_smry_ls)
 }
@@ -12,8 +12,8 @@ make_sngl_grp_ds(seed_ds_tb = NULL, ds_smry_ls)
 \item{ds_smry_ls}{Dataset summary (a list)}
 }
 \value{
-Sngl grp dataset (a tibble)
+Single group dataset (a tibble)
 }
 \description{
-make_sngl_grp_ds() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make sngl grp dataset. The function returns Sngl grp dataset (a tibble).
+make_sngl_grp_ds() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make single group dataset. The function returns Single group dataset (a tibble).
 }

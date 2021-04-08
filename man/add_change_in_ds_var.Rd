@@ -2,7 +2,7 @@
 % Please edit documentation in R/fn_add.R
 \name{add_change_in_ds_var}
 \alias{add_change_in_ds_var}
-\title{Add change in dataset var}
+\title{Add change in dataset variable}
 \usage{
 add_change_in_ds_var(
   ds_tb,
@@ -17,22 +17,22 @@ add_change_in_ds_var(
 \arguments{
 \item{ds_tb}{Dataset (a tibble)}
 
-\item{id_var_nm_1L_chr}{Id var name (a character vector of length one), Default: 'fkClientID'}
+\item{id_var_nm_1L_chr}{Identity variable name (a character vector of length one), Default: 'fkClientID'}
 
-\item{round_var_nm_1L_chr}{Round var name (a character vector of length one), Default: 'round'}
+\item{round_var_nm_1L_chr}{Round variable name (a character vector of length one), Default: 'round'}
 
-\item{round_bl_val_1L_chr}{Round bl value (a character vector of length one), Default: 'Baseline'}
+\item{round_bl_val_1L_chr}{Round baseline value (a character vector of length one), Default: 'Baseline'}
 
-\item{change_var_nm_1L_chr}{Change var name (a character vector of length one)}
+\item{change_var_nm_1L_chr}{Change variable name (a character vector of length one)}
 
-\item{var_nm_1L_chr}{Var name (a character vector of length one)}
+\item{var_nm_1L_chr}{Variable name (a character vector of length one)}
 
-\item{arrange_by_id_lgl}{Arrange by id (a logical vector), Default: T}
+\item{arrange_by_id_lgl}{Arrange by identity (a logical vector), Default: T}
 }
 \value{
 Updated dataset (a tibble)
 }
 \description{
-add_change_in_ds_var() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add change in dataset var. Function argument ds_tb specifies the object to be updated. The function returns Updated dataset (a tibble).
+add_change_in_ds_var() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add change in dataset variable. Function argument ds_tb specifies the object to be updated. The function returns Updated dataset (a tibble).
 }
 \keyword{internal}

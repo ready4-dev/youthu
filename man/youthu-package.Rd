@@ -33,7 +33,7 @@ Useful links:
 \itemize{
   \item \url{https://ready4-dev.github.io/youthu/}
   \item \url{https://github.com/ready4-dev/youthu}
-  \item \url{https://ready4-dev.github.io/ready4/}
+  \item \url{https://www.ready4-dev.com/}
 }
 
 }

@@ -20,21 +20,21 @@ add_aqol6d_predn_to_ds(
 \arguments{
 \item{data_tb}{Data (a tibble)}
 
-\item{model_mdl}{PARAM_DESCRIPTION}
+\item{model_mdl}{Model (a model)}
 
 \item{tfmn_1L_chr}{Transformation (a character vector of length one)}
 
-\item{predr_vars_nms_chr}{Predr vars names (a character vector), Default: NULL}
+\item{predr_vars_nms_chr}{Predictor variables names (a character vector), Default: NULL}
 
-\item{utl_var_nm_1L_chr}{Utl var name (a character vector of length one), Default: NULL}
+\item{utl_var_nm_1L_chr}{Utility variable name (a character vector of length one), Default: NULL}
 
-\item{id_var_nm_1L_chr}{Id var name (a character vector of length one), Default: 'fkClientID'}
+\item{id_var_nm_1L_chr}{Identity variable name (a character vector of length one), Default: 'fkClientID'}
 
-\item{round_var_nm_1L_chr}{Round var name (a character vector of length one), Default: 'round'}
+\item{round_var_nm_1L_chr}{Round variable name (a character vector of length one), Default: 'round'}
 
-\item{round_bl_val_1L_chr}{Round bl value (a character vector of length one), Default: 'Baseline'}
+\item{round_bl_val_1L_chr}{Round baseline value (a character vector of length one), Default: 'Baseline'}
 
-\item{utl_cls_fn}{Utl class (a function), Default: youthvars::youthvars_aqol6d_adol}
+\item{utl_cls_fn}{Utility class (a function), Default: youthvars::youthvars_aqol6d_adol}
 
 \item{predictors_lup}{Predictors (a lookup table), Default: NULL}
 }

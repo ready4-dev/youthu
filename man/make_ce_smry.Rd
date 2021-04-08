@@ -28,19 +28,19 @@ make_ce_smry(
 
 \item{benefits_pfx_1L_chr}{Benefits prefix (a character vector of length one), Default: 'qalys_dbl'}
 
-\item{benefits_var_nm_1L_chr}{Benefits var name (a character vector of length one), Default: 'qalys'}
+\item{benefits_var_nm_1L_chr}{Benefits variable name (a character vector of length one), Default: 'qalys'}
 
 \item{costs_pfx_1L_chr}{Costs prefix (a character vector of length one), Default: 'costs_dbl'}
 
-\item{costs_var_nm_1L_chr}{Costs var name (a character vector of length one), Default: 'costs'}
+\item{costs_var_nm_1L_chr}{Costs variable name (a character vector of length one), Default: 'costs'}
 
 \item{change_sfx_1L_chr}{Change suffix (a character vector of length one), Default: 'change'}
 
-\item{change_vars_chr}{Change vars (a character vector), Default: 'NA'}
+\item{change_vars_chr}{Change variables (a character vector), Default: 'NA'}
 
-\item{cmprsn_groups_chr}{Cmprsn groups (a character vector), Default: c("Intervention", "Control")}
+\item{cmprsn_groups_chr}{Comparison groups (a character vector), Default: c("Intervention", "Control")}
 
-\item{cmprsn_var_nm_1L_chr}{Cmprsn var name (a character vector of length one), Default: 'study_arm_chr'}
+\item{cmprsn_var_nm_1L_chr}{Comparison variable name (a character vector of length one), Default: 'study_arm_chr'}
 
 \item{round_fup_1L_chr}{Round fup (a character vector of length one), Default: 'Follow-up'}
 }

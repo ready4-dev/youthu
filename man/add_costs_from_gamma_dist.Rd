@@ -18,7 +18,7 @@ add_costs_from_gamma_dist(
 
 \item{costs_sd_dbl}{Costs sd (a double vector)}
 
-\item{costs_var_nm_1L_chr}{Costs var name (a character vector of length one), Default: 'costs_dbl'}
+\item{costs_var_nm_1L_chr}{Costs variable name (a character vector of length one), Default: 'costs_dbl'}
 }
 \value{
 Updated dataset (a tibble)

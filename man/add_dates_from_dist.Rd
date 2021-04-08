@@ -20,21 +20,21 @@ add_dates_from_dist(
 \arguments{
 \item{ds_tb}{Dataset (a tibble)}
 
-\item{bl_start_date_dtm}{PARAM_DESCRIPTION}
+\item{bl_start_date_dtm}{Baseline start date (a date vector)}
 
-\item{bl_end_date_dtm}{PARAM_DESCRIPTION}
+\item{bl_end_date_dtm}{Baseline end date (a date vector)}
 
 \item{duration_args_ls}{Duration arguments (a list)}
 
 \item{duration_fn}{Duration (a function), Default: stats::rnorm}
 
-\item{date_var_nm_1L_chr}{Date var name (a character vector of length one), Default: 'date_psx'}
+\item{date_var_nm_1L_chr}{Date variable name (a character vector of length one), Default: 'date_psx'}
 
-\item{id_var_nm_1L_chr}{Id var name (a character vector of length one), Default: 'fkClientID'}
+\item{id_var_nm_1L_chr}{Identity variable name (a character vector of length one), Default: 'fkClientID'}
 
-\item{round_var_nm_1L_chr}{Round var name (a character vector of length one), Default: 'round'}
+\item{round_var_nm_1L_chr}{Round variable name (a character vector of length one), Default: 'round'}
 
-\item{round_bl_val_1L_chr}{Round bl value (a character vector of length one), Default: 'Baseline'}
+\item{round_bl_val_1L_chr}{Round baseline value (a character vector of length one), Default: 'Baseline'}
 
 \item{origin_1L_chr}{Origin (a character vector of length one), Default: '1970-01-01'}
 }

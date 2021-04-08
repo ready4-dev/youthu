@@ -8,7 +8,7 @@ transform_ds_to_predn_ds(
   data_tb,
   predr_vars_nms_chr,
   tfmn_1L_chr,
-  dep_var_nm_1L_chr = "aqol6d_total_w",
+  depnt_var_nm_1L_chr = "aqol6d_total_w",
   id_var_nm_1L_chr = "fkClientID",
   round_var_nm_1L_chr = "round",
   round_bl_val_1L_chr = "Baseline",
@@ -18,17 +18,17 @@ transform_ds_to_predn_ds(
 \arguments{
 \item{data_tb}{Data (a tibble)}
 
-\item{predr_vars_nms_chr}{Predr vars names (a character vector)}
+\item{predr_vars_nms_chr}{Predictor variables names (a character vector)}
 
 \item{tfmn_1L_chr}{Transformation (a character vector of length one)}
 
-\item{dep_var_nm_1L_chr}{Dep var name (a character vector of length one), Default: 'aqol6d_total_w'}
+\item{depnt_var_nm_1L_chr}{Dependent variable name (a character vector of length one), Default: 'aqol6d_total_w'}
 
-\item{id_var_nm_1L_chr}{Id var name (a character vector of length one), Default: 'fkClientID'}
+\item{id_var_nm_1L_chr}{Identity variable name (a character vector of length one), Default: 'fkClientID'}
 
-\item{round_var_nm_1L_chr}{Round var name (a character vector of length one), Default: 'round'}
+\item{round_var_nm_1L_chr}{Round variable name (a character vector of length one), Default: 'round'}
 
-\item{round_bl_val_1L_chr}{Round bl value (a character vector of length one), Default: 'Baseline'}
+\item{round_bl_val_1L_chr}{Round baseline value (a character vector of length one), Default: 'Baseline'}
 
 \item{predictors_lup}{Predictors (a lookup table), Default: NULL}
 }

@@ -7,7 +7,6 @@ reference:
   - fn_type_lup_tb
   - fns_dmt_tb
   - mdls_lup
-  - predictors_lup
 - title: "Functions"
 - contents:
   - add_aqol6d_predn_to_ds

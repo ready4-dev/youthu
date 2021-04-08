@@ -29,17 +29,17 @@ add_aqol6d_predn_to_ds <- function(data_tb,
   updated_tb <- data_tb %>%
     transform_ds_to_predn_ds(predr_vars_nms_chr = mdl_predr_terms_chr,
                              tfmn_1L_chr = tfmn_1L_chr,
-                             dep_var_nm_1L_chr = mdl_dep_var_1L_chr,
+                             depnt_var_nm_1L_chr = mdl_dep_var_1L_chr,
                              id_var_nm_1L_chr = id_var_nm_1L_chr,
                              round_var_nm_1L_chr = round_var_nm_1L_chr,
                              round_bl_val_1L_chr = round_bl_val_1L_chr,
                              predictors_lup = predictors_lup) %>%
     TTU::add_utility_predn_to_ds(model_mdl = model_mdl,
                                  tfmn_1L_chr = tfmn_1L_chr,
-                                 dep_var_nm_1L_chr = mdl_dep_var_1L_chr,
+                                 depnt_var_nm_1L_chr = mdl_dep_var_1L_chr,
                                  predr_vars_nms_chr = mdl_predr_terms_chr,
                                  utl_cls_fn = utl_cls_fn,
-                                 rmv_tfmd_dep_var_1L_lgl = T)
+                                 rmv_tfd_depnt_var_1L_lgl = T)
   if(!is.null(utl_var_nm_1L_chr)){
     updated_tb <- updated_tb %>%
       dplyr::rename(!!rlang::sym(utl_var_nm_1L_chr):=tidyselect::all_of(mdl_dep_var_1L_chr))

@@ -20,21 +20,21 @@ add_qalys(
 \arguments{
 \item{ds_tb}{Dataset (a tibble)}
 
-\item{cmprsn_var_nm_1L_chr}{Cmprsn var name (a character vector of length one), Default: 'study_arm_chr'}
+\item{cmprsn_var_nm_1L_chr}{Comparison variable name (a character vector of length one), Default: 'study_arm_chr'}
 
-\item{duration_var_nm_1L_chr}{Duration var name (a character vector of length one), Default: 'duration_prd'}
+\item{duration_var_nm_1L_chr}{Duration variable name (a character vector of length one), Default: 'duration_prd'}
 
-\item{id_var_nm_1L_chr}{Id var name (a character vector of length one), Default: 'fkClientID'}
+\item{id_var_nm_1L_chr}{Identity variable name (a character vector of length one), Default: 'fkClientID'}
 
-\item{match_idx_var_nm_1L_chr}{Match index var name (a character vector of length one), Default: 'match_idx_int'}
+\item{match_idx_var_nm_1L_chr}{Match index variable name (a character vector of length one), Default: 'match_idx_int'}
 
-\item{qalys_var_nm_1L_chr}{Qalys var name (a character vector of length one), Default: 'qalys_dbl'}
+\item{qalys_var_nm_1L_chr}{Qalys variable name (a character vector of length one), Default: 'qalys_dbl'}
 
-\item{round_var_nm_1L_chr}{Round var name (a character vector of length one), Default: 'round'}
+\item{round_var_nm_1L_chr}{Round variable name (a character vector of length one), Default: 'round'}
 
-\item{utl_change_var_nm_1L_chr}{Utl change var name (a character vector of length one), Default: 'utl_change_dbl'}
+\item{utl_change_var_nm_1L_chr}{Utility change variable name (a character vector of length one), Default: 'utl_change_dbl'}
 
-\item{utl_var_nm_1L_chr}{Utl var name (a character vector of length one), Default: 'utility_dbl'}
+\item{utl_var_nm_1L_chr}{Utility variable name (a character vector of length one), Default: 'utility_dbl'}
 
 \item{reshape_1L_lgl}{Reshape (a logical vector of length one), Default: T}
 }

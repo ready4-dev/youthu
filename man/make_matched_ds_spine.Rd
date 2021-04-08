@@ -17,17 +17,17 @@ make_matched_ds_spine(
 \arguments{
 \item{ds_tb}{Dataset (a tibble)}
 
-\item{round_var_nm_1L_chr}{Round var name (a character vector of length one), Default: 'Timepoint_chr'}
+\item{round_var_nm_1L_chr}{Round variable name (a character vector of length one), Default: 'Timepoint_chr'}
 
-\item{timepoint_bl_val_1L_chr}{Timepoint bl value (a character vector of length one), Default: 'Baseline'}
+\item{timepoint_bl_val_1L_chr}{Timepoint baseline value (a character vector of length one), Default: 'Baseline'}
 
-\item{cmprsn_var_nm_1L_chr}{Cmprsn var name (a character vector of length one), Default: 'study_arm_chr'}
+\item{cmprsn_var_nm_1L_chr}{Comparison variable name (a character vector of length one), Default: 'study_arm_chr'}
 
 \item{active_arm_val_1L_chr}{Active arm value (a character vector of length one), Default: 'Intervention'}
 
-\item{id_var_nm_1L_chr}{Id var name (a character vector of length one), Default: 'fkClientID'}
+\item{id_var_nm_1L_chr}{Identity variable name (a character vector of length one), Default: 'fkClientID'}
 
-\item{match_on_vars_chr}{Match on vars (a character vector)}
+\item{match_on_vars_chr}{Match on variables (a character vector)}
 }
 \value{
 Matched dataset (a tibble)

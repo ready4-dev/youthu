@@ -19,7 +19,7 @@ update_col_with_diff(
 \arguments{
 \item{ds_tb}{Dataset (a tibble)}
 
-\item{var_nm_1L_chr}{Var name (a character vector of length one)}
+\item{var_nm_1L_chr}{Variable name (a character vector of length one)}
 
 \item{fn}{Function (a function)}
 
@@ -29,9 +29,9 @@ update_col_with_diff(
 
 \item{multiplier_1L_dbl}{Multiplier (a double vector of length one)}
 
-\item{min_1L_dbl}{Min (a double vector of length one)}
+\item{min_1L_dbl}{Minimum (a double vector of length one)}
 
-\item{max_1L_dbl}{Max (a double vector of length one)}
+\item{max_1L_dbl}{Maximum (a double vector of length one)}
 
 \item{integer_1L_lgl}{Integer (a logical vector of length one)}
 }
