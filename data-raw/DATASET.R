@@ -108,5 +108,13 @@ ready4fun::write_and_doc_fn_fls(fns_dmt_tb,
                                 update_pkgdown_1L_lgl = T,
                                 path_to_dvpr_dmt_dir_1L_chr = "../../../../../Documentation/Code/Developer",
                                 path_to_user_dmt_dir_1L_chr = "../../../../../Documentation/Code/User")
+# PAUSE FOR INTERACTIVE
+# PART FOUR
+# data("prototype_lup")
+# if(!identical(prototype_lup,ready4fun::get_rds_from_dv("prototype_lup"))){
+#   prototype_lup %>%
+#     ready4use::write_paired_ds_fls_to_dv(fl_nm_1L_chr = "prototype_lup",
+#                                          desc_1L_chr = "Prototypes lookup table")
+# }
 # devtools::build_vignettes()
 #
