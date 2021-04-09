@@ -2,7 +2,7 @@
 % Please edit documentation in R/fn_make.R
 \name{make_hlth_ec_smry}
 \alias{make_hlth_ec_smry}
-\title{Make hlth ec summary}
+\title{Make health economic summary}
 \usage{
 make_hlth_ec_smry(
   ds_tb,
@@ -51,5 +51,5 @@ make_hlth_ec_smry(
 He summary (a list)
 }
 \description{
-make_hlth_ec_smry() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make hlth ec summary. The function returns He summary (a list).
+make_hlth_ec_smry() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make health economic summary. The function returns He summary (a list).
 }

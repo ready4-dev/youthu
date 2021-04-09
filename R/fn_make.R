@@ -162,8 +162,8 @@ make_formula <- function (depnt_var_nm_1L_chr, predictors_chr, environment_env =
         " ~ ", paste0(predictors_chr, collapse = " + ")), env = environment_env)
     return(formula_fml)
 }
-#' Make hlth ec summary
-#' @description make_hlth_ec_smry() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make hlth ec summary. The function returns He summary (a list).
+#' Make health economic summary
+#' @description make_hlth_ec_smry() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make health economic summary. The function returns He summary (a list).
 #' @param ds_tb Dataset (a tibble)
 #' @param change_vars_chr Change variables (a character vector), Default: 'NA'
 #' @param wtp_dbl Willingness to pay (a double vector), Default: 50000

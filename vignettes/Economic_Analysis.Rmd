@@ -67,7 +67,7 @@ sngl_grp_ds_tb <- make_sngl_grp_ds(seed_ds_tb,ds_smry_ls = ds_smry_ls)
 We can split a subset of our single group dataset into two propensity score matched groups - one each for intervention and control - using the `make_matched_ds`{.R} function. We also use this function to build in our assumptions about group differences in changes in PHQ9, SOFAS and costs measured at follow-up. The below example assumes **population** (not sample) mean change differences between Intervention and Control arms of -2 for PHQ9, -2 for SOFAS and +\$300 for costs.
 
 ```{r}
-matched_ds_tb <- make_matched_ds(sngl_grp_ds, 
+matched_ds_tb <- make_matched_ds(sngl_grp_ds_tb, 
                                  cmprsn_smry_tb = tibble::tibble(var_nms_chr = c(ds_smry_ls$predr_var_nms, ds_smry_ls$costs_var_nm_1L_chr),
                                  fns_ls = list(stats::rnorm,stats::rnorm,stats::rnorm),
                                  abs_mean_diff_dbl = c(2,2,300),

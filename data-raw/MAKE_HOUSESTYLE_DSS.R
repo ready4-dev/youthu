@@ -55,10 +55,14 @@ abbreviations_lup <- abbreviations_lup %>%
                                                "willingness to pay threshold"),
                              no_plural_chr = c("effective","effectiveness",
                                                "named","willingness to pay"))
+abbreviations_lup <- abbreviations_lup %>%
+  ready4fun::update_abbr_lup(short_name_chr = c("ec", "hlth"),
+                             long_name_chr = c("economic", "health"))
+
 # Push updates to dataverse
-seed_obj_lup_tb %>%
-  ready4use::write_paired_ds_fls_to_dv(fl_nm_1L_chr = "seed_obj_lup_tb",
-                                       desc_1L_chr = "Seed object type lookup table")
+# seed_obj_lup_tb %>%
+#   ready4use::write_paired_ds_fls_to_dv(fl_nm_1L_chr = "seed_obj_lup_tb",
+#                                        desc_1L_chr = "Seed object type lookup table")
 object_type_lup %>%
   ready4use::write_paired_ds_fls_to_dv(fl_nm_1L_chr = "object_type_lup",
                                        desc_1L_chr = "Object type lookup table")
