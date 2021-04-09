@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Add costs by time point — add_costs_by_tmpt • youthu</title>
+<title>Make cost efns summary — make_cst_efns_smry • youthu</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="Add costs by time point — add_costs_by_tmpt" />
-<meta property="og:description" content="add_costs_by_tmpt() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add costs by time point. Function argument ds_tb specifies the object to be updated. The function returns Updated dataset (a tibble)." />
+<meta property="og:title" content="Make cost efns summary — make_cst_efns_smry" />
+<meta property="og:description" content="make_cst_efns_smry() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make cost efns summary. The function returns Summary (a double vector)." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -134,23 +134,28 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Add costs by time point</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ready4-dev/youthu/blob/master/R/fn_add.R'><code>R/fn_add.R</code></a></small>
-    <div class="hidden name"><code>add_costs_by_tmpt.Rd</code></div>
+    <h1>Make cost efns summary</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ready4-dev/youthu/blob/master/R/fn_make.R'><code>R/fn_make.R</code></a></small>
+    <div class="hidden name"><code>make_cst_efns_smry.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>add_costs_by_tmpt() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add costs by time point. Function argument ds_tb specifies the object to be updated. The function returns Updated dataset (a tibble).</p>
+    <p>make_cst_efns_smry() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make cost efns summary. The function returns Summary (a double vector).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>add_costs_by_tmpt</span><span class='op'>(</span>
+    <pre class="usage"><span class='fu'>make_cst_efns_smry</span><span class='op'>(</span>
   <span class='va'>ds_tb</span>,
-  <span class='va'>round_var_nm_1L_chr</span>,
-  round_lvls_chr <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Baseline"</span>, <span class='st'>"Follow-up"</span><span class='op'>)</span>,
-  <span class='va'>costs_mean_dbl</span>,
-  <span class='va'>costs_sd_dbl</span>,
-  extra_cost_args_ls <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>costs_var_nm_1L_chr <span class='op'>=</span> <span class='st'>"costs_dbl"</span><span class='op'>)</span>,
-  fn <span class='op'>=</span> <span class='va'>add_costs_from_gamma_dstr</span>
+  <span class='va'>idxs_int</span>,
+  change_types_chr <span class='op'>=</span> <span class='st'>"dbl"</span>,
+  benefits_pfx_1L_chr <span class='op'>=</span> <span class='st'>"qalys_dbl"</span>,
+  benefits_var_nm_1L_chr <span class='op'>=</span> <span class='st'>"qalys"</span>,
+  costs_pfx_1L_chr <span class='op'>=</span> <span class='st'>"costs_dbl"</span>,
+  costs_var_nm_1L_chr <span class='op'>=</span> <span class='st'>"costs"</span>,
+  change_sfx_1L_chr <span class='op'>=</span> <span class='st'>"change"</span>,
+  change_vars_chr <span class='op'>=</span> <span class='cn'>NA_character_</span>,
+  cmprsn_groups_chr <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Intervention"</span>, <span class='st'>"Control"</span><span class='op'>)</span>,
+  cmprsn_var_nm_1L_chr <span class='op'>=</span> <span class='st'>"study_arm_chr"</span>,
+  round_fup_val_1L_chr <span class='op'>=</span> <span class='st'>"Follow-up"</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -161,34 +166,54 @@
       <td><p>Dataset (a tibble)</p></td>
     </tr>
     <tr>
-      <th>round_var_nm_1L_chr</th>
-      <td><p>Round variable name (a character vector of length one)</p></td>
+      <th>idxs_int</th>
+      <td><p>Indices (an integer vector)</p></td>
     </tr>
     <tr>
-      <th>round_lvls_chr</th>
-      <td><p>Round levels (a character vector), Default: c("Baseline", "Follow-up")</p></td>
+      <th>change_types_chr</th>
+      <td><p>Change types (a character vector), Default: 'dbl'</p></td>
     </tr>
     <tr>
-      <th>costs_mean_dbl</th>
-      <td><p>Costs mean (a double vector)</p></td>
+      <th>benefits_pfx_1L_chr</th>
+      <td><p>Benefits prefix (a character vector of length one), Default: 'qalys_dbl'</p></td>
     </tr>
     <tr>
-      <th>costs_sd_dbl</th>
-      <td><p>Costs standard deviation (a double vector)</p></td>
+      <th>benefits_var_nm_1L_chr</th>
+      <td><p>Benefits variable name (a character vector of length one), Default: 'qalys'</p></td>
     </tr>
     <tr>
-      <th>extra_cost_args_ls</th>
-      <td><p>Extra cost arguments (a list), Default: list(costs_var_nm_1L_chr = "costs_dbl")</p></td>
+      <th>costs_pfx_1L_chr</th>
+      <td><p>Costs prefix (a character vector of length one), Default: 'costs_dbl'</p></td>
     </tr>
     <tr>
-      <th>fn</th>
-      <td><p>Function (a function), Default: add_costs_from_gamma_dstr</p></td>
+      <th>costs_var_nm_1L_chr</th>
+      <td><p>Costs variable name (a character vector of length one), Default: 'costs'</p></td>
+    </tr>
+    <tr>
+      <th>change_sfx_1L_chr</th>
+      <td><p>Change suffix (a character vector of length one), Default: 'change'</p></td>
+    </tr>
+    <tr>
+      <th>change_vars_chr</th>
+      <td><p>Change variables (a character vector), Default: 'NA'</p></td>
+    </tr>
+    <tr>
+      <th>cmprsn_groups_chr</th>
+      <td><p>Comparison groups (a character vector), Default: c("Intervention", "Control")</p></td>
+    </tr>
+    <tr>
+      <th>cmprsn_var_nm_1L_chr</th>
+      <td><p>Comparison variable name (a character vector of length one), Default: 'study_arm_chr'</p></td>
+    </tr>
+    <tr>
+      <th>round_fup_val_1L_chr</th>
+      <td><p>Round follow-up value (a character vector of length one), Default: 'Follow-up'</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Updated dataset (a tibble)</p>
+    <p>Summary (a double vector)</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

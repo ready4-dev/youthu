@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">youthu</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9063</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9065</span>
       </span>
     </div>
 
@@ -152,7 +152,7 @@
 <code class="sourceCode R"><span class="va">sngl_grp_ds_tb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/make_sngl_grp_ds.html">make_sngl_grp_ds</a></span><span class="op">(</span><span class="va">seed_ds_tb</span>,ds_smry_ls <span class="op">=</span> <span class="va">ds_smry_ls</span><span class="op">)</span></code></pre></div>
 <p>We can split a subset of our single group dataset into two propensity score matched groups - one each for intervention and control - using the <code class="sourceCode r">make_matched_ds</code> function. We also use this function to build in our assumptions about group differences in changes in PHQ9, SOFAS and costs measured at follow-up. The below example assumes <strong>population</strong> (not sample) mean change differences between Intervention and Control arms of -2 for PHQ9, -2 for SOFAS and +$300 for costs.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">matched_ds_tb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/make_matched_ds.html">make_matched_ds</a></span><span class="op">(</span><span class="va">sngl_grp_ds</span>, 
+<code class="sourceCode R"><span class="va">matched_ds_tb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/make_matched_ds.html">make_matched_ds</a></span><span class="op">(</span><span class="va">sngl_grp_ds_tb</span>, 
                                  cmprsn_smry_tb <span class="op">=</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>var_nms_chr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">ds_smry_ls</span><span class="op">$</span><span class="va">predr_var_nms</span>, <span class="va">ds_smry_ls</span><span class="op">$</span><span class="va">costs_var_nm_1L_chr</span><span class="op">)</span>,
                                  fns_ls <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu">stats</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>,<span class="fu">stats</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>,<span class="fu">stats</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">)</span>,
                                  abs_mean_diff_dbl <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">2</span>,<span class="fl">300</span><span class="op">)</span>,
@@ -219,7 +219,7 @@ Participant_20
 Baseline
 </td>
 <td style="text-align:right;">
-2020-09-01
+2020-09-02
 </td>
 <td style="text-align:right;">
 0S
@@ -248,7 +248,7 @@ Participant_593
 Baseline
 </td>
 <td style="text-align:right;">
-2020-07-09
+2020-07-10
 </td>
 <td style="text-align:right;">
 0S
@@ -277,7 +277,7 @@ Participant_593
 Follow-up
 </td>
 <td style="text-align:right;">
-2020-12-31
+2021-01-01
 </td>
 <td style="text-align:right;">
 175d 0H 0M 0S
@@ -306,7 +306,7 @@ Participant_20
 Follow-up
 </td>
 <td style="text-align:right;">
-2021-02-26
+2021-02-27
 </td>
 <td style="text-align:right;">
 178d 0H 0M 0S
@@ -335,7 +335,7 @@ Participant_259
 Baseline
 </td>
 <td style="text-align:right;">
-2020-10-27
+2020-10-28
 </td>
 <td style="text-align:right;">
 0S
@@ -364,7 +364,7 @@ Participant_962
 Baseline
 </td>
 <td style="text-align:right;">
-2020-12-09
+2020-12-10
 </td>
 <td style="text-align:right;">
 0S
@@ -581,10 +581,10 @@ Control
 243
 </td>
 <td style="text-align:right;">
-2020-06-17
+2020-06-18
 </td>
 <td style="text-align:right;">
-2020-12-11
+2020-12-12
 </td>
 <td style="text-align:right;">
 0S
@@ -652,10 +652,10 @@ Control
 191
 </td>
 <td style="text-align:right;">
-2020-08-13
+2020-08-14
 </td>
 <td style="text-align:right;">
-2021-02-13
+2021-02-14
 </td>
 <td style="text-align:right;">
 0S
@@ -723,10 +723,10 @@ Intervention
 230
 </td>
 <td style="text-align:right;">
-2020-07-08
+2020-07-09
 </td>
 <td style="text-align:right;">
-2021-01-03
+2021-01-04
 </td>
 <td style="text-align:right;">
 0S
@@ -794,10 +794,10 @@ Intervention
 115
 </td>
 <td style="text-align:right;">
-2020-08-06
+2020-08-07
 </td>
 <td style="text-align:right;">
-2021-02-04
+2021-02-05
 </td>
 <td style="text-align:right;">
 0S
@@ -865,10 +865,10 @@ Intervention
 183
 </td>
 <td style="text-align:right;">
-2020-11-07
+2020-11-08
 </td>
 <td style="text-align:right;">
-2021-05-12
+2021-05-13
 </td>
 <td style="text-align:right;">
 0S
@@ -936,10 +936,10 @@ Intervention
 219
 </td>
 <td style="text-align:right;">
-2020-12-03
+2020-12-04
 </td>
 <td style="text-align:right;">
-2021-05-31
+2021-06-01
 </td>
 <td style="text-align:right;">
 0S
@@ -1007,10 +1007,10 @@ Intervention
 <div id="analyse-results" class="section level3">
 <h3 class="hasAnchor">
 <a href="#analyse-results" class="anchor"></a>Analyse results</h3>
-<p>Now we can run the main economic analysis. This is implemented by the <code class="sourceCode r">make_he_smry</code> function, which first bootstraps the dataset (implemented by the <code>boot</code> function from the <code>boot</code> package) before passing the mean values for costs and QALYs from each bootstrap sample to with <code>bcea</code> function of the <code>BCEA</code> package to calculate a range of health economic statistics. For this example we pass a value of 50,000 for the willingness to pay parameter, as this is the dollar amount commonly used in Australia as a benchmark for the value of a QALY.</p>
+<p>Now we can run the main economic analysis. This is implemented by the <code class="sourceCode r">make_hlth_ec_smry</code> function, which first bootstraps the dataset (implemented by the <code>boot</code> function from the <code>boot</code> package) before passing the mean values for costs and QALYs from each bootstrap sample to with <code>bcea</code> function of the <code>BCEA</code> package to calculate a range of health economic statistics. For this example we pass a value of 50,000 for the willingness to pay parameter, as this is the dollar amount commonly used in Australia as a benchmark for the value of a QALY.</p>
 <p>Note, for this illustrative example we only request 1000 bootstrap iterations - in practice this number may be higher.</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">he_smry_ls</span> <span class="op">&lt;-</span> <span class="va">econ_cmprsn_ds_tb</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/make_he_smry.html">make_he_smry</a></span><span class="op">(</span>change_vars_chr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">ds_smry_ls</span><span class="op">$</span><span class="va">predr_var_nms</span>,
+<code class="sourceCode R"><span class="va">he_smry_ls</span> <span class="op">&lt;-</span> <span class="va">econ_cmprsn_ds_tb</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/make_hlth_ec_smry.html">make_hlth_ec_smry</a></span><span class="op">(</span>change_vars_chr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">ds_smry_ls</span><span class="op">$</span><span class="va">predr_var_nms</span>,
                                                                      <span class="va">ds_smry_ls</span><span class="op">$</span><span class="va">utl_var_nm_1L_chr</span><span class="op">)</span>,
                                                  wtp_dbl <span class="op">=</span> <span class="fl">50000</span>,
                                                  bootstrap_iters_1L_int <span class="op">=</span> <span class="fl">1000L</span>,
@@ -1022,8 +1022,8 @@ Intervention
                                                  change_sfx_1L_chr <span class="op">=</span> <span class="st">"change"</span>,
                                                  cmprsn_groups_chr <span class="op">=</span> <span class="va">ds_smry_ls</span><span class="op">$</span><span class="va">cmprsn_groups_chr</span>,
                                                  cmprsn_var_nm_1L_chr <span class="op">=</span> <span class="va">ds_smry_ls</span><span class="op">$</span><span class="va">cmprsn_var_nm_1L_chr</span>,
-                                                 round_fup_1L_chr <span class="op">=</span> <span class="va">ds_smry_ls</span><span class="op">$</span><span class="va">round_lvls_chr</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></code></pre></div>
-<p>As part of the output of the <code class="sourceCode r">make_he_smry</code> function is a BCEA object, we can use the BCEA package to produce a number of graphical summaries of economic results. One of the most important is the production of a cost-effectiveness plane. This plot highlights that, with an ICER of $56,247.19, less than half of the bootstrapped iteration incremental cost and QALY pairs fall within the zone of cost-effectiveness (green). In fact, at the cost-effectiveness threshold we supplied, the results suggest there is a 45% probability that the intervention is cost-effective.</p>
+                                                 round_fup_val_1L_chr <span class="op">=</span> <span class="va">ds_smry_ls</span><span class="op">$</span><span class="va">round_lvls_chr</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></code></pre></div>
+<p>As part of the output of the <code class="sourceCode r">make_hlth_ec_smry</code> function is a BCEA object, we can use the BCEA package to produce a number of graphical summaries of economic results. One of the most important is the production of a cost-effectiveness plane. This plot highlights that, with an ICER of $56,247.19, less than half of the bootstrapped iteration incremental cost and QALY pairs fall within the zone of cost-effectiveness (green). In fact, at the cost-effectiveness threshold we supplied, the results suggest there is a 45% probability that the intervention is cost-effective.</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">BCEA</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BCEA/man/ceplane.plot.html">ceplane.plot</a></span><span class="op">(</span><span class="va">he_smry_ls</span><span class="op">$</span><span class="va">ce_res_ls</span>, wtp <span class="op">=</span><span class="fl">50000</span>,    
                    area_color <span class="op">=</span> <span class="st">"green"</span>,
