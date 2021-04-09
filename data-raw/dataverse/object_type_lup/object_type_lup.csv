@@ -1,0 +1,140 @@
+"short_name_chr","long_name_chr","plural_lgl"
+"arr","array",FALSE
+"chr","character vector",FALSE
+"dbl","double vector",FALSE
+"df","data.frame",FALSE
+"dtm","date vector",FALSE
+"env","environment",FALSE
+"fct","factor vector",FALSE
+"fn","function",FALSE
+"int","integer vector",FALSE
+"lgl","logical vector",FALSE
+"ls","list",FALSE
+"lup","lookup table",FALSE
+"mat","matrix",FALSE
+"mdl","model",FALSE
+"plt","plot",FALSE
+"prsn","person",FALSE
+"r3","ready4 S3",FALSE
+"r4","ready4 S4",FALSE
+"rgx","regular expression vector",FALSE
+"s3","S3",FALSE
+"s4","S4",FALSE
+"sf","simple features object",FALSE
+"tb","tibble",FALSE
+"1L_chr","character vector of length one",FALSE
+"1L_dbl","double vector of length one",FALSE
+"1L_dtm","date vector of length one",FALSE
+"1L_fct","factor vector of length one",FALSE
+"1L_int","integer vector of length one",FALSE
+"1L_lgl","logical vector of length one",FALSE
+"1L_rgx","regular expression vector of length one",FALSE
+"arr_r3","ready4 S3 extension of array",FALSE
+"chr_r3","ready4 S3 extension of character vector",FALSE
+"dbl_r3","ready4 S3 extension of double vector",FALSE
+"df_r3","ready4 S3 extension of data.frame",FALSE
+"dtm_r3","ready4 S3 extension of date vector",FALSE
+"fct_r3","ready4 S3 extension of factor vector",FALSE
+"int_r3","ready4 S3 extension of integer vector",FALSE
+"lgl_r3","ready4 S3 extension of logical vector",FALSE
+"ls_r3","ready4 S3 extension of list",FALSE
+"lup_r3","ready4 S3 extension of lookup table",FALSE
+"mat_r3","ready4 S3 extension of matrix",FALSE
+"mdl_r3","ready4 S3 extension of model",FALSE
+"prsn_r3","ready4 S3 extension of person",FALSE
+"rgx_r3","ready4 S3 extension of regular expression vector",FALSE
+"sf_r3","ready4 S3 extension of simple features object",FALSE
+"tb_r3","ready4 S3 extension of tibble",FALSE
+"arr_ls","list of arrays",FALSE
+"chr_ls","list of character vectors",FALSE
+"dbl_ls","list of double vectors",FALSE
+"df_ls","list of data.frames",FALSE
+"dtm_ls","list of date vectors",FALSE
+"env_ls","list of environments",FALSE
+"fct_ls","list of factor vectors",FALSE
+"fn_ls","list of functions",FALSE
+"int_ls","list of integer vectors",FALSE
+"lgl_ls","list of logical vectors",FALSE
+"ls_ls","list of lists",FALSE
+"lup_ls","list of lookup tables",FALSE
+"mat_ls","list of matrices",FALSE
+"mdl_ls","list of models",FALSE
+"plt_ls","list of plots",FALSE
+"prsn_ls","list of persons",FALSE
+"r3_ls","list of ready4 S3s",FALSE
+"r4_ls","list of ready4 S4s",FALSE
+"rgx_ls","list of regular expression vectors",FALSE
+"s3_ls","list of S3s",FALSE
+"s4_ls","list of S4s",FALSE
+"sf_ls","list of simple features objects",FALSE
+"tb_ls","list of tibbles",FALSE
+"1L_chr_ls","list of character vectors of length one",FALSE
+"1L_dbl_ls","list of double vectors of length one",FALSE
+"1L_dtm_ls","list of date vectors of length one",FALSE
+"1L_fct_ls","list of factor vectors of length one",FALSE
+"1L_int_ls","list of integer vectors of length one",FALSE
+"1L_lgl_ls","list of logical vectors of length one",FALSE
+"1L_rgx_ls","list of regular expression vectors of length one",FALSE
+"arr_r3_ls","list of ready4 S3 extension of arrays",FALSE
+"chr_r3_ls","list of ready4 S3 extension of character vectors",FALSE
+"dbl_r3_ls","list of ready4 S3 extension of double vectors",FALSE
+"df_r3_ls","list of ready4 S3 extension of data.frames",FALSE
+"dtm_r3_ls","list of ready4 S3 extension of date vectors",FALSE
+"fct_r3_ls","list of ready4 S3 extension of factor vectors",FALSE
+"int_r3_ls","list of ready4 S3 extension of integer vectors",FALSE
+"lgl_r3_ls","list of ready4 S3 extension of logical vectors",FALSE
+"ls_r3_ls","list of ready4 S3 extension of lists",FALSE
+"lup_r3_ls","list of ready4 S3 extension of lookup tables",FALSE
+"mat_r3_ls","list of ready4 S3 extension of matrices",FALSE
+"mdl_r3_ls","list of ready4 S3 extension of models",FALSE
+"prsn_r3_ls","list of ready4 S3 extension of persons",FALSE
+"rgx_r3_ls","list of ready4 S3 extension of regular expression vectors",FALSE
+"sf_r3_ls","list of ready4 S3 extension of simple features objects",FALSE
+"tb_r3_ls","list of ready4 S3 extension of tibbles",FALSE
+"arr_r4","ready4 S4 collection of arrays",FALSE
+"chr_r4","ready4 S4 collection of character vectors",FALSE
+"dbl_r4","ready4 S4 collection of double vectors",FALSE
+"df_r4","ready4 S4 collection of data.frames",FALSE
+"dtm_r4","ready4 S4 collection of date vectors",FALSE
+"env_r4","ready4 S4 collection of environments",FALSE
+"fct_r4","ready4 S4 collection of factor vectors",FALSE
+"fn_r4","ready4 S4 collection of functions",FALSE
+"int_r4","ready4 S4 collection of integer vectors",FALSE
+"lgl_r4","ready4 S4 collection of logical vectors",FALSE
+"ls_r4","ready4 S4 collection of lists",FALSE
+"lup_r4","ready4 S4 collection of lookup tables",FALSE
+"mat_r4","ready4 S4 collection of matrices",FALSE
+"mdl_r4","ready4 S4 collection of models",FALSE
+"plt_r4","ready4 S4 collection of plots",FALSE
+"prsn_r4","ready4 S4 collection of persons",FALSE
+"r3_r4","ready4 S4 collection of ready4 S3s",FALSE
+"r4_r4","ready4 S4 collection of ready4 S4s",FALSE
+"rgx_r4","ready4 S4 collection of regular expression vectors",FALSE
+"s3_r4","ready4 S4 collection of S3s",FALSE
+"s4_r4","ready4 S4 collection of S4s",FALSE
+"sf_r4","ready4 S4 collection of simple features objects",FALSE
+"tb_r4","ready4 S4 collection of tibbles",FALSE
+"1L_chr_r4","ready4 S4 collection of character vectors of length one",FALSE
+"1L_dbl_r4","ready4 S4 collection of double vectors of length one",FALSE
+"1L_dtm_r4","ready4 S4 collection of date vectors of length one",FALSE
+"1L_fct_r4","ready4 S4 collection of factor vectors of length one",FALSE
+"1L_int_r4","ready4 S4 collection of integer vectors of length one",FALSE
+"1L_lgl_r4","ready4 S4 collection of logical vectors of length one",FALSE
+"1L_rgx_r4","ready4 S4 collection of regular expression vectors of length one",FALSE
+"arr_r3_r4","ready4 S4 collection of ready4 S3 extension of arrays",FALSE
+"chr_r3_r4","ready4 S4 collection of ready4 S3 extension of character vectors",FALSE
+"dbl_r3_r4","ready4 S4 collection of ready4 S3 extension of double vectors",FALSE
+"df_r3_r4","ready4 S4 collection of ready4 S3 extension of data.frames",FALSE
+"dtm_r3_r4","ready4 S4 collection of ready4 S3 extension of date vectors",FALSE
+"fct_r3_r4","ready4 S4 collection of ready4 S3 extension of factor vectors",FALSE
+"int_r3_r4","ready4 S4 collection of ready4 S3 extension of integer vectors",FALSE
+"lgl_r3_r4","ready4 S4 collection of ready4 S3 extension of logical vectors",FALSE
+"ls_r3_r4","ready4 S4 collection of ready4 S3 extension of lists",FALSE
+"lup_r3_r4","ready4 S4 collection of ready4 S3 extension of lookup tables",FALSE
+"mat_r3_r4","ready4 S4 collection of ready4 S3 extension of matrices",FALSE
+"mdl_r3_r4","ready4 S4 collection of ready4 S3 extension of models",FALSE
+"prsn_r3_r4","ready4 S4 collection of ready4 S3 extension of persons",FALSE
+"rgx_r3_r4","ready4 S4 collection of ready4 S3 extension of regular expression vectors",FALSE
+"sf_r3_r4","ready4 S4 collection of ready4 S3 extension of simple features objects",FALSE
+"tb_r3_r4","ready4 S4 collection of ready4 S3 extension of tibbles",FALSE
+"xx","output object of multiple potential types",FALSE

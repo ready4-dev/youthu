@@ -15,7 +15,7 @@ make_formula(
 
 \item{predictors_chr}{Predictors (a character vector)}
 
-\item{environment_env}{PARAM_DESCRIPTION, Default: parent.frame()}
+\item{environment_env}{Environment (an environment), Default: parent.frame()}
 }
 \value{
 NA ()

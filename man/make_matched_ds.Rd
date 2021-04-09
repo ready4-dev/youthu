@@ -4,10 +4,10 @@
 \alias{make_matched_ds}
 \title{Make matched dataset}
 \usage{
-make_matched_ds(sngl_grp_ds, cmprsn_smry_tb, ds_smry_ls)
+make_matched_ds(sngl_grp_ds_tb, cmprsn_smry_tb, ds_smry_ls)
 }
 \arguments{
-\item{sngl_grp_ds}{PARAM_DESCRIPTION}
+\item{sngl_grp_ds_tb}{Single group dataset (a tibble)}
 
 \item{cmprsn_smry_tb}{Comparison summary (a tibble)}
 

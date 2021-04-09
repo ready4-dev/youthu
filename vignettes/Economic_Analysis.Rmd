@@ -171,12 +171,12 @@ econ_cmprsn_ds_tb %>% head() %>%
 ```
 
 ### Analyse results
-Now we can run the main economic analysis. This is implemented by the `make_he_smry`{.R} function, which first bootstraps the dataset (implemented by the `boot` function from the `boot` package) before passing the mean values for costs and QALYs from each bootstrap sample to with `bcea` function of the `BCEA` package to calculate a range of health economic statistics. For this example we pass a value of 50,000 for the willingness to pay parameter, as this is the dollar amount commonly used in Australia as a benchmark for the value of a QALY.
+Now we can run the main economic analysis. This is implemented by the `make_hlth_ec_smry`{.R} function, which first bootstraps the dataset (implemented by the `boot` function from the `boot` package) before passing the mean values for costs and QALYs from each bootstrap sample to with `bcea` function of the `BCEA` package to calculate a range of health economic statistics. For this example we pass a value of 50,000 for the willingness to pay parameter, as this is the dollar amount commonly used in Australia as a benchmark for the value of a QALY.
 
 Note, for this illustrative example we only request 1000 bootstrap iterations - in practice this number may be higher.
 
 ```{r}
-he_smry_ls <- econ_cmprsn_ds_tb %>% make_he_smry(change_vars_chr = c(ds_smry_ls$predr_var_nms,
+he_smry_ls <- econ_cmprsn_ds_tb %>% make_hlth_ec_smry(change_vars_chr = c(ds_smry_ls$predr_var_nms,
                                                                      ds_smry_ls$utl_var_nm_1L_chr),
                                                  wtp_dbl = 50000,
                                                  bootstrap_iters_1L_int = 1000L,
@@ -188,10 +188,10 @@ he_smry_ls <- econ_cmprsn_ds_tb %>% make_he_smry(change_vars_chr = c(ds_smry_ls$
                                                  change_sfx_1L_chr = "change",
                                                  cmprsn_groups_chr = ds_smry_ls$cmprsn_groups_chr,
                                                  cmprsn_var_nm_1L_chr = ds_smry_ls$cmprsn_var_nm_1L_chr,
-                                                 round_fup_1L_chr = ds_smry_ls$round_lvls_chr[2])
+                                                 round_fup_val_1L_chr = ds_smry_ls$round_lvls_chr[2])
 ```
 
-As part of the output of the `make_he_smry`{.R} function is a BCEA object, we can use the BCEA package to produce a number of graphical summaries of economic results. One of the most important is the production of a cost-effectiveness plane. This plot highlights that, with an ICER of \$`r he_smry_ls$ce_res_ls$ICER %>% format(big.mark =",")`, `r ifelse(he_smry_ls$ce_res_ls$ceac[he_smry_ls$ce_res_ls$k==50000]==0.5,"half",ifelse(he_smry_ls$ce_res_ls$ceac[he_smry_ls$ce_res_ls$k==50000]<0.5,"less than half","most"))` of the bootstrapped iteration incremental cost and QALY pairs fall within the zone of cost-effectiveness (green). In fact, at the cost-effectiveness threshold we supplied, the results suggest there is a `r he_smry_ls$ce_res_ls$ceac[he_smry_ls$ce_res_ls$k==50000] * 100`% probability that the intervention is cost-effective.
+As part of the output of the `make_hlth_ec_smry`{.R} function is a BCEA object, we can use the BCEA package to produce a number of graphical summaries of economic results. One of the most important is the production of a cost-effectiveness plane. This plot highlights that, with an ICER of \$`r he_smry_ls$ce_res_ls$ICER %>% format(big.mark =",")`, `r ifelse(he_smry_ls$ce_res_ls$ceac[he_smry_ls$ce_res_ls$k==50000]==0.5,"half",ifelse(he_smry_ls$ce_res_ls$ceac[he_smry_ls$ce_res_ls$k==50000]<0.5,"less than half","most"))` of the bootstrapped iteration incremental cost and QALY pairs fall within the zone of cost-effectiveness (green). In fact, at the cost-effectiveness threshold we supplied, the results suggest there is a `r he_smry_ls$ce_res_ls$ceac[he_smry_ls$ce_res_ls$k==50000] * 100`% probability that the intervention is cost-effective.
 
 ```{r fig.width=6}
 BCEA::ceplane.plot(he_smry_ls$ce_res_ls, wtp =50000,    

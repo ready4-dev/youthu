@@ -2,7 +2,7 @@
 % Please edit documentation in R/fn_update.R
 \name{update_multpl_cols_with_diffs}
 \alias{update_multpl_cols_with_diffs}
-\title{Update multpl columns with diffs}
+\title{Update multiplier columns with differences}
 \usage{
 update_multpl_cols_with_diffs(
   ds_tb,
@@ -23,9 +23,9 @@ update_multpl_cols_with_diffs(
 
 \item{fns_ls}{Functions (a list)}
 
-\item{abs_mean_diff_dbl}{Abs mean diff (a double vector)}
+\item{abs_mean_diff_dbl}{Absolute mean difference (a double vector)}
 
-\item{diff_sd_dbl}{Diff sd (a double vector)}
+\item{diff_sd_dbl}{Difference standard deviation (a double vector)}
 
 \item{multiplier_dbl}{Multiplier (a double vector)}
 
@@ -39,6 +39,6 @@ update_multpl_cols_with_diffs(
 Updated dataset (a tibble)
 }
 \description{
-update_multpl_cols_with_diffs() is an Update function that edits an object, while preserving core object attributes. Specifically, this function implements an algorithm to update multpl columns with diffs. Function argument ds_tb specifies the object to be updated. Argument var_nms_chr provides the object to be updated. The function returns Updated dataset (a tibble).
+update_multpl_cols_with_diffs() is an Update function that edits an object, while preserving core object attributes. Specifically, this function implements an algorithm to update multiplier columns with differences. Function argument ds_tb specifies the object to be updated. Argument var_nms_chr provides the object to be updated. The function returns Updated dataset (a tibble).
 }
 \keyword{internal}

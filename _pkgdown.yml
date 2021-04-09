@@ -14,7 +14,7 @@ reference:
   - get_mdl_from_dv
   - get_mdls_using_predrs
   - get_tfmn_from_lup
-  - make_he_smry
+  - make_hlth_ec_smry
   - make_matched_ds
   - make_sngl_grp_ds
   - rename_from_nmd_vec

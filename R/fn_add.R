@@ -99,15 +99,15 @@ add_change_in_ds_var <- function (ds_tb, id_var_nm_1L_chr = "fkClientID", round_
         updated_ds_tb <- updated_ds_tb %>% dplyr::arrange(!!rlang::sym(id_var_nm_1L_chr))
     return(updated_ds_tb)
 }
-#' Add costs by tmpt
-#' @description add_costs_by_tmpt() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add costs by tmpt. Function argument ds_tb specifies the object to be updated. The function returns Updated dataset (a tibble).
+#' Add costs by time point
+#' @description add_costs_by_tmpt() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add costs by time point. Function argument ds_tb specifies the object to be updated. The function returns Updated dataset (a tibble).
 #' @param ds_tb Dataset (a tibble)
 #' @param round_var_nm_1L_chr Round variable name (a character vector of length one)
-#' @param round_lvls_chr Round lvls (a character vector), Default: c("Baseline", "Follow-up")
+#' @param round_lvls_chr Round levels (a character vector), Default: c("Baseline", "Follow-up")
 #' @param costs_mean_dbl Costs mean (a double vector)
-#' @param costs_sd_dbl Costs sd (a double vector)
+#' @param costs_sd_dbl Costs standard deviation (a double vector)
 #' @param extra_cost_args_ls Extra cost arguments (a list), Default: list(costs_var_nm_1L_chr = "costs_dbl")
-#' @param fn Function (a function), Default: add_costs_from_gamma_dist
+#' @param fn Function (a function), Default: add_costs_from_gamma_dstr
 #' @return Updated dataset (a tibble)
 #' @rdname add_costs_by_tmpt
 #' @export 
@@ -117,7 +117,7 @@ add_change_in_ds_var <- function (ds_tb, id_var_nm_1L_chr = "fkClientID", round_
 #' @keywords internal
 add_costs_by_tmpt <- function (ds_tb, round_var_nm_1L_chr, round_lvls_chr = c("Baseline", 
     "Follow-up"), costs_mean_dbl, costs_sd_dbl, extra_cost_args_ls = list(costs_var_nm_1L_chr = "costs_dbl"), 
-    fn = add_costs_from_gamma_dist) 
+    fn = add_costs_from_gamma_dstr) 
 {
     updated_ds_tb <- purrr::pmap_dfr(list(round_lvls_chr, costs_mean_dbl, 
         costs_sd_dbl), ~{
@@ -129,27 +129,27 @@ add_costs_by_tmpt <- function (ds_tb, round_var_nm_1L_chr, round_lvls_chr = c("B
     })
     return(updated_ds_tb)
 }
-#' Add costs from gamma dist
-#' @description add_costs_from_gamma_dist() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add costs from gamma dist. Function argument ds_tb specifies the object to be updated. The function returns Updated dataset (a tibble).
+#' Add costs from gamma distribution
+#' @description add_costs_from_gamma_dstr() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add costs from gamma distribution. Function argument ds_tb specifies the object to be updated. The function returns Updated dataset (a tibble).
 #' @param ds_tb Dataset (a tibble)
 #' @param costs_mean_dbl Costs mean (a double vector)
-#' @param costs_sd_dbl Costs sd (a double vector)
+#' @param costs_sd_dbl Costs standard deviation (a double vector)
 #' @param costs_var_nm_1L_chr Costs variable name (a character vector of length one), Default: 'costs_dbl'
 #' @return Updated dataset (a tibble)
-#' @rdname add_costs_from_gamma_dist
+#' @rdname add_costs_from_gamma_dstr
 #' @export 
 #' @importFrom dplyr mutate
 #' @importFrom rlang sym
 #' @keywords internal
-add_costs_from_gamma_dist <- function (ds_tb, costs_mean_dbl, costs_sd_dbl, costs_var_nm_1L_chr = "costs_dbl") 
+add_costs_from_gamma_dstr <- function (ds_tb, costs_mean_dbl, costs_sd_dbl, costs_var_nm_1L_chr = "costs_dbl") 
 {
     updated_ds_tb <- dplyr::mutate(ds_tb, `:=`(!!rlang::sym(costs_var_nm_1L_chr), 
-        make_costs_vec_from_gamma_dist(n_int = nrow(ds_tb), costs_mean_dbl = costs_mean_dbl, 
+        make_costs_vec_from_gamma_dstr(n_int = nrow(ds_tb), costs_mean_dbl = costs_mean_dbl, 
             costs_sd_dbl = costs_sd_dbl)))
     return(updated_ds_tb)
 }
-#' Add dates from dist
-#' @description add_dates_from_dist() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add dates from dist. Function argument ds_tb specifies the object to be updated. The function returns Updated dataset (a tibble).
+#' Add dates from distribution
+#' @description add_dates_from_dstr() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add dates from distribution. Function argument ds_tb specifies the object to be updated. The function returns Updated dataset (a tibble).
 #' @param ds_tb Dataset (a tibble)
 #' @param bl_start_date_dtm Baseline start date (a date vector)
 #' @param bl_end_date_dtm Baseline end date (a date vector)
@@ -161,14 +161,14 @@ add_costs_from_gamma_dist <- function (ds_tb, costs_mean_dbl, costs_sd_dbl, cost
 #' @param round_bl_val_1L_chr Round baseline value (a character vector of length one), Default: 'Baseline'
 #' @param origin_1L_chr Origin (a character vector of length one), Default: '1970-01-01'
 #' @return Updated dataset (a tibble)
-#' @rdname add_dates_from_dist
+#' @rdname add_dates_from_dstr
 #' @export 
 #' @importFrom stats rnorm
 #' @importFrom rlang exec sym
 #' @importFrom dplyr mutate case_when n group_by lag ungroup select everything
 #' @importFrom lubridate days
 #' @keywords internal
-add_dates_from_dist <- function (ds_tb, bl_start_date_dtm, bl_end_date_dtm, duration_args_ls, 
+add_dates_from_dstr <- function (ds_tb, bl_start_date_dtm, bl_end_date_dtm, duration_args_ls, 
     duration_fn = stats::rnorm, date_var_nm_1L_chr = "date_psx", 
     id_var_nm_1L_chr = "fkClientID", round_var_nm_1L_chr = "round", 
     round_bl_val_1L_chr = "Baseline", origin_1L_chr = "1970-01-01") 
@@ -191,8 +191,8 @@ add_dates_from_dist <- function (ds_tb, bl_start_date_dtm, bl_end_date_dtm, dura
         duration_prd, dplyr::everything())
     return(updated_ds_tb)
 }
-#' Add diffs by group and tmpt
-#' @description add_diffs_by_group_and_tmpt() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add diffs by group and tmpt. Function argument ds_tb specifies the object to be updated. The function returns Updated dataset (a tibble).
+#' Add differences by group and time point
+#' @description add_diffs_by_group_and_tmpt() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add differences by group and time point. Function argument ds_tb specifies the object to be updated. The function returns Updated dataset (a tibble).
 #' @param ds_tb Dataset (a tibble), Default: trial_ds_tb
 #' @param cmprsn_var_nm_1L_chr Comparison variable name (a character vector of length one), Default: 'study_arm_chr'
 #' @param cmprsn_group_match_val_chr Comparison group match value (a character vector), Default: c("Intervention")
@@ -201,8 +201,8 @@ add_dates_from_dist <- function (ds_tb, bl_start_date_dtm, bl_end_date_dtm, dura
 #' @param match_idx_var_nm_1L_chr Match index variable name (a character vector of length one), Default: 'match_idx_int'
 #' @param var_nms_chr Variable names (a character vector)
 #' @param fns_ls Functions (a list)
-#' @param abs_mean_diff_dbl Abs mean diff (a double vector)
-#' @param diff_sd_dbl Diff sd (a double vector)
+#' @param abs_mean_diff_dbl Absolute mean difference (a double vector)
+#' @param diff_sd_dbl Difference standard deviation (a double vector)
 #' @param multiplier_dbl Multiplier (a double vector)
 #' @param min_dbl Minimum (a double vector)
 #' @param max_dbl Maximum (a double vector)
@@ -232,14 +232,14 @@ add_diffs_by_group_and_tmpt <- function (ds_tb = trial_ds_tb, cmprsn_var_nm_1L_c
         dplyr::arrange(!!rlang::sym(match_idx_var_nm_1L_chr))
     return(updated_ds_tb)
 }
-#' Add qalys
-#' @description add_qalys() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add qalys. Function argument ds_tb specifies the object to be updated. The function returns Updated dataset (a tibble).
+#' Add Quality Adjusted Life Years
+#' @description add_qalys() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add quality adjusted life years. Function argument ds_tb specifies the object to be updated. The function returns Updated dataset (a tibble).
 #' @param ds_tb Dataset (a tibble)
 #' @param cmprsn_var_nm_1L_chr Comparison variable name (a character vector of length one), Default: 'study_arm_chr'
 #' @param duration_var_nm_1L_chr Duration variable name (a character vector of length one), Default: 'duration_prd'
 #' @param id_var_nm_1L_chr Identity variable name (a character vector of length one), Default: 'fkClientID'
 #' @param match_idx_var_nm_1L_chr Match index variable name (a character vector of length one), Default: 'match_idx_int'
-#' @param qalys_var_nm_1L_chr Qalys variable name (a character vector of length one), Default: 'qalys_dbl'
+#' @param qalys_var_nm_1L_chr Quality Adjusted Life Years variable name (a character vector of length one), Default: 'qalys_dbl'
 #' @param round_var_nm_1L_chr Round variable name (a character vector of length one), Default: 'round'
 #' @param utl_change_var_nm_1L_chr Utility change variable name (a character vector of length one), Default: 'utl_change_dbl'
 #' @param utl_var_nm_1L_chr Utility variable name (a character vector of length one), Default: 'utility_dbl'
@@ -271,8 +271,8 @@ add_qalys <- function (ds_tb, cmprsn_var_nm_1L_chr = "study_arm_chr", duration_v
     }
     return(updated_ds_tb)
 }
-#' Add qalys to dataset
-#' @description add_qalys_to_ds() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add qalys to dataset. Function argument ds_tb specifies the object to be updated. The function returns Dataset (a tibble).
+#' Add Quality Adjusted Life Years to dataset
+#' @description add_qalys_to_ds() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add quality adjusted life years to dataset. Function argument ds_tb specifies the object to be updated. The function returns Dataset (a tibble).
 #' @param ds_tb Dataset (a tibble)
 #' @param ds_smry_ls Dataset summary (a list)
 #' @return Dataset (a tibble)

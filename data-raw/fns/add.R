@@ -84,7 +84,7 @@ add_costs_by_tmpt <- function(ds_tb,
                               costs_mean_dbl,
                               costs_sd_dbl,
                               extra_cost_args_ls = list(costs_var_nm_1L_chr = "costs_dbl"),
-                              fn = add_costs_from_gamma_dist){
+                              fn = add_costs_from_gamma_dstr){
   updated_ds_tb <- purrr::pmap_dfr(list(round_lvls_chr,
                                         costs_mean_dbl,
                                         costs_sd_dbl),
@@ -97,19 +97,19 @@ add_costs_by_tmpt <- function(ds_tb,
                                    })
   return(updated_ds_tb)
 }
-add_costs_from_gamma_dist <- function(ds_tb,
+add_costs_from_gamma_dstr <- function(ds_tb,
                                       costs_mean_dbl,
                                       costs_sd_dbl,
                                       costs_var_nm_1L_chr = "costs_dbl"){
 
   updated_ds_tb <- dplyr::mutate(ds_tb,
-                                 !!rlang::sym(costs_var_nm_1L_chr) := make_costs_vec_from_gamma_dist(n_int = nrow(ds_tb),
+                                 !!rlang::sym(costs_var_nm_1L_chr) := make_costs_vec_from_gamma_dstr(n_int = nrow(ds_tb),
                                                                                                      costs_mean_dbl = costs_mean_dbl,
                                                                                                      costs_sd_dbl = costs_sd_dbl))
   return(updated_ds_tb)
 
 }
-add_dates_from_dist <- function(ds_tb,
+add_dates_from_dstr <- function(ds_tb,
                                 bl_start_date_dtm,
                                 bl_end_date_dtm,
                                 duration_args_ls,

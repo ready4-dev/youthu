@@ -2,7 +2,7 @@
 % Please edit documentation in R/fn_add.R
 \name{add_costs_by_tmpt}
 \alias{add_costs_by_tmpt}
-\title{Add costs by tmpt}
+\title{Add costs by time point}
 \usage{
 add_costs_by_tmpt(
   ds_tb,
@@ -11,7 +11,7 @@ add_costs_by_tmpt(
   costs_mean_dbl,
   costs_sd_dbl,
   extra_cost_args_ls = list(costs_var_nm_1L_chr = "costs_dbl"),
-  fn = add_costs_from_gamma_dist
+  fn = add_costs_from_gamma_dstr
 )
 }
 \arguments{
@@ -19,20 +19,20 @@ add_costs_by_tmpt(
 
 \item{round_var_nm_1L_chr}{Round variable name (a character vector of length one)}
 
-\item{round_lvls_chr}{Round lvls (a character vector), Default: c("Baseline", "Follow-up")}
+\item{round_lvls_chr}{Round levels (a character vector), Default: c("Baseline", "Follow-up")}
 
 \item{costs_mean_dbl}{Costs mean (a double vector)}
 
-\item{costs_sd_dbl}{Costs sd (a double vector)}
+\item{costs_sd_dbl}{Costs standard deviation (a double vector)}
 
 \item{extra_cost_args_ls}{Extra cost arguments (a list), Default: list(costs_var_nm_1L_chr = "costs_dbl")}
 
-\item{fn}{Function (a function), Default: add_costs_from_gamma_dist}
+\item{fn}{Function (a function), Default: add_costs_from_gamma_dstr}
 }
 \value{
 Updated dataset (a tibble)
 }
 \description{
-add_costs_by_tmpt() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add costs by tmpt. Function argument ds_tb specifies the object to be updated. The function returns Updated dataset (a tibble).
+add_costs_by_tmpt() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add costs by time point. Function argument ds_tb specifies the object to be updated. The function returns Updated dataset (a tibble).
 }
 \keyword{internal}

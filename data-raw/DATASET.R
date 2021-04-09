@@ -38,7 +38,7 @@ ready4fun::make_pkg_desc_ls(pkg_title_1L_chr = "Youth Outcomes to Health Utility
 ##
 ## PART THREE
 ##
-pkg_dss_tb <- ready4fun::get_rds_from_dv("abbreviations_lup") %>%
+pkg_dss_tb <- abbreviations_lup %>% #ready4fun::get_rds_from_dv("abbreviations_lup") %>% # Replace when DS unlocked
   ready4fun::write_abbr_lup()
 utils::data("abbreviations_lup")
 # 5. Create function types and generics look-up tables
@@ -49,17 +49,24 @@ pkg_dss_tb <- ready4fun::get_rds_from_dv("fn_type_lup_tb") %>%
 utils::data("fn_type_lup_tb")
 #
 # 6. Create a table of all functions to document
-fns_dmt_tb <- ready4fun::make_dmt_for_all_fns(paths_ls = ready4fun::make_fn_nms()[1],
-                                              undocumented_fns_dir_chr = ready4fun::make_undmtd_fns_dir_chr()[1],
-                                              custom_dmt_ls = list(details_ls = NULL,
-                                                                   inc_for_main_user_lgl_ls = list(force_true_chr = c("add_aqol6d_predn_to_ds","add_qalys_to_ds",
-                                                                                                                      "get_mdl_from_dv","get_mdls_using_predrs","get_tfmn_from_lup",
-                                                                                                                      "make_he_smry","make_sngl_grp_ds","make_matched_ds",
-                                                                                                                      "rename_from_nmd_vec"),
+fns_dmt_tb <- make_dmt_for_all_fns(paths_ls = make_fn_nms()[1],
+                                   undocumented_fns_dir_chr = make_undmtd_fns_dir_chr()[1],
+                                   custom_dmt_ls = list(details_ls = NULL,
+                                                        inc_for_main_user_lgl_ls = list(force_true_chr = c("add_aqol6d_predn_to_ds",
+                                                                                                           "add_qalys_to_ds",
+                                                                                                           "get_mdl_from_dv",
+                                                                                                           "get_mdls_using_predrs",
+                                                                                                           "get_tfmn_from_lup",
+                                                                                                           "make_hlth_ec_smry",
+                                                                                                           "make_sngl_grp_ds",
+                                                                                                           "make_matched_ds",
+                                                                                                           "rename_from_nmd_vec"),
                                                                                                    force_false_chr = NA_character_),
                                                                    args_ls_ls = NULL),
-                                              fn_type_lup_tb = fn_type_lup_tb,
-                                              abbreviations_lup = abbreviations_lup)
+                                   fn_type_lup_tb = fn_type_lup_tb,
+                                   abbreviations_lup = abbreviations_lup,
+                                   object_type_lup = object_type_lup #ready4fun::get_rds_from_dv("object_type_lup") Replace when ds unlocked
+                                   )
 pkg_dss_tb <- fns_dmt_tb %>%
   ready4fun::write_and_doc_ds(db_1L_chr = "fns_dmt_tb",
                               title_1L_chr = "youthu function documentation table",

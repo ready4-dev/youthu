@@ -2,7 +2,7 @@
 % Please edit documentation in R/fn_update.R
 \name{update_col_with_diff}
 \alias{update_col_with_diff}
-\title{Update column with diff}
+\title{Update column with difference}
 \usage{
 update_col_with_diff(
   ds_tb,
@@ -23,9 +23,9 @@ update_col_with_diff(
 
 \item{fn}{Function (a function)}
 
-\item{abs_mean_diff_1L_dbl}{Abs mean diff (a double vector of length one)}
+\item{abs_mean_diff_1L_dbl}{Absolute mean difference (a double vector of length one)}
 
-\item{diff_sd_1L_dbl}{Diff sd (a double vector of length one)}
+\item{diff_sd_1L_dbl}{Difference standard deviation (a double vector of length one)}
 
 \item{multiplier_1L_dbl}{Multiplier (a double vector of length one)}
 
@@ -39,6 +39,6 @@ update_col_with_diff(
 New (a dataset)
 }
 \description{
-update_col_with_diff() is an Update function that edits an object, while preserving core object attributes. Specifically, this function implements an algorithm to update column with diff. Function argument ds_tb specifies the object to be updated. Argument var_nm_1L_chr provides the object to be updated. The function is called for its side effects and does not return a value.
+update_col_with_diff() is an Update function that edits an object, while preserving core object attributes. Specifically, this function implements an algorithm to update column with difference. Function argument ds_tb specifies the object to be updated. Argument var_nm_1L_chr provides the object to be updated. The function is called for its side effects and does not return a value.
 }
 \keyword{internal}

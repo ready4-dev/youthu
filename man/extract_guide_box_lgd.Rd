@@ -4,15 +4,15 @@
 \alias{extract_guide_box_lgd}
 \title{Extract guide box legend}
 \usage{
-extract_guide_box_lgd(a.gplot)
+extract_guide_box_lgd(plot_plt)
 }
 \arguments{
-\item{a.gplot}{PARAM_DESCRIPTION}
+\item{plot_plt}{Plot (a plot)}
 }
 \value{
-NA ()
+Legend (a character vector of length one)
 }
 \description{
-extract_guide_box_lgd() is an Extract function that extracts data from an object. Specifically, this function implements an algorithm to extract guide box legend. The function is called for its side effects and does not return a value.
+extract_guide_box_lgd() is an Extract function that extracts data from an object. Specifically, this function implements an algorithm to extract guide box legend. The function returns Legend (a character vector of length one).
 }
 \keyword{internal}

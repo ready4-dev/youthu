@@ -1,7 +1,7 @@
-#' Rename from nmd vector
-#' @description rename_from_nmd_vec() is a Rename function that renames elements of an object based on a pre-speccified schema. Specifically, this function implements an algorithm to rename from nmd vector. The function returns Renamed data (a tibble).
+#' Rename from named vector
+#' @description rename_from_nmd_vec() is a Rename function that renames elements of an object based on a pre-speccified schema. Specifically, this function implements an algorithm to rename from named vector. The function returns Renamed data (a tibble).
 #' @param data_tb Data (a tibble)
-#' @param nmd_vec_chr Nmd vector (a character vector)
+#' @param nmd_vec_chr Named vector (a character vector)
 #' @param vec_nms_as_new_1L_lgl Vector names as new (a logical vector of length one), Default: T
 #' @return Renamed data (a tibble)
 #' @rdname rename_from_nmd_vec

@@ -25,10 +25,27 @@ make_balanced_fake_ds <- function (ds_tb, match_on_vars_chr, id_var_nm_1L_chr = 
         match_on_vars_chr = match_on_vars_chr)
     return(ds_tb)
 }
-#' Make ce summary
-#' @description make_ce_smry() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make ce summary. The function returns Summary (a double vector).
+#' Make costs vector from gamma distribution
+#' @description make_costs_vec_from_gamma_dstr() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make costs vector from gamma distribution. The function returns Costs (a double vector).
+#' @param n_int N (an integer vector)
+#' @param costs_mean_dbl Costs mean (a double vector)
+#' @param costs_sd_dbl Costs standard deviation (a double vector)
+#' @return Costs (a double vector)
+#' @rdname make_costs_vec_from_gamma_dstr
+#' @export 
+#' @importFrom stats rgamma
+#' @keywords internal
+make_costs_vec_from_gamma_dstr <- function (n_int, costs_mean_dbl, costs_sd_dbl) 
+{
+    scale_1L_dbl <- costs_sd_dbl^2/costs_mean_dbl
+    shape_1L_dbl <- costs_mean_dbl/scale_1L_dbl
+    costs_dbl <- stats::rgamma(n_int, shape = shape_1L_dbl, scale = scale_1L_dbl)
+    return(costs_dbl)
+}
+#' Make cost efns summary
+#' @description make_cst_efns_smry() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make cost efns summary. The function returns Summary (a double vector).
 #' @param ds_tb Dataset (a tibble)
-#' @param indices PARAM_DESCRIPTION
+#' @param idxs_int Indices (an integer vector)
 #' @param change_types_chr Change types (a character vector), Default: 'dbl'
 #' @param benefits_pfx_1L_chr Benefits prefix (a character vector of length one), Default: 'qalys_dbl'
 #' @param benefits_var_nm_1L_chr Benefits variable name (a character vector of length one), Default: 'qalys'
@@ -38,9 +55,9 @@ make_balanced_fake_ds <- function (ds_tb, match_on_vars_chr, id_var_nm_1L_chr = 
 #' @param change_vars_chr Change variables (a character vector), Default: 'NA'
 #' @param cmprsn_groups_chr Comparison groups (a character vector), Default: c("Intervention", "Control")
 #' @param cmprsn_var_nm_1L_chr Comparison variable name (a character vector of length one), Default: 'study_arm_chr'
-#' @param round_fup_1L_chr Round fup (a character vector of length one), Default: 'Follow-up'
+#' @param round_fup_val_1L_chr Round follow-up value (a character vector of length one), Default: 'Follow-up'
 #' @return Summary (a double vector)
-#' @rdname make_ce_smry
+#' @rdname make_cst_efns_smry
 #' @export 
 #' @importFrom tibble tibble
 #' @importFrom tidyselect all_of
@@ -50,11 +67,11 @@ make_balanced_fake_ds <- function (ds_tb, match_on_vars_chr, id_var_nm_1L_chr = 
 #' @importFrom ready4fun get_from_lup_obj
 #' @importFrom tidyr pivot_wider
 #' @keywords internal
-make_ce_smry <- function (ds_tb, indices, change_types_chr = "dbl", benefits_pfx_1L_chr = "qalys_dbl", 
+make_cst_efns_smry <- function (ds_tb, idxs_int, change_types_chr = "dbl", benefits_pfx_1L_chr = "qalys_dbl", 
     benefits_var_nm_1L_chr = "qalys", costs_pfx_1L_chr = "costs_dbl", 
     costs_var_nm_1L_chr = "costs", change_sfx_1L_chr = "change", 
     change_vars_chr = NA_character_, cmprsn_groups_chr = c("Intervention", 
-        "Control"), cmprsn_var_nm_1L_chr = "study_arm_chr", round_fup_1L_chr = "Follow-up") 
+        "Control"), cmprsn_var_nm_1L_chr = "study_arm_chr", round_fup_val_1L_chr = "Follow-up") 
 {
     if (!is.na(change_vars_chr[1])) {
         change_vars_with_sfx_chr <- paste0(change_vars_chr, "_", 
@@ -65,13 +82,13 @@ make_ce_smry <- function (ds_tb, indices, change_types_chr = "dbl", benefits_pfx
         change_vars_with_sfx_chr <- replacements_chr <- character(0)
     }
     selected_cols_chr <- c(costs_pfx_1L_chr, benefits_pfx_1L_chr, 
-        change_vars_with_sfx_chr) %>% paste0("_", round_fup_1L_chr)
+        change_vars_with_sfx_chr) %>% paste0("_", round_fup_val_1L_chr)
     rename_lup <- tibble::tibble(old_name_chr = tidyselect::all_of(selected_cols_chr), 
         new_name_chr = c(costs_var_nm_1L_chr, benefits_var_nm_1L_chr, 
             replacements_chr))
     new_nms_ls <- rename_lup$new_name_chr %>% purrr::map(~paste0(.x, 
         "_", cmprsn_groups_chr))
-    summary_tb <- ds_tb[indices, ] %>% dplyr::group_by(!!rlang::sym(cmprsn_var_nm_1L_chr)) %>% 
+    summary_tb <- ds_tb[idxs_int, ] %>% dplyr::group_by(!!rlang::sym(cmprsn_var_nm_1L_chr)) %>% 
         dplyr::select(dplyr::all_of(c(selected_cols_chr, cmprsn_var_nm_1L_chr))) %>% 
         dplyr::rename_with(.cols = tidyselect::all_of(selected_cols_chr), 
             ~ready4fun::get_from_lup_obj(rename_lup, match_var_nm_1L_chr = "old_name_chr", 
@@ -89,36 +106,19 @@ make_ce_smry <- function (ds_tb, indices, change_types_chr = "dbl", benefits_pfx
     summary_dbl <- summary_tb[, 1]
     return(summary_dbl)
 }
-#' Make costs vector from gamma dist
-#' @description make_costs_vec_from_gamma_dist() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make costs vector from gamma dist. The function returns Costs (a double vector).
-#' @param n_int N (an integer vector)
-#' @param costs_mean_dbl Costs mean (a double vector)
-#' @param costs_sd_dbl Costs sd (a double vector)
-#' @return Costs (a double vector)
-#' @rdname make_costs_vec_from_gamma_dist
-#' @export 
-#' @importFrom stats rgamma
-#' @keywords internal
-make_costs_vec_from_gamma_dist <- function (n_int, costs_mean_dbl, costs_sd_dbl) 
-{
-    scale_1L_dbl <- costs_sd_dbl^2/costs_mean_dbl
-    shape_1L_dbl <- costs_mean_dbl/scale_1L_dbl
-    costs_dbl <- stats::rgamma(n_int, shape = shape_1L_dbl, scale = scale_1L_dbl)
-    return(costs_dbl)
-}
 #' Make fake trial dataset
 #' @description make_fake_trial_ds() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make fake trial dataset. The function returns Updated dataset (a tibble).
 #' @param ds_tb Dataset (a tibble)
 #' @param id_var_nm_1L_chr Identity variable name (a character vector of length one), Default: 'fkClientID'
 #' @param round_var_nm_1L_chr Round variable name (a character vector of length one), Default: 'round'
-#' @param round_lvls_chr Round lvls (a character vector), Default: c("Baseline", "Follow-up")
+#' @param round_lvls_chr Round levels (a character vector), Default: c("Baseline", "Follow-up")
 #' @param match_on_vars_chr Match on variables (a character vector)
 #' @param cmprsn_var_nm_1L_chr Comparison variable name (a character vector of length one), Default: 'study_arm_chr'
 #' @param cmprsn_groups_chr Comparison groups (a character vector), Default: c("Intervention", "Control")
 #' @param fns_ls Functions (a list)
 #' @param var_nms_chr Variable names (a character vector)
-#' @param abs_mean_diff_dbl Abs mean diff (a double vector)
-#' @param diff_sd_dbl Diff sd (a double vector)
+#' @param abs_mean_diff_dbl Absolute mean difference (a double vector)
+#' @param diff_sd_dbl Difference standard deviation (a double vector)
 #' @param multiplier_dbl Multiplier (a double vector)
 #' @param min_dbl Minimum (a double vector)
 #' @param max_dbl Maximum (a double vector)
@@ -150,7 +150,7 @@ make_fake_trial_ds <- function (ds_tb, id_var_nm_1L_chr = "fkClientID", round_va
 #' @description make_formula() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make formula. The function is called for its side effects and does not return a value.
 #' @param depnt_var_nm_1L_chr Dependent variable name (a character vector of length one)
 #' @param predictors_chr Predictors (a character vector)
-#' @param environment_env PARAM_DESCRIPTION, Default: parent.frame()
+#' @param environment_env Environment (an environment), Default: parent.frame()
 #' @return NA ()
 #' @rdname make_formula
 #' @export 
@@ -162,11 +162,11 @@ make_formula <- function (depnt_var_nm_1L_chr, predictors_chr, environment_env =
         " ~ ", paste0(predictors_chr, collapse = " + ")), env = environment_env)
     return(formula_fml)
 }
-#' Make he summary
-#' @description make_he_smry() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make he summary. The function returns He summary (a list).
+#' Make hlth ec summary
+#' @description make_hlth_ec_smry() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make hlth ec summary. The function returns He summary (a list).
 #' @param ds_tb Dataset (a tibble)
 #' @param change_vars_chr Change variables (a character vector), Default: 'NA'
-#' @param wtp_dbl Wtp (a double vector), Default: 50000
+#' @param wtp_dbl Willingness to pay (a double vector), Default: 50000
 #' @param bootstrap_iters_1L_int Bootstrap iterations (an integer vector of length one), Default: 1000
 #' @param change_types_chr Change types (a character vector), Default: 'dbl'
 #' @param benefits_pfx_1L_chr Benefits prefix (a character vector of length one), Default: 'qalys_dbl'
@@ -176,25 +176,25 @@ make_formula <- function (depnt_var_nm_1L_chr, predictors_chr, environment_env =
 #' @param change_sfx_1L_chr Change suffix (a character vector of length one), Default: 'change'
 #' @param cmprsn_groups_chr Comparison groups (a character vector), Default: c("Intervention", "Control")
 #' @param cmprsn_var_nm_1L_chr Comparison variable name (a character vector of length one), Default: 'study_arm_chr'
-#' @param round_fup_1L_chr Round fup (a character vector of length one), Default: 'Follow-up'
+#' @param round_fup_val_1L_chr Round follow-up value (a character vector of length one), Default: 'Follow-up'
 #' @return He summary (a list)
-#' @rdname make_he_smry
+#' @rdname make_hlth_ec_smry
 #' @export 
 #' @importFrom boot boot
 #' @importFrom purrr map_int
 #' @importFrom BCEA bcea
-make_he_smry <- function (ds_tb, change_vars_chr = NA_character_, wtp_dbl = 50000, 
+make_hlth_ec_smry <- function (ds_tb, change_vars_chr = NA_character_, wtp_dbl = 50000, 
     bootstrap_iters_1L_int = 1000, change_types_chr = "dbl", 
     benefits_pfx_1L_chr = "qalys_dbl", benefits_var_nm_1L_chr = "qalys", 
     costs_pfx_1L_chr = "costs_dbl", costs_var_nm_1L_chr = "costs", 
     change_sfx_1L_chr = "change", cmprsn_groups_chr = c("Intervention", 
-        "Control"), cmprsn_var_nm_1L_chr = "study_arm_chr", round_fup_1L_chr = "Follow-up") 
+        "Control"), cmprsn_var_nm_1L_chr = "study_arm_chr", round_fup_val_1L_chr = "Follow-up") 
 {
-    bootstraps_ls <- boot::boot(ds_tb, make_ce_smry, R = bootstrap_iters_1L_int, 
+    bootstraps_ls <- boot::boot(ds_tb, make_cst_efns_smry, R = bootstrap_iters_1L_int, 
         benefits_pfx_1L_chr = benefits_pfx_1L_chr, costs_pfx_1L_chr = costs_pfx_1L_chr, 
         change_vars_chr = change_vars_chr, change_sfx_1L_chr = change_sfx_1L_chr, 
         change_types_chr = change_types_chr, cmprsn_groups_chr = cmprsn_groups_chr, 
-        cmprsn_var_nm_1L_chr = cmprsn_var_nm_1L_chr, round_fup_1L_chr = round_fup_1L_chr, 
+        cmprsn_var_nm_1L_chr = cmprsn_var_nm_1L_chr, round_fup_val_1L_chr = round_fup_val_1L_chr, 
         benefits_var_nm_1L_chr = benefits_var_nm_1L_chr, costs_var_nm_1L_chr = costs_var_nm_1L_chr)
     costs_mat <- bootstraps_ls$t[, 1:2]
     benefits_mat <- bootstraps_ls$t[, 3:4]
@@ -213,14 +213,14 @@ make_he_smry <- function (ds_tb, change_vars_chr = NA_character_, wtp_dbl = 5000
 }
 #' Make matched dataset
 #' @description make_matched_ds() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make matched dataset. The function returns Matched dataset (a tibble).
-#' @param sngl_grp_ds PARAM_DESCRIPTION
+#' @param sngl_grp_ds_tb Single group dataset (a tibble)
 #' @param cmprsn_smry_tb Comparison summary (a tibble)
 #' @param ds_smry_ls Dataset summary (a list)
 #' @return Matched dataset (a tibble)
 #' @rdname make_matched_ds
 #' @export 
 #' @importFrom dplyr mutate across
-make_matched_ds <- function (sngl_grp_ds, cmprsn_smry_tb, ds_smry_ls) 
+make_matched_ds <- function (sngl_grp_ds_tb, cmprsn_smry_tb, ds_smry_ls) 
 {
     matched_ds_tb <- sngl_grp_ds_tb %>% make_fake_trial_ds(id_var_nm_1L_chr = ds_smry_ls$id_var_nm_1L_chr, 
         round_var_nm_1L_chr = ds_smry_ls$round_var_nm_1L_chr, 
@@ -292,7 +292,7 @@ make_sngl_grp_ds <- function (seed_ds_tb = NULL, ds_smry_ls)
         sngl_grp_ds_tb <- sngl_grp_ds_tb %>% dplyr::mutate(SOFAS = as.integer(round(SOFAS, 
             0)))
     sngl_grp_ds_tb <- sngl_grp_ds_tb %>% tibble::as_tibble() %>% 
-        add_dates_from_dist(bl_start_date_dtm = ds_smry_ls$bl_start_date_dtm, 
+        add_dates_from_dstr(bl_start_date_dtm = ds_smry_ls$bl_start_date_dtm, 
             bl_end_date_dtm = ds_smry_ls$bl_end_date_dtm, duration_args_ls = ds_smry_ls$duration_args_ls, 
             duration_fn = ds_smry_ls$duration_fn, date_var_nm_1L_chr = ds_smry_ls$date_var_nm_1L_chr, 
             id_var_nm_1L_chr = ds_smry_ls$id_var_nm_1L_chr, round_var_nm_1L_chr = ds_smry_ls$round_var_nm_1L_chr, 
@@ -301,7 +301,7 @@ make_sngl_grp_ds <- function (seed_ds_tb = NULL, ds_smry_ls)
         sngl_grp_ds_tb <- sngl_grp_ds_tb %>% add_costs_by_tmpt(round_var_nm_1L_chr = ds_smry_ls$round_var_nm_1L_chr, 
             round_lvls_chr = ds_smry_ls$round_lvls_chr, costs_mean_dbl = ds_smry_ls$costs_mean_dbl, 
             costs_sd_dbl = ds_smry_ls$costs_sd_dbl, extra_cost_args_ls = list(costs_var_nm_1L_chr = ds_smry_ls$costs_var_nm_1L_chr), 
-            fn = add_costs_from_gamma_dist)
+            fn = add_costs_from_gamma_dstr)
     sngl_grp_ds_tb <- sngl_grp_ds_tb %>% dplyr::arrange(ds_smry_ls$id_var_nm_1L_chr)
     return(sngl_grp_ds_tb)
 }

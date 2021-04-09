@@ -1,0 +1,24 @@
+"short_name_chr","long_name_chr","atomic_element_lgl","r3_element_lgl"
+"arr","array",FALSE,TRUE
+"chr","character",TRUE,TRUE
+"dbl","double",TRUE,TRUE
+"df","data.frame",FALSE,TRUE
+"dtm","date",TRUE,TRUE
+"env","environment",FALSE,FALSE
+"fct","factor",TRUE,TRUE
+"fn","function",FALSE,FALSE
+"int","integer",TRUE,TRUE
+"lgl","logical",TRUE,TRUE
+"ls","list",FALSE,TRUE
+"lup","lookup table",FALSE,TRUE
+"mat","matrix",FALSE,TRUE
+"mdl","model",FALSE,TRUE
+"plt","plot",FALSE,FALSE
+"prsn","person",FALSE,TRUE
+"r3","ready4 S3",FALSE,FALSE
+"r4","ready4 S4",FALSE,FALSE
+"rgx","regular expression",TRUE,TRUE
+"s3","S3",FALSE,FALSE
+"s4","S4",FALSE,FALSE
+"sf","simple features object",FALSE,TRUE
+"tb","tibble",FALSE,TRUE

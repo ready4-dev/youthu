@@ -2,7 +2,7 @@
 % Please edit documentation in R/fn_add.R
 \name{add_diffs_by_group_and_tmpt}
 \alias{add_diffs_by_group_and_tmpt}
-\title{Add diffs by group and tmpt}
+\title{Add differences by group and time point}
 \usage{
 add_diffs_by_group_and_tmpt(
   ds_tb = trial_ds_tb,
@@ -38,9 +38,9 @@ add_diffs_by_group_and_tmpt(
 
 \item{fns_ls}{Functions (a list)}
 
-\item{abs_mean_diff_dbl}{Abs mean diff (a double vector)}
+\item{abs_mean_diff_dbl}{Absolute mean difference (a double vector)}
 
-\item{diff_sd_dbl}{Diff sd (a double vector)}
+\item{diff_sd_dbl}{Difference standard deviation (a double vector)}
 
 \item{multiplier_dbl}{Multiplier (a double vector)}
 
@@ -54,6 +54,6 @@ add_diffs_by_group_and_tmpt(
 Updated dataset (a tibble)
 }
 \description{
-add_diffs_by_group_and_tmpt() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add diffs by group and tmpt. Function argument ds_tb specifies the object to be updated. The function returns Updated dataset (a tibble).
+add_diffs_by_group_and_tmpt() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add differences by group and time point. Function argument ds_tb specifies the object to be updated. The function returns Updated dataset (a tibble).
 }
 \keyword{internal}

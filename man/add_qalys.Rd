@@ -2,7 +2,7 @@
 % Please edit documentation in R/fn_add.R
 \name{add_qalys}
 \alias{add_qalys}
-\title{Add qalys}
+\title{Add Quality Adjusted Life Years}
 \usage{
 add_qalys(
   ds_tb,
@@ -28,7 +28,7 @@ add_qalys(
 
 \item{match_idx_var_nm_1L_chr}{Match index variable name (a character vector of length one), Default: 'match_idx_int'}
 
-\item{qalys_var_nm_1L_chr}{Qalys variable name (a character vector of length one), Default: 'qalys_dbl'}
+\item{qalys_var_nm_1L_chr}{Quality Adjusted Life Years variable name (a character vector of length one), Default: 'qalys_dbl'}
 
 \item{round_var_nm_1L_chr}{Round variable name (a character vector of length one), Default: 'round'}
 
@@ -42,6 +42,6 @@ add_qalys(
 Updated dataset (a tibble)
 }
 \description{
-add_qalys() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add qalys. Function argument ds_tb specifies the object to be updated. The function returns Updated dataset (a tibble).
+add_qalys() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add quality adjusted life years. Function argument ds_tb specifies the object to be updated. The function returns Updated dataset (a tibble).
 }
 \keyword{internal}

@@ -30,7 +30,7 @@ make_fake_trial_ds(
 
 \item{round_var_nm_1L_chr}{Round variable name (a character vector of length one), Default: 'round'}
 
-\item{round_lvls_chr}{Round lvls (a character vector), Default: c("Baseline", "Follow-up")}
+\item{round_lvls_chr}{Round levels (a character vector), Default: c("Baseline", "Follow-up")}
 
 \item{match_on_vars_chr}{Match on variables (a character vector)}
 
@@ -42,9 +42,9 @@ make_fake_trial_ds(
 
 \item{var_nms_chr}{Variable names (a character vector)}
 
-\item{abs_mean_diff_dbl}{Abs mean diff (a double vector)}
+\item{abs_mean_diff_dbl}{Absolute mean difference (a double vector)}
 
-\item{diff_sd_dbl}{Diff sd (a double vector)}
+\item{diff_sd_dbl}{Difference standard deviation (a double vector)}
 
 \item{multiplier_dbl}{Multiplier (a double vector)}
 

@@ -19,8 +19,8 @@ make_balanced_fake_ds <- function(ds_tb,
                         match_on_vars_chr = match_on_vars_chr)
     return(ds_tb)
 }
-make_ce_smry <- function(ds_tb,
-                         indices,
+make_cst_efns_smry <- function(ds_tb,
+                         idxs_int,
                          change_types_chr = "dbl",
                          benefits_pfx_1L_chr = "qalys_dbl",
                          benefits_var_nm_1L_chr = "qalys",
@@ -30,7 +30,7 @@ make_ce_smry <- function(ds_tb,
                          change_vars_chr = NA_character_,
                          cmprsn_groups_chr = c("Intervention","Control"),
                          cmprsn_var_nm_1L_chr = "study_arm_chr",
-                         round_fup_1L_chr = "Follow-up"){
+                         round_fup_val_1L_chr = "Follow-up"){
     if(!is.na(change_vars_chr[1])){
         change_vars_with_sfx_chr <- paste0(change_vars_chr, "_", change_sfx_1L_chr,"_", change_types_chr)
         replacements_chr <- paste0(change_vars_chr, "_", change_sfx_1L_chr)
@@ -39,11 +39,11 @@ make_ce_smry <- function(ds_tb,
     }
     selected_cols_chr <- c(costs_pfx_1L_chr,
                            benefits_pfx_1L_chr,
-                           change_vars_with_sfx_chr) %>% paste0("_",round_fup_1L_chr)
+                           change_vars_with_sfx_chr) %>% paste0("_",round_fup_val_1L_chr)
     rename_lup <- tibble::tibble(old_name_chr = tidyselect::all_of(selected_cols_chr),
                                  new_name_chr = c(costs_var_nm_1L_chr, benefits_var_nm_1L_chr, replacements_chr))
     new_nms_ls <- rename_lup$new_name_chr %>% purrr::map(~paste0(.x,"_",cmprsn_groups_chr))
-    summary_tb <- ds_tb[indices,] %>%
+    summary_tb <- ds_tb[idxs_int,] %>%
         dplyr::group_by(!!rlang::sym(cmprsn_var_nm_1L_chr)) %>%
         dplyr::select(dplyr::all_of(c(selected_cols_chr, cmprsn_var_nm_1L_chr))) %>%
         dplyr::rename_with(.cols = tidyselect::all_of(selected_cols_chr),
@@ -65,7 +65,7 @@ make_ce_smry <- function(ds_tb,
     summary_dbl <- summary_tb[,1]
     return(summary_dbl)
 }
-make_costs_vec_from_gamma_dist <- function(n_int,
+make_costs_vec_from_gamma_dstr <- function(n_int,
                                            costs_mean_dbl,
                                            costs_sd_dbl){
     scale_1L_dbl <- costs_sd_dbl^2/costs_mean_dbl
@@ -120,7 +120,7 @@ make_formula <- function(depnt_var_nm_1L_chr,
                                   paste0(predictors_chr, collapse = " + ")), env = environment_env)
     return(formula_fml)
 }
-make_he_smry <- function(ds_tb,
+make_hlth_ec_smry <- function(ds_tb,
                          change_vars_chr = NA_character_,
                          wtp_dbl = 50000,
                          bootstrap_iters_1L_int = 1000,
@@ -132,10 +132,10 @@ make_he_smry <- function(ds_tb,
                          change_sfx_1L_chr = "change",
                          cmprsn_groups_chr = c("Intervention","Control"),
                          cmprsn_var_nm_1L_chr = "study_arm_chr",
-                         round_fup_1L_chr = "Follow-up"
+                         round_fup_val_1L_chr = "Follow-up"
 ){
     bootstraps_ls <- boot::boot(ds_tb,
-                                make_ce_smry,
+                                make_cst_efns_smry,
                                 R = bootstrap_iters_1L_int,
                                 benefits_pfx_1L_chr = benefits_pfx_1L_chr,
                                 costs_pfx_1L_chr = costs_pfx_1L_chr,
@@ -144,10 +144,10 @@ make_he_smry <- function(ds_tb,
                                 change_types_chr = change_types_chr,
                                 cmprsn_groups_chr = cmprsn_groups_chr,
                                 cmprsn_var_nm_1L_chr = cmprsn_var_nm_1L_chr,
-                                round_fup_1L_chr = round_fup_1L_chr,
+                                round_fup_val_1L_chr = round_fup_val_1L_chr,
                                 benefits_var_nm_1L_chr = benefits_var_nm_1L_chr,
                                 costs_var_nm_1L_chr = costs_var_nm_1L_chr
-    ) # round_fup_1L_chr = "Follow-up", ds_smry_ls$round_lvls_chr[2]
+    ) # round_fup_val_1L_chr = "Follow-up", ds_smry_ls$round_lvls_chr[2]
     costs_mat <- bootstraps_ls$t[,1:2]
     benefits_mat <- bootstraps_ls$t[,3:4]
     reordered_cmprsn_chr <- cmprsn_groups_chr[cmprsn_groups_chr %>% purrr::map_int(~which(endsWith(names(bootstraps_ls$t0)[1:2],                                                                       paste0(.x,"_dbl"))))]
@@ -167,7 +167,7 @@ make_he_smry <- function(ds_tb,
     )
     return(he_smry_ls)
 }
-make_matched_ds <- function(sngl_grp_ds,
+make_matched_ds <- function(sngl_grp_ds_tb,
                             cmprsn_smry_tb,
                             ds_smry_ls){
     matched_ds_tb <- sngl_grp_ds_tb %>%
@@ -220,7 +220,7 @@ make_sngl_grp_ds <- function(seed_ds_tb = NULL,
             dplyr::mutate(SOFAS = as.integer(round(SOFAS,0)))
     sngl_grp_ds_tb <- sngl_grp_ds_tb %>%
         tibble::as_tibble() %>%
-        add_dates_from_dist(bl_start_date_dtm = ds_smry_ls$bl_start_date_dtm,
+        add_dates_from_dstr(bl_start_date_dtm = ds_smry_ls$bl_start_date_dtm,
                             bl_end_date_dtm = ds_smry_ls$bl_end_date_dtm,
                             duration_args_ls = ds_smry_ls$duration_args_ls,
                             duration_fn = ds_smry_ls$duration_fn,
@@ -235,7 +235,7 @@ make_sngl_grp_ds <- function(seed_ds_tb = NULL,
                           costs_mean_dbl = ds_smry_ls$costs_mean_dbl,
                           costs_sd_dbl = ds_smry_ls$costs_sd_dbl,
                           extra_cost_args_ls = list(costs_var_nm_1L_chr = ds_smry_ls$costs_var_nm_1L_chr),
-                          fn = add_costs_from_gamma_dist)
+                          fn = add_costs_from_gamma_dstr)
     sngl_grp_ds_tb <- sngl_grp_ds_tb %>% dplyr::arrange(ds_smry_ls$id_var_nm_1L_chr)
     return(sngl_grp_ds_tb)
 }
