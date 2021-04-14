@@ -1,6 +1,6 @@
 Package: youthu
 Title: Youth Outcomes to Health Utility
-Version: 0.0.0.9067
+Version: 0.0.0.9068
 Authors@R: 
     c(person(given = "Matthew",
              family = "Hamilton",
@@ -47,7 +47,6 @@ Imports:
     boot,
     dataverse (>= 0.3.8),
     dplyr,
-    ggplot2,
     knitr,
     knitrBootstrap,
     lifecycle,
@@ -67,9 +66,9 @@ Imports:
     tidyr,
     tidyselect,
     truncnorm,
-    TTU (>= 0.0.0.9135),
+    TTU (>= 0.0.0.9136),
     utils,
-    youthvars (>= 0.0.0.9024)
+    youthvars (>= 0.0.0.9025)
 VignetteBuilder: knitr
 Depends: 
     R (>= 2.10)
