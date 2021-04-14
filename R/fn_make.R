@@ -146,22 +146,6 @@ make_fake_trial_ds <- function (ds_tb, id_var_nm_1L_chr = "fkClientID", round_va
         min_dbl = min_dbl, max_dbl = max_dbl, integer_lgl = integer_lgl)
     return(updated_ds_tb)
 }
-#' Make formula
-#' @description make_formula() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make formula. The function is called for its side effects and does not return a value.
-#' @param depnt_var_nm_1L_chr Dependent variable name (a character vector of length one)
-#' @param predictors_chr Predictors (a character vector)
-#' @param environment_env Environment (an environment), Default: parent.frame()
-#' @return NA ()
-#' @rdname make_formula
-#' @export 
-#' @importFrom stats formula
-#' @keywords internal
-make_formula <- function (depnt_var_nm_1L_chr, predictors_chr, environment_env = parent.frame()) 
-{
-    formula_fml <- stats::formula(paste0(depnt_var_nm_1L_chr, 
-        " ~ ", paste0(predictors_chr, collapse = " + ")), env = environment_env)
-    return(formula_fml)
-}
 #' Make health economic summary
 #' @description make_hlth_ec_smry() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make health economic summary. The function returns He summary (a list).
 #' @param ds_tb Dataset (a tibble)
@@ -250,6 +234,7 @@ make_matched_ds <- function (sngl_grp_ds_tb, cmprsn_smry_tb, ds_smry_ls)
 #' @export 
 #' @importFrom dplyr filter mutate case_when arrange n select right_join
 #' @importFrom rlang sym
+#' @importFrom youthvars make_formula
 #' @importFrom MatchIt matchit match.data
 #' @importFrom purrr map_dfr
 #' @keywords internal
@@ -260,9 +245,9 @@ make_matched_ds_spine <- function (ds_tb, round_var_nm_1L_chr = "Timepoint_chr",
     match_ds <- ds_tb %>% dplyr::filter(!!rlang::sym(round_var_nm_1L_chr) == 
         timepoint_bl_val_1L_chr) %>% dplyr::mutate(Intervention_lgl = dplyr::case_when(!!rlang::sym(cmprsn_var_nm_1L_chr) == 
         active_arm_val_1L_chr ~ T, T ~ F))
-    matched_ls <- make_formula("Intervention_lgl", predictors_chr = match_on_vars_chr) %>% 
-        MatchIt::matchit(data = match_ds, method = "nearest", 
-            ratio = 1)
+    matched_ls <- youthvars::make_formula("Intervention_lgl", 
+        predictors_chr = match_on_vars_chr) %>% MatchIt::matchit(data = match_ds, 
+        method = "nearest", ratio = 1)
     matched_ds_tb <- MatchIt::match.data(matched_ls)
     match_key_ds_tb <- c(F, T) %>% purrr::map_dfr(~matched_ds_tb %>% 
         dplyr::filter(Intervention_lgl == .x) %>% dplyr::arrange(distance) %>% 

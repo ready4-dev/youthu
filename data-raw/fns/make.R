@@ -112,14 +112,6 @@ make_fake_trial_ds <- function(ds_tb,
                                     )
     return(updated_ds_tb)
 }
-make_formula <- function(depnt_var_nm_1L_chr,
-                         predictors_chr,
-                         environment_env = parent.frame()){
-    formula_fml <- stats::formula(paste0(depnt_var_nm_1L_chr,
-                                  " ~ ",
-                                  paste0(predictors_chr, collapse = " + ")), env = environment_env)
-    return(formula_fml)
-}
 make_hlth_ec_smry <- function(ds_tb,
                          change_vars_chr = NA_character_,
                          wtp_dbl = 50000,
@@ -200,7 +192,7 @@ make_matched_ds_spine <- function(ds_tb,
     match_ds <- ds_tb %>% dplyr::filter(!!rlang::sym(round_var_nm_1L_chr) == timepoint_bl_val_1L_chr) %>%
         dplyr::mutate(Intervention_lgl = dplyr::case_when(!!rlang::sym(cmprsn_var_nm_1L_chr) == active_arm_val_1L_chr ~ T,
                                                           T ~ F))
-    matched_ls <- make_formula("Intervention_lgl",
+    matched_ls <- youthvars::make_formula("Intervention_lgl",
                                predictors_chr = match_on_vars_chr) %>%
         MatchIt::matchit(data = match_ds, method = "nearest", ratio = 1)
     matched_ds_tb <- MatchIt::match.data(matched_ls)

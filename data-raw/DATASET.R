@@ -39,7 +39,7 @@ ready4fun::make_pkg_desc_ls(pkg_title_1L_chr = "Youth Outcomes to Health Utility
 ## PART THREE
 ##
 object_type_lup <- ready4fun::get_rds_from_dv("object_type_lup")
-pkg_dss_tb <- abbreviations_lup %>% #ready4fun::get_rds_from_dv("abbreviations_lup") %>% # Replace when DS unlocked
+pkg_dss_tb <- ready4fun::get_rds_from_dv("abbreviations_lup") %>%
   ready4fun::write_abbr_lup(object_type_lup = object_type_lup)
 utils::data("abbreviations_lup")
 # 5. Create function types and generics look-up tables
@@ -51,8 +51,8 @@ pkg_dss_tb <- ready4fun::get_rds_from_dv("fn_type_lup_tb") %>%
 utils::data("fn_type_lup_tb")
 #
 # 6. Create a table of all functions to document
-fns_dmt_tb <- ready4fun::make_dmt_for_all_fns(paths_ls = make_fn_nms()[1],
-                                   undocumented_fns_dir_chr = make_undmtd_fns_dir_chr()[1],
+fns_dmt_tb <- ready4fun::make_dmt_for_all_fns(paths_ls = ready4fun::make_fn_nms()[1],
+                                   undocumented_fns_dir_chr = ready4fun::make_undmtd_fns_dir_chr()[1],
                                    custom_dmt_ls = list(details_ls = NULL,
                                                         inc_for_main_user_lgl_ls = list(force_true_chr = c("add_aqol6d_predn_to_ds",
                                                                                                            "add_qalys_to_ds",
@@ -67,8 +67,7 @@ fns_dmt_tb <- ready4fun::make_dmt_for_all_fns(paths_ls = make_fn_nms()[1],
                                                                    args_ls_ls = NULL),
                                    fn_type_lup_tb = fn_type_lup_tb,
                                    abbreviations_lup = abbreviations_lup,
-                                   object_type_lup = object_type_lup #ready4fun::get_rds_from_dv("object_type_lup") Replace when ds unlocked
-                                   )
+                                   object_type_lup = object_type_lup)
 pkg_dss_tb <- fns_dmt_tb %>%
   ready4fun::write_and_doc_ds(db_1L_chr = "fns_dmt_tb",
                               title_1L_chr = "youthu function documentation table",
@@ -84,7 +83,7 @@ mdls_smry_tb <- ready4use::ready4_dv_import_lup() %>%
                    file_type_chr = ".csv",
                    data_repo_file_ext_chr = ".tab") %>%
   ready4use::get_data()
-data("predictors_lup", package = "TTU")
+utils::data("predictors_lup", package = "TTU")
 pkg_dss_tb <- tibble::tibble(mdl_nms_chr = mdls_smry_tb$Model %>% unique()) %>%
   dplyr::mutate(predrs_ls = mdl_nms_chr %>% strsplit("_") %>% purrr::map(~ .x[.x %in% c(predictors_lup$short_name_chr)]),
                 mdl_type_chr = mdl_nms_chr %>% strsplit("_") %>% purrr::map(~ .x[.x %in% c("GLM", "OLS")]) %>% purrr::flatten_chr(),

@@ -41,3 +41,5 @@ vignettes/*.pdf
 docs
 doc
 Meta
+/doc/
+/Meta/
