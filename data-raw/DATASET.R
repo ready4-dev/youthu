@@ -38,18 +38,20 @@ ready4fun::make_pkg_desc_ls(pkg_title_1L_chr = "Youth Outcomes to Health Utility
 ##
 ## PART THREE
 ##
+object_type_lup <- ready4fun::get_rds_from_dv("object_type_lup")
 pkg_dss_tb <- abbreviations_lup %>% #ready4fun::get_rds_from_dv("abbreviations_lup") %>% # Replace when DS unlocked
-  ready4fun::write_abbr_lup()
+  ready4fun::write_abbr_lup(object_type_lup = object_type_lup)
 utils::data("abbreviations_lup")
 # 5. Create function types and generics look-up tables
 # 5.1 Create a lookup table of function types used in this package and save it as a package dataset (data gets saved in the data directory, documentation script is created in R directory).
 pkg_dss_tb <- ready4fun::get_rds_from_dv("fn_type_lup_tb") %>%
   ready4fun::write_dmtd_fn_type_lup(abbreviations_lup = abbreviations_lup,
+                                    object_type_lup = object_type_lup,
                                     pkg_dss_tb = pkg_dss_tb)
 utils::data("fn_type_lup_tb")
 #
 # 6. Create a table of all functions to document
-fns_dmt_tb <- make_dmt_for_all_fns(paths_ls = make_fn_nms()[1],
+fns_dmt_tb <- ready4fun::make_dmt_for_all_fns(paths_ls = make_fn_nms()[1],
                                    undocumented_fns_dir_chr = make_undmtd_fns_dir_chr()[1],
                                    custom_dmt_ls = list(details_ls = NULL,
                                                         inc_for_main_user_lgl_ls = list(force_true_chr = c("add_aqol6d_predn_to_ds",
@@ -73,6 +75,7 @@ pkg_dss_tb <- fns_dmt_tb %>%
                               desc_1L_chr = "Meta-data on each youthu function used to create package documentation",
                               url_1L_chr = "https://ready4-dev.github.io/youthu/",
                               abbreviations_lup = abbreviations_lup,
+                              object_type_lup = object_type_lup,
                               pkg_dss_tb = pkg_dss_tb)
 ##
 mdls_smry_tb <- ready4use::ready4_dv_import_lup() %>%
@@ -90,6 +93,7 @@ pkg_dss_tb <- tibble::tibble(mdl_nms_chr = mdls_smry_tb$Model %>% unique()) %>%
                               title_1L_chr = "Lookup table of prediction models",
                               desc_1L_chr = "A summary of the key descriptive features of the prediction models included in the youthu package.",
                               abbreviations_lup = abbreviations_lup,
+                              object_type_lup = object_type_lup,
                               pkg_dss_tb = pkg_dss_tb)
 # 7. Save copy of package documentation to online data repo.
 # ds_ls <- ready4use::write_pkg_dss_to_dv_ds_csvs(pkg_dss_tb,
@@ -126,6 +130,7 @@ ready4fun::write_and_doc_fn_fls(fns_dmt_tb,
 # devtools::build_vignettes()
 #
 ready4fun::write_links_for_website(user_manual_url_1L_chr = "https://github.com/ready4-dev/youthu/releases/download/v0.0.0.9065/youthu_user_0.0.0.9065.pdf",
-                                   developer_manual_url_1L_chr = "https://github.com/ready4-dev/youthu/releases/download/v0.0.0.9065/youthu_developer_0.0.0.9065.pdf")
+                                   developer_manual_url_1L_chr = "https://github.com/ready4-dev/youthu/releases/download/v0.0.0.9065/youthu_developer_0.0.0.9065.pdf",
+                                   project_website_url_1L_chr = "https://www.ready4-dev.com/")
 
 

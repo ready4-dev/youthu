@@ -52,6 +52,8 @@
 "bnmls","binomials",TRUE
 "brm","bayesian regression model",FALSE
 "brms","bayesian regression models",TRUE
+"bw","black and white",FALSE
+"bws","black and whites",TRUE
 "cdn","condition",FALSE
 "cdns","conditions",TRUE
 "chkr","checker",FALSE
@@ -110,6 +112,8 @@
 "depnts","dependents",TRUE
 "desc","description",FALSE
 "descs","descriptions",TRUE
+"descv","descriptive",FALSE
+"descvs","descriptives",TRUE
 "dev","development",FALSE
 "devs","developments",TRUE
 "df","data.frame",FALSE
@@ -150,6 +154,8 @@
 "dvpr","developer",FALSE
 "dvprs","developers",TRUE
 "dvs","dataverses",TRUE
+"ec","economic",FALSE
+"ecs","economics",TRUE
 "efc","effective",NA
 "efcn","effectiveness",NA
 "elmt","element",FALSE
@@ -188,6 +194,8 @@
 "gtrs","getters",TRUE
 "hline","horizonal line",FALSE
 "hlines","horizonal lines",TRUE
+"hlth","health",FALSE
+"hlths","healths",TRUE
 "id","identity",FALSE
 "ids","identities",TRUE
 "idx","index",FALSE
@@ -390,8 +398,10 @@
 "s4","S4",FALSE
 "s4_ls","list of S4s",FALSE
 "s4_r4","ready4 S4 collection of S4s",FALSE
+"scl","scale",FALSE
 "sclg","scaling",FALSE
 "sclgs","scalings",TRUE
+"scls","scales",TRUE
 "scrg","scoring",FALSE
 "scrgs","scorings",TRUE
 "sctr","scatter",FALSE
@@ -413,6 +423,8 @@
 "sngls","singles",TRUE
 "src","source",FALSE
 "srcs","sources",TRUE
+"stat","statistic",FALSE
+"stats","statistics",TRUE
 "std","standard",FALSE
 "stds","standards",TRUE
 "str","setter",FALSE
