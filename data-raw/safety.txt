@@ -1,0 +1,49 @@
+
+## Tools for predicting Quality Adjusted Life Years
+To apply the results of this study to predict Quality Adjusted Life Years (QALYs), we suggest the following workflow.
+
+### Search for models that are compatible with your data
+A collection of datasets containing Transfer to Utility model objects (in RDS file format) are available at:
+
+- https://dataverse.harvard.edu/dataverse/TTU
+
+At the time of submission of this article, that collection contained the three datasets we created as part of this study: 
+
+- https://doi.org/10.7910/DVN/BAMRIP (Primary Analysis);
+
+- https://doi.org/10.7910/DVN/6H971K (Secondary Analysis A - Depression measure added to Anxiety predictors); and
+
+- https://doi.org/10.7910/DVN/KKQFNX (Secondary Analysis B - SOFAS as an independent predictor)
+
+Future datasets created using the same standardised methods may be added over time, which we hope will expand the range of models to include additional predictors and different health utility measures.
+
+Each data repository of models created with our tools includes a file named **TS_TTU_Mdls_Smry.pdf** that is a catalogue describing the key features of each included model. Consulting this catalogue will help inform you whether a dataset contains models that are appropriate to your needs.  
+
+### Apply selected model to your data.
+The simplest workflow for using the models in the online data repositories to predict QALYS using your own data is to use the youthu (Youth Outcomes to Health Utility) package. We recommend reviewing the latest installation and use instructions at:
+
+- https://ready4-dev.github.io/youthu
+
+At the time of article submission, the two steps for predicting QALYS with youthu functions are as follows.
+
+#### Retrieve preferred model from its data repository
+```{r}
+model_mdl <- youthu::get_mdl_from_dv()
+
+```
+
+
+
+## Tools for study replication and extension
+
+### Complete study algorithm
+```{r child="Complete_Study_Algorithm.Rmd", eval=FALSE, echo=TRUE}
+```
+
+## Additional tables refernced in the main text
+```{r child="TA_Tables.Rmd", echo=FALSE}
+```
+
+## Additional figures refernced in the main text
+```{r child="TA_Figures.Rmd", echo=FALSE}
+```

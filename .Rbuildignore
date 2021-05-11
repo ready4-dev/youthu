@@ -70,3 +70,4 @@
 ^data-raw/dataverse/seed_obj_lup_tb/seed_obj_lup_tb\.csv$
 ^data-raw/dataverse/seed_obj_lup_tb/seed_obj_lup_tb\.RDS$
 ^data-raw/name_changes\.txt$
+^data-raw/safety\.txt$
