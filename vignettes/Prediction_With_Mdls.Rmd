@@ -18,10 +18,10 @@ library(youthu)
 To use youthu to predict health utility values for records in a dataset, it is necessary for that dataset to include one or more of the predictors used in the youthu models. To verify that this is the case it is necessary to identify the predictors used in youthu models and to then compare these to the variables in the dataset being used for prediction.
 
 ### Identify measures that can be used to predict health utility with youthu models
-To identify the predictors in youthu models consult the `predictors_lup`{.R} lookup table from the TTU package.
+To identify the predictors in youthu models consult the `predictors_lup`{.R} lookup table from the youthvars package.
 
 ```{r results='hide'}
-data("predictors_lup", package = "TTU")
+data("predictors_lup", package = "youthvars")
 predictors_lup[,1:5]
 ```
 ```{r predrstb, echo = F, tab.cap='Predictors used in youthu models', tab.id = 'predrstb', results="asis"}

@@ -139,7 +139,7 @@ Our first step is to identify which youthu models we will use to predict adolesc
 First we retrieve the model we wish to use.
 
 ```{r}
-data("predictors_lup", package = "TTU")
+data("predictors_lup", package = "youthvars")
 candidate_mdls_tb <- get_mdls_using_predrs(predictors_lup$short_name_chr[c(5,7)])
 model_mdl <- get_mdl_from_dv(candidate_mdls_tb$mdl_nms_chr[4])
 ```

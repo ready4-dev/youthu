@@ -83,7 +83,7 @@ mdls_smry_tb <- ready4use::ready4_dv_import_lup() %>%
                    file_type_chr = ".csv",
                    data_repo_file_ext_chr = ".tab") %>%
   ready4use::get_data()
-utils::data("predictors_lup", package = "TTU")
+utils::data("predictors_lup", package = "youthvars")
 pkg_dss_tb <- tibble::tibble(mdl_nms_chr = mdls_smry_tb$Model %>% unique()) %>%
   dplyr::mutate(predrs_ls = mdl_nms_chr %>% strsplit("_") %>% purrr::map(~ .x[.x %in% c(predictors_lup$short_name_chr)]),
                 mdl_type_chr = mdl_nms_chr %>% strsplit("_") %>% purrr::map(~ .x[.x %in% c("GLM", "OLS")]) %>% purrr::flatten_chr(),
