@@ -21,6 +21,5 @@ This development version of the youthu package has been made available as part o
 
 The following vignettes demonstrate some of the tools currently included in the youthu package:
 
-- [Data integrity tools](Data_Integrity.html)
 - [Predict Adolescent AQoL-6D](Prediction_With_Mdls.html)
 - [Economic analysis](Economic_Analysis.html)
