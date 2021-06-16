@@ -52,7 +52,10 @@ add_aqol6d_predn_to_ds <- function (data_tb, model_mdl, tfmn_1L_chr, predr_vars_
         round_bl_val_1L_chr = round_bl_val_1L_chr, predictors_lup = predictors_lup) %>% 
         TTU::add_utility_predn_to_ds(model_mdl = model_mdl, tfmn_1L_chr = tfmn_1L_chr, 
             depnt_var_nm_1L_chr = mdl_dep_var_1L_chr, predr_vars_nms_chr = mdl_predr_terms_chr, 
-            utl_cls_fn = utl_cls_fn, rmv_tfd_depnt_var_1L_lgl = T)
+            new_data_is_1L_chr = "Simulated", utl_cls_fn = utl_cls_fn, 
+            force_min_max_1L_lgl = T, force_new_data_1L_lgl = T, 
+            is_brms_mdl_1L_lgl = F, utl_min_val_1L_dbl = 0.03, 
+            rmv_tfd_depnt_var_1L_lgl = T)
     if (!is.null(utl_var_nm_1L_chr)) {
         updated_tb <- updated_tb %>% dplyr::rename(`:=`(!!rlang::sym(utl_var_nm_1L_chr), 
             tidyselect::all_of(mdl_dep_var_1L_chr)))

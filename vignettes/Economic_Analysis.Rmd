@@ -147,12 +147,12 @@ model_mdl <- get_mdl_from_dv(candidate_mdls_tb$mdl_nms_chr[4])
 We then use that model to predict health utility from the measures in our dataset.
 ```{r}
 econ_cmprsn_ds_tb <- add_aqol6d_predn_to_ds(data_tb = matched_ds_tb,
-                                   model_mdl = model_mdl,
-                                   tfmn_1L_chr = get_tfmn_from_lup(candidate_mdls_tb$mdl_nms_chr[4]),
-                                   utl_var_nm_1L_chr = ds_smry_ls$utl_var_nm_1L_chr,
-                                   id_var_nm_1L_chr = ds_smry_ls$id_var_nm_1L_chr,
-                                   round_var_nm_1L_chr = ds_smry_ls$round_var_nm_1L_chr,
-                                   round_bl_val_1L_chr = ds_smry_ls$round_lvls_chr[1]) %>%
+                                            model_mdl = model_mdl,
+                                            tfmn_1L_chr = get_tfmn_from_lup(candidate_mdls_tb$mdl_nms_chr[4]),
+                                            utl_var_nm_1L_chr = ds_smry_ls$utl_var_nm_1L_chr,
+                                            id_var_nm_1L_chr = ds_smry_ls$id_var_nm_1L_chr,
+                                            round_var_nm_1L_chr = ds_smry_ls$round_var_nm_1L_chr,
+                                            round_bl_val_1L_chr = ds_smry_ls$round_lvls_chr[1]) %>%
   dplyr::select(fkClientID, round, study_arm_chr, date_psx, duration_prd, dplyr::everything())
 ```
 
