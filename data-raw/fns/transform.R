@@ -55,7 +55,7 @@ transform_ds_to_predn_ds <- function(data_tb,
                                                                                                                     match_value_xx = .x,
                                                                                                                     evaluate_lgl = F)),
                                                  ungroup_1L_lgl = T,
-                                                 add_cll_tfmn_1L_lgl = ifelse(tfmn_1L_chr=="CLL",T,F))
+                                                 tfmn_1L_chr = tfmn_1L_chr)
   return(data_tb)
 }
 

@@ -73,7 +73,6 @@ transform_ds_to_predn_ds <- function (data_tb, predr_vars_nms_chr, tfmn_1L_chr, 
         drop_all_msng_1L_lgl = F, scaling_fctr_dbl = purrr::map_dbl(predr_vars_nms_chr, 
             ~ready4fun::get_from_lup_obj(predictors_lup, target_var_nm_1L_chr = "mdl_scaling_dbl", 
                 match_var_nm_1L_chr = "short_name_chr", match_value_xx = .x, 
-                evaluate_lgl = F)), ungroup_1L_lgl = T, add_cll_tfmn_1L_lgl = ifelse(tfmn_1L_chr == 
-            "CLL", T, F))
+                evaluate_lgl = F)), ungroup_1L_lgl = T, tfmn_1L_chr = tfmn_1L_chr)
     return(data_tb)
 }

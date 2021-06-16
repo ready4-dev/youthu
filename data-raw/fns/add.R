@@ -49,10 +49,9 @@ add_aqol6d_predn_to_ds <- function(data_tb,
                                       nmd_vec_chr = predr_vars_nms_chr,
                                       vec_nms_as_new_1L_lgl = F)
   }
-
-  if("aqol6d_total_w_CLL_cloglog" %in% names(updated_tb))
-    updated_tb <- updated_tb %>%
-    dplyr::select(-aqol6d_total_w_CLL_cloglog)
+  if("aqol6d_total_w_CLL_cloglog" %in% names(updated_tb)) # CHECK & REMOVE
+    updated_tb <- updated_tb %>% # CHECK & REMOVE
+    dplyr::select(-aqol6d_total_w_CLL_cloglog) # CHECK & REMOVE
   names_to_incl_chr <- c(names(updated_tb),
                          setdiff(names(data_tb),
                                  names(updated_tb)))
