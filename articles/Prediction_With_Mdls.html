@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">youthu</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9070</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9075</span>
       </span>
     </div>
 
@@ -113,9 +113,9 @@
 <div id="identify-measures-that-can-be-used-to-predict-health-utility-with-youthu-models" class="section level3">
 <h3 class="hasAnchor">
 <a href="#identify-measures-that-can-be-used-to-predict-health-utility-with-youthu-models" class="anchor"></a>Identify measures that can be used to predict health utility with youthu models</h3>
-<p>To identify the predictors in youthu models consult the <code class="sourceCode r">predictors_lup</code> lookup table from the TTU package.</p>
+<p>To identify the predictors in youthu models consult the <code class="sourceCode r">predictors_lup</code> lookup table from the youthvars package.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"predictors_lup"</span>, package <span class="op">=</span> <span class="st">"TTU"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"predictors_lup"</span>, package <span class="op">=</span> <span class="st">"youthvars"</span><span class="op">)</span>
 <span class="va">predictors_lup</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span></code></pre></div>
 <table class="table  lightable-paper lightable-hover">
 <caption>
@@ -612,7 +612,7 @@ Baseline
 69
 </td>
 <td style="text-align:right;">
-0.7736508
+0.8244436
 </td>
 </tr>
 <tr>
@@ -629,7 +629,7 @@ Baseline
 60
 </td>
 <td style="text-align:right;">
-0.4851686
+0.3884536
 </td>
 </tr>
 <tr>
@@ -646,7 +646,7 @@ Follow-up
 64
 </td>
 <td style="text-align:right;">
-0.4995956
+0.3184655
 </td>
 </tr>
 <tr>
@@ -663,7 +663,7 @@ Baseline
 76
 </td>
 <td style="text-align:right;">
-0.9285070
+0.9554088
 </td>
 </tr>
 <tr>
@@ -680,7 +680,7 @@ Baseline
 71
 </td>
 <td style="text-align:right;">
-0.9136730
+0.8361715
 </td>
 </tr>
 <tr>
@@ -697,7 +697,7 @@ Follow-up
 71
 </td>
 <td style="text-align:right;">
-0.9136730
+0.9041380
 </td>
 </tr>
 </tbody>
@@ -711,7 +711,7 @@ Follow-up
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">updated_data_tb</span><span class="op">$</span><span class="va">AQoL6D_HU</span><span class="op">)</span></code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##  0.2114  0.5188  0.6430  0.6390  0.7658  0.9660</code></pre>
+##  0.1371  0.4922  0.6381  0.6370  0.7893  0.9980</code></pre>
 </div>
   </div>
 

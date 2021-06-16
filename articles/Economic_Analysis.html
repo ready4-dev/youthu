@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">youthu</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9070</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9075</span>
       </span>
     </div>
 
@@ -219,7 +219,7 @@ Participant_20
 Baseline
 </td>
 <td style="text-align:right;">
-2020-09-08
+2020-11-09
 </td>
 <td style="text-align:right;">
 0S
@@ -248,7 +248,7 @@ Participant_593
 Baseline
 </td>
 <td style="text-align:right;">
-2020-07-16
+2020-09-16
 </td>
 <td style="text-align:right;">
 0S
@@ -277,7 +277,7 @@ Participant_593
 Follow-up
 </td>
 <td style="text-align:right;">
-2021-01-07
+2021-03-10
 </td>
 <td style="text-align:right;">
 175d 0H 0M 0S
@@ -306,7 +306,7 @@ Participant_20
 Follow-up
 </td>
 <td style="text-align:right;">
-2021-03-05
+2021-05-06
 </td>
 <td style="text-align:right;">
 178d 0H 0M 0S
@@ -335,7 +335,7 @@ Participant_259
 Baseline
 </td>
 <td style="text-align:right;">
-2020-11-03
+2021-01-04
 </td>
 <td style="text-align:right;">
 0S
@@ -364,7 +364,7 @@ Participant_962
 Baseline
 </td>
 <td style="text-align:right;">
-2020-12-16
+2021-02-16
 </td>
 <td style="text-align:right;">
 0S
@@ -463,7 +463,7 @@ Intervention
 <p>Our first step is to identify which youthu models we will use to predict adolescent AQoL-6D and apply these models to our data. This step was explained in more detail in <a href="Prediction_With_Mdls.html">another vignette article</a>, so will be dealt with briefly here.</p>
 <p>First we retrieve the model we wish to use.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"predictors_lup"</span>, package <span class="op">=</span> <span class="st">"TTU"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"predictors_lup"</span>, package <span class="op">=</span> <span class="st">"youthvars"</span><span class="op">)</span>
 <span class="va">candidate_mdls_tb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_mdls_using_predrs.html">get_mdls_using_predrs</a></span><span class="op">(</span><span class="va">predictors_lup</span><span class="op">$</span><span class="va">short_name_chr</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">7</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></code></pre></div>
 <pre><code>## New names:
 ## * `` -&gt; ...1
@@ -474,12 +474,12 @@ Intervention
 <p>We then use that model to predict health utility from the measures in our dataset.</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">econ_cmprsn_ds_tb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/add_aqol6d_predn_to_ds.html">add_aqol6d_predn_to_ds</a></span><span class="op">(</span>data_tb <span class="op">=</span> <span class="va">matched_ds_tb</span>,
-                                   model_mdl <span class="op">=</span> <span class="va">model_mdl</span>,
-                                   tfmn_1L_chr <span class="op">=</span> <span class="fu"><a href="../reference/get_tfmn_from_lup.html">get_tfmn_from_lup</a></span><span class="op">(</span><span class="va">candidate_mdls_tb</span><span class="op">$</span><span class="va">mdl_nms_chr</span><span class="op">[</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span>,
-                                   utl_var_nm_1L_chr <span class="op">=</span> <span class="va">ds_smry_ls</span><span class="op">$</span><span class="va">utl_var_nm_1L_chr</span>,
-                                   id_var_nm_1L_chr <span class="op">=</span> <span class="va">ds_smry_ls</span><span class="op">$</span><span class="va">id_var_nm_1L_chr</span>,
-                                   round_var_nm_1L_chr <span class="op">=</span> <span class="va">ds_smry_ls</span><span class="op">$</span><span class="va">round_var_nm_1L_chr</span>,
-                                   round_bl_val_1L_chr <span class="op">=</span> <span class="va">ds_smry_ls</span><span class="op">$</span><span class="va">round_lvls_chr</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="op">%&gt;%</span>
+                                            model_mdl <span class="op">=</span> <span class="va">model_mdl</span>,
+                                            tfmn_1L_chr <span class="op">=</span> <span class="fu"><a href="../reference/get_tfmn_from_lup.html">get_tfmn_from_lup</a></span><span class="op">(</span><span class="va">candidate_mdls_tb</span><span class="op">$</span><span class="va">mdl_nms_chr</span><span class="op">[</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span>,
+                                            utl_var_nm_1L_chr <span class="op">=</span> <span class="va">ds_smry_ls</span><span class="op">$</span><span class="va">utl_var_nm_1L_chr</span>,
+                                            id_var_nm_1L_chr <span class="op">=</span> <span class="va">ds_smry_ls</span><span class="op">$</span><span class="va">id_var_nm_1L_chr</span>,
+                                            round_var_nm_1L_chr <span class="op">=</span> <span class="va">ds_smry_ls</span><span class="op">$</span><span class="va">round_var_nm_1L_chr</span>,
+                                            round_bl_val_1L_chr <span class="op">=</span> <span class="va">ds_smry_ls</span><span class="op">$</span><span class="va">round_lvls_chr</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">fkClientID</span>, <span class="va">round</span>, <span class="va">study_arm_chr</span>, <span class="va">date_psx</span>, <span class="va">duration_prd</span>, <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## Joining, by = c("fkClientID", "round")</code></pre>
 </div>
@@ -581,10 +581,10 @@ Control
 243
 </td>
 <td style="text-align:right;">
-2020-06-24
+2020-08-25
 </td>
 <td style="text-align:right;">
-2020-12-18
+2021-02-18
 </td>
 <td style="text-align:right;">
 0S
@@ -605,10 +605,10 @@ Control
 64
 </td>
 <td style="text-align:right;">
-0.4851686
+0.3389797
 </td>
 <td style="text-align:left;">
-0.4995956
+0.5491302
 </td>
 <td style="text-align:right;">
 647.9386
@@ -632,13 +632,13 @@ Control
 0
 </td>
 <td style="text-align:right;">
-0.0144270
+0.2101505
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-0.2386082
+0.2151889
 </td>
 </tr>
 <tr>
@@ -652,10 +652,10 @@ Control
 191
 </td>
 <td style="text-align:right;">
-2020-08-20
+2020-10-21
 </td>
 <td style="text-align:right;">
-2021-02-20
+2021-04-23
 </td>
 <td style="text-align:right;">
 0S
@@ -676,10 +676,10 @@ Control
 71
 </td>
 <td style="text-align:right;">
-0.9136730
+0.9593505
 </td>
 <td style="text-align:left;">
-0.9136730
+0.8888675
 </td>
 <td style="text-align:right;">
 428.9205
@@ -703,13 +703,13 @@ Control
 0
 </td>
 <td style="text-align:right;">
-0.0000000
+-0.0704829
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-0.4602761
+0.4655333
 </td>
 </tr>
 <tr>
@@ -723,10 +723,10 @@ Intervention
 230
 </td>
 <td style="text-align:right;">
-2020-07-15
+2020-09-15
 </td>
 <td style="text-align:right;">
-2021-01-10
+2021-03-13
 </td>
 <td style="text-align:right;">
 0S
@@ -747,10 +747,10 @@ Intervention
 77
 </td>
 <td style="text-align:right;">
-0.9365928
+0.8964027
 </td>
 <td style="text-align:left;">
-0.9328595
+0.9576689
 </td>
 <td style="text-align:right;">
 429.3703
@@ -774,13 +774,13 @@ Intervention
 0
 </td>
 <td style="text-align:right;">
--0.0037333
+0.0612662
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-0.4580862
+0.4543173
 </td>
 </tr>
 <tr>
@@ -794,10 +794,10 @@ Intervention
 115
 </td>
 <td style="text-align:right;">
-2020-08-13
+2020-10-14
 </td>
 <td style="text-align:right;">
-2021-02-11
+2021-04-14
 </td>
 <td style="text-align:right;">
 0S
@@ -818,10 +818,10 @@ Intervention
 59
 </td>
 <td style="text-align:right;">
-0.5056398
+0.5211633
 </td>
 <td style="text-align:left;">
-0.5166532
+0.7340772
 </td>
 <td style="text-align:right;">
 395.1637
@@ -845,13 +845,13 @@ Intervention
 0
 </td>
 <td style="text-align:right;">
-0.0110135
+0.2129139
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-0.2546986
+0.3127362
 </td>
 </tr>
 <tr>
@@ -865,10 +865,10 @@ Intervention
 183
 </td>
 <td style="text-align:right;">
-2020-11-14
+2021-01-15
 </td>
 <td style="text-align:right;">
-2021-05-19
+2021-07-20
 </td>
 <td style="text-align:right;">
 0S
@@ -889,10 +889,10 @@ Intervention
 67
 </td>
 <td style="text-align:right;">
-0.5476195
+0.6401275
 </td>
 <td style="text-align:left;">
-0.7846798
+0.6945803
 </td>
 <td style="text-align:right;">
 402.9910
@@ -916,13 +916,13 @@ Intervention
 0
 </td>
 <td style="text-align:right;">
-0.2370603
+0.0544528
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-0.3392302
+0.3398435
 </td>
 </tr>
 <tr>
@@ -936,10 +936,10 @@ Intervention
 219
 </td>
 <td style="text-align:right;">
-2020-12-10
+2021-02-10
 </td>
 <td style="text-align:right;">
-2021-06-07
+2021-08-08
 </td>
 <td style="text-align:right;">
 0S
@@ -960,10 +960,10 @@ Intervention
 67
 </td>
 <td style="text-align:right;">
-0.4977575
+0.5692839
 </td>
 <td style="text-align:left;">
-0.6029373
+0.6838795
 </td>
 <td style="text-align:right;">
 534.2285
@@ -987,13 +987,13 @@ Intervention
 0
 </td>
 <td style="text-align:right;">
-0.1051799
+0.1145956
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-0.2697117
+0.3070722
 </td>
 </tr>
 </tbody>
@@ -1023,7 +1023,7 @@ Intervention
                                                  cmprsn_groups_chr <span class="op">=</span> <span class="va">ds_smry_ls</span><span class="op">$</span><span class="va">cmprsn_groups_chr</span>,
                                                  cmprsn_var_nm_1L_chr <span class="op">=</span> <span class="va">ds_smry_ls</span><span class="op">$</span><span class="va">cmprsn_var_nm_1L_chr</span>,
                                                  round_fup_val_1L_chr <span class="op">=</span> <span class="va">ds_smry_ls</span><span class="op">$</span><span class="va">round_lvls_chr</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></code></pre></div>
-<p>As part of the output of the <code class="sourceCode r">make_hlth_ec_smry</code> function is a BCEA object, we can use the BCEA package to produce a number of graphical summaries of economic results. One of the most important is the production of a cost-effectiveness plane. This plot highlights that, with an ICER of $56,368.35, less than half of the bootstrapped iteration incremental cost and QALY pairs fall within the zone of cost-effectiveness (green). In fact, at the cost-effectiveness threshold we supplied, the results suggest there is a 44.9% probability that the intervention is cost-effective.</p>
+<p>As part of the output of the <code class="sourceCode r">make_hlth_ec_smry</code> function is a BCEA object, we can use the BCEA package to produce a number of graphical summaries of economic results. One of the most important is the production of a cost-effectiveness plane. This plot highlights that, with an ICER of $38,533.23, most of the bootstrapped iteration incremental cost and QALY pairs fall within the zone of cost-effectiveness (green). In fact, at the cost-effectiveness threshold we supplied, the results suggest there is a 62.5% probability that the intervention is cost-effective.</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">BCEA</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BCEA/man/ceplane.plot.html">ceplane.plot</a></span><span class="op">(</span><span class="va">he_smry_ls</span><span class="op">$</span><span class="va">ce_res_ls</span>, wtp <span class="op">=</span><span class="fl">50000</span>,    
                    area_color <span class="op">=</span> <span class="st">"green"</span>,
