@@ -35,6 +35,30 @@ get_mdls_using_predrs <- function(mdl_predrs_in_ds_chr,
   filtered_mdls_lup <- mdls_lup %>% dplyr::filter(include_lgl)
   return(filtered_mdls_lup)
 }
+get_mdl_catalogue_refs <- function(predictors_chr,
+                                   ingredients_ls){
+  catalogue_refs_chr <- get_mdls_using_predrs("k10",
+                                              mdls_lup = ingredients_ls$mdls_lup) %>%
+    dplyr::pull(mdl_nms_chr)
+  return(catalogue_refs_chr)
+}
+get_mdl_smrys <- function(ingredients_ls,
+                          mdl_nms_chr = NULL){
+  if(is.null(mdl_nms_chr))
+    mdl_nms_chr <- ingredients_ls$mdls_smry_tb$Model %>% unique()
+  mdls_smry_ls <- mdl_nms_chr %>%
+    purrr::map(~ingredients_ls$mdls_smry_tb %>%
+                 dplyr::filter(Model == .x)) %>%
+    stats::setNames(mdl_nms_chr)
+  return(mdls_smry_ls)
+}
+get_predictors <- function(ingredients_ls){
+  predictors_tb <- ingredients_ls$predictors_lup %>%
+    dplyr::select(short_name_chr, long_name_chr) %>%
+    dplyr::rename(Variable = short_name_chr,
+                  Description = long_name_chr)
+  return(predictors_tb)
+}
 get_tfmn_from_lup <- function(mdl_nm_1L_chr, mdls_lup = NULL){
   if (is.null(mdls_lup))
     utils::data("mdls_lup", envir = environment())

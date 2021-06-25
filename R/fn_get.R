@@ -1,3 +1,18 @@
+#' Get model catalogue references
+#' @description get_mdl_catalogue_refs() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get model catalogue references. Function argument predictors_chr specifies the where to look for the required object. The function returns Catalogue references (a character vector).
+#' @param predictors_chr Predictors (a character vector)
+#' @param ingredients_ls Ingredients (a list)
+#' @return Catalogue references (a character vector)
+#' @rdname get_mdl_catalogue_refs
+#' @export 
+#' @importFrom dplyr pull
+#' @keywords internal
+get_mdl_catalogue_refs <- function (predictors_chr, ingredients_ls) 
+{
+    catalogue_refs_chr <- get_mdls_using_predrs("k10", mdls_lup = ingredients_ls$mdls_lup) %>% 
+        dplyr::pull(mdl_nms_chr)
+    return(catalogue_refs_chr)
+}
 #' Get model from dataverse
 #' @description get_mdl_from_dv() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get model from dataverse. Function argument mdl_nm_1L_chr specifies the where to look for the required object. The function returns Model (a model).
 #' @param mdl_nm_1L_chr Model name (a character vector of length one)
@@ -20,6 +35,26 @@ get_mdl_from_dv <- function (mdl_nm_1L_chr, dv_ds_nm_1L_chr = "https://doi.org/1
     model_mdl <- readRDS(url(paste0("https://dataverse.harvard.edu/api/access/datafile/", 
         ds_ls[[idx_1L_int]]$dataFile$id)))
     return(model_mdl)
+}
+#' Get model summarys
+#' @description get_mdl_smrys() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get model summarys. Function argument ingredients_ls specifies the where to look for the required object. The function returns Models summary (a list).
+#' @param ingredients_ls Ingredients (a list)
+#' @param mdl_nms_chr Model names (a character vector), Default: NULL
+#' @return Models summary (a list)
+#' @rdname get_mdl_smrys
+#' @export 
+#' @importFrom purrr map
+#' @importFrom dplyr filter
+#' @importFrom stats setNames
+#' @keywords internal
+get_mdl_smrys <- function (ingredients_ls, mdl_nms_chr = NULL) 
+{
+    if (is.null(mdl_nms_chr)) 
+        mdl_nms_chr <- ingredients_ls$mdls_smry_tb$Model %>% 
+            unique()
+    mdls_smry_ls <- mdl_nms_chr %>% purrr::map(~ingredients_ls$mdls_smry_tb %>% 
+        dplyr::filter(Model == .x)) %>% stats::setNames(mdl_nms_chr)
+    return(mdls_smry_ls)
 }
 #' Get models using predictors
 #' @description get_mdls_using_predrs() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get models using predictors. Function argument mdl_predrs_in_ds_chr specifies the where to look for the required object. The function returns Filtered models (a lookup table).
@@ -57,6 +92,21 @@ get_mdls_using_predrs <- function (mdl_predrs_in_ds_chr, mdls_lup = NULL)
         0
     filtered_mdls_lup <- mdls_lup %>% dplyr::filter(include_lgl)
     return(filtered_mdls_lup)
+}
+#' Get predictors
+#' @description get_predictors() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get predictors. Function argument ingredients_ls specifies the where to look for the required object. The function returns Predictors (a tibble).
+#' @param ingredients_ls Ingredients (a list)
+#' @return Predictors (a tibble)
+#' @rdname get_predictors
+#' @export 
+#' @importFrom dplyr select rename
+#' @keywords internal
+get_predictors <- function (ingredients_ls) 
+{
+    predictors_tb <- ingredients_ls$predictors_lup %>% dplyr::select(short_name_chr, 
+        long_name_chr) %>% dplyr::rename(Variable = short_name_chr, 
+        Description = long_name_chr)
+    return(predictors_tb)
 }
 #' Get transformation from
 #' @description get_tfmn_from_lup() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get transformation from lookup table. Function argument mdl_nm_1L_chr specifies the where to look for the required object. The function returns Transformation (a character vector of length one).

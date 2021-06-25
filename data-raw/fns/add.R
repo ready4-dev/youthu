@@ -11,7 +11,7 @@ add_aqol6d_predn_to_ds <- function(data_tb,
   if (is.null(predictors_lup))
     utils::data("predictors_lup", package = "youthvars", envir = environment())
   if(!is.null(names(predr_vars_nms_chr))){
-    data_tb <- rename_from_nmd_vec(data_tb,
+    data_tb <- TTU::rename_from_nmd_vec(data_tb,
                                    nmd_vec_chr = predr_vars_nms_chr,
                                    vec_nms_as_new_1L_lgl = T)
   }
@@ -27,7 +27,7 @@ add_aqol6d_predn_to_ds <- function(data_tb,
                                                utl_var_nm_1L_chr,
                                                mdl_dep_var_1L_chr))]
   updated_tb <- data_tb %>%
-    transform_ds_to_predn_ds(predr_vars_nms_chr = mdl_predr_terms_chr,
+    TTU::transform_ds_to_predn_ds(predr_vars_nms_chr = mdl_predr_terms_chr,
                              tfmn_1L_chr = tfmn_1L_chr,
                              depnt_var_nm_1L_chr = mdl_dep_var_1L_chr,
                              id_var_nm_1L_chr = id_var_nm_1L_chr,
@@ -50,7 +50,7 @@ add_aqol6d_predn_to_ds <- function(data_tb,
       dplyr::rename(!!rlang::sym(utl_var_nm_1L_chr):=tidyselect::all_of(mdl_dep_var_1L_chr))
   }
   if(!is.null(names(predr_vars_nms_chr))){
-    updated_tb <- rename_from_nmd_vec(updated_tb,
+    updated_tb <- TTU::rename_from_nmd_vec(updated_tb,
                                       nmd_vec_chr = predr_vars_nms_chr,
                                       vec_nms_as_new_1L_lgl = F)
   }

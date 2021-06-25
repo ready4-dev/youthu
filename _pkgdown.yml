@@ -1,11 +1,3 @@
-home:
-  links:
-  - text: User manual (PDF)
-    href: https://github.com/ready4-dev/youthu/releases/download/v0.0.0.9065/youthu_user_0.0.0.9065.pdf
-  - text: Developer version of usual manual (PDF)
-    href: https://github.com/ready4-dev/youthu/releases/download/v0.0.0.9065/youthu_developer_0.0.0.9065.pdf
-  - text: Project website
-    href: https://www.ready4-dev.com/
 development:
   mode: auto
 reference:
@@ -25,4 +17,3 @@ reference:
   - make_hlth_ec_smry
   - make_matched_ds
   - make_sngl_grp_ds
-  - rename_from_nmd_vec
