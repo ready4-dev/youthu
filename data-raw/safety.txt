@@ -17,7 +17,7 @@ At the time of submission of this article, that collection contained the three d
 
 Future datasets created using the same standardised methods may be added over time, which we hope will expand the range of models to include additional predictors and different health utility measures.
 
-Each data repository of models created with our tools includes a file named **TS_TTU_Mdls_Smry.pdf** that is a catalogue describing the key features of each included model. Consulting this catalogue will help inform you whether a dataset contains models that are appropriate to your needs.  
+Each data repository of models created with our tools includes a file named **AAA_TTU_MDL_CTG.pdf** that is a catalogue describing the key features of each included model. Consulting this catalogue will help inform you whether a dataset contains models that are appropriate to your needs.  
 
 ### Apply selected model to your data.
 The simplest workflow for using the models in the online data repositories to predict QALYS using your own data is to use the youthu (Youth Outcomes to Health Utility) package. We recommend reviewing the latest installation and use instructions at:
