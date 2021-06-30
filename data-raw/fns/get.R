@@ -43,11 +43,7 @@ get_mdl_ctlg_url <- function(mdls_lup,
                              mdl_nm_1L_chr,
                              server_1L_chr = "dataverse.harvard.edu",
                              key_1L_chr = NULL){
-  dv_ds_nm_1L_chr <- ready4fun::get_from_lup_obj(mdls_lup,
-                              match_value_xx = mdl_nm_1L_chr,
-                              match_var_nm_1L_chr = "mdl_nms_chr",
-                              target_var_nm_1L_chr = "ds_url",
-                              evaluate_lgl = F)
+  dv_ds_nm_1L_chr <- get_mdl_ds_url(mdls_lup, mdl_nm_1L_chr = mdl_nm_1L_chr)
   ds_ls <- dataverse::dataset_files(dv_ds_nm_1L_chr,
                                     server = server_1L_chr,
                                     key = key_1L_chr)
@@ -67,6 +63,15 @@ get_mdl_ctlg_url <- function(mdls_lup,
     ctlg_url <- paste0("https://dataverse.harvard.edu/api/access/datafile/",ds_ls[[idx_1L_int]]$dataFile$id)
   }
   return(ctlg_url)
+}
+get_mdl_ds_url <- function(mdls_lup,
+                           mdl_nm_1L_chr){
+  mdl_ds_url <- ready4fun::get_from_lup_obj(mdls_lup,
+                                                 match_value_xx = mdl_nm_1L_chr,
+                                                 match_var_nm_1L_chr = "mdl_nms_chr",
+                                                 target_var_nm_1L_chr = "ds_url",
+                                                 evaluate_lgl = F)
+  return(mdl_ds_url)
 }
 get_mdl_from_dv <- function(mdl_nm_1L_chr,
                             dv_ds_nm_1L_chr = "https://doi.org/10.7910/DVN/JC6PTV",
@@ -128,7 +133,6 @@ get_mdl_catalogue_refs <- function(predictors_chr,
     dplyr::pull(mdl_nms_chr)
   return(catalogue_refs_chr)
 }
-
 get_mdl_smrys <- function(ingredients_ls,
                           mdl_nms_chr = NULL){
   if(is.null(mdl_nms_chr))
@@ -143,6 +147,41 @@ get_mdl_smrys <- function(ingredients_ls,
       }) %>%
     stats::setNames(mdl_nms_chr)
   return(mdls_smry_ls)
+}
+get_mdl_metadata <- function(mdls_lup,
+                             mdl_nm_1L_chr,
+                             server_1L_chr = "dataverse.harvard.edu",
+                             key_1L_chr = NULL){
+  dv_ds_nm_1L_chr <- get_mdl_ds_url(mdls_lup, mdl_nm_1L_chr = mdl_nm_1L_chr)
+  ingredients_ls <- get_mdl_from_dv("mdl_ingredients",
+                                    dv_ds_nm_1L_chr = dv_ds_nm_1L_chr,
+                                    server_1L_chr = server_1L_chr,
+                                    key_1L_chr = key_1L_chr)
+  return(ingredients_ls)
+}
+get_model <- function(mdls_lup,
+                      mdl_nm_1L_chr,
+                      make_from_tbl_1L_lgl = T,
+                      server_1L_chr = "dataverse.harvard.edu",
+                      key_1L_chr = NULL){
+  if(make_from_tbl_1L_lgl){
+    ingredients_ls <- get_mdl_metadata(mdls_lup,
+                                       mdl_nm_1L_chr = mdl_nm_1L_chr,
+                                       server_1L_chr = server_1L_chr,
+                                       key_1L_chr = key_1L_chr)
+    model_mdl <- TTU::get_table_predn_mdl(mdl_nm_1L_chr,
+                                     ingredients_ls = ingredients_ls,
+                                     analysis_1L_chr = ready4fun::get_from_lup_obj(mdls_lup,
+                                                                                   match_value_xx = mdl_nm_1L_chr,
+                                                                                   match_var_nm_1L_chr = "mdl_nms_chr",
+                                                                                   target_var_nm_1L_chr = "source_chr",
+                                                                                   evaluate_lgl = F))
+  }else
+    model_mdl <- get_mdl_from_dv(mdl_nm_1L_chr,
+                                 dv_ds_nm_1L_chr = get_mdl_ds_url(mdls_lup, mdl_nm_1L_chr = mdl_nm_1L_chr),
+                                 server_1L_chr = server_1L_chr,
+                                 key_1L_chr = key_1L_chr)
+  return(model_mdl)
 }
 get_predictors <- function(ingredients_ls){
   predictors_tb <- ingredients_ls$predictors_lup %>%
@@ -190,7 +229,7 @@ get_ttu_ds_smrys <- function(ttu_dv_nm_1L_chr = "firstbounce",
                                         key_1L_chr = key_1L_chr)
   dv_dss_mdl_smrys_ls <- dv_dss_mdl_smrys_ls %>%
     purrr::compact()
-  if(!is.null(reference_1L_int) & length(dv_dss_mdl_smrys_ls)>0)
+  if(!is.null(reference_int) & length(dv_dss_mdl_smrys_ls)>0)
     dv_dss_mdl_smrys_ls <- reference_int %>%
     purrr::map(~dv_dss_mdl_smrys_ls %>%
     purrr::pluck(.x)) %>%

@@ -1,71 +1,4 @@
-add_aqol6d_predn_to_ds <- function(data_tb,
-                                   model_mdl,
-                                   tfmn_1L_chr,
-                                   predr_vars_nms_chr = NULL,
-                                   utl_var_nm_1L_chr = NULL,
-                                   id_var_nm_1L_chr = "fkClientID",
-                                   round_var_nm_1L_chr = "round",
-                                   round_bl_val_1L_chr = "Baseline",
-                                   utl_cls_fn = youthvars::youthvars_aqol6d_adol,
-                                   predictors_lup = NULL){
-  if (is.null(predictors_lup))
-    utils::data("predictors_lup", package = "youthvars", envir = environment())
-  if(!is.null(names(predr_vars_nms_chr))){
-    data_tb <- TTU::rename_from_nmd_vec(data_tb,
-                                   nmd_vec_chr = predr_vars_nms_chr,
-                                   vec_nms_as_new_1L_lgl = T)
-  }
-  terms_ls <- model_mdl$terms
-  mdl_dep_var_1L_chr <- terms_ls[[2]] %>% as.character()
-  mdl_predr_terms_chr <- terms_ls[[3]] %>% as.character()
-  mdl_predr_terms_chr <- mdl_predr_terms_chr %>% strsplit(split = " +") %>% purrr::flatten_chr()
-  mdl_predr_terms_chr <- mdl_predr_terms_chr[mdl_predr_terms_chr!="+"]
-  mdl_predr_terms_chr <- mdl_predr_terms_chr %>% purrr::map_chr(~stringr::str_replace(.x,"_baseline","") %>%                                                         stringr::str_replace("_change","")
-  ) %>% unique()
-  original_ds_vars_chr <- names(data_tb)[!names(data_tb) %in% c(mdl_predr_terms_chr,
-                                        ifelse(!is.null(utl_var_nm_1L_chr),
-                                               utl_var_nm_1L_chr,
-                                               mdl_dep_var_1L_chr))]
-  updated_tb <- data_tb %>%
-    TTU::transform_ds_to_predn_ds(predr_vars_nms_chr = mdl_predr_terms_chr,
-                             tfmn_1L_chr = tfmn_1L_chr,
-                             depnt_var_nm_1L_chr = mdl_dep_var_1L_chr,
-                             id_var_nm_1L_chr = id_var_nm_1L_chr,
-                             round_var_nm_1L_chr = round_var_nm_1L_chr,
-                             round_bl_val_1L_chr = round_bl_val_1L_chr,
-                             predictors_lup = predictors_lup) %>%
-    TTU::add_utility_predn_to_ds(model_mdl = model_mdl,
-                                 tfmn_1L_chr = tfmn_1L_chr,
-                                 depnt_var_nm_1L_chr = mdl_dep_var_1L_chr,
-                                 predr_vars_nms_chr = mdl_predr_terms_chr,
-                                 new_data_is_1L_chr = "Simulated",
-                                 utl_cls_fn = utl_cls_fn,
-                                 force_min_max_1L_lgl = T,
-                                 force_new_data_1L_lgl = T,
-                                 is_brms_mdl_1L_lgl = F,
-                                 utl_min_val_1L_dbl = 0.03,
-                                 rmv_tfd_depnt_var_1L_lgl = T)
-  if(!is.null(utl_var_nm_1L_chr)){
-    updated_tb <- updated_tb %>%
-      dplyr::rename(!!rlang::sym(utl_var_nm_1L_chr):=tidyselect::all_of(mdl_dep_var_1L_chr))
-  }
-  if(!is.null(names(predr_vars_nms_chr))){
-    updated_tb <- TTU::rename_from_nmd_vec(updated_tb,
-                                      nmd_vec_chr = predr_vars_nms_chr,
-                                      vec_nms_as_new_1L_lgl = F)
-  }
-  if("aqol6d_total_w_CLL_cloglog" %in% names(updated_tb)) # CHECK & REMOVE
-    updated_tb <- updated_tb %>% # CHECK & REMOVE
-    dplyr::select(-aqol6d_total_w_CLL_cloglog) # CHECK & REMOVE
-  names_to_incl_chr <- c(names(updated_tb),
-                         setdiff(names(data_tb),
-                                 names(updated_tb)))
-  updated_tb <- dplyr::left_join(data_tb %>% dplyr::select(tidyselect::all_of(original_ds_vars_chr)),
-                                 updated_tb)
-  updated_tb <- updated_tb %>%
-    dplyr::select(tidyselect::all_of(names_to_incl_chr[names_to_incl_chr %in% names(updated_tb)]))
-  return(updated_tb)
-}
+
 add_change_in_ds_var <- function(ds_tb,
                                  id_var_nm_1L_chr = "fkClientID",
                                  round_var_nm_1L_chr = "round",
@@ -214,4 +147,44 @@ add_qalys_to_ds <- function(ds_tb,
               duration_var_nm_1L_chr = "duration_prd",
               qalys_var_nm_1L_chr = "qalys_dbl")
   return(ds_tb)
+}
+add_utl_predn <- function(data_tb,
+                          mdls_lup,
+                          mdl_nm_1L_chr,
+                          deterministic_1L_lgl = T,
+                          force_min_max_1L_lgl = T,
+                          id_var_nm_1L_chr = "UID",
+                          key_1L_chr = NULL,
+                          make_from_tbl_1L_lgl = T,
+                          model_mdl = NULL,
+                          new_data_is_1L_chr = "Simulated",
+                          predr_vars_nms_chr = NULL,
+                          round_var_nm_1L_chr = "Timepoint",
+                          round_bl_val_1L_chr = "BL",
+                          server_1L_chr = "dataverse.harvard.edu",
+                          utl_cls_fn = NULL,
+                          utl_var_nm_1L_chr = NULL){
+  if(is.null(model_mdl))
+    model_mdl <- get_model(mdls_lup,
+                           mdl_nm_1L_chr = mdl_nm_1L_chr,
+                           make_from_tbl_1L_lgl = make_from_tbl_1L_lgl,
+                           server_1L_chr = server_1L_chr,
+                           key_1L_chr = key_1L_chr)
+  updated_tb <- add_utl_predn_to_new_ds(data_tb,# ADD TTU::
+                                        mdl_nm_1L_chr = mdl_nm_1L_chr,
+                                        id_var_nm_1L_chr = id_var_nm_1L_chr,
+                                        analysis_1L_chr = ready4fun::get_from_lup_obj(mdls_lup,
+                                                                                      match_value_xx = mdl_nm_1L_chr,
+                                                                                      match_var_nm_1L_chr = "mdl_nms_chr",
+                                                                                      target_var_nm_1L_chr = "source_chr",
+                                                                                      evaluate_lgl = F),
+                                        ingredients_ls = get_mdl_metadata(mdls_lup,
+                                                                          mdl_nm_1L_chr = mdl_nm_1L_chr),
+                                        model_mdl = model_mdl,
+                                        new_data_is_1L_chr = new_data_is_1L_chr,
+                                        predr_vars_nms_chr = predr_vars_nms_chr,
+                                        round_var_nm_1L_chr = round_var_nm_1L_chr,
+                                        round_bl_val_1L_chr = round_bl_val_1L_chr,
+                                        utl_var_nm_1L_chr = utl_var_nm_1L_chr)
+  return(updated_tb)
 }
