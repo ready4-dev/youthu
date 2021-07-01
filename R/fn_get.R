@@ -1,28 +1,3 @@
-#' Get datasets using predictors
-#' @description get_dss_using_predrs() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get datasets using predictors. Function argument mdl_predrs_in_ds_chr specifies the where to look for the required object. The function returns Ttu dataverse datasets (a tibble).
-#' @param mdl_predrs_in_ds_chr Model predictors in dataset (a character vector)
-#' @param ttu_dv_dss_tb Ttu dataverse datasets (a tibble), Default: NULL
-#' @param ttu_dv_nm_1L_chr Ttu dataverse name (a character vector of length one), Default: 'firstbounce'
-#' @param server_1L_chr Server (a character vector of length one), Default: 'dataverse.harvard.edu'
-#' @param key_1L_chr Key (a character vector of length one), Default: NULL
-#' @return Ttu dataverse datasets (a tibble)
-#' @rdname get_dss_using_predrs
-#' @export 
-#' @importFrom dplyr filter
-#' @importFrom purrr map_lgl
-#' @keywords internal
-get_dss_using_predrs <- function (mdl_predrs_in_ds_chr, ttu_dv_dss_tb = NULL, ttu_dv_nm_1L_chr = "firstbounce", 
-    server_1L_chr = "dataverse.harvard.edu", key_1L_chr = NULL) 
-{
-    if (is.null(ttu_dv_dss_tb)) 
-        ttu_dv_dss_tb <- get_ttu_dv_dss(ttu_dv_nm_1L_chr = ttu_dv_nm_1L_chr, 
-            server_1L_chr = server_1L_chr, key_1L_chr = NULL)
-    if (is.null(ttu_dv_dss_tb)) 
-        ttu_dv_dss_tb <- ttu_dv_dss_tb %>% dplyr::filter(predrs_ls %>% 
-            purrr::map_lgl(~!identical(intersect(.x, mdl_predrs_in_ds_chr), 
-                character(0))))
-    return(ttu_dv_dss_tb)
-}
 #' Get dataverse datasets model summarys
 #' @description get_dv_dss_mdl_smrys() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get dataverse datasets model summarys. Function argument ids_chr specifies the where to look for the required object. The function returns Dataverse datasets model summarys (a list).
 #' @param ids_chr Identities (a character vector)
@@ -64,20 +39,38 @@ get_dv_mdl_smrys <- function (mdls_lup, mdl_nms_chr = NULL)
     }
     return(dv_mdl_smrys)
 }
-#' Get model catalogue references
-#' @description get_mdl_catalogue_refs() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get model catalogue references. Function argument predictors_chr specifies the where to look for the required object. The function returns Catalogue references (a character vector).
-#' @param predictors_chr Predictors (a character vector)
-#' @param ingredients_ls Ingredients (a list)
-#' @return Catalogue references (a character vector)
-#' @rdname get_mdl_catalogue_refs
+#' Get filtered ttu datasets
+#' @description get_filtered_ttu_dss() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get filtered ttu datasets. Function argument ttu_dv_dss_tb specifies the where to look for the required object. The function returns Ttu dataverse datasets (a tibble).
+#' @param ttu_dv_dss_tb Ttu dataverse datasets (a tibble), Default: NULL
+#' @param mdl_predrs_in_ds_chr Model predictors in dataset (a character vector), Default: NULL
+#' @param utility_type_chr Utility type (a character vector), Default: NULL
+#' @param ttu_dv_nm_1L_chr Ttu dataverse name (a character vector of length one), Default: 'firstbounce'
+#' @param server_1L_chr Server (a character vector of length one), Default: 'dataverse.harvard.edu'
+#' @param key_1L_chr Key (a character vector of length one), Default: NULL
+#' @return Ttu dataverse datasets (a tibble)
+#' @rdname get_filtered_ttu_dss
 #' @export 
-#' @importFrom dplyr pull
+#' @importFrom dplyr filter
+#' @importFrom purrr map_lgl
 #' @keywords internal
-get_mdl_catalogue_refs <- function (predictors_chr, ingredients_ls) 
+get_filtered_ttu_dss <- function (ttu_dv_dss_tb = NULL, mdl_predrs_in_ds_chr = NULL, 
+    utility_type_chr = NULL, ttu_dv_nm_1L_chr = "firstbounce", 
+    server_1L_chr = "dataverse.harvard.edu", key_1L_chr = NULL) 
 {
-    catalogue_refs_chr <- get_mdls_using_predrs("k10", mdls_lup = ingredients_ls$mdls_lup) %>% 
-        dplyr::pull(mdl_nms_chr)
-    return(catalogue_refs_chr)
+    if (is.null(ttu_dv_dss_tb)) 
+        ttu_dv_dss_tb <- get_ttu_dv_dss(ttu_dv_nm_1L_chr = ttu_dv_nm_1L_chr, 
+            server_1L_chr = server_1L_chr, key_1L_chr = NULL)
+    if (is.null(ttu_dv_dss_tb)) {
+        if (is.null(mdl_predrs_in_ds_chr)) 
+            mdl_predrs_in_ds_chr <- get_ttu_dv_predrs(ttu_dv_dss_tb)
+        ttu_dv_dss_tb <- ttu_dv_dss_tb %>% dplyr::filter(predrs_ls %>% 
+            purrr::map_lgl(~!identical(intersect(.x, mdl_predrs_in_ds_chr), 
+                character(0))))
+        if (!is.null(utility_type_chr)) 
+            ttu_dv_dss_tb <- ttu_dv_dss_tb %>% dplyr::filter(utility %in% 
+                utility_type_chr)
+    }
+    return(ttu_dv_dss_tb)
 }
 #' Get model ctlg url
 #' @description get_mdl_ctlg_url() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get model ctlg url. Function argument mdls_lup specifies the where to look for the required object. The function is called for its side effects and does not return a value.
@@ -88,17 +81,15 @@ get_mdl_catalogue_refs <- function (predictors_chr, ingredients_ls)
 #' @return NA ()
 #' @rdname get_mdl_ctlg_url
 #' @export 
-#' @importFrom ready4fun get_from_lup_obj
 #' @importFrom dataverse dataset_files
 #' @importFrom purrr map_chr map_lgl
 #' @importFrom stringr str_detect
+#' @importFrom ready4fun get_from_lup_obj
 #' @keywords internal
 get_mdl_ctlg_url <- function (mdls_lup, mdl_nm_1L_chr, server_1L_chr = "dataverse.harvard.edu", 
     key_1L_chr = NULL) 
 {
-    dv_ds_nm_1L_chr <- ready4fun::get_from_lup_obj(mdls_lup, 
-        match_value_xx = mdl_nm_1L_chr, match_var_nm_1L_chr = "mdl_nms_chr", 
-        target_var_nm_1L_chr = "ds_url", evaluate_lgl = F)
+    dv_ds_nm_1L_chr <- get_mdl_ds_url(mdls_lup, mdl_nm_1L_chr = mdl_nm_1L_chr)
     ds_ls <- dataverse::dataset_files(dv_ds_nm_1L_chr, server = server_1L_chr, 
         key = key_1L_chr)
     all_lbls_chr <- purrr::map_chr(ds_ls, ~.x$label)
@@ -118,6 +109,22 @@ get_mdl_ctlg_url <- function (mdls_lup, mdl_nm_1L_chr, server_1L_chr = "datavers
             ds_ls[[idx_1L_int]]$dataFile$id)
     }
     return(ctlg_url)
+}
+#' Get model dataset url
+#' @description get_mdl_ds_url() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get model dataset url. Function argument mdls_lup specifies the where to look for the required object. The function is called for its side effects and does not return a value.
+#' @param mdls_lup Models (a lookup table)
+#' @param mdl_nm_1L_chr Model name (a character vector of length one)
+#' @return NA ()
+#' @rdname get_mdl_ds_url
+#' @export 
+#' @importFrom ready4fun get_from_lup_obj
+#' @keywords internal
+get_mdl_ds_url <- function (mdls_lup, mdl_nm_1L_chr) 
+{
+    mdl_ds_url <- ready4fun::get_from_lup_obj(mdls_lup, match_value_xx = mdl_nm_1L_chr, 
+        match_var_nm_1L_chr = "mdl_nms_chr", target_var_nm_1L_chr = "ds_url", 
+        evaluate_lgl = F)
+    return(mdl_ds_url)
 }
 #' Get model from dataverse
 #' @description get_mdl_from_dv() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get model from dataverse. Function argument mdl_nm_1L_chr specifies the where to look for the required object. The function returns Model (a model).
@@ -147,6 +154,25 @@ get_mdl_from_dv <- function (mdl_nm_1L_chr, dv_ds_nm_1L_chr = "https://doi.org/1
     }
     return(model_mdl)
 }
+#' Get model metadata
+#' @description get_mdl_metadata() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get model metadata. Function argument mdls_lup specifies the where to look for the required object. The function returns Ingredients (a list).
+#' @param mdls_lup Models (a lookup table)
+#' @param mdl_nm_1L_chr Model name (a character vector of length one)
+#' @param server_1L_chr Server (a character vector of length one), Default: 'dataverse.harvard.edu'
+#' @param key_1L_chr Key (a character vector of length one), Default: NULL
+#' @return Ingredients (a list)
+#' @rdname get_mdl_metadata
+#' @export 
+
+#' @keywords internal
+get_mdl_metadata <- function (mdls_lup, mdl_nm_1L_chr, server_1L_chr = "dataverse.harvard.edu", 
+    key_1L_chr = NULL) 
+{
+    dv_ds_nm_1L_chr <- get_mdl_ds_url(mdls_lup, mdl_nm_1L_chr = mdl_nm_1L_chr)
+    ingredients_ls <- get_mdl_from_dv("mdl_ingredients", dv_ds_nm_1L_chr = dv_ds_nm_1L_chr, 
+        server_1L_chr = server_1L_chr, key_1L_chr = key_1L_chr)
+    return(ingredients_ls)
+}
 #' Get model summarys
 #' @description get_mdl_smrys() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get model summarys. Function argument ingredients_ls specifies the where to look for the required object. The function returns Models summary (a list).
 #' @param ingredients_ls Ingredients (a list)
@@ -171,30 +197,36 @@ get_mdl_smrys <- function (ingredients_ls, mdl_nms_chr = NULL)
     }) %>% stats::setNames(mdl_nms_chr)
     return(mdls_smry_ls)
 }
-#' Get models using predictors
-#' @description get_mdls_using_predrs() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get models using predictors. Function argument mdl_predrs_in_ds_chr specifies the where to look for the required object. The function returns Models (a lookup table).
-#' @param mdl_predrs_in_ds_chr Model predictors in dataset (a character vector)
+#' Get models
+#' @description get_mdls_lup() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get models lookup table. Function argument ttu_dv_dss_tb specifies the where to look for the required object. The function returns Models (a lookup table).
 #' @param ttu_dv_dss_tb Ttu dataverse datasets (a tibble), Default: NULL
+#' @param mdl_predrs_in_ds_chr Model predictors in dataset (a character vector), Default: NULL
+#' @param utility_type_chr Utility type (a character vector), Default: NULL
 #' @param ttu_dv_nm_1L_chr Ttu dataverse name (a character vector of length one), Default: 'firstbounce'
 #' @param server_1L_chr Server (a character vector of length one), Default: 'dataverse.harvard.edu'
 #' @param key_1L_chr Key (a character vector of length one), Default: NULL
 #' @return Models (a lookup table)
-#' @rdname get_mdls_using_predrs
+#' @rdname get_mdls_lup
 #' @export 
 #' @importFrom purrr map2_dfr map_chr map_lgl
 #' @importFrom ready4fun get_from_lup_obj
 #' @importFrom dplyr filter mutate
-get_mdls_using_predrs <- function (mdl_predrs_in_ds_chr, ttu_dv_dss_tb = NULL, ttu_dv_nm_1L_chr = "firstbounce", 
+#' @keywords internal
+get_mdls_lup <- function (ttu_dv_dss_tb = NULL, mdl_predrs_in_ds_chr = NULL, 
+    utility_type_chr = NULL, ttu_dv_nm_1L_chr = "firstbounce", 
     server_1L_chr = "dataverse.harvard.edu", key_1L_chr = NULL) 
 {
     if (is.null(ttu_dv_dss_tb)) 
         ttu_dv_dss_tb <- get_ttu_dv_dss(ttu_dv_nm_1L_chr = ttu_dv_nm_1L_chr, 
             server_1L_chr = server_1L_chr, key_1L_chr = NULL)
-    if (!is.null(ttu_dv_dss_tb)) 
-        ttu_dv_dss_tb <- get_dss_using_predrs(ttu_dv_dss_tb, 
-            mdl_predrs_in_ds_chr = mdl_predrs_in_ds_chr)
     if (!is.null(ttu_dv_dss_tb)) {
-        ds_smrys_ls <- get_ttu_ds_smrys("firstbounce", reference_int = ttu_dv_dss_tb$reference)
+        if (is.null(mdl_predrs_in_ds_chr)) 
+            mdl_predrs_in_ds_chr <- get_ttu_dv_predrs(ttu_dv_dss_tb)
+        ttu_dv_dss_tb <- get_filtered_ttu_dss(ttu_dv_dss_tb, 
+            mdl_predrs_in_ds_chr = mdl_predrs_in_ds_chr, utility_type_chr = utility_type_chr)
+    }
+    if (!is.null(ttu_dv_dss_tb)) {
+        ds_smrys_ls <- get_ttu_ds_smrys("firstbounce", reference_int = ttu_dv_dss_tb$reference_int)
         mdls_lup <- ds_smrys_ls %>% purrr::map2_dfr(names(ds_smrys_ls), 
             ~{
                 predictors_lup <- .x$predictors_lup
@@ -215,19 +247,74 @@ get_mdls_using_predrs <- function (mdl_predrs_in_ds_chr, ttu_dv_dss_tb = NULL, t
     }
     return(mdls_lup)
 }
-#' Get predictors
-#' @description get_predictors() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get predictors. Function argument ingredients_ls specifies the where to look for the required object. The function returns Predictors (a tibble).
-#' @param ingredients_ls Ingredients (a list)
-#' @return Predictors (a tibble)
-#' @rdname get_predictors
+#' Get model
+#' @description get_model() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get model. Function argument mdls_lup specifies the where to look for the required object. The function returns Model (a model).
+#' @param mdls_lup Models (a lookup table)
+#' @param mdl_nm_1L_chr Model name (a character vector of length one)
+#' @param make_from_tbl_1L_lgl Make from table (a logical vector of length one), Default: T
+#' @param mdl_meta_data_ls Model meta data (a list), Default: NULL
+#' @param server_1L_chr Server (a character vector of length one), Default: 'dataverse.harvard.edu'
+#' @param key_1L_chr Key (a character vector of length one), Default: NULL
+#' @return Model (a model)
+#' @rdname get_model
 #' @export 
-#' @importFrom dplyr select rename
+#' @importFrom TTU get_table_predn_mdl
+#' @importFrom ready4fun get_from_lup_obj
 #' @keywords internal
-get_predictors <- function (ingredients_ls) 
+get_model <- function (mdls_lup, mdl_nm_1L_chr, make_from_tbl_1L_lgl = T, 
+    mdl_meta_data_ls = NULL, server_1L_chr = "dataverse.harvard.edu", 
+    key_1L_chr = NULL) 
 {
-    predictors_tb <- ingredients_ls$predictors_lup %>% dplyr::select(short_name_chr, 
-        long_name_chr) %>% dplyr::rename(Variable = short_name_chr, 
-        Description = long_name_chr)
+    if (make_from_tbl_1L_lgl) {
+        if (is.null(mdl_meta_data_ls)) {
+            mdl_meta_data_ls <- get_mdl_metadata(mdls_lup, mdl_nm_1L_chr = mdl_nm_1L_chr, 
+                server_1L_chr = server_1L_chr, key_1L_chr = key_1L_chr)
+        }
+        model_mdl <- TTU::get_table_predn_mdl(mdl_nm_1L_chr, 
+            ingredients_ls = mdl_meta_data_ls, analysis_1L_chr = ready4fun::get_from_lup_obj(mdls_lup, 
+                match_value_xx = mdl_nm_1L_chr, match_var_nm_1L_chr = "mdl_nms_chr", 
+                target_var_nm_1L_chr = "source_chr", evaluate_lgl = F))
+    }
+    else model_mdl <- get_mdl_from_dv(mdl_nm_1L_chr, dv_ds_nm_1L_chr = get_mdl_ds_url(mdls_lup, 
+        mdl_nm_1L_chr = mdl_nm_1L_chr), server_1L_chr = server_1L_chr, 
+        key_1L_chr = key_1L_chr)
+    return(model_mdl)
+}
+#' Get predictors
+#' @description get_predictors_lup() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get predictors lookup table. Function argument mdl_meta_data_ls specifies the where to look for the required object. The function returns Predictors (a tibble).
+#' @param mdl_meta_data_ls Model meta data (a list), Default: NULL
+#' @param mdls_lup Models (a lookup table), Default: NULL
+#' @param mdl_nm_1L_chr Model name (a character vector of length one), Default: NULL
+#' @param outp_is_abbrvs_tb Output is abbrvs (a tibble), Default: F
+#' @param server_1L_chr Server (a character vector of length one), Default: 'dataverse.harvard.edu'
+#' @param key_1L_chr Key (a character vector of length one), Default: NULL
+#' @return Predictors (a tibble)
+#' @rdname get_predictors_lup
+#' @export 
+#' @importFrom dplyr filter select rename
+#' @importFrom ready4fun get_from_lup_obj
+#' @importFrom purrr flatten_chr
+#' @keywords internal
+get_predictors_lup <- function (mdl_meta_data_ls = NULL, mdls_lup = NULL, mdl_nm_1L_chr = NULL, 
+    outp_is_abbrvs_tb = F, server_1L_chr = "dataverse.harvard.edu", 
+    key_1L_chr = NULL) 
+{
+    if (is.null(mdl_meta_data_ls)) 
+        mdl_meta_data_ls <- get_mdl_metadata(mdls_lup = mdls_lup, 
+            mdl_nm_1L_chr = mdl_nm_1L_chr, server_1L_chr = server_1L_chr, 
+            key_1L_chr = key_1L_chr)
+    predictors_tb <- mdl_meta_data_ls$predictors_lup
+    if (!is.null(mdl_nm_1L_chr)) {
+        predictors_tb <- predictors_tb %>% dplyr::filter(short_name_chr %in% 
+            (ready4fun::get_from_lup_obj(mdls_lup, match_value_xx = mdl_nm_1L_chr, 
+                match_var_nm_1L_chr = "mdl_nms_chr", target_var_nm_1L_chr = "predrs_ls", 
+                evaluate_lgl = F) %>% purrr::flatten_chr()))
+    }
+    if (outp_is_abbrvs_tb) {
+        predictors_tb <- predictors_tb %>% dplyr::select(short_name_chr, 
+            long_name_chr) %>% dplyr::rename(Variable = short_name_chr, 
+            Description = long_name_chr)
+    }
     return(predictors_tb)
 }
 #' Get transformation from
@@ -270,44 +357,48 @@ get_ttu_ds_smrys <- function (ttu_dv_nm_1L_chr = "firstbounce", server_1L_chr = 
     dv_dss_mdl_smrys_ls <- get_dv_dss_mdl_smrys(ids_chr, server_1L_chr = server_1L_chr, 
         key_1L_chr = key_1L_chr)
     dv_dss_mdl_smrys_ls <- dv_dss_mdl_smrys_ls %>% purrr::compact()
-    if (!is.null(reference_1L_int) & length(dv_dss_mdl_smrys_ls) > 
+    if (!is.null(reference_int) & length(dv_dss_mdl_smrys_ls) > 
         0) 
         dv_dss_mdl_smrys_ls <- reference_int %>% purrr::map(~dv_dss_mdl_smrys_ls %>% 
             purrr::pluck(.x)) %>% stats::setNames(names(dv_dss_mdl_smrys_ls)[reference_int])
     return(dv_dss_mdl_smrys_ls)
 }
 #' Get ttu dataverse datasets
-#' @description get_ttu_dv_dss() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get ttu dataverse datasets. Function argument ttu_dv_nm_1L_chr specifies the where to look for the required object. The function returns Ttu dataverse datasets (a tibble).
-#' @param ttu_dv_nm_1L_chr Ttu dataverse name (a character vector of length one), Default: 'firstbounce'
+#' @description get_ttu_dv_dss() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get ttu dataverse datasets. Function argument ttu_dv_nms_chr specifies the where to look for the required object. The function returns Ttu dataverse datasets (a tibble).
+#' @param ttu_dv_nms_chr Ttu dataverse names (a character vector), Default: 'firstbounce'
 #' @param server_1L_chr Server (a character vector of length one), Default: 'dataverse.harvard.edu'
 #' @param key_1L_chr Key (a character vector of length one), Default: NULL
 #' @return Ttu dataverse datasets (a tibble)
 #' @rdname get_ttu_dv_dss
 #' @export 
-#' @importFrom purrr map map_dfr pluck flatten_chr
+#' @importFrom purrr map flatten map_dfr pluck
 #' @importFrom dataverse get_dataset
 #' @importFrom stats setNames
 #' @importFrom tibble tibble
-#' @importFrom ready4fun get_from_lup_obj
 #' @importFrom dplyr pull
+#' @importFrom ready4use add_labels_from_dictionary
 #' @keywords internal
-get_ttu_dv_dss <- function (ttu_dv_nm_1L_chr = "firstbounce", server_1L_chr = "dataverse.harvard.edu", 
+get_ttu_dv_dss <- function (ttu_dv_nms_chr = "firstbounce", server_1L_chr = "dataverse.harvard.edu", 
     key_1L_chr = NULL) 
 {
-    dv_dss_mdl_smrys_ls <- get_ttu_ds_smrys(ttu_dv_nm_1L_chr, 
-        server_1L_chr = server_1L_chr, key_1L_chr = key_1L_chr)
+    dv_dss_mdl_smrys_ls <- ttu_dv_nms_chr %>% purrr::map(~get_ttu_ds_smrys(.x, 
+        server_1L_chr = server_1L_chr, key_1L_chr = key_1L_chr)) %>% 
+        purrr::flatten()
     if (length(dv_dss_mdl_smrys_ls) > 0) {
         ttu_dss_ls <- names(dv_dss_mdl_smrys_ls) %>% purrr::map(~dataverse::get_dataset(.x, 
             key = key_1L_chr, server = server_1L_chr)) %>% stats::setNames(names(dv_dss_mdl_smrys_ls))
         ttu_dv_dss_tb <- purrr::map_dfr(1:length(ttu_dss_ls), 
-            ~tibble::tibble(reference = .x, title = (ttu_dss_ls %>% 
-                purrr::pluck(.x))$metadataBlocks$citation$fields %>% 
-                ready4fun::get_from_lup_obj(match_value_xx = "title", 
-                  match_var_nm_1L_chr = "typeName", target_var_nm_1L_chr = "value", 
-                  evaluate_lgl = F) %>% purrr::flatten_chr(), 
-                predrs_ls = list(get_predictors(dv_dss_mdl_smrys_ls %>% 
-                  purrr::pluck(.x)) %>% dplyr::pull(Description)), 
-                id = names(ttu_dss_ls)[.x], ), )
+            ~tibble::tibble(reference_int = .x, utility_chr = ifelse((dv_dss_mdl_smrys_ls %>% 
+                purrr::pluck(.x))$depnt_var_nm_1L_chr == "EQ5D_total_dbl", 
+                "EQ-5D", ifelse((dv_dss_mdl_smrys_ls %>% purrr::pluck(.x))$depnt_var_nm_1L_chr == 
+                  "aqol6d_total_w", "AQoL-6D", (dv_dss_mdl_smrys_ls %>% 
+                  purrr::pluck(.x))$depnt_var_nm_1L_chr)), predrs_ls = list(get_predictors_lup(dv_dss_mdl_smrys_ls %>% 
+                purrr::pluck(.x)) %>% dplyr::pull(long_name_chr)), 
+                ds_url = names(ttu_dss_ls)[.x]))
+        ttu_dv_dss_tb <- ready4use::add_labels_from_dictionary(ttu_dv_dss_tb, 
+            dictionary_tb = tibble::tibble(var_nm_chr = names(ttu_dv_dss_tb), 
+                var_desc_chr = c("ID", "Utility", "Predictors", 
+                  "URL")))
     }
     else {
         ttu_dv_dss_tb <- NULL

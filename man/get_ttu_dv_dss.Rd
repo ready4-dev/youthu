@@ -5,13 +5,13 @@
 \title{Get ttu dataverse datasets}
 \usage{
 get_ttu_dv_dss(
-  ttu_dv_nm_1L_chr = "firstbounce",
+  ttu_dv_nms_chr = "firstbounce",
   server_1L_chr = "dataverse.harvard.edu",
   key_1L_chr = NULL
 )
 }
 \arguments{
-\item{ttu_dv_nm_1L_chr}{Ttu dataverse name (a character vector of length one), Default: 'firstbounce'}
+\item{ttu_dv_nms_chr}{Ttu dataverse names (a character vector), Default: 'firstbounce'}
 
 \item{server_1L_chr}{Server (a character vector of length one), Default: 'dataverse.harvard.edu'}
 
@@ -21,6 +21,6 @@ get_ttu_dv_dss(
 Ttu dataverse datasets (a tibble)
 }
 \description{
-get_ttu_dv_dss() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get ttu dataverse datasets. Function argument ttu_dv_nm_1L_chr specifies the where to look for the required object. The function returns Ttu dataverse datasets (a tibble).
+get_ttu_dv_dss() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get ttu dataverse datasets. Function argument ttu_dv_nms_chr specifies the where to look for the required object. The function returns Ttu dataverse datasets (a tibble).
 }
 \keyword{internal}

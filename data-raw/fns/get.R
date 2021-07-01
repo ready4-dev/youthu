@@ -1,5 +1,6 @@
-get_dss_using_predrs <- function(mdl_predrs_in_ds_chr,
-                                 ttu_dv_dss_tb = NULL,
+get_filtered_ttu_dss <- function(ttu_dv_dss_tb = NULL,
+                                 mdl_predrs_in_ds_chr = NULL,
+                                 utility_type_chr = NULL,
                                  ttu_dv_nm_1L_chr = "firstbounce",
                                  server_1L_chr = "dataverse.harvard.edu",
                                  key_1L_chr = NULL){
@@ -7,10 +8,16 @@ get_dss_using_predrs <- function(mdl_predrs_in_ds_chr,
     ttu_dv_dss_tb <- get_ttu_dv_dss(ttu_dv_nm_1L_chr = ttu_dv_nm_1L_chr,
                                     server_1L_chr = server_1L_chr,
                                     key_1L_chr = NULL)
-  if(is.null(ttu_dv_dss_tb))
+  if(is.null(ttu_dv_dss_tb)){
+    if(is.null(mdl_predrs_in_ds_chr))
+      mdl_predrs_in_ds_chr <- get_ttu_dv_predrs(ttu_dv_dss_tb)
     ttu_dv_dss_tb <- ttu_dv_dss_tb %>%
       dplyr::filter(predrs_ls %>% purrr::map_lgl(~!identical(intersect(.x,mdl_predrs_in_ds_chr),
                                                              character(0))))
+    if(!is.null(utility_type_chr))
+      ttu_dv_dss_tb <- ttu_dv_dss_tb %>%
+      dplyr::filter(utility %in% utility_type_chr)
+  }
   return(ttu_dv_dss_tb)
 }
 get_dv_dss_mdl_smrys <- function(ids_chr,
@@ -89,20 +96,25 @@ get_mdl_from_dv <- function(mdl_nm_1L_chr,
   }
   return(model_mdl)
 }
-get_mdls_using_predrs <- function(mdl_predrs_in_ds_chr,
-                                  ttu_dv_dss_tb = NULL,
-                                  ttu_dv_nm_1L_chr = "firstbounce",
-                                  server_1L_chr = "dataverse.harvard.edu",
-                                  key_1L_chr = NULL){
+get_mdls_lup <- function(ttu_dv_dss_tb = NULL,
+                         mdl_predrs_in_ds_chr = NULL,
+                         utility_type_chr = NULL,
+                         ttu_dv_nm_1L_chr = "firstbounce",
+                         server_1L_chr = "dataverse.harvard.edu",
+                         key_1L_chr = NULL){
   if(is.null(ttu_dv_dss_tb))
     ttu_dv_dss_tb <- get_ttu_dv_dss(ttu_dv_nm_1L_chr = ttu_dv_nm_1L_chr,
                                     server_1L_chr = server_1L_chr,
                                     key_1L_chr = NULL)
-  if(!is.null(ttu_dv_dss_tb))
-    ttu_dv_dss_tb <- get_dss_using_predrs(ttu_dv_dss_tb,
-                                          mdl_predrs_in_ds_chr = mdl_predrs_in_ds_chr)
   if(!is.null(ttu_dv_dss_tb)){
-    ds_smrys_ls <- get_ttu_ds_smrys("firstbounce", reference_int = ttu_dv_dss_tb$reference)
+    if(is.null(mdl_predrs_in_ds_chr))
+      mdl_predrs_in_ds_chr <- get_ttu_dv_predrs(ttu_dv_dss_tb)
+    ttu_dv_dss_tb <- get_filtered_ttu_dss(ttu_dv_dss_tb,
+                                          mdl_predrs_in_ds_chr = mdl_predrs_in_ds_chr,
+                                          utility_type_chr = utility_type_chr)
+  }
+  if(!is.null(ttu_dv_dss_tb)){
+    ds_smrys_ls <- get_ttu_ds_smrys("firstbounce", reference_int = ttu_dv_dss_tb$reference_int)
     mdls_lup <- ds_smrys_ls %>%
       purrr::map2_dfr(names(ds_smrys_ls),
                       ~{
@@ -126,13 +138,14 @@ get_mdls_using_predrs <- function(mdl_predrs_in_ds_chr,
   }
   return(mdls_lup)
 }
-get_mdl_catalogue_refs <- function(predictors_chr,
-                                   ingredients_ls){
-  catalogue_refs_chr <- get_mdls_using_predrs("k10",
-                                              mdls_lup = ingredients_ls$mdls_lup) %>%
-    dplyr::pull(mdl_nms_chr)
-  return(catalogue_refs_chr)
-}
+# get_mdl_catalogue_refs <- function(predictors_chr,
+#                                    ingredients_ls,
+#                                    mdl_predrs_in_ds_chr){
+#   catalogue_refs_chr <- get_mdls_lup(mdl_predrs_in_ds_chr = mdl_predrs_in_ds_chr,
+#                                               mdls_lup = ingredients_ls$mdls_lup) %>%
+#     dplyr::pull(mdl_nms_chr)
+#   return(catalogue_refs_chr)
+# }
 get_mdl_smrys <- function(ingredients_ls,
                           mdl_nms_chr = NULL){
   if(is.null(mdl_nms_chr))
@@ -162,15 +175,18 @@ get_mdl_metadata <- function(mdls_lup,
 get_model <- function(mdls_lup,
                       mdl_nm_1L_chr,
                       make_from_tbl_1L_lgl = T,
+                      mdl_meta_data_ls = NULL,
                       server_1L_chr = "dataverse.harvard.edu",
                       key_1L_chr = NULL){
   if(make_from_tbl_1L_lgl){
-    ingredients_ls <- get_mdl_metadata(mdls_lup,
-                                       mdl_nm_1L_chr = mdl_nm_1L_chr,
-                                       server_1L_chr = server_1L_chr,
-                                       key_1L_chr = key_1L_chr)
+    if(is.null(mdl_meta_data_ls)){
+      mdl_meta_data_ls <- get_mdl_metadata(mdls_lup,
+                                         mdl_nm_1L_chr = mdl_nm_1L_chr,
+                                         server_1L_chr = server_1L_chr,
+                                         key_1L_chr = key_1L_chr)
+    }
     model_mdl <- TTU::get_table_predn_mdl(mdl_nm_1L_chr,
-                                     ingredients_ls = ingredients_ls,
+                                     ingredients_ls = mdl_meta_data_ls,
                                      analysis_1L_chr = ready4fun::get_from_lup_obj(mdls_lup,
                                                                                    match_value_xx = mdl_nm_1L_chr,
                                                                                    match_var_nm_1L_chr = "mdl_nms_chr",
@@ -183,11 +199,33 @@ get_model <- function(mdls_lup,
                                  key_1L_chr = key_1L_chr)
   return(model_mdl)
 }
-get_predictors <- function(ingredients_ls){
-  predictors_tb <- ingredients_ls$predictors_lup %>%
-    dplyr::select(short_name_chr, long_name_chr) %>%
-    dplyr::rename(Variable = short_name_chr,
-                  Description = long_name_chr)
+get_predictors_lup <- function(mdl_meta_data_ls = NULL,
+                               mdls_lup = NULL,
+                               mdl_nm_1L_chr = NULL,
+                               outp_is_abbrvs_tb = F,
+                               server_1L_chr = "dataverse.harvard.edu",
+                               key_1L_chr = NULL){
+  if(is.null(mdl_meta_data_ls))
+    mdl_meta_data_ls <- get_mdl_metadata(mdls_lup = mdls_lup,
+                                         mdl_nm_1L_chr = mdl_nm_1L_chr,
+                                         server_1L_chr = server_1L_chr,
+                                         key_1L_chr = key_1L_chr)
+  predictors_tb <- mdl_meta_data_ls$predictors_lup
+  if(!is.null(mdl_nm_1L_chr)){
+    predictors_tb <- predictors_tb %>%
+      dplyr::filter(short_name_chr %in% (ready4fun::get_from_lup_obj(mdls_lup,
+                                match_value_xx = mdl_nm_1L_chr,
+                                match_var_nm_1L_chr = "mdl_nms_chr",
+                                target_var_nm_1L_chr = "predrs_ls",
+                                evaluate_lgl = F) %>% purrr::flatten_chr()))
+  }
+  if(outp_is_abbrvs_tb){
+    predictors_tb <- predictors_tb %>%
+      dplyr::select(short_name_chr, long_name_chr) %>%
+      dplyr::rename(Variable = short_name_chr,
+                    Description = long_name_chr)
+  }
+
   return(predictors_tb)
 }
 get_ttu_dv_predrs <- function(ttu_dv_dss_tb = NULL,
@@ -236,12 +274,14 @@ get_ttu_ds_smrys <- function(ttu_dv_nm_1L_chr = "firstbounce",
     stats::setNames(names(dv_dss_mdl_smrys_ls)[reference_int])
   return(dv_dss_mdl_smrys_ls)
 }
-get_ttu_dv_dss <- function(ttu_dv_nm_1L_chr = "firstbounce",
+get_ttu_dv_dss <- function(ttu_dv_nms_chr = "firstbounce",
                            server_1L_chr = "dataverse.harvard.edu",
                            key_1L_chr = NULL){
-  dv_dss_mdl_smrys_ls <- get_ttu_ds_smrys(ttu_dv_nm_1L_chr,
-                                    server_1L_chr = server_1L_chr,
-                                    key_1L_chr = key_1L_chr)
+  dv_dss_mdl_smrys_ls <- ttu_dv_nms_chr %>%
+    purrr::map(~get_ttu_ds_smrys(.x,
+                                 server_1L_chr = server_1L_chr,
+                                 key_1L_chr = key_1L_chr)) %>%
+    purrr::flatten()
 
   if(length(dv_dss_mdl_smrys_ls) > 0){
     ttu_dss_ls <- names(dv_dss_mdl_smrys_ls) %>%
@@ -250,19 +290,31 @@ get_ttu_dv_dss <- function(ttu_dv_nm_1L_chr = "firstbounce",
                                           server = server_1L_chr)) %>%
       stats::setNames(names(dv_dss_mdl_smrys_ls))
     ttu_dv_dss_tb <- purrr::map_dfr(1:length(ttu_dss_ls),
-                 ~ tibble::tibble(reference = .x,
-                                  title = (ttu_dss_ls %>%
-                                             purrr::pluck(.x))$metadataBlocks$citation$fields %>%
-                                  ready4fun::get_from_lup_obj(match_value_xx = "title",
-                                                              match_var_nm_1L_chr = "typeName",
-                                                              target_var_nm_1L_chr = "value",
-                                                              evaluate_lgl = F) %>%
-                                  purrr::flatten_chr(),
-                                  predrs_ls = list(get_predictors(dv_dss_mdl_smrys_ls %>%
+                 ~ tibble::tibble(reference_int = .x,
+                                  utility_chr = ifelse((dv_dss_mdl_smrys_ls %>%
+                                    purrr::pluck(.x))$depnt_var_nm_1L_chr =="EQ5D_total_dbl",
+                                    "EQ-5D",
+                                    ifelse((dv_dss_mdl_smrys_ls %>%
+                                              purrr::pluck(.x))$depnt_var_nm_1L_chr =="aqol6d_total_w",
+                                           "AQoL-6D",
+                                           (dv_dss_mdl_smrys_ls %>%
+                                             purrr::pluck(.x))$depnt_var_nm_1L_chr)),
+                                  # title = (ttu_dss_ls %>%
+                                  #            purrr::pluck(.x))$metadataBlocks$citation$fields %>%
+                                  # ready4fun::get_from_lup_obj(match_value_xx = "title",
+                                  #                             match_var_nm_1L_chr = "typeName",
+                                  #                             target_var_nm_1L_chr = "value",
+                                  #                             evaluate_lgl = F) %>%
+                                  # purrr::flatten_chr(),
+                                  predrs_ls = list(get_predictors_lup(dv_dss_mdl_smrys_ls %>%
                                                                 purrr::pluck(.x)) %>%
-                                                                dplyr::pull(Description)),
-                                  id = names(ttu_dss_ls)[.x],),
-        )
+                                                                dplyr::pull(long_name_chr)),
+                                  ds_url = names(ttu_dss_ls)[.x]))
+
+    ttu_dv_dss_tb <- ready4use::add_labels_from_dictionary(ttu_dv_dss_tb,
+                                            dictionary_tb = tibble::tibble(var_nm_chr = names(ttu_dv_dss_tb),
+                                                                           var_desc_chr = c("ID","Utility","Predictors","URL")))
+
   }else{
     ttu_dv_dss_tb <- NULL
   }

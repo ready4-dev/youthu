@@ -1,4 +1,3 @@
-
 add_change_in_ds_var <- function(ds_tb,
                                  id_var_nm_1L_chr = "fkClientID",
                                  round_var_nm_1L_chr = "round",
@@ -149,42 +148,46 @@ add_qalys_to_ds <- function(ds_tb,
   return(ds_tb)
 }
 add_utl_predn <- function(data_tb,
-                          mdls_lup,
-                          mdl_nm_1L_chr,
+                          predn_ds_ls,
                           deterministic_1L_lgl = T,
                           force_min_max_1L_lgl = T,
-                          id_var_nm_1L_chr = "UID",
                           key_1L_chr = NULL,
                           make_from_tbl_1L_lgl = T,
                           model_mdl = NULL,
                           new_data_is_1L_chr = "Simulated",
-                          predr_vars_nms_chr = NULL,
-                          round_var_nm_1L_chr = "Timepoint",
-                          round_bl_val_1L_chr = "BL",
                           server_1L_chr = "dataverse.harvard.edu",
-                          utl_cls_fn = NULL,
-                          utl_var_nm_1L_chr = NULL){
+                          utl_cls_fn = NULL              # ,
+                          ){
+  id_var_nm_1L_chr = predn_ds_ls$id_var_nm_1L_chr
+  predr_vars_nms_chr = predn_ds_ls$predr_vars_nms_chr
+  round_var_nm_1L_chr = predn_ds_ls$round_var_nm_1L_chr
+  round_bl_val_1L_chr = predn_ds_ls$round_bl_val_1L_chr
+  utl_var_nm_1L_chr = predn_ds_ls$utl_var_nm_1L_chr
+  mdl_meta_data_ls = predn_ds_ls$mdl_meta_data_ls
+  mdls_lup = predn_ds_ls$mdls_lup
+  mdl_nm_1L_chr = predn_ds_ls$mdl_nm_1L_chr
   if(is.null(model_mdl))
     model_mdl <- get_model(mdls_lup,
                            mdl_nm_1L_chr = mdl_nm_1L_chr,
                            make_from_tbl_1L_lgl = make_from_tbl_1L_lgl,
+                           mdl_meta_data_ls = mdl_meta_data_ls,
                            server_1L_chr = server_1L_chr,
                            key_1L_chr = key_1L_chr)
-  updated_tb <- add_utl_predn_to_new_ds(data_tb,# ADD TTU::
-                                        mdl_nm_1L_chr = mdl_nm_1L_chr,
-                                        id_var_nm_1L_chr = id_var_nm_1L_chr,
-                                        analysis_1L_chr = ready4fun::get_from_lup_obj(mdls_lup,
-                                                                                      match_value_xx = mdl_nm_1L_chr,
-                                                                                      match_var_nm_1L_chr = "mdl_nms_chr",
-                                                                                      target_var_nm_1L_chr = "source_chr",
-                                                                                      evaluate_lgl = F),
-                                        ingredients_ls = get_mdl_metadata(mdls_lup,
-                                                                          mdl_nm_1L_chr = mdl_nm_1L_chr),
-                                        model_mdl = model_mdl,
-                                        new_data_is_1L_chr = new_data_is_1L_chr,
-                                        predr_vars_nms_chr = predr_vars_nms_chr,
-                                        round_var_nm_1L_chr = round_var_nm_1L_chr,
-                                        round_bl_val_1L_chr = round_bl_val_1L_chr,
-                                        utl_var_nm_1L_chr = utl_var_nm_1L_chr)
+  updated_tb <- TTU::add_utl_predn_to_new_ds(data_tb,
+                                             mdl_nm_1L_chr = mdl_nm_1L_chr,
+                                             id_var_nm_1L_chr = id_var_nm_1L_chr,
+                                             analysis_1L_chr = ready4fun::get_from_lup_obj(mdls_lup,
+                                                                                           match_value_xx = mdl_nm_1L_chr,
+                                                                                           match_var_nm_1L_chr = "mdl_nms_chr",
+                                                                                           target_var_nm_1L_chr = "source_chr",
+                                                                                           evaluate_lgl = F),
+                                             ingredients_ls = get_mdl_metadata(mdls_lup,
+                                                                               mdl_nm_1L_chr = mdl_nm_1L_chr),
+                                             model_mdl = model_mdl,
+                                             new_data_is_1L_chr = new_data_is_1L_chr,
+                                             predr_vars_nms_chr = predr_vars_nms_chr,
+                                             round_var_nm_1L_chr = round_var_nm_1L_chr,
+                                             round_bl_val_1L_chr = round_bl_val_1L_chr,
+                                             utl_var_nm_1L_chr = utl_var_nm_1L_chr)
   return(updated_tb)
 }

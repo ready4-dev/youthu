@@ -106,6 +106,25 @@ make_cst_efns_smry <- function (ds_tb, idxs_int, change_types_chr = "dbl", benef
     summary_dbl <- summary_tb[, 1]
     return(summary_dbl)
 }
+#' Make fake dataset one
+#' @description make_fake_ds_one() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make fake dataset one. The function returns Fake data (a tibble).
+
+#' @return Fake data (a tibble)
+#' @rdname make_fake_ds_one
+#' @export 
+#' @importFrom youthvars replication_popl_tb transform_raw_ds_for_analysis
+#' @importFrom dplyr select arrange rename mutate
+#' @importFrom tibble as_tibble
+#' @keywords internal
+make_fake_ds_one <- function () 
+{
+    fake_data_tb <- youthvars::replication_popl_tb %>% youthvars::transform_raw_ds_for_analysis() %>% 
+        dplyr::select(fkClientID, round, PHQ9, SOFAS) %>% dplyr::arrange(fkClientID) %>% 
+        na.omit() %>% dplyr::rename(UID = fkClientID, Timepoint = round, 
+        PHQ_total = PHQ9, SOFAS_total = SOFAS) %>% dplyr::mutate(SOFAS_total = as.integer(round(SOFAS_total, 
+        0))) %>% tibble::as_tibble()
+    return(fake_data_tb)
+}
 #' Make fake trial dataset
 #' @description make_fake_trial_ds() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make fake trial dataset. The function returns Updated dataset (a tibble).
 #' @param ds_tb Dataset (a tibble)
@@ -289,4 +308,84 @@ make_sngl_grp_ds <- function (seed_ds_tb = NULL, ds_smry_ls)
             fn = add_costs_from_gamma_dstr)
     sngl_grp_ds_tb <- sngl_grp_ds_tb %>% dplyr::arrange(ds_smry_ls$id_var_nm_1L_chr)
     return(sngl_grp_ds_tb)
+}
+#' Make valid prediction dataset
+#' @description make_valid_predn_ds_ls() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make valid prediction dataset list. The function returns Valid prediction dataset (a list).
+#' @param data_tb Data (a tibble)
+#' @param id_var_nm_1L_chr Identity variable name (a character vector of length one), Default: 'UID'
+#' @param mdl_meta_data_ls Model meta data (a list), Default: NULL
+#' @param mdls_lup Models (a lookup table), Default: NULL
+#' @param mdl_nm_1L_chr Model name (a character vector of length one), Default: NULL
+#' @param msrmnt_date_var_nm_1L_chr Measurement date variable name (a character vector of length one), Default: NULL
+#' @param predr_vars_nms_chr Predictor variables names (a character vector), Default: NULL
+#' @param round_var_nm_1L_chr Round variable name (a character vector of length one)
+#' @param round_bl_val_1L_chr Round baseline value (a character vector of length one)
+#' @param utl_var_nm_1L_chr Utility variable name (a character vector of length one), Default: 'AQoL6D_HU'
+#' @param server_1L_chr Server (a character vector of length one), Default: 'dataverse.harvard.edu'
+#' @param key_1L_chr Key (a character vector of length one), Default: NULL
+#' @return Valid prediction dataset (a list)
+#' @rdname make_valid_predn_ds_ls
+#' @export 
+#' @importFrom purrr walk pluck
+#' @importFrom dplyr pull filter
+#' @importFrom ready4fun get_from_lup_obj
+#' @importFrom assertthat assert_that
+#' @importFrom rlang sym
+#' @importFrom lubridate is.Date
+#' @keywords internal
+make_valid_predn_ds_ls <- function (data_tb, id_var_nm_1L_chr = "UID", mdl_meta_data_ls = NULL, 
+    mdls_lup = NULL, mdl_nm_1L_chr = NULL, msrmnt_date_var_nm_1L_chr = NULL, 
+    predr_vars_nms_chr = NULL, round_var_nm_1L_chr, round_bl_val_1L_chr, 
+    utl_var_nm_1L_chr = "AQoL6D_HU", server_1L_chr = "dataverse.harvard.edu", 
+    key_1L_chr = NULL) 
+{
+    if (!is.null(predr_vars_nms_chr)) {
+        data_tb <- rename_from_nmd_vec(data_tb, nmd_vec_chr = predr_vars_nms_chr, 
+            vec_nms_as_new_1L_lgl = T)
+    }
+    predictors_lup <- get_predictors_lup(mdl_meta_data_ls = mdl_meta_data_ls, 
+        mdls_lup = mdls_lup, mdl_nm_1L_chr = mdl_nm_1L_chr, outp_is_abbrvs_tb = F, 
+        server_1L_chr = server_1L_chr, key_1L_chr = key_1L_chr)
+    data_tb <- data_tb %>% transform_mdl_vars_with_clss(predictors_lup = predictors_lup)
+    purrr::walk(predictors_lup$short_name_chr, ~{
+        vector_xx <- data_tb %>% dplyr::pull(.x)
+        min_dbl <- ready4fun::get_from_lup_obj(predictors_lup, 
+            match_value_xx = .x, match_var_nm_1L_chr = "short_name_chr", 
+            target_var_nm_1L_chr = "min_val_dbl", evaluate_lgl = F)
+        max_dbl <- ready4fun::get_from_lup_obj(predictors_lup, 
+            match_value_xx = .x, match_var_nm_1L_chr = "short_name_chr", 
+            target_var_nm_1L_chr = "max_val_dbl", evaluate_lgl = F)
+        assertthat::assert_that(max(vector_xx) <= max_dbl & min(vector_xx) >= 
+            min_dbl, msg = paste0(predr_vars_nms_chr %>% purrr::pluck(.x), 
+            " variable must be within range of ", min_dbl, " and ", 
+            max_dbl, "."))
+    })
+    assertthat::assert_that(length(data_tb %>% dplyr::pull(!!rlang::sym(round_var_nm_1L_chr)) %>% 
+        unique()) == 2, msg = paste0(round_var_nm_1L_chr, " variable must have two values - one for each data collection round."))
+    assertthat::assert_that(is.factor(data_tb %>% dplyr::pull(!!rlang::sym(round_var_nm_1L_chr))), 
+        msg = paste0(round_var_nm_1L_chr, " variable must be a factor."))
+    assertthat::assert_that(round_bl_val_1L_chr %in% levels(data_tb %>% 
+        dplyr::pull(!!rlang::sym(round_var_nm_1L_chr))), msg = paste0("Levels of ", 
+        round_var_nm_1L_chr, " variable must include one that is named ", 
+        round_bl_val_1L_chr, "."))
+    bl_ds_tb <- data_tb %>% dplyr::filter(!!rlang::sym(round_var_nm_1L_chr) == 
+        round_bl_val_1L_chr)
+    fup_ds_tb <- data_tb %>% dplyr::filter(!!rlang::sym(round_var_nm_1L_chr) != 
+        round_bl_val_1L_chr)
+    bl_uids_xx <- bl_ds_tb %>% dplyr::pull(id_var_nm_1L_chr)
+    fup_uids_xx <- fup_ds_tb %>% dplyr::pull(id_var_nm_1L_chr)
+    assertthat::assert_that(nrow(bl_ds_tb) == length(unique(bl_uids_xx)) & 
+        nrow(fup_ds_tb) == length(unique(fup_uids_xx)), msg = paste0("At each time-point (the ", 
+        round_var_nm_1L_chr, " variable) there must be one unique record identifier (the ", 
+        id_var_nm_1L_chr, " variable)."))
+    if (!is.null(msrmnt_date_var_nm_1L_chr)) 
+        assertthat::assert_that(lubridate::is.Date(data_tb %>% 
+            dplyr::pull(msrmnt_date_var_nm_1L_chr)), msg = paste0(msrmnt_date_var_nm_1L_chr, 
+            " variable must be of date class."))
+    valid_predn_ds_ls <- list(id_var_nm_1L_chr = id_var_nm_1L_chr, 
+        mdl_meta_data_ls = mdl_meta_data_ls, mdls_lup = mdls_lup, 
+        mdl_nm_1L_chr = mdl_nm_1L_chr, msrmnt_date_var_nm_1L_chr = msrmnt_date_var_nm_1L_chr, 
+        predr_vars_nms_chr = predr_vars_nms_chr, round_var_nm_1L_chr = round_var_nm_1L_chr, 
+        round_bl_val_1L_chr = round_bl_val_1L_chr, utl_var_nm_1L_chr = utl_var_nm_1L_chr)
+    return(valid_predn_ds_ls)
 }

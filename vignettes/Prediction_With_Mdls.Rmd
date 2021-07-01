@@ -17,32 +17,37 @@ library(youthu)
 ## Identifying suitable transfer to utility algorithms
 To use youthu functions to predict health utility values for records in a dataset, it is necessary to identify transfer to utility models that use predictors that are also present in the prediction dataset. 
 
-To identify datasets that contain transfer to utility models compatible with youthu (ie those developped with the [TTU package](https://ready4-dev.github.io/TTU/index.html)), you can use the following command.
+To identify datasets that contain transfer to utility models compatible with youthu (ie those developped with the [TTU package](https://ready4-dev.github.io/TTU/index.html)), you can use the following command. Note, the following example retrieves models created from fake data and is for instructional purposes only - these models should not be used to inform decision making.
 
 ```{r}
 ttu_dv_dss_tb <- get_ttu_dv_dss("firstbounce")
 ```
-```{r}
-ttu_dv_dss_tb
+
+```{r ttudss, echo = F, tab.cap='Transfer to Utility Datasets', tab.id = 'ttudss', results="asis"}
+ttu_dv_dss_tb %>% 
+  ready4show::print_table(output_type_1L_chr = params$output_type_1L_chr,
+                          caption_1L_chr = knitr::opts_current$get("tab.cap"),
+                          use_lbls_as_col_nms_1L_lgl = T,
+                          mkdn_tbl_ref_1L_chr = paste0("tab:",knitr::opts_current$get("tab.id")),
+                          add_to_row_ls = NULL) 
 ```
 
-To identify the predictors used by the models hosted by that dataverse, use:
+To identify models that predict a specified type of health utility from one or more of a specified subset of predictors, use:
 
 ```{r}
-get_ttu_dv_predrs(ttu_dv_dss_tb)
-```
-To identify which models use specified subsets of those predictors, use:
-
-```{r}
-mdls_lup <- get_mdls_using_predrs(mdl_predrs_in_ds_chr = c("PHQ9 total score",
-                                                           "SOFAS total score"),
-                                  ttu_dv_dss_tb = ttu_dv_dss_tb)
-```
-```{r}
-mdls_lup
+mdls_lup <- get_mdls_lup(ttu_dv_dss_tb = ttu_dv_dss_tb,
+                         utility_type_chr = "AQoL-6D",
+                         mdl_predrs_in_ds_chr = c("PHQ9 total score",
+                                                  "SOFAS total score"))
 ```
 
-To review the summary information about the predictive performance of these models, use:
+The preceding command will produce a lookup table with information that includes the catalogue names of models, the predictors used in each model and the analysis that generated each one.
+
+```{r}
+mdls_lup[,c(1,2,5)]
+```
+
+To review the summary information about the predictive performance of a specific model, use:
 
 ```{r}
 get_dv_mdl_smrys(mdls_lup,
@@ -56,36 +61,16 @@ More information about a selected model can be found in the online model catalog
 get_mdl_ctlg_url(mdls_lup,
                  mdl_nm_1L_chr = "SOFAS_1_OLS_CLL")
 ```
-To retrieve a specified model, use:
-
-```{r}
-model_mdl <- get_model(mdls_lup,
-                       mdl_nm_1L_chr = "SOFAS_1_OLS_CLL")
-```
-
 # ```{r results='hide'}
 # ingredients_ls <- get_mdl_metadata(mdls_lup,
 #                                    "SOFAS_1_OLS_CLL")
 # ```
 
 ## Prepare prediction dataset
-To illustrate this next step, we have created a prediction dataset that is a modified and simplified version of the study [replication dataset](https://ready4-dev.github.io/youthvars/articles/Replication_DS.html) distributed with the youthvars package. This illustrative dataset reflects the likely real-world circumstance in which the prediction dataset uses a different naming convention to that of the dataset we used to estimate the youth models. 
+First import and inspect the dataset you will be using for prediction. In the below example we use fake data.
 
 ```{r }
-data_tb <- youthvars::replication_popl_tb %>%
-  youthvars::transform_raw_ds_for_analysis() %>%
-  dplyr::select(fkClientID,round,PHQ9, SOFAS) %>% #
-  dplyr::arrange(fkClientID) %>%
-  na.omit() %>%
-  dplyr::rename(UID = fkClientID,
-                Timepoint = round,
-                PHQ_total = PHQ9,
-                SOFAS_total = SOFAS) %>%
-  dplyr::mutate(SOFAS_total = as.integer(round(SOFAS_total,0))) %>%
-  tibble::as_tibble()
-```
-```{r results='hide'}
-data_tb %>% head()
+data_tb <- make_fake_ds_one()
 ```
 ```{r dstb, echo = F, tab.cap='Illustrative example of a prediction dataset', tab.id = 'dstb', results="asis"}
 data_tb %>% 
@@ -96,36 +81,35 @@ data_tb %>%
                           add_to_row_ls = NULL) 
 ```
 
-### Confirm dataset meets other structural requirements
-In addition to containing at least one match for the predictors used in youthu models, the prediction dataset must include both a unique client identifier variable and a measurement time-point identifier variable (`factor`{.R} class, with two levels). The dataset also needs to be in long format (ie where measures at different time-points for the same individual are stacked on top of each other in separate rows). We can confirm these conditions hold both by visual inspection of the dataset and investigation of the classes of the unique identified and measurement timepoint variables.
+### Confirm dataset can be used as a prediction dataset
+The prediction dataset must contain variables that correspond to all the predictors of the model you intend to apply. The values of each predictor variable must be within the allowable range and be of a compatible class to the corresponding model predictor metadata.
 
 ```{r}
-data_tb$UID %>% class()
+get_predictors_lup(mdls_lup = mdls_lup,
+                   mdl_nm_1L_chr = "SOFAS_1_OLS_CLL")
 ```
+The prediction dataset must include both a unique client identifier variable and a measurement time-point identifier variable (`factor`{.R} class, with two levels). The dataset also needs to be in long format (ie where measures at different time-points for the same individual are stacked on top of each other in separate rows). We can confirm these conditions hold by creating a dataset metadata object using the `make_valid_predn_ds_ls` function. In creating the metadata object, the function checks that the dataset can be used in conjunction with the model specified at the `mdl_nm_1L_chr` argument. If the prediction dataset uses different variable names for the predictors to those specified in the `predictors_lup`{.R} lookup table, a named vector detailing the correspondence between the two sets of variable names needs to be passed to the `predr_vars_nms_chr` argument. Finally, if you wish to specify a preferred variable name to use for the predicted utility values when applying the model, you can do this by passing this name to the `utl_var_nm_1L_chr` argument.
+
 ```{r}
-data_tb$Timepoint %>% class()
-levels(data_tb$Timepoint)
+predn_ds_ls <- make_valid_predn_ds_ls(data_tb,
+                                      id_var_nm_1L_chr = "UID",
+                                      predr_vars_nms_chr = c(SOFAS = "SOFAS_total"),
+                                      round_var_nm_1L_chr = "Timepoint",
+                                      round_bl_val_1L_chr = "Baseline",
+                                      utl_var_nm_1L_chr = "AQoL6D_HU",
+                                      mdls_lup = mdls_lup,
+                                      mdl_nm_1L_chr = "SOFAS_1_OLS_CLL")
 ```
+
 
 ## Predict utility
-To generate utility predictions we use the `add_aqol6d_predn_to_ds`{.R} function. The function needs to be supplied with the prediction dataset (the value passed to argument `data_tb`), the model we are applying to that dataset (`model_mdl`), the transformation associated with that model (`tfmn_1L_chr`, which can be identified by passing the name of the selected model to the `get_tfmn_from_lup`{.R} function) and details of the variable names used in the prediction dataset for the unique identifier (`id_var_nm_1L_chr`) and measurement timepoint (`round_var_nm_1L_chr`) and, for the later, the factor level that represents the baseline timepoint (`round_bl_val_1L_chr`). Additionally, if the prediction dataset uses different variable names for the predictors to those specified in the `predictors_lup`{.R} lookup table, a named vector detailing the correspondence between the two sets of variable names needs to be passed to the `predr_vars_nms_chr` argument. Finally, if you wish to specify the desired variable name to use for the predicted utility values generated by the function, you can do this by passing this name to the `utl_var_nm_1L_chr` argument.
+
+To generate utility predictions we use the `add_utl_predn`{.R} function. The function needs to be supplied with the prediction dataset (the value passed to argument `data_tb`) and the validated prediction metadata object we created in the previous step. By default the function chooses a constrained simulation approach when making predictions. You can override this by adding additional arguments `new_data_is_1L_chr = "Predicted"` and `force_min_max_1L_lgl = T`, however you should consult the model catalogue before doing this to understand the implications for the predicted values that will be generated.
 
 ```{r}
 updated_data_tb <- add_utl_predn(data_tb,
-                                 mdls_lup = mdls_lup,
-                                 mdl_nm_1L_chr = "SOFAS_1_OLS_CLL",
-                                 id_var_nm_1L_chr = "UID",
-                                 make_from_tbl_1L_lgl = T,
-                                 model_mdl = model_mdl,
-                                 new_data_is_1L_chr = "Simulated",
-                                 predr_vars_nms_chr = c(SOFAS = "SOFAS_total"),
-                                 round_var_nm_1L_chr = "Timepoint",
-                                 round_bl_val_1L_chr = "BL",
-                                 utl_var_nm_1L_chr = "AQoL6D_HU")
+                                 predn_ds_ls = predn_ds_ls)
 
-```
-```{r results='hide'}
-updated_data_tb %>% head()
 ```
 ```{r updtb, echo = F, tab.cap='Prediction dataset with predicted utilities', tab.id = 'updtb', results="asis"}
 updated_data_tb %>% 
@@ -135,7 +119,6 @@ updated_data_tb %>%
                           mkdn_tbl_ref_1L_chr = paste0("tab:",knitr::opts_current$get("tab.id")),
                           add_to_row_ls = NULL) 
 ```
-
 Our health utility predictions are now available for use and are summarised below.
 
 ```{r}

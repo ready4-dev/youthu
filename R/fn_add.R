@@ -1,79 +1,3 @@
-#' Add Assessment of Quality of Life Six Dimension prediction to dataset
-#' @description add_aqol6d_predn_to_ds() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add assessment of quality of life six dimension prediction to dataset. Function argument data_tb specifies the object to be updated. The function returns Updated (a tibble).
-#' @param data_tb Data (a tibble)
-#' @param model_mdl Model (a model)
-#' @param tfmn_1L_chr Transformation (a character vector of length one)
-#' @param predr_vars_nms_chr Predictor variables names (a character vector), Default: NULL
-#' @param utl_var_nm_1L_chr Utility variable name (a character vector of length one), Default: NULL
-#' @param id_var_nm_1L_chr Identity variable name (a character vector of length one), Default: 'fkClientID'
-#' @param round_var_nm_1L_chr Round variable name (a character vector of length one), Default: 'round'
-#' @param round_bl_val_1L_chr Round baseline value (a character vector of length one), Default: 'Baseline'
-#' @param utl_cls_fn Utility class (a function), Default: youthvars::youthvars_aqol6d_adol
-#' @param predictors_lup Predictors (a lookup table), Default: NULL
-#' @return Updated (a tibble)
-#' @rdname add_aqol6d_predn_to_ds
-#' @export 
-#' @importFrom youthvars youthvars_aqol6d_adol
-#' @importFrom utils data
-#' @importFrom TTU rename_from_nmd_vec transform_ds_to_predn_ds add_utility_predn_to_ds
-#' @importFrom purrr flatten_chr map_chr
-#' @importFrom stringr str_replace
-#' @importFrom dplyr rename select left_join
-#' @importFrom rlang sym
-#' @importFrom tidyselect all_of
-add_aqol6d_predn_to_ds <- function (data_tb, model_mdl, tfmn_1L_chr, predr_vars_nms_chr = NULL, 
-    utl_var_nm_1L_chr = NULL, id_var_nm_1L_chr = "fkClientID", 
-    round_var_nm_1L_chr = "round", round_bl_val_1L_chr = "Baseline", 
-    utl_cls_fn = youthvars::youthvars_aqol6d_adol, predictors_lup = NULL) 
-{
-    if (is.null(predictors_lup)) 
-        utils::data("predictors_lup", package = "youthvars", 
-            envir = environment())
-    if (!is.null(names(predr_vars_nms_chr))) {
-        data_tb <- TTU::rename_from_nmd_vec(data_tb, nmd_vec_chr = predr_vars_nms_chr, 
-            vec_nms_as_new_1L_lgl = T)
-    }
-    terms_ls <- model_mdl$terms
-    mdl_dep_var_1L_chr <- terms_ls[[2]] %>% as.character()
-    mdl_predr_terms_chr <- terms_ls[[3]] %>% as.character()
-    mdl_predr_terms_chr <- mdl_predr_terms_chr %>% strsplit(split = " +") %>% 
-        purrr::flatten_chr()
-    mdl_predr_terms_chr <- mdl_predr_terms_chr[mdl_predr_terms_chr != 
-        "+"]
-    mdl_predr_terms_chr <- mdl_predr_terms_chr %>% purrr::map_chr(~stringr::str_replace(.x, 
-        "_baseline", "") %>% stringr::str_replace("_change", 
-        "")) %>% unique()
-    original_ds_vars_chr <- names(data_tb)[!names(data_tb) %in% 
-        c(mdl_predr_terms_chr, ifelse(!is.null(utl_var_nm_1L_chr), 
-            utl_var_nm_1L_chr, mdl_dep_var_1L_chr))]
-    updated_tb <- data_tb %>% TTU::transform_ds_to_predn_ds(predr_vars_nms_chr = mdl_predr_terms_chr, 
-        tfmn_1L_chr = tfmn_1L_chr, depnt_var_nm_1L_chr = mdl_dep_var_1L_chr, 
-        id_var_nm_1L_chr = id_var_nm_1L_chr, round_var_nm_1L_chr = round_var_nm_1L_chr, 
-        round_bl_val_1L_chr = round_bl_val_1L_chr, predictors_lup = predictors_lup) %>% 
-        TTU::add_utility_predn_to_ds(model_mdl = model_mdl, tfmn_1L_chr = tfmn_1L_chr, 
-            depnt_var_nm_1L_chr = mdl_dep_var_1L_chr, predr_vars_nms_chr = mdl_predr_terms_chr, 
-            new_data_is_1L_chr = "Simulated", utl_cls_fn = utl_cls_fn, 
-            force_min_max_1L_lgl = T, force_new_data_1L_lgl = T, 
-            is_brms_mdl_1L_lgl = F, utl_min_val_1L_dbl = 0.03, 
-            rmv_tfd_depnt_var_1L_lgl = T)
-    if (!is.null(utl_var_nm_1L_chr)) {
-        updated_tb <- updated_tb %>% dplyr::rename(`:=`(!!rlang::sym(utl_var_nm_1L_chr), 
-            tidyselect::all_of(mdl_dep_var_1L_chr)))
-    }
-    if (!is.null(names(predr_vars_nms_chr))) {
-        updated_tb <- TTU::rename_from_nmd_vec(updated_tb, nmd_vec_chr = predr_vars_nms_chr, 
-            vec_nms_as_new_1L_lgl = F)
-    }
-    if ("aqol6d_total_w_CLL_cloglog" %in% names(updated_tb)) 
-        updated_tb <- updated_tb %>% dplyr::select(-aqol6d_total_w_CLL_cloglog)
-    names_to_incl_chr <- c(names(updated_tb), setdiff(names(data_tb), 
-        names(updated_tb)))
-    updated_tb <- dplyr::left_join(data_tb %>% dplyr::select(tidyselect::all_of(original_ds_vars_chr)), 
-        updated_tb)
-    updated_tb <- updated_tb %>% dplyr::select(tidyselect::all_of(names_to_incl_chr[names_to_incl_chr %in% 
-        names(updated_tb)]))
-    return(updated_tb)
-}
 #' Add change in dataset variable
 #' @description add_change_in_ds_var() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add change in dataset variable. Function argument ds_tb specifies the object to be updated. The function returns Updated dataset (a tibble).
 #' @param ds_tb Dataset (a tibble)
@@ -295,4 +219,48 @@ add_qalys_to_ds <- function (ds_tb, ds_smry_ls)
             "_change_dbl"), utl_var_nm_1L_chr = ds_smry_ls$utl_var_nm_1L_chr, 
             duration_var_nm_1L_chr = "duration_prd", qalys_var_nm_1L_chr = "qalys_dbl")
     return(ds_tb)
+}
+#' Add utility prediction
+#' @description add_utl_predn() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add utility prediction. Function argument data_tb specifies the object to be updated. The function returns Updated (a tibble).
+#' @param data_tb Data (a tibble)
+#' @param predn_ds_ls Prediction dataset (a list)
+#' @param deterministic_1L_lgl Deterministic (a logical vector of length one), Default: T
+#' @param force_min_max_1L_lgl Force minimum maximum (a logical vector of length one), Default: T
+#' @param key_1L_chr Key (a character vector of length one), Default: NULL
+#' @param make_from_tbl_1L_lgl Make from table (a logical vector of length one), Default: T
+#' @param model_mdl Model (a model), Default: NULL
+#' @param new_data_is_1L_chr New data is (a character vector of length one), Default: 'Simulated'
+#' @param server_1L_chr Server (a character vector of length one), Default: 'dataverse.harvard.edu'
+#' @param utl_cls_fn Utility class (a function), Default: NULL
+#' @return Updated (a tibble)
+#' @rdname add_utl_predn
+#' @export 
+#' @importFrom TTU add_utl_predn_to_new_ds
+#' @importFrom ready4fun get_from_lup_obj
+add_utl_predn <- function (data_tb, predn_ds_ls, deterministic_1L_lgl = T, force_min_max_1L_lgl = T, 
+    key_1L_chr = NULL, make_from_tbl_1L_lgl = T, model_mdl = NULL, 
+    new_data_is_1L_chr = "Simulated", server_1L_chr = "dataverse.harvard.edu", 
+    utl_cls_fn = NULL) 
+{
+    id_var_nm_1L_chr = predn_ds_ls$id_var_nm_1L_chr
+    predr_vars_nms_chr = predn_ds_ls$predr_vars_nms_chr
+    round_var_nm_1L_chr = predn_ds_ls$round_var_nm_1L_chr
+    round_bl_val_1L_chr = predn_ds_ls$round_bl_val_1L_chr
+    utl_var_nm_1L_chr = predn_ds_ls$utl_var_nm_1L_chr
+    mdl_meta_data_ls = predn_ds_ls$mdl_meta_data_ls
+    mdls_lup = predn_ds_ls$mdls_lup
+    mdl_nm_1L_chr = predn_ds_ls$mdl_nm_1L_chr
+    if (is.null(model_mdl)) 
+        model_mdl <- get_model(mdls_lup, mdl_nm_1L_chr = mdl_nm_1L_chr, 
+            make_from_tbl_1L_lgl = make_from_tbl_1L_lgl, mdl_meta_data_ls = mdl_meta_data_ls, 
+            server_1L_chr = server_1L_chr, key_1L_chr = key_1L_chr)
+    updated_tb <- TTU::add_utl_predn_to_new_ds(data_tb, mdl_nm_1L_chr = mdl_nm_1L_chr, 
+        id_var_nm_1L_chr = id_var_nm_1L_chr, analysis_1L_chr = ready4fun::get_from_lup_obj(mdls_lup, 
+            match_value_xx = mdl_nm_1L_chr, match_var_nm_1L_chr = "mdl_nms_chr", 
+            target_var_nm_1L_chr = "source_chr", evaluate_lgl = F), 
+        ingredients_ls = get_mdl_metadata(mdls_lup, mdl_nm_1L_chr = mdl_nm_1L_chr), 
+        model_mdl = model_mdl, new_data_is_1L_chr = new_data_is_1L_chr, 
+        predr_vars_nms_chr = predr_vars_nms_chr, round_var_nm_1L_chr = round_var_nm_1L_chr, 
+        round_bl_val_1L_chr = round_bl_val_1L_chr, utl_var_nm_1L_chr = utl_var_nm_1L_chr)
+    return(updated_tb)
 }

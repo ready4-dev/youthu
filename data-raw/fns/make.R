@@ -73,6 +73,20 @@ make_costs_vec_from_gamma_dstr <- function(n_int,
     costs_dbl <- stats::rgamma(n_int,shape = shape_1L_dbl, scale = scale_1L_dbl)
     return(costs_dbl)
 }
+make_fake_ds_one <- function(){
+    fake_data_tb <- youthvars::replication_popl_tb %>%
+        youthvars::transform_raw_ds_for_analysis() %>%
+        dplyr::select(fkClientID,round,PHQ9, SOFAS) %>% #
+        dplyr::arrange(fkClientID) %>%
+        na.omit() %>%
+        dplyr::rename(UID = fkClientID,
+                      Timepoint = round,
+                      PHQ_total = PHQ9,
+                      SOFAS_total = SOFAS) %>%
+        dplyr::mutate(SOFAS_total = as.integer(round(SOFAS_total,0))) %>%
+        tibble::as_tibble()
+    return(fake_data_tb)
+}
 make_fake_trial_ds <- function(ds_tb,
                                id_var_nm_1L_chr = "fkClientID",
                                round_var_nm_1L_chr = "round",
@@ -199,6 +213,86 @@ make_matched_ds_spine <- function(ds_tb,
     match_key_ds_tb <- c(F,T) %>% purrr::map_dfr(~matched_ds_tb %>% dplyr::filter(Intervention_lgl == .x) %>% dplyr::arrange(distance) %>% dplyr::mutate(match_idx_int = 1:dplyr::n())) %>% dplyr::arrange(match_idx_int) %>% dplyr::select(!!rlang::sym(id_var_nm_1L_chr), study_arm_chr, match_idx_int)
     matched_ds_tb <- dplyr::right_join(ds_tb,match_key_ds_tb) %>% dplyr::arrange(match_idx_int)
     return(matched_ds_tb)
+}
+make_valid_predn_ds_ls <- function(data_tb,
+                                   id_var_nm_1L_chr = "UID",
+                                   mdl_meta_data_ls = NULL,
+                                   mdls_lup = NULL,
+                                   mdl_nm_1L_chr = NULL,
+                                   msrmnt_date_var_nm_1L_chr = NULL,
+                                   predr_vars_nms_chr = NULL,
+                                   round_var_nm_1L_chr,
+                                   round_bl_val_1L_chr,
+                                   utl_var_nm_1L_chr = "AQoL6D_HU",
+                                   server_1L_chr = "dataverse.harvard.edu",
+                                   key_1L_chr = NULL){
+    if(!is.null(predr_vars_nms_chr)){
+        data_tb <- rename_from_nmd_vec(data_tb,
+                                       nmd_vec_chr = predr_vars_nms_chr,
+                                       vec_nms_as_new_1L_lgl = T)
+    }
+    predictors_lup <- get_predictors_lup(mdl_meta_data_ls = mdl_meta_data_ls,
+                                        mdls_lup = mdls_lup,
+                                        mdl_nm_1L_chr = mdl_nm_1L_chr,
+                                        outp_is_abbrvs_tb = F,
+                                        server_1L_chr = server_1L_chr,
+                                        key_1L_chr = key_1L_chr)
+    data_tb <- data_tb %>%
+        transform_mdl_vars_with_clss(predictors_lup = predictors_lup)
+    purrr::walk(predictors_lup$short_name_chr,
+               ~{
+                   vector_xx <- data_tb %>% dplyr::pull(.x)
+                   min_dbl <- ready4fun::get_from_lup_obj(predictors_lup,
+                                                         match_value_xx = .x,
+                                                         match_var_nm_1L_chr = "short_name_chr",
+                                                         target_var_nm_1L_chr = "min_val_dbl",
+                                                         evaluate_lgl = F)
+                   max_dbl <- ready4fun::get_from_lup_obj(predictors_lup,
+                                                          match_value_xx = .x,
+                                                          match_var_nm_1L_chr = "short_name_chr",
+                                                          target_var_nm_1L_chr = "max_val_dbl",
+                                                          evaluate_lgl = F)
+                   assertthat::assert_that(max(vector_xx)<= max_dbl & min(vector_xx)>=min_dbl, msg = paste0(predr_vars_nms_chr %>% purrr::pluck(.x),
+                                                                                                            " variable must be within range of ",
+                                                                                                            min_dbl,
+                                                                                                            " and ",
+                                                                                                            max_dbl,
+                                                                                                            "."))
+               })
+    assertthat::assert_that(length(data_tb %>% dplyr::pull(!!rlang::sym(round_var_nm_1L_chr)) %>% unique())==2, msg = paste0(round_var_nm_1L_chr,
+                                                                                                                             " variable must have two values - one for each data collection round."))
+    assertthat::assert_that(is.factor(data_tb %>% dplyr::pull(!!rlang::sym(round_var_nm_1L_chr))), msg = paste0(round_var_nm_1L_chr,
+                                                                                                                             " variable must be a factor."))
+    assertthat::assert_that(round_bl_val_1L_chr %in% levels(data_tb %>% dplyr::pull(!!rlang::sym(round_var_nm_1L_chr))), msg = paste0("Levels of ",
+                                                                                                                                      round_var_nm_1L_chr,
+                                                                                                                " variable must include one that is named ",
+                                                                                                                round_bl_val_1L_chr,
+                                                                                                                "."))
+    bl_ds_tb <- data_tb %>%
+        dplyr::filter(!!rlang::sym(round_var_nm_1L_chr) == round_bl_val_1L_chr)
+    fup_ds_tb <- data_tb %>%
+        dplyr::filter(!!rlang::sym(round_var_nm_1L_chr) != round_bl_val_1L_chr)
+    bl_uids_xx <- bl_ds_tb %>% dplyr::pull(id_var_nm_1L_chr)
+    fup_uids_xx <- fup_ds_tb %>% dplyr::pull(id_var_nm_1L_chr)
+    assertthat::assert_that(nrow(bl_ds_tb)==length(unique(bl_uids_xx)) & nrow(fup_ds_tb)==length(unique(fup_uids_xx)), msg = paste0("At each time-point (the ",
+                                                                                                                                    round_var_nm_1L_chr,
+                                                                                                                                    " variable) there must be one unique record identifier (the ",
+                                                                                                                                      id_var_nm_1L_chr,
+                                                                                                                                     " variable)."))
+
+    if(!is.null(msrmnt_date_var_nm_1L_chr))
+        assertthat::assert_that(lubridate::is.Date(data_tb %>% dplyr::pull(msrmnt_date_var_nm_1L_chr)), msg = paste0(msrmnt_date_var_nm_1L_chr,
+                                                                                                                     " variable must be of date class."))
+    valid_predn_ds_ls <- list(id_var_nm_1L_chr = id_var_nm_1L_chr,
+                              mdl_meta_data_ls = mdl_meta_data_ls,
+                              mdls_lup = mdls_lup,
+                              mdl_nm_1L_chr = mdl_nm_1L_chr,
+                              msrmnt_date_var_nm_1L_chr = msrmnt_date_var_nm_1L_chr,
+                              predr_vars_nms_chr = predr_vars_nms_chr,
+                              round_var_nm_1L_chr = round_var_nm_1L_chr,
+                              round_bl_val_1L_chr = round_bl_val_1L_chr,
+                              utl_var_nm_1L_chr = utl_var_nm_1L_chr)
+    return(valid_predn_ds_ls)
 }
 make_sngl_grp_ds <- function(seed_ds_tb = NULL,
                              ds_smry_ls){

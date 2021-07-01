@@ -1,3 +1,11 @@
+home:
+  links:
+  - text: User manual (PDF)
+    href: https://github.com/ready4-dev/youthu/releases/download/v0.0.0.9065/youthu_user_0.0.0.9065.pdf
+  - text: Developer version of usual manual (PDF)
+    href: https://github.com/ready4-dev/youthu/releases/download/v0.0.0.9065/youthu_developer_0.0.0.9065.pdf
+  - text: Project website
+    href: https://www.ready4-dev.com/
 development:
   mode: auto
 reference:
@@ -9,10 +17,9 @@ reference:
   - mdls_lup
 - title: "Functions"
 - contents:
-  - add_aqol6d_predn_to_ds
   - add_qalys_to_ds
+  - add_utl_predn
   - get_mdl_from_dv
-  - get_mdls_using_predrs
   - get_tfmn_from_lup
   - make_hlth_ec_smry
   - make_matched_ds
