@@ -1,6 +1,6 @@
 Package: youthu
 Title: Youth Outcomes to Health Utility
-Version: 0.0.0.9079
+Version: 0.0.0.9080
 Authors@R: 
     c(person(given = "Matthew",
              family = "Hamilton",
@@ -43,6 +43,7 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Imports: 
+    assertthat,
     BCEA,
     boot,
     dataverse (>= 0.3.8.9000),
@@ -66,7 +67,7 @@ Imports:
     tidyr,
     tidyselect,
     truncnorm,
-    TTU (>= 0.0.0.9267),
+    TTU (>= 0.0.0.9269),
     utils,
     youthvars (>= 0.0.0.9054)
 VignetteBuilder: knitr
