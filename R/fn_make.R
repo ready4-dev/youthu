@@ -112,13 +112,14 @@ make_cst_efns_smry <- function (ds_tb, idxs_int, change_types_chr = "dbl", benef
 #' @return Fake data (a tibble)
 #' @rdname make_fake_ds_one
 #' @export 
-#' @importFrom youthvars replication_popl_tb transform_raw_ds_for_analysis
+#' @importFrom youthvars transform_raw_ds_for_analysis
 #' @importFrom dplyr select arrange rename mutate
 #' @importFrom tibble as_tibble
 #' @keywords internal
 make_fake_ds_one <- function () 
 {
-    fake_data_tb <- youthvars::replication_popl_tb %>% youthvars::transform_raw_ds_for_analysis() %>% 
+    data("replication_popl_tb", package = "youthvars")
+    fake_data_tb <- replication_popl_tb %>% youthvars::transform_raw_ds_for_analysis() %>% 
         dplyr::select(fkClientID, round, PHQ9, SOFAS) %>% dplyr::arrange(fkClientID) %>% 
         na.omit() %>% dplyr::rename(UID = fkClientID, Timepoint = round, 
         PHQ_total = PHQ9, SOFAS_total = SOFAS) %>% dplyr::mutate(SOFAS_total = as.integer(round(SOFAS_total, 

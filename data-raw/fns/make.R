@@ -74,7 +74,8 @@ make_costs_vec_from_gamma_dstr <- function(n_int,
     return(costs_dbl)
 }
 make_fake_ds_one <- function(){
-    fake_data_tb <- youthvars::replication_popl_tb %>%
+    data("replication_popl_tb", package = "youthvars")
+    fake_data_tb <- replication_popl_tb %>%
         youthvars::transform_raw_ds_for_analysis() %>%
         dplyr::select(fkClientID,round,PHQ9, SOFAS) %>% #
         dplyr::arrange(fkClientID) %>%
