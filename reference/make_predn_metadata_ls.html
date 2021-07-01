@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Add Quality Adjusted Life Years — add_qalys • youthu</title>
+<title>Make prediction metadata — make_predn_metadata_ls • youthu</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,8 +46,8 @@
 
 
 
-<meta property="og:title" content="Add Quality Adjusted Life Years — add_qalys" />
-<meta property="og:description" content="add_qalys() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add quality adjusted life years. Function argument ds_tb specifies the object to be updated. The function returns Updated dataset (a tibble)." />
+<meta property="og:title" content="Make prediction metadata — make_predn_metadata_ls" />
+<meta property="og:description" content="make_predn_metadata_ls() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make prediction metadata list. The function returns Prediction metadata (a list)." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -134,76 +134,86 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Add Quality Adjusted Life Years</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ready4-dev/youthu/blob/master/R/fn_add.R'><code>R/fn_add.R</code></a></small>
-    <div class="hidden name"><code>add_qalys.Rd</code></div>
+    <h1>Make prediction metadata</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ready4-dev/youthu/blob/master/R/fn_make.R'><code>R/fn_make.R</code></a></small>
+    <div class="hidden name"><code>make_predn_metadata_ls.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>add_qalys() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add quality adjusted life years. Function argument ds_tb specifies the object to be updated. The function returns Updated dataset (a tibble).</p>
+    <p>make_predn_metadata_ls() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make prediction metadata list. The function returns Prediction metadata (a list).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>add_qalys</span><span class='op'>(</span>
-  <span class='va'>ds_tb</span>,
-  cmprsn_var_nm_1L_chr <span class='op'>=</span> <span class='st'>"study_arm_chr"</span>,
-  duration_var_nm_1L_chr <span class='op'>=</span> <span class='st'>"duration_prd"</span>,
-  id_var_nm_1L_chr <span class='op'>=</span> <span class='st'>"fkClientID"</span>,
-  match_idx_var_nm_1L_chr <span class='op'>=</span> <span class='st'>"match_idx_int"</span>,
-  qalys_var_nm_1L_chr <span class='op'>=</span> <span class='st'>"qalys_dbl"</span>,
-  round_var_nm_1L_chr <span class='op'>=</span> <span class='st'>"round"</span>,
-  utl_change_var_nm_1L_chr <span class='op'>=</span> <span class='st'>"utl_change_dbl"</span>,
-  utl_var_nm_1L_chr <span class='op'>=</span> <span class='st'>"utility_dbl"</span>,
-  reshape_1L_lgl <span class='op'>=</span> <span class='cn'>T</span>
+    <pre class="usage"><span class='fu'>make_predn_metadata_ls</span><span class='op'>(</span>
+  <span class='va'>data_tb</span>,
+  id_var_nm_1L_chr <span class='op'>=</span> <span class='st'>"UID"</span>,
+  mdl_meta_data_ls <span class='op'>=</span> <span class='cn'>NULL</span>,
+  mdls_lup <span class='op'>=</span> <span class='cn'>NULL</span>,
+  mdl_nm_1L_chr <span class='op'>=</span> <span class='cn'>NULL</span>,
+  msrmnt_date_var_nm_1L_chr <span class='op'>=</span> <span class='cn'>NULL</span>,
+  predr_vars_nms_chr <span class='op'>=</span> <span class='cn'>NULL</span>,
+  <span class='va'>round_var_nm_1L_chr</span>,
+  <span class='va'>round_bl_val_1L_chr</span>,
+  utl_var_nm_1L_chr <span class='op'>=</span> <span class='st'>"AQoL6D_HU"</span>,
+  server_1L_chr <span class='op'>=</span> <span class='st'>"dataverse.harvard.edu"</span>,
+  key_1L_chr <span class='op'>=</span> <span class='cn'>NULL</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>ds_tb</th>
-      <td><p>Dataset (a tibble)</p></td>
-    </tr>
-    <tr>
-      <th>cmprsn_var_nm_1L_chr</th>
-      <td><p>Comparison variable name (a character vector of length one), Default: 'study_arm_chr'</p></td>
-    </tr>
-    <tr>
-      <th>duration_var_nm_1L_chr</th>
-      <td><p>Duration variable name (a character vector of length one), Default: 'duration_prd'</p></td>
+      <th>data_tb</th>
+      <td><p>Data (a tibble)</p></td>
     </tr>
     <tr>
       <th>id_var_nm_1L_chr</th>
-      <td><p>Identity variable name (a character vector of length one), Default: 'fkClientID'</p></td>
+      <td><p>Identity variable name (a character vector of length one), Default: 'UID'</p></td>
     </tr>
     <tr>
-      <th>match_idx_var_nm_1L_chr</th>
-      <td><p>Match index variable name (a character vector of length one), Default: 'match_idx_int'</p></td>
+      <th>mdl_meta_data_ls</th>
+      <td><p>Model meta data (a list), Default: NULL</p></td>
     </tr>
     <tr>
-      <th>qalys_var_nm_1L_chr</th>
-      <td><p>Quality Adjusted Life Years variable name (a character vector of length one), Default: 'qalys_dbl'</p></td>
+      <th>mdls_lup</th>
+      <td><p>Models (a lookup table), Default: NULL</p></td>
+    </tr>
+    <tr>
+      <th>mdl_nm_1L_chr</th>
+      <td><p>Model name (a character vector of length one), Default: NULL</p></td>
+    </tr>
+    <tr>
+      <th>msrmnt_date_var_nm_1L_chr</th>
+      <td><p>Measurement date variable name (a character vector of length one), Default: NULL</p></td>
+    </tr>
+    <tr>
+      <th>predr_vars_nms_chr</th>
+      <td><p>Predictor variables names (a character vector), Default: NULL</p></td>
     </tr>
     <tr>
       <th>round_var_nm_1L_chr</th>
-      <td><p>Round variable name (a character vector of length one), Default: 'round'</p></td>
+      <td><p>Round variable name (a character vector of length one)</p></td>
     </tr>
     <tr>
-      <th>utl_change_var_nm_1L_chr</th>
-      <td><p>Utility change variable name (a character vector of length one), Default: 'utl_change_dbl'</p></td>
+      <th>round_bl_val_1L_chr</th>
+      <td><p>Round baseline value (a character vector of length one)</p></td>
     </tr>
     <tr>
       <th>utl_var_nm_1L_chr</th>
-      <td><p>Utility variable name (a character vector of length one), Default: 'utility_dbl'</p></td>
+      <td><p>Utility variable name (a character vector of length one), Default: 'AQoL6D_HU'</p></td>
     </tr>
     <tr>
-      <th>reshape_1L_lgl</th>
-      <td><p>Reshape (a logical vector of length one), Default: T</p></td>
+      <th>server_1L_chr</th>
+      <td><p>Server (a character vector of length one), Default: 'dataverse.harvard.edu'</p></td>
+    </tr>
+    <tr>
+      <th>key_1L_chr</th>
+      <td><p>Key (a character vector of length one), Default: NULL</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Updated dataset (a tibble)</p>
+    <p>Prediction metadata (a list)</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

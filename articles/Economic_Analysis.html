@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">youthu</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9076</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9086</span>
       </span>
     </div>
 
@@ -219,7 +219,7 @@ Participant_20
 Baseline
 </td>
 <td style="text-align:right;">
-2020-11-10
+2020-11-24
 </td>
 <td style="text-align:right;">
 0S
@@ -248,7 +248,7 @@ Participant_593
 Baseline
 </td>
 <td style="text-align:right;">
-2020-09-17
+2020-10-01
 </td>
 <td style="text-align:right;">
 0S
@@ -277,7 +277,7 @@ Participant_593
 Follow-up
 </td>
 <td style="text-align:right;">
-2021-03-11
+2021-03-25
 </td>
 <td style="text-align:right;">
 175d 0H 0M 0S
@@ -306,7 +306,7 @@ Participant_20
 Follow-up
 </td>
 <td style="text-align:right;">
-2021-05-07
+2021-05-21
 </td>
 <td style="text-align:right;">
 178d 0H 0M 0S
@@ -335,7 +335,7 @@ Participant_259
 Baseline
 </td>
 <td style="text-align:right;">
-2021-01-05
+2021-01-19
 </td>
 <td style="text-align:right;">
 0S
@@ -364,7 +364,7 @@ Participant_962
 Baseline
 </td>
 <td style="text-align:right;">
-2021-02-17
+2021-03-03
 </td>
 <td style="text-align:right;">
 0S
@@ -392,13 +392,7 @@ Intervention
 </td>
 </tr></tfoot>
 </table>
-<p>This dataset contains features that make it possible to use in conjunction with youthu’s economic analysis functions. Specifically these requirements are that the dataset must:</p>
-<ul>
-<li>
-<a href="Prediction_With_Mdls.html">include one or more of the predictors used in the youthu models</a>;</li>
-<li>include variables for unique study participant identifier, data collection round, data collection date, interval between baseline and follow-up, study arm assignment and record matching; and</li>
-<li>be in long format where each row represents <strong><em>either</em></strong> a baseline or follow-up measurement for a unique study participant.</li>
-</ul>
+<p>This dataset contains features that make it possible to use in conjunction with youthu’s economic analysis functions. These requirements are described in the vignette about <a href="Prediction_With_Mdls.html">finding and using models compatible with youthu functions</a>;</p>
 <p>The synthetic matched dataset also contains a cost variable, which is a requirement for most, though not all, of the economic analyses that can be undertaken with youthu.</p>
 </div>
 <div id="limitations-of-datasets-without-measures-of-health-utility" class="section level2">
@@ -460,26 +454,24 @@ Intervention
 <div id="predict-adolescent-aqol-6d-health-utility" class="section level3">
 <h3 class="hasAnchor">
 <a href="#predict-adolescent-aqol-6d-health-utility" class="anchor"></a>Predict adolescent AQoL-6D health utility</h3>
-<p>Our first step is to identify which youthu models we will use to predict adolescent AQoL-6D and apply these models to our data. This step was explained in more detail in <a href="Prediction_With_Mdls.html">another vignette article</a>, so will be dealt with briefly here.</p>
-<p>First we retrieve the model we wish to use.</p>
+<p>Our first step is to identify which youthu models we will use to predict adolescent AQoL-6D and apply these models to our data. This step was explained in more detail in <a href="Prediction_With_Mdls.html">another vignette article about finding and using transfer to utility models</a>, so will be dealt with briefly here.</p>
+<p>First we make sure that our dataset can be used as a prediction dataset in conjunction with the model we intend using.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"predictors_lup"</span>, package <span class="op">=</span> <span class="st">"youthvars"</span><span class="op">)</span>
-<span class="va">candidate_mdls_tb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_mdls_using_predrs.html">get_mdls_using_predrs</a></span><span class="op">(</span><span class="va">predictors_lup</span><span class="op">$</span><span class="va">short_name_chr</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span>,<span class="fl">7</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></code></pre></div>
-<pre><code>## New names:
-## * `` -&gt; ...1
-## * `` -&gt; ...2
-## * `` -&gt; ...3</code></pre>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">model_mdl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_mdl_from_dv.html">get_mdl_from_dv</a></span><span class="op">(</span><span class="va">candidate_mdls_tb</span><span class="op">$</span><span class="va">mdl_nms_chr</span><span class="op">[</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span></code></pre></div>
-<p>We then use that model to predict health utility from the measures in our dataset.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">econ_cmprsn_ds_tb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/add_aqol6d_predn_to_ds.html">add_aqol6d_predn_to_ds</a></span><span class="op">(</span>data_tb <span class="op">=</span> <span class="va">matched_ds_tb</span>,
-                                            model_mdl <span class="op">=</span> <span class="va">model_mdl</span>,
-                                            tfmn_1L_chr <span class="op">=</span> <span class="fu"><a href="../reference/get_tfmn_from_lup.html">get_tfmn_from_lup</a></span><span class="op">(</span><span class="va">candidate_mdls_tb</span><span class="op">$</span><span class="va">mdl_nms_chr</span><span class="op">[</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span>,
-                                            utl_var_nm_1L_chr <span class="op">=</span> <span class="va">ds_smry_ls</span><span class="op">$</span><span class="va">utl_var_nm_1L_chr</span>,
-                                            id_var_nm_1L_chr <span class="op">=</span> <span class="va">ds_smry_ls</span><span class="op">$</span><span class="va">id_var_nm_1L_chr</span>,
-                                            round_var_nm_1L_chr <span class="op">=</span> <span class="va">ds_smry_ls</span><span class="op">$</span><span class="va">round_var_nm_1L_chr</span>,
-                                            round_bl_val_1L_chr <span class="op">=</span> <span class="va">ds_smry_ls</span><span class="op">$</span><span class="va">round_lvls_chr</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="op">%&gt;%</span>
+<code class="sourceCode R"><span class="va">predn_ds_ls</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/make_predn_metadata_ls.html">make_predn_metadata_ls</a></span><span class="op">(</span><span class="va">matched_ds_tb</span>,
+                                      id_var_nm_1L_chr <span class="op">=</span> <span class="st">"fkClientID"</span>,
+                                      msrmnt_date_var_nm_1L_chr <span class="op">=</span> <span class="st">"date_psx"</span>,
+                                      round_var_nm_1L_chr <span class="op">=</span> <span class="st">"round"</span>,
+                                      round_bl_val_1L_chr <span class="op">=</span> <span class="st">"Baseline"</span>,
+                                      utl_var_nm_1L_chr <span class="op">=</span> <span class="st">"AQoL6D_HU"</span>,
+                                      mdls_lup <span class="op">=</span> <span class="fu"><a href="../reference/get_mdls_lup.html">get_mdls_lup</a></span><span class="op">(</span>utility_type_chr <span class="op">=</span> <span class="st">"AQoL-6D"</span>,
+                                                              mdl_predrs_in_ds_chr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"PHQ9 total score"</span>,
+                                                                                       <span class="st">"SOFAS total score"</span><span class="op">)</span>,
+                                                              ttu_dv_nms_chr <span class="op">=</span> <span class="st">"firstbounce"</span><span class="op">)</span>,
+                                      mdl_nm_1L_chr <span class="op">=</span> <span class="st">"SOFAS_1_OLS_CLL"</span><span class="op">)</span></code></pre></div>
+<p>We now use our preferred model to predict health utility from the measures in our dataset.</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">econ_cmprsn_ds_tb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/add_utl_predn.html">add_utl_predn</a></span><span class="op">(</span><span class="va">matched_ds_tb</span>,
+                                   predn_ds_ls <span class="op">=</span> <span class="va">predn_ds_ls</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">fkClientID</span>, <span class="va">round</span>, <span class="va">study_arm_chr</span>, <span class="va">date_psx</span>, <span class="va">duration_prd</span>, <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <pre><code>## Joining, by = c("fkClientID", "round")</code></pre>
 </div>
@@ -487,9 +479,9 @@ Intervention
 <h3 class="hasAnchor">
 <a href="#calculate-qalys" class="anchor"></a>Calculate QALYs</h3>
 <p>Next we combine the health utility data with the interval between measurement data to calculate QALYs and add them to the dataset.</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">econ_cmprsn_ds_tb</span>  <span class="op">&lt;-</span> <span class="va">econ_cmprsn_ds_tb</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/add_qalys_to_ds.html">add_qalys_to_ds</a></span><span class="op">(</span>ds_smry_ls <span class="op">=</span> <span class="va">ds_smry_ls</span><span class="op">)</span></code></pre></div>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">econ_cmprsn_ds_tb</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
     <span class="fu">ready4show</span><span class="fu">::</span><span class="fu"><a href="https://ready4-dev.github.io/ready4show/reference/print_table.html">print_table</a></span><span class="op">(</span>output_type_1L_chr <span class="op">=</span> <span class="st">"HTML"</span>,
                           caption_1L_chr <span class="op">=</span> <span class="st">"Updated dataset with QALYs"</span>, 
@@ -527,22 +519,22 @@ PHQ9_Baseline
 PHQ9_Follow-up
 </th>
 <th style="text-align:right;">
-SOFAS_Baseline
+costs_dbl_Baseline
 </th>
 <th style="text-align:right;">
+costs_dbl_Follow-up
+</th>
+<th style="text-align:right;">
+SOFAS_Baseline
+</th>
+<th style="text-align:left;">
 SOFAS_Follow-up
 </th>
 <th style="text-align:right;">
 AQoL6D_HU_Baseline
 </th>
-<th style="text-align:left;">
+<th style="text-align:right;">
 AQoL6D_HU_Follow-up
-</th>
-<th style="text-align:right;">
-costs_dbl_Baseline
-</th>
-<th style="text-align:right;">
-costs_dbl_Follow-up
 </th>
 <th style="text-align:right;">
 PHQ9_change_dbl_Baseline
@@ -581,10 +573,10 @@ Control
 243
 </td>
 <td style="text-align:right;">
-2020-08-26
+2020-09-09
 </td>
 <td style="text-align:right;">
-2021-02-19
+2021-03-05
 </td>
 <td style="text-align:right;">
 0S
@@ -599,24 +591,24 @@ Control
 17
 </td>
 <td style="text-align:right;">
-60
-</td>
-<td style="text-align:right;">
-64
-</td>
-<td style="text-align:right;">
-0.3389797
-</td>
-<td style="text-align:left;">
-0.5491302
-</td>
-<td style="text-align:right;">
 647.9386
 </td>
 <td style="text-align:right;">
 1696.235
 </td>
 <td style="text-align:right;">
+61
+</td>
+<td style="text-align:left;">
+64
+</td>
+<td style="text-align:right;">
+0.7095291
+</td>
+<td style="text-align:right;">
+0.3746629
+</td>
+<td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
@@ -626,19 +618,19 @@ Control
 0
 </td>
 <td style="text-align:left;">
-4
+3
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-0.2101505
+-0.3348662
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-0.2151889
+0.2626995
 </td>
 </tr>
 <tr>
@@ -652,10 +644,10 @@ Control
 191
 </td>
 <td style="text-align:right;">
-2020-10-22
+2020-11-05
 </td>
 <td style="text-align:right;">
-2021-04-24
+2021-05-08
 </td>
 <td style="text-align:right;">
 0S
@@ -670,24 +662,24 @@ Control
 0
 </td>
 <td style="text-align:right;">
-71
-</td>
-<td style="text-align:right;">
-71
-</td>
-<td style="text-align:right;">
-0.9593505
-</td>
-<td style="text-align:left;">
-0.8888675
-</td>
-<td style="text-align:right;">
 428.9205
 </td>
 <td style="text-align:right;">
 1619.037
 </td>
 <td style="text-align:right;">
+63
+</td>
+<td style="text-align:left;">
+82
+</td>
+<td style="text-align:right;">
+0.4698319
+</td>
+<td style="text-align:right;">
+0.8682309
+</td>
+<td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
@@ -697,19 +689,19 @@ Control
 0
 </td>
 <td style="text-align:left;">
-0
+19
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
--0.0704829
+0.3983989
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-0.4655333
+0.3370343
 </td>
 </tr>
 <tr>
@@ -723,10 +715,10 @@ Intervention
 230
 </td>
 <td style="text-align:right;">
-2020-09-16
+2020-09-30
 </td>
 <td style="text-align:right;">
-2021-03-14
+2021-03-28
 </td>
 <td style="text-align:right;">
 0S
@@ -741,24 +733,24 @@ Intervention
 0
 </td>
 <td style="text-align:right;">
-79
-</td>
-<td style="text-align:right;">
-77
-</td>
-<td style="text-align:right;">
-0.8964027
-</td>
-<td style="text-align:left;">
-0.9576689
-</td>
-<td style="text-align:right;">
 429.3703
 </td>
 <td style="text-align:right;">
 1844.219
 </td>
 <td style="text-align:right;">
+59
+</td>
+<td style="text-align:left;">
+72
+</td>
+<td style="text-align:right;">
+0.1849771
+</td>
+<td style="text-align:right;">
+0.3443917
+</td>
+<td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
@@ -768,19 +760,19 @@ Intervention
 0
 </td>
 <td style="text-align:left;">
--2
+13
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-0.0612662
+0.1594146
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-0.4543173
+0.1297153
 </td>
 </tr>
 <tr>
@@ -794,10 +786,10 @@ Intervention
 115
 </td>
 <td style="text-align:right;">
-2020-10-15
+2020-10-29
 </td>
 <td style="text-align:right;">
-2021-04-15
+2021-04-29
 </td>
 <td style="text-align:right;">
 0S
@@ -812,22 +804,22 @@ Intervention
 15
 </td>
 <td style="text-align:right;">
-64
-</td>
-<td style="text-align:right;">
-59
-</td>
-<td style="text-align:right;">
-0.5211633
-</td>
-<td style="text-align:left;">
-0.7340772
-</td>
-<td style="text-align:right;">
 395.1637
 </td>
 <td style="text-align:right;">
 1537.365
+</td>
+<td style="text-align:right;">
+71
+</td>
+<td style="text-align:left;">
+81
+</td>
+<td style="text-align:right;">
+0.3516098
+</td>
+<td style="text-align:right;">
+0.8683802
 </td>
 <td style="text-align:right;">
 0
@@ -839,19 +831,19 @@ Intervention
 0
 </td>
 <td style="text-align:left;">
--5
+10
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-0.2129139
+0.5167704
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-0.3127362
+0.3039537
 </td>
 </tr>
 <tr>
@@ -865,10 +857,10 @@ Intervention
 183
 </td>
 <td style="text-align:right;">
-2021-01-16
+2021-01-30
 </td>
 <td style="text-align:right;">
-2021-07-21
+2021-08-04
 </td>
 <td style="text-align:right;">
 0S
@@ -883,22 +875,22 @@ Intervention
 0
 </td>
 <td style="text-align:right;">
-72
-</td>
-<td style="text-align:right;">
-67
-</td>
-<td style="text-align:right;">
-0.6401275
-</td>
-<td style="text-align:left;">
-0.6945803
-</td>
-<td style="text-align:right;">
 402.9910
 </td>
 <td style="text-align:right;">
 1826.511
+</td>
+<td style="text-align:right;">
+78
+</td>
+<td style="text-align:left;">
+88
+</td>
+<td style="text-align:right;">
+0.9686623
+</td>
+<td style="text-align:right;">
+0.6603391
 </td>
 <td style="text-align:right;">
 0
@@ -910,19 +902,19 @@ Intervention
 0
 </td>
 <td style="text-align:left;">
--5
+10
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-0.0544528
+-0.3083232
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-0.3398435
+0.4147765
 </td>
 </tr>
 <tr>
@@ -936,10 +928,10 @@ Intervention
 219
 </td>
 <td style="text-align:right;">
-2021-02-11
+2021-02-25
 </td>
 <td style="text-align:right;">
-2021-08-09
+2021-08-23
 </td>
 <td style="text-align:right;">
 0S
@@ -954,22 +946,22 @@ Intervention
 11
 </td>
 <td style="text-align:right;">
-67
-</td>
-<td style="text-align:right;">
-67
-</td>
-<td style="text-align:right;">
-0.5692839
-</td>
-<td style="text-align:left;">
-0.6838795
-</td>
-<td style="text-align:right;">
 534.2285
 </td>
 <td style="text-align:right;">
 2401.478
+</td>
+<td style="text-align:right;">
+75
+</td>
+<td style="text-align:left;">
+73
+</td>
+<td style="text-align:right;">
+0.8092530
+</td>
+<td style="text-align:right;">
+0.6275554
 </td>
 <td style="text-align:right;">
 0
@@ -981,19 +973,19 @@ Intervention
 0
 </td>
 <td style="text-align:left;">
-0
+-2
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-0.1145956
+-0.1816976
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-0.3070722
+0.3520721
 </td>
 </tr>
 </tbody>
@@ -1009,7 +1001,7 @@ Intervention
 <a href="#analyse-results" class="anchor"></a>Analyse results</h3>
 <p>Now we can run the main economic analysis. This is implemented by the <code class="sourceCode r">make_hlth_ec_smry</code> function, which first bootstraps the dataset (implemented by the <code>boot</code> function from the <code>boot</code> package) before passing the mean values for costs and QALYs from each bootstrap sample to with <code>bcea</code> function of the <code>BCEA</code> package to calculate a range of health economic statistics. For this example we pass a value of 50,000 for the willingness to pay parameter, as this is the dollar amount commonly used in Australia as a benchmark for the value of a QALY.</p>
 <p>Note, for this illustrative example we only request 1000 bootstrap iterations - in practice this number may be higher.</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">he_smry_ls</span> <span class="op">&lt;-</span> <span class="va">econ_cmprsn_ds_tb</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/make_hlth_ec_smry.html">make_hlth_ec_smry</a></span><span class="op">(</span>change_vars_chr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">ds_smry_ls</span><span class="op">$</span><span class="va">predr_var_nms</span>,
                                                                      <span class="va">ds_smry_ls</span><span class="op">$</span><span class="va">utl_var_nm_1L_chr</span><span class="op">)</span>,
                                                  wtp_dbl <span class="op">=</span> <span class="fl">50000</span>,
@@ -1023,8 +1015,8 @@ Intervention
                                                  cmprsn_groups_chr <span class="op">=</span> <span class="va">ds_smry_ls</span><span class="op">$</span><span class="va">cmprsn_groups_chr</span>,
                                                  cmprsn_var_nm_1L_chr <span class="op">=</span> <span class="va">ds_smry_ls</span><span class="op">$</span><span class="va">cmprsn_var_nm_1L_chr</span>,
                                                  round_fup_val_1L_chr <span class="op">=</span> <span class="va">ds_smry_ls</span><span class="op">$</span><span class="va">round_lvls_chr</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span></code></pre></div>
-<p>As part of the output of the <code class="sourceCode r">make_hlth_ec_smry</code> function is a BCEA object, we can use the BCEA package to produce a number of graphical summaries of economic results. One of the most important is the production of a cost-effectiveness plane. This plot highlights that, with an ICER of $38,533.23, most of the bootstrapped iteration incremental cost and QALY pairs fall within the zone of cost-effectiveness (green). In fact, at the cost-effectiveness threshold we supplied, the results suggest there is a 62.5% probability that the intervention is cost-effective.</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<p>As part of the output of the <code class="sourceCode r">make_hlth_ec_smry</code> function is a BCEA object, we can use the BCEA package to produce a number of graphical summaries of economic results. One of the most important is the production of a cost-effectiveness plane. This plot highlights that, with an ICER of $25,542.87, most of the bootstrapped iteration incremental cost and QALY pairs fall within the zone of cost-effectiveness (green). In fact, at the cost-effectiveness threshold we supplied, the results suggest there is a 76.5% probability that the intervention is cost-effective.</p>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">BCEA</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BCEA/man/ceplane.plot.html">ceplane.plot</a></span><span class="op">(</span><span class="va">he_smry_ls</span><span class="op">$</span><span class="va">ce_res_ls</span>, wtp <span class="op">=</span><span class="fl">50000</span>,    
                    area_color <span class="op">=</span> <span class="st">"green"</span>,
                     graph <span class="op">=</span> <span class="st">"ggplot2"</span>,
