@@ -215,7 +215,7 @@ make_matched_ds_spine <- function(ds_tb,
     matched_ds_tb <- dplyr::right_join(ds_tb,match_key_ds_tb) %>% dplyr::arrange(match_idx_int)
     return(matched_ds_tb)
 }
-make_valid_predn_ds_ls <- function(data_tb,
+make_predn_metadata_ls <- function(data_tb,
                                    id_var_nm_1L_chr = "UID",
                                    mdl_meta_data_ls = NULL,
                                    mdls_lup = NULL,
@@ -284,16 +284,16 @@ make_valid_predn_ds_ls <- function(data_tb,
     if(!is.null(msrmnt_date_var_nm_1L_chr))
         assertthat::assert_that(lubridate::is.Date(data_tb %>% dplyr::pull(msrmnt_date_var_nm_1L_chr)), msg = paste0(msrmnt_date_var_nm_1L_chr,
                                                                                                                      " variable must be of date class."))
-    valid_predn_ds_ls <- list(id_var_nm_1L_chr = id_var_nm_1L_chr,
-                              mdl_meta_data_ls = mdl_meta_data_ls,
-                              mdls_lup = mdls_lup,
-                              mdl_nm_1L_chr = mdl_nm_1L_chr,
-                              msrmnt_date_var_nm_1L_chr = msrmnt_date_var_nm_1L_chr,
-                              predr_vars_nms_chr = predr_vars_nms_chr,
-                              round_var_nm_1L_chr = round_var_nm_1L_chr,
-                              round_bl_val_1L_chr = round_bl_val_1L_chr,
-                              utl_var_nm_1L_chr = utl_var_nm_1L_chr)
-    return(valid_predn_ds_ls)
+    predn_metadata_ls <- list(ds_ls = list(id_var_nm_1L_chr = id_var_nm_1L_chr,
+                                           msrmnt_date_var_nm_1L_chr = msrmnt_date_var_nm_1L_chr,
+                                           predr_vars_nms_chr = predr_vars_nms_chr,
+                                           round_var_nm_1L_chr = round_var_nm_1L_chr,
+                                           round_bl_val_1L_chr = round_bl_val_1L_chr,
+                                           utl_var_nm_1L_chr = utl_var_nm_1L_chr),
+                              mdl_ls = list(mdl_meta_data_ls = mdl_meta_data_ls,
+                                            mdls_lup = mdls_lup,
+                                            mdl_nm_1L_chr = mdl_nm_1L_chr))
+    return(predn_metadata_ls)
 }
 make_sngl_grp_ds <- function(seed_ds_tb = NULL,
                              ds_smry_ls){

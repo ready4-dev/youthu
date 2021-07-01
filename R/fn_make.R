@@ -278,40 +278,8 @@ make_matched_ds_spine <- function (ds_tb, round_var_nm_1L_chr = "Timepoint_chr",
         dplyr::arrange(match_idx_int)
     return(matched_ds_tb)
 }
-#' Make single group dataset
-#' @description make_sngl_grp_ds() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make single group dataset. The function returns Single group dataset (a tibble).
-#' @param seed_ds_tb Seed dataset (a tibble), Default: NULL
-#' @param ds_smry_ls Dataset summary (a list)
-#' @return Single group dataset (a tibble)
-#' @rdname make_sngl_grp_ds
-#' @export 
-#' @importFrom dplyr select mutate arrange
-#' @importFrom stats na.omit
-#' @importFrom tibble as_tibble
-make_sngl_grp_ds <- function (seed_ds_tb = NULL, ds_smry_ls) 
-{
-    sngl_grp_ds_tb <- seed_ds_tb %>% dplyr::select(ds_smry_ls$id_var_nm_1L_chr, 
-        ds_smry_ls$round_var_nm_1L_chr, ds_smry_ls$predr_var_nms) %>% 
-        stats::na.omit()
-    if ("SOFAS" %in% ds_smry_ls$predr_var_nms) 
-        sngl_grp_ds_tb <- sngl_grp_ds_tb %>% dplyr::mutate(SOFAS = as.integer(round(SOFAS, 
-            0)))
-    sngl_grp_ds_tb <- sngl_grp_ds_tb %>% tibble::as_tibble() %>% 
-        add_dates_from_dstr(bl_start_date_dtm = ds_smry_ls$bl_start_date_dtm, 
-            bl_end_date_dtm = ds_smry_ls$bl_end_date_dtm, duration_args_ls = ds_smry_ls$duration_args_ls, 
-            duration_fn = ds_smry_ls$duration_fn, date_var_nm_1L_chr = ds_smry_ls$date_var_nm_1L_chr, 
-            id_var_nm_1L_chr = ds_smry_ls$id_var_nm_1L_chr, round_var_nm_1L_chr = ds_smry_ls$round_var_nm_1L_chr, 
-            round_bl_val_1L_chr = ds_smry_ls$round_lvls_chr[1])
-    if (!is.null(ds_smry_ls$costs_mean_dbl) & !is.null(ds_smry_ls$costs_sd_dbl)) 
-        sngl_grp_ds_tb <- sngl_grp_ds_tb %>% add_costs_by_tmpt(round_var_nm_1L_chr = ds_smry_ls$round_var_nm_1L_chr, 
-            round_lvls_chr = ds_smry_ls$round_lvls_chr, costs_mean_dbl = ds_smry_ls$costs_mean_dbl, 
-            costs_sd_dbl = ds_smry_ls$costs_sd_dbl, extra_cost_args_ls = list(costs_var_nm_1L_chr = ds_smry_ls$costs_var_nm_1L_chr), 
-            fn = add_costs_from_gamma_dstr)
-    sngl_grp_ds_tb <- sngl_grp_ds_tb %>% dplyr::arrange(ds_smry_ls$id_var_nm_1L_chr)
-    return(sngl_grp_ds_tb)
-}
-#' Make valid prediction dataset
-#' @description make_valid_predn_ds_ls() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make valid prediction dataset list. The function returns Valid prediction dataset (a list).
+#' Make prediction metadata
+#' @description make_predn_metadata_ls() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make prediction metadata list. The function returns Prediction metadata (a list).
 #' @param data_tb Data (a tibble)
 #' @param id_var_nm_1L_chr Identity variable name (a character vector of length one), Default: 'UID'
 #' @param mdl_meta_data_ls Model meta data (a list), Default: NULL
@@ -324,8 +292,8 @@ make_sngl_grp_ds <- function (seed_ds_tb = NULL, ds_smry_ls)
 #' @param utl_var_nm_1L_chr Utility variable name (a character vector of length one), Default: 'AQoL6D_HU'
 #' @param server_1L_chr Server (a character vector of length one), Default: 'dataverse.harvard.edu'
 #' @param key_1L_chr Key (a character vector of length one), Default: NULL
-#' @return Valid prediction dataset (a list)
-#' @rdname make_valid_predn_ds_ls
+#' @return Prediction metadata (a list)
+#' @rdname make_predn_metadata_ls
 #' @export 
 #' @importFrom TTU rename_from_nmd_vec transform_mdl_vars_with_clss
 #' @importFrom purrr walk pluck
@@ -335,7 +303,7 @@ make_sngl_grp_ds <- function (seed_ds_tb = NULL, ds_smry_ls)
 #' @importFrom rlang sym
 #' @importFrom lubridate is.Date
 #' @keywords internal
-make_valid_predn_ds_ls <- function (data_tb, id_var_nm_1L_chr = "UID", mdl_meta_data_ls = NULL, 
+make_predn_metadata_ls <- function (data_tb, id_var_nm_1L_chr = "UID", mdl_meta_data_ls = NULL, 
     mdls_lup = NULL, mdl_nm_1L_chr = NULL, msrmnt_date_var_nm_1L_chr = NULL, 
     predr_vars_nms_chr = NULL, round_var_nm_1L_chr, round_bl_val_1L_chr, 
     utl_var_nm_1L_chr = "AQoL6D_HU", server_1L_chr = "dataverse.harvard.edu", 
@@ -384,10 +352,43 @@ make_valid_predn_ds_ls <- function (data_tb, id_var_nm_1L_chr = "UID", mdl_meta_
         assertthat::assert_that(lubridate::is.Date(data_tb %>% 
             dplyr::pull(msrmnt_date_var_nm_1L_chr)), msg = paste0(msrmnt_date_var_nm_1L_chr, 
             " variable must be of date class."))
-    valid_predn_ds_ls <- list(id_var_nm_1L_chr = id_var_nm_1L_chr, 
-        mdl_meta_data_ls = mdl_meta_data_ls, mdls_lup = mdls_lup, 
-        mdl_nm_1L_chr = mdl_nm_1L_chr, msrmnt_date_var_nm_1L_chr = msrmnt_date_var_nm_1L_chr, 
+    predn_metadata_ls <- list(ds_ls = list(id_var_nm_1L_chr = id_var_nm_1L_chr, 
+        msrmnt_date_var_nm_1L_chr = msrmnt_date_var_nm_1L_chr, 
         predr_vars_nms_chr = predr_vars_nms_chr, round_var_nm_1L_chr = round_var_nm_1L_chr, 
-        round_bl_val_1L_chr = round_bl_val_1L_chr, utl_var_nm_1L_chr = utl_var_nm_1L_chr)
-    return(valid_predn_ds_ls)
+        round_bl_val_1L_chr = round_bl_val_1L_chr, utl_var_nm_1L_chr = utl_var_nm_1L_chr), 
+        mdl_ls = list(mdl_meta_data_ls = mdl_meta_data_ls, mdls_lup = mdls_lup, 
+            mdl_nm_1L_chr = mdl_nm_1L_chr))
+    return(predn_metadata_ls)
+}
+#' Make single group dataset
+#' @description make_sngl_grp_ds() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make single group dataset. The function returns Single group dataset (a tibble).
+#' @param seed_ds_tb Seed dataset (a tibble), Default: NULL
+#' @param ds_smry_ls Dataset summary (a list)
+#' @return Single group dataset (a tibble)
+#' @rdname make_sngl_grp_ds
+#' @export 
+#' @importFrom dplyr select mutate arrange
+#' @importFrom stats na.omit
+#' @importFrom tibble as_tibble
+make_sngl_grp_ds <- function (seed_ds_tb = NULL, ds_smry_ls) 
+{
+    sngl_grp_ds_tb <- seed_ds_tb %>% dplyr::select(ds_smry_ls$id_var_nm_1L_chr, 
+        ds_smry_ls$round_var_nm_1L_chr, ds_smry_ls$predr_var_nms) %>% 
+        stats::na.omit()
+    if ("SOFAS" %in% ds_smry_ls$predr_var_nms) 
+        sngl_grp_ds_tb <- sngl_grp_ds_tb %>% dplyr::mutate(SOFAS = as.integer(round(SOFAS, 
+            0)))
+    sngl_grp_ds_tb <- sngl_grp_ds_tb %>% tibble::as_tibble() %>% 
+        add_dates_from_dstr(bl_start_date_dtm = ds_smry_ls$bl_start_date_dtm, 
+            bl_end_date_dtm = ds_smry_ls$bl_end_date_dtm, duration_args_ls = ds_smry_ls$duration_args_ls, 
+            duration_fn = ds_smry_ls$duration_fn, date_var_nm_1L_chr = ds_smry_ls$date_var_nm_1L_chr, 
+            id_var_nm_1L_chr = ds_smry_ls$id_var_nm_1L_chr, round_var_nm_1L_chr = ds_smry_ls$round_var_nm_1L_chr, 
+            round_bl_val_1L_chr = ds_smry_ls$round_lvls_chr[1])
+    if (!is.null(ds_smry_ls$costs_mean_dbl) & !is.null(ds_smry_ls$costs_sd_dbl)) 
+        sngl_grp_ds_tb <- sngl_grp_ds_tb %>% add_costs_by_tmpt(round_var_nm_1L_chr = ds_smry_ls$round_var_nm_1L_chr, 
+            round_lvls_chr = ds_smry_ls$round_lvls_chr, costs_mean_dbl = ds_smry_ls$costs_mean_dbl, 
+            costs_sd_dbl = ds_smry_ls$costs_sd_dbl, extra_cost_args_ls = list(costs_var_nm_1L_chr = ds_smry_ls$costs_var_nm_1L_chr), 
+            fn = add_costs_from_gamma_dstr)
+    sngl_grp_ds_tb <- sngl_grp_ds_tb %>% dplyr::arrange(ds_smry_ls$id_var_nm_1L_chr)
+    return(sngl_grp_ds_tb)
 }

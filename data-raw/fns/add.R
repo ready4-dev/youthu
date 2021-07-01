@@ -158,14 +158,14 @@ add_utl_predn <- function(data_tb,
                           server_1L_chr = "dataverse.harvard.edu",
                           utl_cls_fn = NULL              # ,
                           ){
-  id_var_nm_1L_chr = predn_ds_ls$id_var_nm_1L_chr
-  predr_vars_nms_chr = predn_ds_ls$predr_vars_nms_chr
-  round_var_nm_1L_chr = predn_ds_ls$round_var_nm_1L_chr
-  round_bl_val_1L_chr = predn_ds_ls$round_bl_val_1L_chr
-  utl_var_nm_1L_chr = predn_ds_ls$utl_var_nm_1L_chr
-  mdl_meta_data_ls = predn_ds_ls$mdl_meta_data_ls
-  mdls_lup = predn_ds_ls$mdls_lup
-  mdl_nm_1L_chr = predn_ds_ls$mdl_nm_1L_chr
+  id_var_nm_1L_chr = predn_ds_ls$ds_ls$id_var_nm_1L_chr
+  predr_vars_nms_chr = predn_ds_ls$ds_ls$predr_vars_nms_chr
+  round_var_nm_1L_chr = predn_ds_ls$ds_ls$round_var_nm_1L_chr
+  round_bl_val_1L_chr = predn_ds_ls$ds_ls$round_bl_val_1L_chr
+  utl_var_nm_1L_chr = predn_ds_ls$ds_ls$utl_var_nm_1L_chr
+  mdl_meta_data_ls = predn_ds_ls$mdl_ls$mdl_meta_data_ls
+  mdls_lup = predn_ds_ls$mdl_ls$mdls_lup
+  mdl_nm_1L_chr = predn_ds_ls$mdl_ls$mdl_nm_1L_chr
   if(is.null(model_mdl))
     model_mdl <- get_model(mdls_lup,
                            mdl_nm_1L_chr = mdl_nm_1L_chr,

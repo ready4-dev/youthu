@@ -186,17 +186,19 @@ get_model <- function(mdls_lup,
                                          key_1L_chr = key_1L_chr)
     }
     model_mdl <- TTU::get_table_predn_mdl(mdl_nm_1L_chr,
-                                     ingredients_ls = mdl_meta_data_ls,
-                                     analysis_1L_chr = ready4fun::get_from_lup_obj(mdls_lup,
+                                          ingredients_ls = mdl_meta_data_ls,
+                                          analysis_1L_chr = ready4fun::get_from_lup_obj(mdls_lup,
                                                                                    match_value_xx = mdl_nm_1L_chr,
                                                                                    match_var_nm_1L_chr = "mdl_nms_chr",
                                                                                    target_var_nm_1L_chr = "source_chr",
                                                                                    evaluate_lgl = F))
-  }else
+  }else{
     model_mdl <- get_mdl_from_dv(mdl_nm_1L_chr,
-                                 dv_ds_nm_1L_chr = get_mdl_ds_url(mdls_lup, mdl_nm_1L_chr = mdl_nm_1L_chr),
+                                 dv_ds_nm_1L_chr = get_mdl_ds_url(mdls_lup,
+                                                                  mdl_nm_1L_chr = mdl_nm_1L_chr),
                                  server_1L_chr = server_1L_chr,
                                  key_1L_chr = key_1L_chr)
+  }
   return(model_mdl)
 }
 get_predictors_lup <- function(mdl_meta_data_ls = NULL,

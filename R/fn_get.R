@@ -275,9 +275,11 @@ get_model <- function (mdls_lup, mdl_nm_1L_chr, make_from_tbl_1L_lgl = T,
                 match_value_xx = mdl_nm_1L_chr, match_var_nm_1L_chr = "mdl_nms_chr", 
                 target_var_nm_1L_chr = "source_chr", evaluate_lgl = F))
     }
-    else model_mdl <- get_mdl_from_dv(mdl_nm_1L_chr, dv_ds_nm_1L_chr = get_mdl_ds_url(mdls_lup, 
-        mdl_nm_1L_chr = mdl_nm_1L_chr), server_1L_chr = server_1L_chr, 
-        key_1L_chr = key_1L_chr)
+    else {
+        model_mdl <- get_mdl_from_dv(mdl_nm_1L_chr, dv_ds_nm_1L_chr = get_mdl_ds_url(mdls_lup, 
+            mdl_nm_1L_chr = mdl_nm_1L_chr), server_1L_chr = server_1L_chr, 
+            key_1L_chr = key_1L_chr)
+    }
     return(model_mdl)
 }
 #' Get predictors
