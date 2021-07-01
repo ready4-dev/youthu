@@ -11,6 +11,7 @@ params:
 
 ```{r message=FALSE}
 library(magrittr)
+# library(TTU)
 library(youthu)
 ```
 
@@ -61,10 +62,6 @@ More information about a selected model can be found in the online model catalog
 get_mdl_ctlg_url(mdls_lup,
                  mdl_nm_1L_chr = "SOFAS_1_OLS_CLL")
 ```
-# ```{r results='hide'}
-# ingredients_ls <- get_mdl_metadata(mdls_lup,
-#                                    "SOFAS_1_OLS_CLL")
-# ```
 
 ## Prepare prediction dataset
 First import and inspect the dataset you will be using for prediction. In the below example we use fake data.
@@ -104,9 +101,9 @@ predn_ds_ls <- make_valid_predn_ds_ls(data_tb,
 
 ## Predict utility
 
-To generate utility predictions we use the `add_utl_predn`{.R} function. The function needs to be supplied with the prediction dataset (the value passed to argument `data_tb`) and the validated prediction metadata object we created in the previous step. By default the function chooses a constrained simulation approach when making predictions. You can override this by adding additional arguments `new_data_is_1L_chr = "Predicted"` and `force_min_max_1L_lgl = T`, however you should consult the model catalogue before doing this to understand the implications for the predicted values that will be generated.
+To generate utility predictions we use the `add_utl_predn`{.R} function. The function needs to be supplied with the prediction dataset (the value passed to argument `data_tb`) and the validated prediction metadata object we created in the previous step. By default the function chooses a constrained simulation approach, based on a table of model coefficients when making predictions. You can override this by adding additional arguments `new_data_is_1L_chr = "Predicted"`, `force_min_max_1L_lgl = T` and (if the source dataset makes available downloadable models) `make_from_tbl_1L_lgl = F`. However, before doing so it is strongly recommended that you consult the model catalogue (see above) to understand how such a decision may affect the validity of the predicted values that will be generated.
 
-```{r}
+```{r eval = F}
 updated_data_tb <- add_utl_predn(data_tb,
                                  predn_ds_ls = predn_ds_ls)
 

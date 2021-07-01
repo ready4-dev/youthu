@@ -327,6 +327,7 @@ make_sngl_grp_ds <- function (seed_ds_tb = NULL, ds_smry_ls)
 #' @return Valid prediction dataset (a list)
 #' @rdname make_valid_predn_ds_ls
 #' @export 
+#' @importFrom TTU rename_from_nmd_vec transform_mdl_vars_with_clss
 #' @importFrom purrr walk pluck
 #' @importFrom dplyr pull filter
 #' @importFrom ready4fun get_from_lup_obj
@@ -341,13 +342,13 @@ make_valid_predn_ds_ls <- function (data_tb, id_var_nm_1L_chr = "UID", mdl_meta_
     key_1L_chr = NULL) 
 {
     if (!is.null(predr_vars_nms_chr)) {
-        data_tb <- rename_from_nmd_vec(data_tb, nmd_vec_chr = predr_vars_nms_chr, 
+        data_tb <- TTU::rename_from_nmd_vec(data_tb, nmd_vec_chr = predr_vars_nms_chr, 
             vec_nms_as_new_1L_lgl = T)
     }
     predictors_lup <- get_predictors_lup(mdl_meta_data_ls = mdl_meta_data_ls, 
         mdls_lup = mdls_lup, mdl_nm_1L_chr = mdl_nm_1L_chr, outp_is_abbrvs_tb = F, 
         server_1L_chr = server_1L_chr, key_1L_chr = key_1L_chr)
-    data_tb <- data_tb %>% transform_mdl_vars_with_clss(predictors_lup = predictors_lup)
+    data_tb <- data_tb %>% TTU::transform_mdl_vars_with_clss(predictors_lup = predictors_lup)
     purrr::walk(predictors_lup$short_name_chr, ~{
         vector_xx <- data_tb %>% dplyr::pull(.x)
         min_dbl <- ready4fun::get_from_lup_obj(predictors_lup, 

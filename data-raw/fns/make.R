@@ -228,7 +228,7 @@ make_valid_predn_ds_ls <- function(data_tb,
                                    server_1L_chr = "dataverse.harvard.edu",
                                    key_1L_chr = NULL){
     if(!is.null(predr_vars_nms_chr)){
-        data_tb <- rename_from_nmd_vec(data_tb,
+        data_tb <- TTU::rename_from_nmd_vec(data_tb,
                                        nmd_vec_chr = predr_vars_nms_chr,
                                        vec_nms_as_new_1L_lgl = T)
     }
@@ -239,7 +239,7 @@ make_valid_predn_ds_ls <- function(data_tb,
                                         server_1L_chr = server_1L_chr,
                                         key_1L_chr = key_1L_chr)
     data_tb <- data_tb %>%
-        transform_mdl_vars_with_clss(predictors_lup = predictors_lup)
+        TTU::transform_mdl_vars_with_clss(predictors_lup = predictors_lup)
     purrr::walk(predictors_lup$short_name_chr,
                ~{
                    vector_xx <- data_tb %>% dplyr::pull(.x)
