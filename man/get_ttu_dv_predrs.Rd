@@ -6,7 +6,7 @@
 \usage{
 get_ttu_dv_predrs(
   ttu_dv_dss_tb = NULL,
-  ttu_dv_nm_1L_chr = "firstbounce",
+  ttu_dv_nms_chr = "firstbounce",
   server_1L_chr = "dataverse.harvard.edu",
   key_1L_chr = NULL
 )
@@ -14,7 +14,7 @@ get_ttu_dv_predrs(
 \arguments{
 \item{ttu_dv_dss_tb}{Ttu dataverse datasets (a tibble), Default: NULL}
 
-\item{ttu_dv_nm_1L_chr}{Ttu dataverse name (a character vector of length one), Default: 'firstbounce'}
+\item{ttu_dv_nms_chr}{Ttu dataverse names (a character vector), Default: 'firstbounce'}
 
 \item{server_1L_chr}{Server (a character vector of length one), Default: 'dataverse.harvard.edu'}
 

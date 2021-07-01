@@ -8,7 +8,7 @@ get_filtered_ttu_dss(
   ttu_dv_dss_tb = NULL,
   mdl_predrs_in_ds_chr = NULL,
   utility_type_chr = NULL,
-  ttu_dv_nm_1L_chr = "firstbounce",
+  ttu_dv_nms_chr = "firstbounce",
   server_1L_chr = "dataverse.harvard.edu",
   key_1L_chr = NULL
 )
@@ -20,7 +20,7 @@ get_filtered_ttu_dss(
 
 \item{utility_type_chr}{Utility type (a character vector), Default: NULL}
 
-\item{ttu_dv_nm_1L_chr}{Ttu dataverse name (a character vector of length one), Default: 'firstbounce'}
+\item{ttu_dv_nms_chr}{Ttu dataverse names (a character vector), Default: 'firstbounce'}
 
 \item{server_1L_chr}{Server (a character vector of length one), Default: 'dataverse.harvard.edu'}
 

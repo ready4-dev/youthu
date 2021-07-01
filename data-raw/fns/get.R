@@ -1,11 +1,11 @@
 get_filtered_ttu_dss <- function(ttu_dv_dss_tb = NULL,
                                  mdl_predrs_in_ds_chr = NULL,
                                  utility_type_chr = NULL,
-                                 ttu_dv_nm_1L_chr = "firstbounce",
+                                 ttu_dv_nms_chr = "firstbounce",
                                  server_1L_chr = "dataverse.harvard.edu",
                                  key_1L_chr = NULL){
   if(is.null(ttu_dv_dss_tb))
-    ttu_dv_dss_tb <- get_ttu_dv_dss(ttu_dv_nm_1L_chr = ttu_dv_nm_1L_chr,
+    ttu_dv_dss_tb <- get_ttu_dv_dss(ttu_dv_nms_chr = ttu_dv_nms_chr,
                                     server_1L_chr = server_1L_chr,
                                     key_1L_chr = NULL)
   if(is.null(ttu_dv_dss_tb)){
@@ -99,11 +99,11 @@ get_mdl_from_dv <- function(mdl_nm_1L_chr,
 get_mdls_lup <- function(ttu_dv_dss_tb = NULL,
                          mdl_predrs_in_ds_chr = NULL,
                          utility_type_chr = NULL,
-                         ttu_dv_nm_1L_chr = "firstbounce",
+                         ttu_dv_nms_chr = "firstbounce",
                          server_1L_chr = "dataverse.harvard.edu",
                          key_1L_chr = NULL){
   if(is.null(ttu_dv_dss_tb))
-    ttu_dv_dss_tb <- get_ttu_dv_dss(ttu_dv_nm_1L_chr = ttu_dv_nm_1L_chr,
+    ttu_dv_dss_tb <- get_ttu_dv_dss(ttu_dv_nms_chr = ttu_dv_nms_chr,
                                     server_1L_chr = server_1L_chr,
                                     key_1L_chr = NULL)
   if(!is.null(ttu_dv_dss_tb)){
@@ -231,11 +231,11 @@ get_predictors_lup <- function(mdl_meta_data_ls = NULL,
   return(predictors_tb)
 }
 get_ttu_dv_predrs <- function(ttu_dv_dss_tb = NULL,
-                              ttu_dv_nm_1L_chr = "firstbounce",
+                              ttu_dv_nms_chr = "firstbounce",
                               server_1L_chr = "dataverse.harvard.edu",
                               key_1L_chr = NULL){
   if(is.null(ttu_dv_dss_tb))
-    ttu_dv_dss_tb <- get_ttu_dv_dss(ttu_dv_nm_1L_chr = ttu_dv_nm_1L_chr,
+    ttu_dv_dss_tb <- get_ttu_dv_dss(ttu_dv_nms_chr = ttu_dv_nms_chr,
                                     server_1L_chr = server_1L_chr,
                                     key_1L_chr = NULL)
   predrs_chr <- ttu_dv_dss_tb$predrs_ls %>%

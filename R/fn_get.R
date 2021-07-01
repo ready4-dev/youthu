@@ -44,7 +44,7 @@ get_dv_mdl_smrys <- function (mdls_lup, mdl_nms_chr = NULL)
 #' @param ttu_dv_dss_tb Ttu dataverse datasets (a tibble), Default: NULL
 #' @param mdl_predrs_in_ds_chr Model predictors in dataset (a character vector), Default: NULL
 #' @param utility_type_chr Utility type (a character vector), Default: NULL
-#' @param ttu_dv_nm_1L_chr Ttu dataverse name (a character vector of length one), Default: 'firstbounce'
+#' @param ttu_dv_nms_chr Ttu dataverse names (a character vector), Default: 'firstbounce'
 #' @param server_1L_chr Server (a character vector of length one), Default: 'dataverse.harvard.edu'
 #' @param key_1L_chr Key (a character vector of length one), Default: NULL
 #' @return Ttu dataverse datasets (a tibble)
@@ -54,11 +54,11 @@ get_dv_mdl_smrys <- function (mdls_lup, mdl_nms_chr = NULL)
 #' @importFrom purrr map_lgl
 #' @keywords internal
 get_filtered_ttu_dss <- function (ttu_dv_dss_tb = NULL, mdl_predrs_in_ds_chr = NULL, 
-    utility_type_chr = NULL, ttu_dv_nm_1L_chr = "firstbounce", 
+    utility_type_chr = NULL, ttu_dv_nms_chr = "firstbounce", 
     server_1L_chr = "dataverse.harvard.edu", key_1L_chr = NULL) 
 {
     if (is.null(ttu_dv_dss_tb)) 
-        ttu_dv_dss_tb <- get_ttu_dv_dss(ttu_dv_nm_1L_chr = ttu_dv_nm_1L_chr, 
+        ttu_dv_dss_tb <- get_ttu_dv_dss(ttu_dv_nms_chr = ttu_dv_nms_chr, 
             server_1L_chr = server_1L_chr, key_1L_chr = NULL)
     if (is.null(ttu_dv_dss_tb)) {
         if (is.null(mdl_predrs_in_ds_chr)) 
@@ -202,7 +202,7 @@ get_mdl_smrys <- function (ingredients_ls, mdl_nms_chr = NULL)
 #' @param ttu_dv_dss_tb Ttu dataverse datasets (a tibble), Default: NULL
 #' @param mdl_predrs_in_ds_chr Model predictors in dataset (a character vector), Default: NULL
 #' @param utility_type_chr Utility type (a character vector), Default: NULL
-#' @param ttu_dv_nm_1L_chr Ttu dataverse name (a character vector of length one), Default: 'firstbounce'
+#' @param ttu_dv_nms_chr Ttu dataverse names (a character vector), Default: 'firstbounce'
 #' @param server_1L_chr Server (a character vector of length one), Default: 'dataverse.harvard.edu'
 #' @param key_1L_chr Key (a character vector of length one), Default: NULL
 #' @return Models (a lookup table)
@@ -213,11 +213,11 @@ get_mdl_smrys <- function (ingredients_ls, mdl_nms_chr = NULL)
 #' @importFrom dplyr filter mutate
 #' @keywords internal
 get_mdls_lup <- function (ttu_dv_dss_tb = NULL, mdl_predrs_in_ds_chr = NULL, 
-    utility_type_chr = NULL, ttu_dv_nm_1L_chr = "firstbounce", 
+    utility_type_chr = NULL, ttu_dv_nms_chr = "firstbounce", 
     server_1L_chr = "dataverse.harvard.edu", key_1L_chr = NULL) 
 {
     if (is.null(ttu_dv_dss_tb)) 
-        ttu_dv_dss_tb <- get_ttu_dv_dss(ttu_dv_nm_1L_chr = ttu_dv_nm_1L_chr, 
+        ttu_dv_dss_tb <- get_ttu_dv_dss(ttu_dv_nms_chr = ttu_dv_nms_chr, 
             server_1L_chr = server_1L_chr, key_1L_chr = NULL)
     if (!is.null(ttu_dv_dss_tb)) {
         if (is.null(mdl_predrs_in_ds_chr)) 
@@ -410,7 +410,7 @@ get_ttu_dv_dss <- function (ttu_dv_nms_chr = "firstbounce", server_1L_chr = "dat
 #' Get ttu dataverse predictors
 #' @description get_ttu_dv_predrs() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get ttu dataverse predictors. Function argument ttu_dv_dss_tb specifies the where to look for the required object. The function returns Predictors (a character vector).
 #' @param ttu_dv_dss_tb Ttu dataverse datasets (a tibble), Default: NULL
-#' @param ttu_dv_nm_1L_chr Ttu dataverse name (a character vector of length one), Default: 'firstbounce'
+#' @param ttu_dv_nms_chr Ttu dataverse names (a character vector), Default: 'firstbounce'
 #' @param server_1L_chr Server (a character vector of length one), Default: 'dataverse.harvard.edu'
 #' @param key_1L_chr Key (a character vector of length one), Default: NULL
 #' @return Predictors (a character vector)
@@ -418,11 +418,11 @@ get_ttu_dv_dss <- function (ttu_dv_nms_chr = "firstbounce", server_1L_chr = "dat
 #' @export 
 #' @importFrom purrr flatten_chr
 #' @keywords internal
-get_ttu_dv_predrs <- function (ttu_dv_dss_tb = NULL, ttu_dv_nm_1L_chr = "firstbounce", 
+get_ttu_dv_predrs <- function (ttu_dv_dss_tb = NULL, ttu_dv_nms_chr = "firstbounce", 
     server_1L_chr = "dataverse.harvard.edu", key_1L_chr = NULL) 
 {
     if (is.null(ttu_dv_dss_tb)) 
-        ttu_dv_dss_tb <- get_ttu_dv_dss(ttu_dv_nm_1L_chr = ttu_dv_nm_1L_chr, 
+        ttu_dv_dss_tb <- get_ttu_dv_dss(ttu_dv_nms_chr = ttu_dv_nms_chr, 
             server_1L_chr = server_1L_chr, key_1L_chr = NULL)
     predrs_chr <- ttu_dv_dss_tb$predrs_ls %>% purrr::flatten_chr() %>% 
         unique() %>% sort()
