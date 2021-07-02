@@ -4,12 +4,12 @@
 \alias{add_qalys_to_ds}
 \title{Add Quality Adjusted Life Years to dataset}
 \usage{
-add_qalys_to_ds(ds_tb, ds_smry_ls)
+add_qalys_to_ds(ds_tb, predn_ds_ls)
 }
 \arguments{
 \item{ds_tb}{Dataset (a tibble)}
 
-\item{ds_smry_ls}{Dataset summary (a list)}
+\item{predn_ds_ls}{Prediction dataset (a list)}
 }
 \value{
 Dataset (a tibble)

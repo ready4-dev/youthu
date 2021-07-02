@@ -71,3 +71,4 @@
 ^data-raw/dataverse/seed_obj_lup_tb/seed_obj_lup_tb\.RDS$
 ^data-raw/name_changes\.txt$
 ^data-raw/safety\.txt$
+^data-raw/vignette_pts/_clipped_fake_ds\.Rmd$

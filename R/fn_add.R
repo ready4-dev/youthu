@@ -202,16 +202,19 @@ add_qalys <- function (ds_tb, cmprsn_var_nm_1L_chr = "study_arm_chr", duration_v
 #' Add Quality Adjusted Life Years to dataset
 #' @description add_qalys_to_ds() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add quality adjusted life years to dataset. Function argument ds_tb specifies the object to be updated. The function returns Dataset (a tibble).
 #' @param ds_tb Dataset (a tibble)
-#' @param ds_smry_ls Dataset summary (a list)
+#' @param predn_ds_ls Prediction dataset (a list)
 #' @return Dataset (a tibble)
 #' @rdname add_qalys_to_ds
 #' @export 
 #' @importFrom purrr map reduce
-add_qalys_to_ds <- function (ds_tb, ds_smry_ls) 
+add_qalys_to_ds <- function (ds_tb, predn_ds_ls) 
 {
-    args_ls_ls <- purrr::map(c(ds_smry_ls$predr_var_nms, ds_smry_ls$utl_var_nm_1L_chr), 
-        ~list(change_var_nm_1L_chr = paste0(.x, "_change_dbl"), 
-            var_nm_1L_chr = .x))
+    if (is.null(predn_ds_ls$ds_ls$predr_vars_nms_chr)) 
+        predn_ds_ls$ds_ls$predr_vars_nms_chr <- predn_ds_ls$mdl_ls$predictors_lup$short_name_chr
+    ds_smry_ls <- predn_ds_ls$ds_ls
+    args_ls_ls <- purrr::map(c(ds_smry_ls$predr_vars_nms_chr, 
+        ds_smry_ls$utl_var_nm_1L_chr), ~list(change_var_nm_1L_chr = paste0(.x, 
+        "_change_dbl"), var_nm_1L_chr = .x))
     ds_tb <- purrr::reduce(1:length(args_ls_ls), .init = ds_tb, 
         ~add_change_in_ds_var(.x, var_nm_1L_chr = args_ls_ls[[.y]]$var_nm_1L_chr, 
             change_var_nm_1L_chr = args_ls_ls[[.y]]$change_var_nm_1L_chr)) %>% 

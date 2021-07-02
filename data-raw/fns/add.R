@@ -131,8 +131,11 @@ add_qalys <- function(ds_tb,
   return(updated_ds_tb)
 }
 add_qalys_to_ds <- function(ds_tb,
-                            ds_smry_ls){
-  args_ls_ls <- purrr::map(c(ds_smry_ls$predr_var_nms,
+                            predn_ds_ls){
+  if(is.null(predn_ds_ls$ds_ls$predr_vars_nms_chr))
+    predn_ds_ls$ds_ls$predr_vars_nms_chr <- predn_ds_ls$mdl_ls$predictors_lup$short_name_chr
+  ds_smry_ls <- predn_ds_ls$ds_ls
+  args_ls_ls <- purrr::map(c(ds_smry_ls$predr_vars_nms_chr,
                              ds_smry_ls$utl_var_nm_1L_chr),
                            ~ list(change_var_nm_1L_chr = paste0(.x,"_change_dbl"),
                                   var_nm_1L_chr = .x))

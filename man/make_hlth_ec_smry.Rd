@@ -6,46 +6,31 @@
 \usage{
 make_hlth_ec_smry(
   ds_tb,
-  change_vars_chr = NA_character_,
+  predn_ds_ls,
   wtp_dbl = 50000,
   bootstrap_iters_1L_int = 1000,
-  change_types_chr = "dbl",
   benefits_pfx_1L_chr = "qalys_dbl",
   benefits_var_nm_1L_chr = "qalys",
-  costs_pfx_1L_chr = "costs_dbl",
   costs_var_nm_1L_chr = "costs",
-  change_sfx_1L_chr = "change",
-  cmprsn_groups_chr = c("Intervention", "Control"),
-  cmprsn_var_nm_1L_chr = "study_arm_chr",
-  round_fup_val_1L_chr = "Follow-up"
+  change_sfx_1L_chr = "change"
 )
 }
 \arguments{
 \item{ds_tb}{Dataset (a tibble)}
 
-\item{change_vars_chr}{Change variables (a character vector), Default: 'NA'}
+\item{predn_ds_ls}{Prediction dataset (a list)}
 
 \item{wtp_dbl}{Willingness to pay (a double vector), Default: 50000}
 
 \item{bootstrap_iters_1L_int}{Bootstrap iterations (an integer vector of length one), Default: 1000}
 
-\item{change_types_chr}{Change types (a character vector), Default: 'dbl'}
-
 \item{benefits_pfx_1L_chr}{Benefits prefix (a character vector of length one), Default: 'qalys_dbl'}
 
 \item{benefits_var_nm_1L_chr}{Benefits variable name (a character vector of length one), Default: 'qalys'}
 
-\item{costs_pfx_1L_chr}{Costs prefix (a character vector of length one), Default: 'costs_dbl'}
-
 \item{costs_var_nm_1L_chr}{Costs variable name (a character vector of length one), Default: 'costs'}
 
 \item{change_sfx_1L_chr}{Change suffix (a character vector of length one), Default: 'change'}
-
-\item{cmprsn_groups_chr}{Comparison groups (a character vector), Default: c("Intervention", "Control")}
-
-\item{cmprsn_var_nm_1L_chr}{Comparison variable name (a character vector of length one), Default: 'study_arm_chr'}
-
-\item{round_fup_val_1L_chr}{Round follow-up value (a character vector of length one), Default: 'Follow-up'}
 }
 \value{
 He summary (a list)

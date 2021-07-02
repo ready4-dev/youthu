@@ -88,6 +88,42 @@ make_fake_ds_one <- function(){
         tibble::as_tibble()
     return(fake_data_tb)
 }
+make_fake_ds_two <- function(){
+    data("replication_popl_tb", package = "youthvars")
+    seed_ds_tb <- replication_popl_tb %>%
+        youthvars::transform_raw_ds_for_analysis() %>%
+        dplyr::filter(fkClientID %in% (replication_popl_tb %>%
+                                           dplyr::filter(round=="Baseline" & PHQ9<20) %>%
+                                           dplyr::pull(fkClientID)))
+    ds_smry_ls <- list(bl_start_date_dtm = Sys.Date() - lubridate::days(300),
+                       bl_end_date_dtm = Sys.Date() - lubridate::days(120),
+                       cmprsn_var_nm_1L_chr = "study_arm_chr",
+                       cmprsn_groups_chr = c("Intervention","Control"),
+                       costs_mean_dbl = c(400,1500),
+                       costs_sd_dbl = c(100,220),
+                       costs_var_nm_1L_chr = "costs_dbl",
+                       date_var_nm_1L_chr = "date_psx",
+                       duration_args_ls = list(a = 160, b = 220, mean = 180, sd = 7),
+                       duration_fn = truncnorm::rtruncnorm,
+                       id_var_nm_1L_chr = "fkClientID",
+                       predr_var_nms = c("PHQ9", "SOFAS"),
+                       round_var_nm_1L_chr = "round",
+                       round_lvls_chr = c("Baseline","Follow-up"),
+                       utl_var_nm_1L_chr = "AQoL6D_HU")
+    sngl_grp_ds_tb <- make_sngl_grp_ds(seed_ds_tb,
+                                       ds_smry_ls = ds_smry_ls)
+    matched_ds_tb <- make_matched_ds(sngl_grp_ds_tb,
+                                     cmprsn_smry_tb = tibble::tibble(var_nms_chr = c(ds_smry_ls$predr_var_nms, ds_smry_ls$costs_var_nm_1L_chr),
+                                                                     fns_ls = list(stats::rnorm,stats::rnorm,stats::rnorm),
+                                                                     abs_mean_diff_dbl = c(2,2,300),
+                                                                     diff_sd_dbl = c(2,2,200),
+                                                                     multiplier_dbl = c(-1,-1,1),
+                                                                     min_dbl = c(0,0,0),
+                                                                     max_dbl = c(27,100,Inf),
+                                                                     integer_lgl = c(T,T,F)),
+                                     ds_smry_ls = ds_smry_ls)
+    return(matched_ds_tb)
+}
 make_fake_trial_ds <- function(ds_tb,
                                id_var_nm_1L_chr = "fkClientID",
                                round_var_nm_1L_chr = "round",
@@ -128,19 +164,26 @@ make_fake_trial_ds <- function(ds_tb,
     return(updated_ds_tb)
 }
 make_hlth_ec_smry <- function(ds_tb,
-                         change_vars_chr = NA_character_,
-                         wtp_dbl = 50000,
-                         bootstrap_iters_1L_int = 1000,
-                         change_types_chr = "dbl",
-                         benefits_pfx_1L_chr = "qalys_dbl",
-                         benefits_var_nm_1L_chr = "qalys",
-                         costs_pfx_1L_chr = "costs_dbl",
-                         costs_var_nm_1L_chr = "costs",
-                         change_sfx_1L_chr = "change",
-                         cmprsn_groups_chr = c("Intervention","Control"),
-                         cmprsn_var_nm_1L_chr = "study_arm_chr",
-                         round_fup_val_1L_chr = "Follow-up"
-){
+                              predn_ds_ls,
+                              wtp_dbl = 50000,
+                              bootstrap_iters_1L_int = 1000,
+                              benefits_pfx_1L_chr = "qalys_dbl",
+                              benefits_var_nm_1L_chr = "qalys",
+                              costs_var_nm_1L_chr = "costs",
+                              change_sfx_1L_chr = "change"){
+    if(is.null(predn_ds_ls$ds_ls$predr_vars_nms_chr))
+        predn_ds_ls$ds_ls$predr_vars_nms_chr <- predn_ds_ls$mdl_ls$predictors_lup$short_name_chr
+
+    costs_pfx_1L_chr = predn_ds_ls$ds_ls$costs_var_nm_1L_chr
+    cmprsn_groups_chr = predn_ds_ls$ds$cmprsn_groups_chr
+    cmprsn_var_nm_1L_chr = predn_ds_ls$ds$cmprsn_var_nm_1L_chr
+    round_fup_val_1L_chr = predn_ds_ls$ds$round_fup_val_1L_chr
+
+
+    change_vars_chr <- c(predn_ds_ls$ds_ls$predr_vars_nms_chr,
+                        predn_ds_ls$ds_ls$utl_var_nm_1L_chr)
+    change_types_chr <- rep("dbl",length(change_vars_chr))
+    costs_pfx_1L_chr <- predn_ds_ls$ds_ls$costs_var_nm_1L_chr
     bootstraps_ls <- boot::boot(ds_tb,
                                 make_cst_efns_smry,
                                 R = bootstrap_iters_1L_int,
@@ -216,6 +259,9 @@ make_matched_ds_spine <- function(ds_tb,
     return(matched_ds_tb)
 }
 make_predn_metadata_ls <- function(data_tb,
+                                   cmprsn_groups_chr = NULL,
+                                   cmprsn_var_nm_1L_chr = NULL,
+                                   costs_var_nm_1L_chr = NULL,
                                    id_var_nm_1L_chr = "UID",
                                    mdl_meta_data_ls = NULL,
                                    mdls_lup = NULL,
@@ -283,16 +329,27 @@ make_predn_metadata_ls <- function(data_tb,
 
     if(!is.null(msrmnt_date_var_nm_1L_chr))
         assertthat::assert_that(lubridate::is.Date(data_tb %>% dplyr::pull(msrmnt_date_var_nm_1L_chr)), msg = paste0(msrmnt_date_var_nm_1L_chr,
-                                                                                                                     " variable must be of date class."))
-    predn_metadata_ls <- list(ds_ls = list(id_var_nm_1L_chr = id_var_nm_1L_chr,
+                                                                                                                 " variable must be of date class."))
+
+
+    # Need to validate cmprsn_var_nm_1L_chr / cmprsn_groups_chr, costs_var_nm_1L_chr
+    round_vals_chr <- data_tb %>%
+        dplyr::pull(!!rlang::sym(round_var_nm_1L_chr)) %>%
+        levels()
+    predn_metadata_ls <- list(ds_ls = list(cmprsn_groups_chr = cmprsn_groups_chr,
+                                           cmprsn_var_nm_1L_chr = cmprsn_var_nm_1L_chr,
+                                           costs_var_nm_1L_chr = costs_var_nm_1L_chr,
+                                           id_var_nm_1L_chr = id_var_nm_1L_chr,
                                            msrmnt_date_var_nm_1L_chr = msrmnt_date_var_nm_1L_chr,
                                            predr_vars_nms_chr = predr_vars_nms_chr,
                                            round_var_nm_1L_chr = round_var_nm_1L_chr,
                                            round_bl_val_1L_chr = round_bl_val_1L_chr,
+                                           round_fup_val_1L_chr = round_vals_chr[round_vals_chr != round_bl_val_1L_chr],
                                            utl_var_nm_1L_chr = utl_var_nm_1L_chr),
                               mdl_ls = list(mdl_meta_data_ls = mdl_meta_data_ls,
                                             mdls_lup = mdls_lup,
-                                            mdl_nm_1L_chr = mdl_nm_1L_chr))
+                                            mdl_nm_1L_chr = mdl_nm_1L_chr,
+                                            predictors_lup = predictors_lup))
     return(predn_metadata_ls)
 }
 make_sngl_grp_ds <- function(seed_ds_tb = NULL,

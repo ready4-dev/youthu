@@ -6,6 +6,9 @@
 \usage{
 make_predn_metadata_ls(
   data_tb,
+  cmprsn_groups_chr = NULL,
+  cmprsn_var_nm_1L_chr = NULL,
+  costs_var_nm_1L_chr = NULL,
   id_var_nm_1L_chr = "UID",
   mdl_meta_data_ls = NULL,
   mdls_lup = NULL,
@@ -21,6 +24,12 @@ make_predn_metadata_ls(
 }
 \arguments{
 \item{data_tb}{Data (a tibble)}
+
+\item{cmprsn_groups_chr}{Comparison groups (a character vector), Default: NULL}
+
+\item{cmprsn_var_nm_1L_chr}{Comparison variable name (a character vector of length one), Default: NULL}
+
+\item{costs_var_nm_1L_chr}{Costs variable name (a character vector of length one), Default: NULL}
 
 \item{id_var_nm_1L_chr}{Identity variable name (a character vector of length one), Default: 'UID'}
 

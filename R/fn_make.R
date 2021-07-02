@@ -126,6 +126,44 @@ make_fake_ds_one <- function ()
         0))) %>% tibble::as_tibble()
     return(fake_data_tb)
 }
+#' Make fake dataset two
+#' @description make_fake_ds_two() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make fake dataset two. The function returns Matched dataset (a tibble).
+
+#' @return Matched dataset (a tibble)
+#' @rdname make_fake_ds_two
+#' @export 
+#' @importFrom youthvars transform_raw_ds_for_analysis
+#' @importFrom dplyr filter pull
+#' @importFrom lubridate days
+#' @importFrom truncnorm rtruncnorm
+#' @importFrom tibble tibble
+#' @importFrom stats rnorm
+#' @keywords internal
+make_fake_ds_two <- function () 
+{
+    data("replication_popl_tb", package = "youthvars")
+    seed_ds_tb <- replication_popl_tb %>% youthvars::transform_raw_ds_for_analysis() %>% 
+        dplyr::filter(fkClientID %in% (replication_popl_tb %>% 
+            dplyr::filter(round == "Baseline" & PHQ9 < 20) %>% 
+            dplyr::pull(fkClientID)))
+    ds_smry_ls <- list(bl_start_date_dtm = Sys.Date() - lubridate::days(300), 
+        bl_end_date_dtm = Sys.Date() - lubridate::days(120), 
+        cmprsn_var_nm_1L_chr = "study_arm_chr", cmprsn_groups_chr = c("Intervention", 
+            "Control"), costs_mean_dbl = c(400, 1500), costs_sd_dbl = c(100, 
+            220), costs_var_nm_1L_chr = "costs_dbl", date_var_nm_1L_chr = "date_psx", 
+        duration_args_ls = list(a = 160, b = 220, mean = 180, 
+            sd = 7), duration_fn = truncnorm::rtruncnorm, id_var_nm_1L_chr = "fkClientID", 
+        predr_var_nms = c("PHQ9", "SOFAS"), round_var_nm_1L_chr = "round", 
+        round_lvls_chr = c("Baseline", "Follow-up"), utl_var_nm_1L_chr = "AQoL6D_HU")
+    sngl_grp_ds_tb <- make_sngl_grp_ds(seed_ds_tb, ds_smry_ls = ds_smry_ls)
+    matched_ds_tb <- make_matched_ds(sngl_grp_ds_tb, cmprsn_smry_tb = tibble::tibble(var_nms_chr = c(ds_smry_ls$predr_var_nms, 
+        ds_smry_ls$costs_var_nm_1L_chr), fns_ls = list(stats::rnorm, 
+        stats::rnorm, stats::rnorm), abs_mean_diff_dbl = c(2, 
+        2, 300), diff_sd_dbl = c(2, 2, 200), multiplier_dbl = c(-1, 
+        -1, 1), min_dbl = c(0, 0, 0), max_dbl = c(27, 100, Inf), 
+        integer_lgl = c(T, T, F)), ds_smry_ls = ds_smry_ls)
+    return(matched_ds_tb)
+}
 #' Make fake trial dataset
 #' @description make_fake_trial_ds() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make fake trial dataset. The function returns Updated dataset (a tibble).
 #' @param ds_tb Dataset (a tibble)
@@ -169,31 +207,33 @@ make_fake_trial_ds <- function (ds_tb, id_var_nm_1L_chr = "fkClientID", round_va
 #' Make health economic summary
 #' @description make_hlth_ec_smry() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make health economic summary. The function returns He summary (a list).
 #' @param ds_tb Dataset (a tibble)
-#' @param change_vars_chr Change variables (a character vector), Default: 'NA'
+#' @param predn_ds_ls Prediction dataset (a list)
 #' @param wtp_dbl Willingness to pay (a double vector), Default: 50000
 #' @param bootstrap_iters_1L_int Bootstrap iterations (an integer vector of length one), Default: 1000
-#' @param change_types_chr Change types (a character vector), Default: 'dbl'
 #' @param benefits_pfx_1L_chr Benefits prefix (a character vector of length one), Default: 'qalys_dbl'
 #' @param benefits_var_nm_1L_chr Benefits variable name (a character vector of length one), Default: 'qalys'
-#' @param costs_pfx_1L_chr Costs prefix (a character vector of length one), Default: 'costs_dbl'
 #' @param costs_var_nm_1L_chr Costs variable name (a character vector of length one), Default: 'costs'
 #' @param change_sfx_1L_chr Change suffix (a character vector of length one), Default: 'change'
-#' @param cmprsn_groups_chr Comparison groups (a character vector), Default: c("Intervention", "Control")
-#' @param cmprsn_var_nm_1L_chr Comparison variable name (a character vector of length one), Default: 'study_arm_chr'
-#' @param round_fup_val_1L_chr Round follow-up value (a character vector of length one), Default: 'Follow-up'
 #' @return He summary (a list)
 #' @rdname make_hlth_ec_smry
 #' @export 
 #' @importFrom boot boot
 #' @importFrom purrr map_int
 #' @importFrom BCEA bcea
-make_hlth_ec_smry <- function (ds_tb, change_vars_chr = NA_character_, wtp_dbl = 50000, 
-    bootstrap_iters_1L_int = 1000, change_types_chr = "dbl", 
+make_hlth_ec_smry <- function (ds_tb, predn_ds_ls, wtp_dbl = 50000, bootstrap_iters_1L_int = 1000, 
     benefits_pfx_1L_chr = "qalys_dbl", benefits_var_nm_1L_chr = "qalys", 
-    costs_pfx_1L_chr = "costs_dbl", costs_var_nm_1L_chr = "costs", 
-    change_sfx_1L_chr = "change", cmprsn_groups_chr = c("Intervention", 
-        "Control"), cmprsn_var_nm_1L_chr = "study_arm_chr", round_fup_val_1L_chr = "Follow-up") 
+    costs_var_nm_1L_chr = "costs", change_sfx_1L_chr = "change") 
 {
+    if (is.null(predn_ds_ls$ds_ls$predr_vars_nms_chr)) 
+        predn_ds_ls$ds_ls$predr_vars_nms_chr <- predn_ds_ls$mdl_ls$predictors_lup$short_name_chr
+    costs_pfx_1L_chr = predn_ds_ls$ds_ls$costs_var_nm_1L_chr
+    cmprsn_groups_chr = predn_ds_ls$ds$cmprsn_groups_chr
+    cmprsn_var_nm_1L_chr = predn_ds_ls$ds$cmprsn_var_nm_1L_chr
+    round_fup_val_1L_chr = predn_ds_ls$ds$round_fup_val_1L_chr
+    change_vars_chr <- c(predn_ds_ls$ds_ls$predr_vars_nms_chr, 
+        predn_ds_ls$ds_ls$utl_var_nm_1L_chr)
+    change_types_chr <- rep("dbl", length(change_vars_chr))
+    costs_pfx_1L_chr <- predn_ds_ls$ds_ls$costs_var_nm_1L_chr
     bootstraps_ls <- boot::boot(ds_tb, make_cst_efns_smry, R = bootstrap_iters_1L_int, 
         benefits_pfx_1L_chr = benefits_pfx_1L_chr, costs_pfx_1L_chr = costs_pfx_1L_chr, 
         change_vars_chr = change_vars_chr, change_sfx_1L_chr = change_sfx_1L_chr, 
@@ -281,6 +321,9 @@ make_matched_ds_spine <- function (ds_tb, round_var_nm_1L_chr = "Timepoint_chr",
 #' Make prediction metadata
 #' @description make_predn_metadata_ls() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make prediction metadata list. The function returns Prediction metadata (a list).
 #' @param data_tb Data (a tibble)
+#' @param cmprsn_groups_chr Comparison groups (a character vector), Default: NULL
+#' @param cmprsn_var_nm_1L_chr Comparison variable name (a character vector of length one), Default: NULL
+#' @param costs_var_nm_1L_chr Costs variable name (a character vector of length one), Default: NULL
 #' @param id_var_nm_1L_chr Identity variable name (a character vector of length one), Default: 'UID'
 #' @param mdl_meta_data_ls Model meta data (a list), Default: NULL
 #' @param mdls_lup Models (a lookup table), Default: NULL
@@ -303,7 +346,8 @@ make_matched_ds_spine <- function (ds_tb, round_var_nm_1L_chr = "Timepoint_chr",
 #' @importFrom rlang sym
 #' @importFrom lubridate is.Date
 #' @keywords internal
-make_predn_metadata_ls <- function (data_tb, id_var_nm_1L_chr = "UID", mdl_meta_data_ls = NULL, 
+make_predn_metadata_ls <- function (data_tb, cmprsn_groups_chr = NULL, cmprsn_var_nm_1L_chr = NULL, 
+    costs_var_nm_1L_chr = NULL, id_var_nm_1L_chr = "UID", mdl_meta_data_ls = NULL, 
     mdls_lup = NULL, mdl_nm_1L_chr = NULL, msrmnt_date_var_nm_1L_chr = NULL, 
     predr_vars_nms_chr = NULL, round_var_nm_1L_chr, round_bl_val_1L_chr, 
     utl_var_nm_1L_chr = "AQoL6D_HU", server_1L_chr = "dataverse.harvard.edu", 
@@ -352,12 +396,16 @@ make_predn_metadata_ls <- function (data_tb, id_var_nm_1L_chr = "UID", mdl_meta_
         assertthat::assert_that(lubridate::is.Date(data_tb %>% 
             dplyr::pull(msrmnt_date_var_nm_1L_chr)), msg = paste0(msrmnt_date_var_nm_1L_chr, 
             " variable must be of date class."))
-    predn_metadata_ls <- list(ds_ls = list(id_var_nm_1L_chr = id_var_nm_1L_chr, 
-        msrmnt_date_var_nm_1L_chr = msrmnt_date_var_nm_1L_chr, 
+    round_vals_chr <- data_tb %>% dplyr::pull(!!rlang::sym(round_var_nm_1L_chr)) %>% 
+        levels()
+    predn_metadata_ls <- list(ds_ls = list(cmprsn_groups_chr = cmprsn_groups_chr, 
+        cmprsn_var_nm_1L_chr = cmprsn_var_nm_1L_chr, costs_var_nm_1L_chr = costs_var_nm_1L_chr, 
+        id_var_nm_1L_chr = id_var_nm_1L_chr, msrmnt_date_var_nm_1L_chr = msrmnt_date_var_nm_1L_chr, 
         predr_vars_nms_chr = predr_vars_nms_chr, round_var_nm_1L_chr = round_var_nm_1L_chr, 
-        round_bl_val_1L_chr = round_bl_val_1L_chr, utl_var_nm_1L_chr = utl_var_nm_1L_chr), 
+        round_bl_val_1L_chr = round_bl_val_1L_chr, round_fup_val_1L_chr = round_vals_chr[round_vals_chr != 
+            round_bl_val_1L_chr], utl_var_nm_1L_chr = utl_var_nm_1L_chr), 
         mdl_ls = list(mdl_meta_data_ls = mdl_meta_data_ls, mdls_lup = mdls_lup, 
-            mdl_nm_1L_chr = mdl_nm_1L_chr))
+            mdl_nm_1L_chr = mdl_nm_1L_chr, predictors_lup = predictors_lup))
     return(predn_metadata_ls)
 }
 #' Make single group dataset

@@ -1,25 +1,3 @@
-get_filtered_ttu_dss <- function(ttu_dv_dss_tb = NULL,
-                                 mdl_predrs_in_ds_chr = NULL,
-                                 utility_type_chr = NULL,
-                                 ttu_dv_nms_chr = "firstbounce",
-                                 server_1L_chr = "dataverse.harvard.edu",
-                                 key_1L_chr = NULL){
-  if(is.null(ttu_dv_dss_tb))
-    ttu_dv_dss_tb <- get_ttu_dv_dss(ttu_dv_nms_chr = ttu_dv_nms_chr,
-                                    server_1L_chr = server_1L_chr,
-                                    key_1L_chr = NULL)
-  if(is.null(ttu_dv_dss_tb)){
-    if(is.null(mdl_predrs_in_ds_chr))
-      mdl_predrs_in_ds_chr <- get_ttu_dv_predrs(ttu_dv_dss_tb)
-    ttu_dv_dss_tb <- ttu_dv_dss_tb %>%
-      dplyr::filter(predrs_ls %>% purrr::map_lgl(~!identical(intersect(.x,mdl_predrs_in_ds_chr),
-                                                             character(0))))
-    if(!is.null(utility_type_chr))
-      ttu_dv_dss_tb <- ttu_dv_dss_tb %>%
-      dplyr::filter(utility %in% utility_type_chr)
-  }
-  return(ttu_dv_dss_tb)
-}
 get_dv_dss_mdl_smrys <- function(ids_chr,
                                  server_1L_chr = "dataverse.harvard.edu",
                                  key_1L_chr = NULL){
@@ -46,6 +24,28 @@ get_dv_mdl_smrys <- function(mdls_lup,
   }
   return(dv_mdl_smrys)
 }
+get_filtered_ttu_dss <- function(ttu_dv_dss_tb = NULL,
+                                 mdl_predrs_in_ds_chr = NULL,
+                                 utility_type_chr = NULL,
+                                 ttu_dv_nms_chr = "firstbounce",
+                                 server_1L_chr = "dataverse.harvard.edu",
+                                 key_1L_chr = NULL){
+  if(is.null(ttu_dv_dss_tb))
+    ttu_dv_dss_tb <- get_ttu_dv_dss(ttu_dv_nms_chr = ttu_dv_nms_chr,
+                                    server_1L_chr = server_1L_chr,
+                                    key_1L_chr = NULL)
+  if(is.null(ttu_dv_dss_tb)){
+    if(is.null(mdl_predrs_in_ds_chr))
+      mdl_predrs_in_ds_chr <- get_ttu_dv_predrs(ttu_dv_dss_tb)
+    ttu_dv_dss_tb <- ttu_dv_dss_tb %>%
+      dplyr::filter(predrs_ls %>% purrr::map_lgl(~!identical(intersect(.x,mdl_predrs_in_ds_chr),
+                                                             character(0))))
+    if(!is.null(utility_type_chr))
+      ttu_dv_dss_tb <- ttu_dv_dss_tb %>%
+      dplyr::filter(utility %in% utility_type_chr)
+  }
+  return(ttu_dv_dss_tb)
+}
 get_mdl_ctlg_url <- function(mdls_lup,
                              mdl_nm_1L_chr,
                              server_1L_chr = "dataverse.harvard.edu",
@@ -55,7 +55,7 @@ get_mdl_ctlg_url <- function(mdls_lup,
                                     server = server_1L_chr,
                                     key = key_1L_chr)
   all_lbls_chr <- purrr::map_chr(ds_ls,~.x$label)
-  include_lgl <- all_lbls_chr %>% purrr::map_lgl(~startsWith(.x,"TS_TTU_Mdls_Smry"))
+  include_lgl <- all_lbls_chr %>% purrr::map_lgl(~startsWith(.x,"AAA_TTU_MDL_CTG"))
   all_descs_chr <- purrr::map_chr(ds_ls,~.x$description)
   include_lgl <- include_lgl & (all_descs_chr %>% purrr::map_lgl(~stringr::str_detect(.x,
                                                                                      ready4fun::get_from_lup_obj(mdls_lup,

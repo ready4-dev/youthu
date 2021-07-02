@@ -94,7 +94,7 @@ get_mdl_ctlg_url <- function (mdls_lup, mdl_nm_1L_chr, server_1L_chr = "datavers
         key = key_1L_chr)
     all_lbls_chr <- purrr::map_chr(ds_ls, ~.x$label)
     include_lgl <- all_lbls_chr %>% purrr::map_lgl(~startsWith(.x, 
-        "TS_TTU_Mdls_Smry"))
+        "AAA_TTU_MDL_CTG"))
     all_descs_chr <- purrr::map_chr(ds_ls, ~.x$description)
     include_lgl <- include_lgl & (all_descs_chr %>% purrr::map_lgl(~stringr::str_detect(.x, 
         ready4fun::get_from_lup_obj(mdls_lup, match_value_xx = mdl_nm_1L_chr, 
