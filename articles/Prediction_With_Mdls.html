@@ -275,20 +275,20 @@ Secondary Analysis A
                  mdl_nms_chr <span class="op">=</span> <span class="st">"PHQ9_SOFAS_1_OLS_CLL"</span><span class="op">)</span></code></pre></div>
 <pre><code>## $PHQ9_SOFAS_1_OLS_CLL
 ##        Parameter Estimate    SE          95% CI
-## 1 SD (Intercept)    0.243 0.010   0.222 , 0.262
-## 2      Intercept   -0.157 0.084  -0.319 , 0.008
-## 3  PHQ9 baseline   -6.716 0.170 -7.053 , -6.382
-## 4    PHQ9 change   -4.192 0.194 -4.575 , -3.814
-## 5 SOFAS baseline    0.015 0.001   0.013 , 0.017
-## 6   SOFAS change    0.010 0.001   0.009 , 0.012
-## 7             R2    0.839 0.008   0.822 , 0.853
+## 1 SD (Intercept)    0.242 0.010   0.222 , 0.262
+## 2      Intercept   -0.157 0.084  -0.321 , 0.005
+## 3  PHQ9 baseline   -6.720 0.169  -7.05 , -6.391
+## 4    PHQ9 change   -4.194 0.194 -4.576 , -3.818
+## 5 SOFAS baseline    1.483 0.112   1.268 , 1.701
+## 6   SOFAS change    1.048 0.096    0.86 , 1.235
+## 7             R2    0.838 0.008   0.822 , 0.853
 ## 8           RMSE    0.762 0.003    0.76 , 0.764
 ## 9          Sigma    0.243 0.007    0.23 , 0.257</code></pre>
 <p>More information about a selected model can be found in the online model catalogue, the link to which can be obtained with the following command:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/get_mdl_ctlg_url.html">get_mdl_ctlg_url</a></span><span class="op">(</span><span class="va">mdls_lup</span>,
                  mdl_nm_1L_chr <span class="op">=</span> <span class="st">"PHQ9_SOFAS_1_OLS_CLL"</span><span class="op">)</span></code></pre></div>
-<p>[1] “<a href="https://dataverse.harvard.edu/api/access/datafile/4867747" class="uri">https://dataverse.harvard.edu/api/access/datafile/4867747</a>”</p>
+<p>[1] “<a href="https://dataverse.harvard.edu/api/access/datafile/4867929" class="uri">https://dataverse.harvard.edu/api/access/datafile/4867929</a>”</p>
 </div>
 <div id="prepare-prediction-dataset" class="section level2">
 <h2 class="hasAnchor">
@@ -476,7 +476,7 @@ Baseline
 69
 </td>
 <td style="text-align:right;">
-0.5229801
+0.8699928
 </td>
 </tr>
 <tr>
@@ -493,7 +493,7 @@ Baseline
 60
 </td>
 <td style="text-align:right;">
-0.2973338
+0.5967787
 </td>
 </tr>
 <tr>
@@ -510,7 +510,7 @@ Follow-up
 64
 </td>
 <td style="text-align:right;">
-0.2000971
+0.3884106
 </td>
 </tr>
 <tr>
@@ -527,7 +527,7 @@ Baseline
 76
 </td>
 <td style="text-align:right;">
-0.8070229
+0.8797272
 </td>
 </tr>
 <tr>
@@ -544,7 +544,7 @@ Baseline
 71
 </td>
 <td style="text-align:right;">
-0.6821478
+0.8599971
 </td>
 </tr>
 <tr>
@@ -561,7 +561,7 @@ Follow-up
 71
 </td>
 <td style="text-align:right;">
-0.6074271
+0.9837122
 </td>
 </tr>
 </tbody>
@@ -575,7 +575,7 @@ Follow-up
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">updated_data_tb</span><span class="op">$</span><span class="va">AQoL6D_HU</span><span class="op">)</span></code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-## 0.07082 0.23350 0.31898 0.33904 0.42208 0.81501</code></pre>
+##  0.1776  0.5095  0.6493  0.6391  0.7749  0.9998</code></pre>
 </div>
   </div>
 
