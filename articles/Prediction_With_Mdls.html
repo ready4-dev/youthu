@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">youthu</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9086</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9087</span>
       </span>
     </div>
 
@@ -198,6 +198,50 @@ Primary Analysis
 </tr>
 <tr>
 <td style="text-align:left;">
+PHQ9_SOFAS_1_GLM_GSN_LOG
+</td>
+<td style="text-align:right;">
+PHQ9 , SOFAS
+</td>
+<td style="text-align:right;">
+Primary Analysis
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PHQ9_SOFAS_1_OLS_CLL
+</td>
+<td style="text-align:right;">
+PHQ9 , SOFAS
+</td>
+<td style="text-align:right;">
+Primary Analysis
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+K6_SOFAS_1_GLM_GSN_LOG
+</td>
+<td style="text-align:right;">
+K6 , SOFAS
+</td>
+<td style="text-align:right;">
+Primary Analysis
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+K6_SOFAS_1_OLS_CLL
+</td>
+<td style="text-align:right;">
+K6 , SOFAS
+</td>
+<td style="text-align:right;">
+Primary Analysis
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 SOFAS_1_GLM_GSN_LOG
 </td>
 <td style="text-align:right;">
@@ -228,21 +272,23 @@ Secondary Analysis A
 <p>To review the summary information about the predictive performance of a specific model, use:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/get_dv_mdl_smrys.html">get_dv_mdl_smrys</a></span><span class="op">(</span><span class="va">mdls_lup</span>,
-                 mdl_nms_chr <span class="op">=</span> <span class="st">"SOFAS_1_OLS_CLL"</span><span class="op">)</span></code></pre></div>
-<pre><code>## $SOFAS_1_OLS_CLL
+                 mdl_nms_chr <span class="op">=</span> <span class="st">"PHQ9_SOFAS_1_OLS_CLL"</span><span class="op">)</span></code></pre></div>
+<pre><code>## $PHQ9_SOFAS_1_OLS_CLL
 ##        Parameter Estimate    SE          95% CI
-## 1 SD (Intercept)    0.428 0.013   0.403 , 0.453
-## 2      Intercept   -2.161 0.106 -2.369 , -1.954
-## 3 SOFAS baseline    3.301 0.161    2.99 , 3.618
-## 4   SOFAS change    1.549 0.118   1.317 , 1.779
-## 5             R2    0.778 0.011   0.756 , 0.798
-## 6           RMSE    0.771 0.003   0.769 , 0.773
-## 7          Sigma    0.285 0.008    0.27 , 0.301</code></pre>
+## 1 SD (Intercept)    0.243 0.010   0.222 , 0.262
+## 2      Intercept   -0.157 0.084  -0.319 , 0.008
+## 3  PHQ9 baseline   -6.716 0.170 -7.053 , -6.382
+## 4    PHQ9 change   -4.192 0.194 -4.575 , -3.814
+## 5 SOFAS baseline    0.015 0.001   0.013 , 0.017
+## 6   SOFAS change    0.010 0.001   0.009 , 0.012
+## 7             R2    0.839 0.008   0.822 , 0.853
+## 8           RMSE    0.762 0.003    0.76 , 0.764
+## 9          Sigma    0.243 0.007    0.23 , 0.257</code></pre>
 <p>More information about a selected model can be found in the online model catalogue, the link to which can be obtained with the following command:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/get_mdl_ctlg_url.html">get_mdl_ctlg_url</a></span><span class="op">(</span><span class="va">mdls_lup</span>,
-                 mdl_nm_1L_chr <span class="op">=</span> <span class="st">"SOFAS_1_OLS_CLL"</span><span class="op">)</span></code></pre></div>
-<p>[1] “<a href="https://dataverse.harvard.edu/api/access/datafile/4862881" class="uri">https://dataverse.harvard.edu/api/access/datafile/4862881</a>”</p>
+                 mdl_nm_1L_chr <span class="op">=</span> <span class="st">"PHQ9_SOFAS_1_OLS_CLL"</span><span class="op">)</span></code></pre></div>
+<p>[1] “<a href="https://dataverse.harvard.edu/api/access/datafile/4867747" class="uri">https://dataverse.harvard.edu/api/access/datafile/4867747</a>”</p>
 </div>
 <div id="prepare-prediction-dataset" class="section level2">
 <h2 class="hasAnchor">
@@ -366,23 +412,24 @@ Follow-up
 <p>The prediction dataset must contain variables that correspond to all the predictors of the model you intend to apply. The values of each predictor variable must conform to the corresponding parameter as described in the model predictor metadata, which can be accessed with a call to the <code>get_predictors_lup</code> function.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/get_predictors_lup.html">get_predictors_lup</a></span><span class="op">(</span>mdls_lup <span class="op">=</span> <span class="va">mdls_lup</span>,
-                   mdl_nm_1L_chr <span class="op">=</span> <span class="st">"SOFAS_1_OLS_CLL"</span><span class="op">)</span></code></pre></div>
-<pre><code>## # A tibble: 1 x 9
+                   mdl_nm_1L_chr <span class="op">=</span> <span class="st">"PHQ9_SOFAS_1_OLS_CLL"</span><span class="op">)</span></code></pre></div>
+<pre><code>## # A tibble: 2 x 9
 ##   short_name_chr long_name_chr   min_val_dbl max_val_dbl class_chr increment_dbl
 ##   &lt;chr&gt;          &lt;chr&gt;                 &lt;dbl&gt;       &lt;dbl&gt; &lt;chr&gt;             &lt;dbl&gt;
-## 1 SOFAS          SOFAS total sc…           0         100 integer               1
+## 1 PHQ9           PHQ9 total sco…           0          27 integer               1
+## 2 SOFAS          SOFAS total sc…           0         100 integer               1
 ## # … with 3 more variables: class_fn_chr &lt;chr&gt;, mdl_scaling_dbl &lt;dbl&gt;,
 ## #   covariate_lgl &lt;lgl&gt;</code></pre>
 <p>The prediction dataset must also include both a unique client identifier variable and a measurement time-point identifier variable (which must be a <code class="sourceCode r">factor</code> with two levels). The dataset also needs to be in long format (ie where measures at different time-points for the same individual are stacked on top of each other in separate rows). We can confirm these conditions hold by creating a dataset metadata object using the <code>make_predn_metadata_ls</code> function. In creating the metadata object, the function checks that the dataset can be used in conjunction with the model specified at the <code>mdl_nm_1L_chr</code> argument. If the prediction dataset uses different variable names for the predictors to those specified in the <code class="sourceCode r">predictors_lup</code> lookup table, a named vector detailing the correspondence between the two sets of variable names needs to be passed to the <code>predr_vars_nms_chr</code> argument. Finally, if you wish to specify a preferred variable name to use for the predicted utility values when applying the model, you can do this by passing this name to the <code>utl_var_nm_1L_chr</code> argument.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">predn_ds_ls</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/make_predn_metadata_ls.html">make_predn_metadata_ls</a></span><span class="op">(</span><span class="va">data_tb</span>,
                                       id_var_nm_1L_chr <span class="op">=</span> <span class="st">"UID"</span>,
-                                      predr_vars_nms_chr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>SOFAS <span class="op">=</span> <span class="st">"SOFAS_total"</span><span class="op">)</span>,
+                                      predr_vars_nms_chr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>PHQ9 <span class="op">=</span> <span class="st">"PHQ_total"</span>,SOFAS <span class="op">=</span> <span class="st">"SOFAS_total"</span><span class="op">)</span>,
                                       round_var_nm_1L_chr <span class="op">=</span> <span class="st">"Timepoint"</span>,
                                       round_bl_val_1L_chr <span class="op">=</span> <span class="st">"Baseline"</span>,
                                       utl_var_nm_1L_chr <span class="op">=</span> <span class="st">"AQoL6D_HU"</span>,
                                       mdls_lup <span class="op">=</span> <span class="va">mdls_lup</span>,
-                                      mdl_nm_1L_chr <span class="op">=</span> <span class="st">"SOFAS_1_OLS_CLL"</span><span class="op">)</span></code></pre></div>
+                                      mdl_nm_1L_chr <span class="op">=</span> <span class="st">"PHQ9_SOFAS_1_OLS_CLL"</span><span class="op">)</span></code></pre></div>
 </div>
 </div>
 <div id="predict-utility" class="section level2">
@@ -429,7 +476,7 @@ Baseline
 69
 </td>
 <td style="text-align:right;">
-0.3568430
+0.5229801
 </td>
 </tr>
 <tr>
@@ -446,7 +493,7 @@ Baseline
 60
 </td>
 <td style="text-align:right;">
-0.7814701
+0.2973338
 </td>
 </tr>
 <tr>
@@ -463,7 +510,7 @@ Follow-up
 64
 </td>
 <td style="text-align:right;">
-0.5103436
+0.2000971
 </td>
 </tr>
 <tr>
@@ -480,7 +527,7 @@ Baseline
 76
 </td>
 <td style="text-align:right;">
-0.3627649
+0.8070229
 </td>
 </tr>
 <tr>
@@ -497,7 +544,7 @@ Baseline
 71
 </td>
 <td style="text-align:right;">
-0.5451080
+0.6821478
 </td>
 </tr>
 <tr>
@@ -514,7 +561,7 @@ Follow-up
 71
 </td>
 <td style="text-align:right;">
-0.9987286
+0.6074271
 </td>
 </tr>
 </tbody>
@@ -528,7 +575,7 @@ Follow-up
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">updated_data_tb</span><span class="op">$</span><span class="va">AQoL6D_HU</span><span class="op">)</span></code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##  0.0300  0.4035  0.6565  0.6310  0.8894  1.0000</code></pre>
+## 0.07082 0.23350 0.31898 0.33904 0.42208 0.81501</code></pre>
 </div>
   </div>
 

@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">youthu</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9086</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9087</span>
       </span>
     </div>
 
@@ -145,18 +145,13 @@
 
     <pre class="usage"><span class='fu'>make_hlth_ec_smry</span><span class='op'>(</span>
   <span class='va'>ds_tb</span>,
-  change_vars_chr <span class='op'>=</span> <span class='cn'>NA_character_</span>,
+  <span class='va'>predn_ds_ls</span>,
   wtp_dbl <span class='op'>=</span> <span class='fl'>50000</span>,
   bootstrap_iters_1L_int <span class='op'>=</span> <span class='fl'>1000</span>,
-  change_types_chr <span class='op'>=</span> <span class='st'>"dbl"</span>,
   benefits_pfx_1L_chr <span class='op'>=</span> <span class='st'>"qalys_dbl"</span>,
   benefits_var_nm_1L_chr <span class='op'>=</span> <span class='st'>"qalys"</span>,
-  costs_pfx_1L_chr <span class='op'>=</span> <span class='st'>"costs_dbl"</span>,
   costs_var_nm_1L_chr <span class='op'>=</span> <span class='st'>"costs"</span>,
-  change_sfx_1L_chr <span class='op'>=</span> <span class='st'>"change"</span>,
-  cmprsn_groups_chr <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Intervention"</span>, <span class='st'>"Control"</span><span class='op'>)</span>,
-  cmprsn_var_nm_1L_chr <span class='op'>=</span> <span class='st'>"study_arm_chr"</span>,
-  round_fup_val_1L_chr <span class='op'>=</span> <span class='st'>"Follow-up"</span>
+  change_sfx_1L_chr <span class='op'>=</span> <span class='st'>"change"</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -167,8 +162,8 @@
       <td><p>Dataset (a tibble)</p></td>
     </tr>
     <tr>
-      <th>change_vars_chr</th>
-      <td><p>Change variables (a character vector), Default: 'NA'</p></td>
+      <th>predn_ds_ls</th>
+      <td><p>Prediction dataset (a list)</p></td>
     </tr>
     <tr>
       <th>wtp_dbl</th>
@@ -179,10 +174,6 @@
       <td><p>Bootstrap iterations (an integer vector of length one), Default: 1000</p></td>
     </tr>
     <tr>
-      <th>change_types_chr</th>
-      <td><p>Change types (a character vector), Default: 'dbl'</p></td>
-    </tr>
-    <tr>
       <th>benefits_pfx_1L_chr</th>
       <td><p>Benefits prefix (a character vector of length one), Default: 'qalys_dbl'</p></td>
     </tr>
@@ -191,28 +182,12 @@
       <td><p>Benefits variable name (a character vector of length one), Default: 'qalys'</p></td>
     </tr>
     <tr>
-      <th>costs_pfx_1L_chr</th>
-      <td><p>Costs prefix (a character vector of length one), Default: 'costs_dbl'</p></td>
-    </tr>
-    <tr>
       <th>costs_var_nm_1L_chr</th>
       <td><p>Costs variable name (a character vector of length one), Default: 'costs'</p></td>
     </tr>
     <tr>
       <th>change_sfx_1L_chr</th>
       <td><p>Change suffix (a character vector of length one), Default: 'change'</p></td>
-    </tr>
-    <tr>
-      <th>cmprsn_groups_chr</th>
-      <td><p>Comparison groups (a character vector), Default: c("Intervention", "Control")</p></td>
-    </tr>
-    <tr>
-      <th>cmprsn_var_nm_1L_chr</th>
-      <td><p>Comparison variable name (a character vector of length one), Default: 'study_arm_chr'</p></td>
-    </tr>
-    <tr>
-      <th>round_fup_val_1L_chr</th>
-      <td><p>Round follow-up value (a character vector of length one), Default: 'Follow-up'</p></td>
     </tr>
     </table>
 
