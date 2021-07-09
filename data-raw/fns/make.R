@@ -74,7 +74,7 @@ make_costs_vec_from_gamma_dstr <- function(n_int,
     return(costs_dbl)
 }
 make_fake_ds_one <- function(){
-    data("replication_popl_tb", package = "youthvars")
+    data("replication_popl_tb", package = "youthvars", envir = environment())
     fake_data_tb <- replication_popl_tb %>%
         youthvars::transform_raw_ds_for_analysis() %>%
         dplyr::select(fkClientID,round,PHQ9, SOFAS) %>% #
@@ -89,7 +89,7 @@ make_fake_ds_one <- function(){
     return(fake_data_tb)
 }
 make_fake_ds_two <- function(){
-    data("replication_popl_tb", package = "youthvars")
+    data("replication_popl_tb", package = "youthvars", envir = environment())
     seed_ds_tb <- replication_popl_tb %>%
         youthvars::transform_raw_ds_for_analysis() %>%
         dplyr::filter(fkClientID %in% (replication_popl_tb %>%

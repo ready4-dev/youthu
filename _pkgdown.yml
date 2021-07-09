@@ -14,7 +14,6 @@ reference:
   - abbreviations_lup
   - fn_type_lup_tb
   - fns_dmt_tb
-  - mdls_lup
 - title: "Functions"
 - contents:
   - add_qalys_to_ds
