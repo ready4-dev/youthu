@@ -13,13 +13,13 @@ params:
 library(magrittr)
 library(youthu)
 ```
-Note, all models and input data used in this example are fake data for illustrative purposes only - they should not be used to inform decision making.
+Note, this example uses fake data - it should should not be used to inform decision making.
 
 ## Identifying suitable transfer to utility algorithms
 To identify datasets that contain transfer to utility models compatible with youthu (ie those developped with the [TTU package](https://ready4-dev.github.io/TTU/index.html)), you can use the following command. 
 
 ```{r}
-ttu_dv_dss_tb <- get_ttu_dv_dss("firstbounce")
+ttu_dv_dss_tb <- get_ttu_dv_dss("TTU")
 ```
 
 ```{r ttudss, echo = F, tab.cap='Transfer to Utility Datasets', tab.id = 'ttudss', results="asis"}

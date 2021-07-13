@@ -95,7 +95,7 @@ predn_ds_ls <- make_predn_metadata_ls(ds_tb,
                                       mdls_lup = get_mdls_lup(utility_type_chr = "AQoL-6D",
                                                               mdl_predrs_in_ds_chr = c("PHQ9 total score",
                                                                                        "SOFAS total score"),
-                                                              ttu_dv_nms_chr = "firstbounce"),
+                                                              ttu_dv_nms_chr = "TTU"),
                                       mdl_nm_1L_chr =  "PHQ9_SOFAS_1_OLS_CLL")
 ```
 
@@ -134,6 +134,7 @@ he_smry_ls <- ds_tb %>% make_hlth_ec_smry(predn_ds_ls = predn_ds_ls,
 As part of the output of the `make_hlth_ec_smry`{.R} function is a BCEA object, we can use the BCEA package to produce a number of graphical summaries of economic results. One of the most important is the production of a cost-effectiveness plane. This plot highlights that, with an ICER of \$`r he_smry_ls$ce_res_ls$ICER %>% format(big.mark =",")`, `r ifelse(he_smry_ls$ce_res_ls$ceac[he_smry_ls$ce_res_ls$k==50000]==0.5,"half",ifelse(he_smry_ls$ce_res_ls$ceac[he_smry_ls$ce_res_ls$k==50000]<0.5,"less than half","most"))` of the bootstrapped iteration incremental cost and QALY pairs fall within the zone of cost-effectiveness (green). In fact, at the cost-effectiveness threshold we supplied, the results suggest there is a `r he_smry_ls$ce_res_ls$ceac[he_smry_ls$ce_res_ls$k==50000] * 100`% probability that the intervention is cost-effective.
 
 ```{r fig.width=6}
+library(ggplot2)
 BCEA::ceplane.plot(he_smry_ls$ce_res_ls, wtp =50000,    
                    area_color = "green",
                     graph = "ggplot2",

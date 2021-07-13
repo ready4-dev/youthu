@@ -27,7 +27,7 @@ get_dv_mdl_smrys <- function(mdls_lup,
 get_filtered_ttu_dss <- function(ttu_dv_dss_tb = NULL,
                                  mdl_predrs_in_ds_chr = NULL,
                                  utility_type_chr = NULL,
-                                 ttu_dv_nms_chr = "firstbounce",
+                                 ttu_dv_nms_chr = "TTU",
                                  server_1L_chr = "dataverse.harvard.edu",
                                  key_1L_chr = NULL){
   if(is.null(ttu_dv_dss_tb))
@@ -99,7 +99,7 @@ get_mdl_from_dv <- function(mdl_nm_1L_chr,
 get_mdls_lup <- function(ttu_dv_dss_tb = NULL,
                          mdl_predrs_in_ds_chr = NULL,
                          utility_type_chr = NULL,
-                         ttu_dv_nms_chr = "firstbounce",
+                         ttu_dv_nms_chr = "TTU",
                          server_1L_chr = "dataverse.harvard.edu",
                          key_1L_chr = NULL){
   if(is.null(ttu_dv_dss_tb))
@@ -114,7 +114,7 @@ get_mdls_lup <- function(ttu_dv_dss_tb = NULL,
                                           utility_type_chr = utility_type_chr)
   }
   if(!is.null(ttu_dv_dss_tb)){
-    ds_smrys_ls <- get_ttu_ds_smrys("firstbounce", reference_int = ttu_dv_dss_tb$reference_int)
+    ds_smrys_ls <- get_ttu_ds_smrys("TTU", reference_int = ttu_dv_dss_tb$reference_int)
     mdls_lup <- ds_smrys_ls %>%
       purrr::map2_dfr(names(ds_smrys_ls),
                       ~{
@@ -231,7 +231,7 @@ get_predictors_lup <- function(mdl_meta_data_ls = NULL,
   return(predictors_tb)
 }
 get_ttu_dv_predrs <- function(ttu_dv_dss_tb = NULL,
-                              ttu_dv_nms_chr = "firstbounce",
+                              ttu_dv_nms_chr = "TTU",
                               server_1L_chr = "dataverse.harvard.edu",
                               key_1L_chr = NULL){
   if(is.null(ttu_dv_dss_tb))
@@ -254,7 +254,7 @@ get_tfmn_from_lup <- function(mdl_nm_1L_chr, mdls_lup = NULL){
 
   return(tfmn_1L_chr)
 }
-get_ttu_ds_smrys <- function(ttu_dv_nm_1L_chr = "firstbounce",
+get_ttu_ds_smrys <- function(ttu_dv_nm_1L_chr = "TTU",
                              server_1L_chr = "dataverse.harvard.edu",
                              key_1L_chr = NULL,
                              reference_int = NULL){
@@ -276,7 +276,7 @@ get_ttu_ds_smrys <- function(ttu_dv_nm_1L_chr = "firstbounce",
     stats::setNames(names(dv_dss_mdl_smrys_ls)[reference_int])
   return(dv_dss_mdl_smrys_ls)
 }
-get_ttu_dv_dss <- function(ttu_dv_nms_chr = "firstbounce",
+get_ttu_dv_dss <- function(ttu_dv_nms_chr = "TTU",
                            server_1L_chr = "dataverse.harvard.edu",
                            key_1L_chr = NULL){
   dv_dss_mdl_smrys_ls <- ttu_dv_nms_chr %>%
