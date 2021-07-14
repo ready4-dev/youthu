@@ -4,10 +4,18 @@
 \alias{get_dv_ds_publication}
 \title{Get dataverse dataset publication}
 \usage{
-get_dv_ds_publication(ds_url_1L_chr)
+get_dv_ds_publication(
+  ds_url_1L_chr,
+  server_1L_chr = "dataverse.harvard.edu",
+  key_1L_chr = NULL
+)
 }
 \arguments{
 \item{ds_url_1L_chr}{Dataset url (a character vector of length one)}
+
+\item{server_1L_chr}{Server (a character vector of length one), Default: 'dataverse.harvard.edu'}
+
+\item{key_1L_chr}{Key (a character vector of length one), Default: NULL}
 }
 \value{
 Doi url (a character vector of length one)

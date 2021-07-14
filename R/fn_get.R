@@ -1,6 +1,8 @@
 #' Get dataverse dataset publication
 #' @description get_dv_ds_publication() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get dataverse dataset publication. Function argument ds_url_1L_chr specifies the where to look for the required object. The function returns Doi url (a character vector of length one).
 #' @param ds_url_1L_chr Dataset url (a character vector of length one)
+#' @param server_1L_chr Server (a character vector of length one), Default: 'dataverse.harvard.edu'
+#' @param key_1L_chr Key (a character vector of length one), Default: NULL
 #' @return Doi url (a character vector of length one)
 #' @rdname get_dv_ds_publication
 #' @export 
@@ -8,9 +10,11 @@
 #' @importFrom dplyr filter pull
 #' @importFrom purrr pluck
 #' @keywords internal
-get_dv_ds_publication <- function (ds_url_1L_chr) 
+get_dv_ds_publication <- function (ds_url_1L_chr, server_1L_chr = "dataverse.harvard.edu", 
+    key_1L_chr = NULL) 
 {
-    ds_md_ls <- dataverse::dataset_metadata(ds_url_1L_chr)
+    ds_md_ls <- dataverse::dataset_metadata(ds_url_1L_chr, key = key_1L_chr, 
+        server = server_1L_chr)
     doi_url_1L_chr <- ds_md_ls$fields %>% dplyr::filter(typeName == 
         "publication") %>% dplyr::pull(value) %>% purrr::pluck(1)
     doi_url_1L_chr <- ifelse(!is.null(doi_url_1L_chr), doi_url_1L_chr %>% 
@@ -416,7 +420,8 @@ get_ttu_dv_dss <- function (ttu_dv_nms_chr = "TTU", server_1L_chr = "dataverse.h
                   purrr::pluck(.x))$depnt_var_nm_1L_chr)), predrs_ls = list(get_predictors_lup(dv_dss_mdl_smrys_ls %>% 
                 purrr::pluck(.x)) %>% dplyr::pull(long_name_chr)), 
                 ds_url = names(ttu_dss_ls)[.x])) %>% dplyr::mutate(publication_url = purrr::map_chr(ds_url, 
-            ~get_dv_ds_publication(.x)))
+            ~get_dv_ds_publication(.x, key_1L_chr = key_1L_chr, 
+                server_1L_chr = server_1L_chr)))
         ttu_dv_dss_tb <- ready4use::add_labels_from_dictionary(ttu_dv_dss_tb, 
             dictionary_tb = tibble::tibble(var_nm_chr = names(ttu_dv_dss_tb), 
                 var_desc_chr = c("ID", "Utility", "Predictors", 

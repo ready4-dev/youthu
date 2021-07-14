@@ -1,5 +1,9 @@
-get_dv_ds_publication <- function(ds_url_1L_chr){
-  ds_md_ls <- dataverse::dataset_metadata(ds_url_1L_chr)
+get_dv_ds_publication <- function(ds_url_1L_chr,
+                                  server_1L_chr = "dataverse.harvard.edu",
+                                  key_1L_chr = NULL){
+  ds_md_ls <- dataverse::dataset_metadata(ds_url_1L_chr,
+                                          key = key_1L_chr,
+                                          server = server_1L_chr)
   doi_url_1L_chr <- ds_md_ls$fields %>%
     dplyr::filter(typeName == "publication") %>%
     dplyr::pull(value) %>% purrr::pluck(1)
@@ -316,7 +320,9 @@ get_ttu_dv_dss <- function(ttu_dv_nms_chr = "TTU",
                                                                 dplyr::pull(long_name_chr)),
                                   ds_url = names(ttu_dss_ls)[.x])) %>%
       dplyr::mutate(publication_url = purrr::map_chr(ds_url,
-                                                     ~ get_dv_ds_publication(.x)))
+                                                     ~ get_dv_ds_publication(.x,
+                                                                             key_1L_chr = key_1L_chr,
+                                                                             server_1L_chr = server_1L_chr)))
 
     ttu_dv_dss_tb <- ready4use::add_labels_from_dictionary(ttu_dv_dss_tb,
                                             dictionary_tb = tibble::tibble(var_nm_chr = names(ttu_dv_dss_tb),
