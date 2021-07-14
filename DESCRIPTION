@@ -1,6 +1,6 @@
 Package: youthu
 Title: Youth Outcomes to Health Utility
-Version: 0.0.0.9092
+Version: 0.0.0.9093
 Authors@R: 
     c(person(given = "Matthew",
              family = "Hamilton",
