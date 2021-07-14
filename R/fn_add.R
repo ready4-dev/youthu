@@ -167,26 +167,37 @@ add_diffs_by_group_and_tmpt <- function (ds_tb = trial_ds_tb, cmprsn_var_nm_1L_c
 #' @param duration_var_nm_1L_chr Duration variable name (a character vector of length one), Default: 'duration_prd'
 #' @param id_var_nm_1L_chr Identity variable name (a character vector of length one), Default: 'fkClientID'
 #' @param match_idx_var_nm_1L_chr Match index variable name (a character vector of length one), Default: 'match_idx_int'
+#' @param msrmnt_date_var_nm_1L_chr Measurement date variable name (a character vector of length one), Default: 'date_dtm'
 #' @param qalys_var_nm_1L_chr Quality Adjusted Life Years variable name (a character vector of length one), Default: 'qalys_dbl'
 #' @param round_var_nm_1L_chr Round variable name (a character vector of length one), Default: 'round'
+#' @param round_bl_val_1L_chr Round baseline value (a character vector of length one), Default: 'Baseline'
 #' @param utl_change_var_nm_1L_chr Utility change variable name (a character vector of length one), Default: 'utl_change_dbl'
 #' @param utl_var_nm_1L_chr Utility variable name (a character vector of length one), Default: 'utility_dbl'
 #' @param reshape_1L_lgl Reshape (a logical vector of length one), Default: T
 #' @return Updated dataset (a tibble)
 #' @rdname add_qalys
 #' @export 
-#' @importFrom dplyr mutate
+#' @importFrom dplyr group_by mutate case_when lag ungroup
 #' @importFrom rlang sym
-#' @importFrom lubridate years
+#' @importFrom lubridate as.period days years
 #' @importFrom tidyr pivot_wider
 #' @importFrom tidyselect all_of
 #' @keywords internal
 add_qalys <- function (ds_tb, cmprsn_var_nm_1L_chr = "study_arm_chr", duration_var_nm_1L_chr = "duration_prd", 
     id_var_nm_1L_chr = "fkClientID", match_idx_var_nm_1L_chr = "match_idx_int", 
-    qalys_var_nm_1L_chr = "qalys_dbl", round_var_nm_1L_chr = "round", 
+    msrmnt_date_var_nm_1L_chr = "date_dtm", qalys_var_nm_1L_chr = "qalys_dbl", 
+    round_var_nm_1L_chr = "round", round_bl_val_1L_chr = "Baseline", 
     utl_change_var_nm_1L_chr = "utl_change_dbl", utl_var_nm_1L_chr = "utility_dbl", 
     reshape_1L_lgl = T) 
 {
+    if (!duration_var_nm_1L_chr %in% names(ds_tb)) {
+        ds_tb <- ds_tb %>% dplyr::group_by(!!rlang::sym(id_var_nm_1L_chr)) %>% 
+            dplyr::mutate(`:=`(!!rlang::sym(duration_var_nm_1L_chr), 
+                dplyr::case_when(!!rlang::sym(round_var_nm_1L_chr) != 
+                  round_bl_val_1L_chr ~ lubridate::as.period(!!rlang::sym(msrmnt_date_var_nm_1L_chr) - 
+                  dplyr::lag(!!rlang::sym(msrmnt_date_var_nm_1L_chr))), 
+                  T ~ lubridate::days(0)))) %>% dplyr::ungroup()
+    }
     updated_ds_tb <- ds_tb %>% dplyr::mutate(`:=`(!!rlang::sym(qalys_var_nm_1L_chr), 
         (!!rlang::sym(utl_var_nm_1L_chr) - (!!rlang::sym(utl_change_var_nm_1L_chr) * 
             0.5)) * (!!rlang::sym(duration_var_nm_1L_chr)/lubridate::years(1))))
@@ -203,24 +214,34 @@ add_qalys <- function (ds_tb, cmprsn_var_nm_1L_chr = "study_arm_chr", duration_v
 #' @description add_qalys_to_ds() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add quality adjusted life years to dataset. Function argument ds_tb specifies the object to be updated. The function returns Dataset (a tibble).
 #' @param ds_tb Dataset (a tibble)
 #' @param predn_ds_ls Prediction dataset (a list)
+#' @param include_predrs_1L_lgl Include predictors (a logical vector of length one), Default: T
+#' @param reshape_1L_lgl Reshape (a logical vector of length one), Default: T
 #' @return Dataset (a tibble)
 #' @rdname add_qalys_to_ds
 #' @export 
-#' @importFrom purrr map reduce
-add_qalys_to_ds <- function (ds_tb, predn_ds_ls) 
+#' @importFrom purrr map discard reduce
+add_qalys_to_ds <- function (ds_tb, predn_ds_ls, include_predrs_1L_lgl = T, reshape_1L_lgl = T) 
 {
     if (is.null(predn_ds_ls$ds_ls$predr_vars_nms_chr)) 
         predn_ds_ls$ds_ls$predr_vars_nms_chr <- predn_ds_ls$mdl_ls$predictors_lup$short_name_chr
     ds_smry_ls <- predn_ds_ls$ds_ls
-    args_ls_ls <- purrr::map(c(ds_smry_ls$predr_vars_nms_chr, 
+    args_ls_ls <- purrr::map(c(ifelse(include_predrs_1L_lgl, 
+        ds_smry_ls$predr_vars_nms_chr, NA_character_) %>% purrr::discard(is.na), 
         ds_smry_ls$utl_var_nm_1L_chr), ~list(change_var_nm_1L_chr = paste0(.x, 
         "_change_dbl"), var_nm_1L_chr = .x))
     ds_tb <- purrr::reduce(1:length(args_ls_ls), .init = ds_tb, 
-        ~add_change_in_ds_var(.x, var_nm_1L_chr = args_ls_ls[[.y]]$var_nm_1L_chr, 
-            change_var_nm_1L_chr = args_ls_ls[[.y]]$change_var_nm_1L_chr)) %>% 
-        add_qalys(utl_change_var_nm_1L_chr = paste0(ds_smry_ls$utl_var_nm_1L_chr, 
-            "_change_dbl"), utl_var_nm_1L_chr = ds_smry_ls$utl_var_nm_1L_chr, 
-            duration_var_nm_1L_chr = "duration_prd", qalys_var_nm_1L_chr = "qalys_dbl")
+        ~add_change_in_ds_var(.x, id_var_nm_1L_chr = predn_ds_ls$ds_ls$id_var_nm_1L_chr, 
+            round_bl_val_1L_chr = predn_ds_ls$ds_ls$round_bl_val_1L_chr, 
+            round_var_nm_1L_chr = predn_ds_ls$ds_ls$round_var_nm_1L_chr, 
+            var_nm_1L_chr = args_ls_ls[[.y]]$var_nm_1L_chr, change_var_nm_1L_chr = args_ls_ls[[.y]]$change_var_nm_1L_chr)) %>% 
+        add_qalys(id_var_nm_1L_chr = predn_ds_ls$ds_ls$id_var_nm_1L_chr, 
+            msrmnt_date_var_nm_1L_chr = predn_ds_ls$ds_ls$msrmnt_date_var_nm_1L_chr, 
+            round_bl_val_1L_chr = predn_ds_ls$ds_ls$round_bl_val_1L_chr, 
+            round_var_nm_1L_chr = predn_ds_ls$ds_ls$round_var_nm_1L_chr, 
+            utl_change_var_nm_1L_chr = paste0(ds_smry_ls$utl_var_nm_1L_chr, 
+                "_change_dbl"), utl_var_nm_1L_chr = ds_smry_ls$utl_var_nm_1L_chr, 
+            duration_var_nm_1L_chr = "duration_prd", qalys_var_nm_1L_chr = "qalys_dbl", 
+            reshape_1L_lgl = reshape_1L_lgl)
     return(ds_tb)
 }
 #' Add utility prediction

@@ -10,8 +10,10 @@ add_qalys(
   duration_var_nm_1L_chr = "duration_prd",
   id_var_nm_1L_chr = "fkClientID",
   match_idx_var_nm_1L_chr = "match_idx_int",
+  msrmnt_date_var_nm_1L_chr = "date_dtm",
   qalys_var_nm_1L_chr = "qalys_dbl",
   round_var_nm_1L_chr = "round",
+  round_bl_val_1L_chr = "Baseline",
   utl_change_var_nm_1L_chr = "utl_change_dbl",
   utl_var_nm_1L_chr = "utility_dbl",
   reshape_1L_lgl = T
@@ -28,9 +30,13 @@ add_qalys(
 
 \item{match_idx_var_nm_1L_chr}{Match index variable name (a character vector of length one), Default: 'match_idx_int'}
 
+\item{msrmnt_date_var_nm_1L_chr}{Measurement date variable name (a character vector of length one), Default: 'date_dtm'}
+
 \item{qalys_var_nm_1L_chr}{Quality Adjusted Life Years variable name (a character vector of length one), Default: 'qalys_dbl'}
 
 \item{round_var_nm_1L_chr}{Round variable name (a character vector of length one), Default: 'round'}
+
+\item{round_bl_val_1L_chr}{Round baseline value (a character vector of length one), Default: 'Baseline'}
 
 \item{utl_change_var_nm_1L_chr}{Utility change variable name (a character vector of length one), Default: 'utl_change_dbl'}
 

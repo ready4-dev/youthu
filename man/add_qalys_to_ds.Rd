@@ -4,12 +4,21 @@
 \alias{add_qalys_to_ds}
 \title{Add Quality Adjusted Life Years to dataset}
 \usage{
-add_qalys_to_ds(ds_tb, predn_ds_ls)
+add_qalys_to_ds(
+  ds_tb,
+  predn_ds_ls,
+  include_predrs_1L_lgl = T,
+  reshape_1L_lgl = T
+)
 }
 \arguments{
 \item{ds_tb}{Dataset (a tibble)}
 
 \item{predn_ds_ls}{Prediction dataset (a list)}
+
+\item{include_predrs_1L_lgl}{Include predictors (a logical vector of length one), Default: T}
+
+\item{reshape_1L_lgl}{Reshape (a logical vector of length one), Default: T}
 }
 \value{
 Dataset (a tibble)

@@ -1,8 +1,8 @@
 ---
-title: "Predict Adolescent AQoL-6D"
+title: "Predict Quality Adjusted Life Years (QALYs)"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Predict Adolescent AQoL-6D}
+  %\VignetteIndexEntry{Predict Quality Adjusted Life Years (QALYs)}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 params:
@@ -21,6 +21,8 @@ To identify datasets that contain transfer to utility models compatible with you
 ```{r}
 ttu_dv_dss_tb <- get_ttu_dv_dss("TTU")
 ```
+
+The `ttu_dv_dss_tb` table summarises some pertinent details about each dataset containing TTU models found by the preceding command. These details include a link to any scientific summary (the "Article" column) associated with a dataset.
 
 ```{r ttudss, echo = F, tab.cap='Transfer to Utility Datasets', tab.id = 'ttudss', results="asis"}
 ttu_dv_dss_tb %>% 
@@ -95,6 +97,7 @@ The prediction dataset must also include both a unique client identifier variabl
 ```{r}
 predn_ds_ls <- make_predn_metadata_ls(data_tb,
                                       id_var_nm_1L_chr = "UID",
+                                      msrmnt_date_var_nm_1L_chr = "Date",
                                       predr_vars_nms_chr = c(PHQ9 = "PHQ_total",SOFAS = "SOFAS_total"),
                                       round_var_nm_1L_chr = "Timepoint",
                                       round_bl_val_1L_chr = "Baseline",
@@ -109,12 +112,12 @@ predn_ds_ls <- make_predn_metadata_ls(data_tb,
 To generate utility predictions we use the `add_utl_predn`{.R} function. The function needs to be supplied with the prediction dataset (the value passed to argument `data_tb`) and the validated prediction metadata object we created in the previous step. By default the function chooses a constrained simulation approach, based on a table of model coefficients when making predictions. You can override this by adding additional arguments `new_data_is_1L_chr = "Predicted"`, `force_min_max_1L_lgl = T` and (if the source dataset makes available downloadable models) `make_from_tbl_1L_lgl = F`. However, before doing so it is strongly recommended that you consult the model catalogue (see above) to understand how such a decision may affect the validity of the predicted values that will be generated.
 
 ```{r }
-updated_data_tb <- add_utl_predn(data_tb,
-                                 predn_ds_ls = predn_ds_ls)
+data_tb <- add_utl_predn(data_tb,
+                         predn_ds_ls = predn_ds_ls)
 
 ```
 ```{r updtb, echo = F, tab.cap='Prediction dataset with predicted utilities', tab.id = 'updtb', results="asis"}
-updated_data_tb %>% 
+data_tb %>% 
   head() %>%
   ready4show::print_table(output_type_1L_chr = params$output_type_1L_chr,
                           caption_1L_chr = knitr::opts_current$get("tab.cap"),
@@ -127,6 +130,24 @@ Our health utility predictions are now available for use and are summarised belo
 summary(updated_data_tb$AQoL6D_HU)
 ```
 
+## Calculate QALYs
+The last step is to calculate Quality Adjusted Life Years, using a method assuming a linear rate of change between timepoints.
+
+```{r}
+data_tb <- data_tb %>% add_qalys_to_ds(predn_ds_ls = predn_ds_ls,
+                                       include_predrs_1L_lgl = F,
+                                       reshape_1L_lgl = F)
+```
+
+```{r qalytb, echo = F, tab.cap='Prediction dataset with QALYs', tab.id = 'qalytb', results="asis"}
+data_tb %>% 
+  head() %>%
+  ready4show::print_table(output_type_1L_chr = params$output_type_1L_chr,
+                          caption_1L_chr = knitr::opts_current$get("tab.cap"),
+                          mkdn_tbl_ref_1L_chr = paste0("tab:",knitr::opts_current$get("tab.id")),
+    add_to_row_ls = NULL) 
+
+```
 
 ```{r include=FALSE}
 #Source: https://stackoverflow.com/questions/60042689/how-to-include-the-description-of-a-data-set-in-rmarkdown

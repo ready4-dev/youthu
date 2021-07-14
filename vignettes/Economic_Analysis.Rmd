@@ -16,6 +16,8 @@ knitr::opts_chunk$set(echo = TRUE)
 library(youthu)
 set.seed(1234)
 ```
+Note, this example is illustrated with fake data. It should not be used to inform decision-making.
+
 # Introduction
 
 ## Motivation
@@ -39,7 +41,7 @@ ds_tb %>%
                           caption_1L_chr = "First few records from input dataset")
 ```
 
-This dataset contains features that make it possible to use in conjunction with youthu's economic analysis functions. These requirements are described in the vignette about [finding and using models compatible with youthu functions](Prediction_With_Mdls.html);
+This dataset contains features that make it possible to use in conjunction with youthu's economic analysis functions. These requirements are described in the vignette about [finding and using models compatible models to predict QALYs](Prediction_With_Mdls.html);
 
 The dataset also contains a cost variable, which is a requirement for most, though not all, of the economic analyses that can be undertaken with youthu. 
 

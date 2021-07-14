@@ -1,3 +1,13 @@
+get_dv_ds_publication <- function(ds_url_1L_chr){
+  ds_md_ls <- dataverse::dataset_metadata(ds_url_1L_chr)
+  doi_url_1L_chr <- ds_md_ls$fields %>%
+    dplyr::filter(typeName == "publication") %>%
+    dplyr::pull(value) %>% purrr::pluck(1)
+  doi_url_1L_chr <- ifelse(!is.null(doi_url_1L_chr),doi_url_1L_chr %>%
+                             dplyr::pull(publicationURL) %>%
+                             dplyr::pull(value), "")
+  return(doi_url_1L_chr)
+}
 get_dv_dss_mdl_smrys <- function(ids_chr,
                                  server_1L_chr = "dataverse.harvard.edu",
                                  key_1L_chr = NULL){
@@ -301,21 +311,16 @@ get_ttu_dv_dss <- function(ttu_dv_nms_chr = "TTU",
                                            "AQoL-6D",
                                            (dv_dss_mdl_smrys_ls %>%
                                              purrr::pluck(.x))$depnt_var_nm_1L_chr)),
-                                  # title = (ttu_dss_ls %>%
-                                  #            purrr::pluck(.x))$metadataBlocks$citation$fields %>%
-                                  # ready4fun::get_from_lup_obj(match_value_xx = "title",
-                                  #                             match_var_nm_1L_chr = "typeName",
-                                  #                             target_var_nm_1L_chr = "value",
-                                  #                             evaluate_lgl = F) %>%
-                                  # purrr::flatten_chr(),
                                   predrs_ls = list(get_predictors_lup(dv_dss_mdl_smrys_ls %>%
                                                                 purrr::pluck(.x)) %>%
                                                                 dplyr::pull(long_name_chr)),
-                                  ds_url = names(ttu_dss_ls)[.x]))
+                                  ds_url = names(ttu_dss_ls)[.x])) %>%
+      dplyr::mutate(publication_url = purrr::map_chr(ds_url,
+                                                     ~ get_dv_ds_publication(.x)))
 
     ttu_dv_dss_tb <- ready4use::add_labels_from_dictionary(ttu_dv_dss_tb,
                                             dictionary_tb = tibble::tibble(var_nm_chr = names(ttu_dv_dss_tb),
-                                                                           var_desc_chr = c("ID","Utility","Predictors","URL")))
+                                                                           var_desc_chr = c("ID","Utility","Predictors","Dataset","Article")))
 
   }else{
     ttu_dv_dss_tb <- NULL

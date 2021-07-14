@@ -77,11 +77,12 @@ make_fake_ds_one <- function(){
     data("replication_popl_tb", package = "youthvars", envir = environment())
     fake_data_tb <- replication_popl_tb %>%
         youthvars::transform_raw_ds_for_analysis() %>%
-        dplyr::select(fkClientID,round,PHQ9, SOFAS) %>% #
+        dplyr::select(fkClientID,round,d_interview_date,PHQ9, SOFAS) %>% #
         dplyr::arrange(fkClientID) %>%
         na.omit() %>%
         dplyr::rename(UID = fkClientID,
                       Timepoint = round,
+                      Date = d_interview_date,
                       PHQ_total = PHQ9,
                       SOFAS_total = SOFAS) %>%
         dplyr::mutate(SOFAS_total = as.integer(round(SOFAS_total,0))) %>%

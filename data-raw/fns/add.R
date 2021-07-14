@@ -113,11 +113,20 @@ add_qalys <- function(ds_tb,
                       duration_var_nm_1L_chr = "duration_prd",
                       id_var_nm_1L_chr = "fkClientID",
                       match_idx_var_nm_1L_chr = "match_idx_int",
+                      msrmnt_date_var_nm_1L_chr = "date_dtm",
                       qalys_var_nm_1L_chr = "qalys_dbl",
                       round_var_nm_1L_chr = "round",
+                      round_bl_val_1L_chr = "Baseline",
                       utl_change_var_nm_1L_chr = "utl_change_dbl",
                       utl_var_nm_1L_chr = "utility_dbl",
                       reshape_1L_lgl = T){
+  if(!duration_var_nm_1L_chr %in% names(ds_tb)){
+    ds_tb <- ds_tb %>%
+      dplyr::group_by(!!rlang::sym(id_var_nm_1L_chr)) %>%
+      dplyr::mutate(!!rlang::sym(duration_var_nm_1L_chr) := dplyr::case_when(!!rlang::sym(round_var_nm_1L_chr) != round_bl_val_1L_chr ~ lubridate::as.period(!!rlang::sym(msrmnt_date_var_nm_1L_chr) - dplyr::lag(!!rlang::sym(msrmnt_date_var_nm_1L_chr))),
+                                                                             T ~ lubridate::days(0))) %>%
+      dplyr::ungroup()
+  }
   updated_ds_tb <- ds_tb %>%
     dplyr::mutate(!!rlang::sym(qalys_var_nm_1L_chr) := (!!rlang::sym(utl_var_nm_1L_chr)-(!!rlang::sym(utl_change_var_nm_1L_chr) * 0.5)) * (!!rlang::sym(duration_var_nm_1L_chr) / lubridate::years(1)))
   if(reshape_1L_lgl){
@@ -131,23 +140,36 @@ add_qalys <- function(ds_tb,
   return(updated_ds_tb)
 }
 add_qalys_to_ds <- function(ds_tb,
-                            predn_ds_ls){
+                            predn_ds_ls,
+                            include_predrs_1L_lgl = T,
+                            reshape_1L_lgl = T){
   if(is.null(predn_ds_ls$ds_ls$predr_vars_nms_chr))
     predn_ds_ls$ds_ls$predr_vars_nms_chr <- predn_ds_ls$mdl_ls$predictors_lup$short_name_chr
   ds_smry_ls <- predn_ds_ls$ds_ls
-  args_ls_ls <- purrr::map(c(ds_smry_ls$predr_vars_nms_chr,
+
+  args_ls_ls <- purrr::map(c(ifelse(include_predrs_1L_lgl,
+                                      ds_smry_ls$predr_vars_nms_chr,
+                                      NA_character_) %>% purrr::discard(is.na),
                              ds_smry_ls$utl_var_nm_1L_chr),
                            ~ list(change_var_nm_1L_chr = paste0(.x,"_change_dbl"),
                                   var_nm_1L_chr = .x))
   ds_tb <- purrr::reduce(1:length(args_ls_ls),
                          .init = ds_tb,
                          ~ add_change_in_ds_var(.x,
+                                                id_var_nm_1L_chr = predn_ds_ls$ds_ls$id_var_nm_1L_chr,
+                                                round_bl_val_1L_chr = predn_ds_ls$ds_ls$round_bl_val_1L_chr,
+                                                round_var_nm_1L_chr = predn_ds_ls$ds_ls$round_var_nm_1L_chr,
                                                 var_nm_1L_chr = args_ls_ls[[.y]]$var_nm_1L_chr,
                                                 change_var_nm_1L_chr = args_ls_ls[[.y]]$change_var_nm_1L_chr)) %>%
-    add_qalys(utl_change_var_nm_1L_chr = paste0(ds_smry_ls$utl_var_nm_1L_chr,"_change_dbl"),
+    add_qalys(id_var_nm_1L_chr = predn_ds_ls$ds_ls$id_var_nm_1L_chr,
+              msrmnt_date_var_nm_1L_chr = predn_ds_ls$ds_ls$msrmnt_date_var_nm_1L_chr,
+              round_bl_val_1L_chr = predn_ds_ls$ds_ls$round_bl_val_1L_chr,
+              round_var_nm_1L_chr = predn_ds_ls$ds_ls$round_var_nm_1L_chr,
+              utl_change_var_nm_1L_chr = paste0(ds_smry_ls$utl_var_nm_1L_chr,"_change_dbl"),
               utl_var_nm_1L_chr = ds_smry_ls$utl_var_nm_1L_chr,
               duration_var_nm_1L_chr = "duration_prd",
-              qalys_var_nm_1L_chr = "qalys_dbl")
+              qalys_var_nm_1L_chr = "qalys_dbl",
+              reshape_1L_lgl = reshape_1L_lgl)
   return(ds_tb)
 }
 add_utl_predn <- function(data_tb,
