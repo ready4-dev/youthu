@@ -127,7 +127,7 @@ data_tb %>%
 Our health utility predictions are now available for use and are summarised below.
 
 ```{r }
-summary(updated_data_tb$AQoL6D_HU)
+summary(data_tb$AQoL6D_HU)
 ```
 
 ## Calculate QALYs

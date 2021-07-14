@@ -146,10 +146,12 @@ add_qalys_to_ds <- function(ds_tb,
   if(is.null(predn_ds_ls$ds_ls$predr_vars_nms_chr))
     predn_ds_ls$ds_ls$predr_vars_nms_chr <- predn_ds_ls$mdl_ls$predictors_lup$short_name_chr
   ds_smry_ls <- predn_ds_ls$ds_ls
-
-  args_ls_ls <- purrr::map(c(ifelse(include_predrs_1L_lgl,
-                                      ds_smry_ls$predr_vars_nms_chr,
-                                      NA_character_) %>% purrr::discard(is.na),
+  if(include_predrs_1L_lgl){
+    predr_vars_nms_chr <- ds_smry_ls$predr_vars_nms_chr
+  }else{
+    predr_vars_nms_chr <- character(0)
+  }
+  args_ls_ls <- purrr::map(c(predr_vars_nms_chr,
                              ds_smry_ls$utl_var_nm_1L_chr),
                            ~ list(change_var_nm_1L_chr = paste0(.x,"_change_dbl"),
                                   var_nm_1L_chr = .x))
