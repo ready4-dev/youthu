@@ -13,10 +13,16 @@ params:
 library(magrittr)
 library(youthu)
 ```
-Note, this example uses fake data - it should should not be used to inform decision making.
+This vignette outlines a workflow for:
 
-## Identifying suitable transfer to utility algorithms
-To identify datasets that contain transfer to utility models compatible with youthu (ie those developped with the [TTU package](https://ready4-dev.github.io/TTU/index.html)), you can use the following command. 
+- Searching, selecting and retrieving transfer to utility models;
+- Preparing a prediction dataset for use with a selected transfer to utility model; and
+- Applying the selected transfer to utility model to a prediction dataset to predict Quality Adjusted Life Years (QALYs).
+
+The practical value of implementing such a workflow is discussed in the [economic analysis vignette](Economic_Analysis.html) and [a scientific manuscript](https://www.medrxiv.org/content/10.1101/2021.07.07.21260129v2.full). Note, this example uses fake data - it should should not be used to inform decision making.
+
+## Search, select and retrie transfer to utility models
+To identify datasets that contain transfer to utility models compatible with youthu (ie those developped with the [TTU package](https://ready4-dev.github.io/TTU/index.html)), you can use the `get_ttu_dv_dss` function. The function searches specified dataverses (in the below example, the [TTU dataverse](https://dataverse.harvard.edu/dataverse/TTU)) for datasets containing output from the TTU package.
 
 ```{r}
 ttu_dv_dss_tb <- get_ttu_dv_dss("TTU")
@@ -25,7 +31,7 @@ ttu_dv_dss_tb <- get_ttu_dv_dss("TTU")
 The `ttu_dv_dss_tb` table summarises some pertinent details about each dataset containing TTU models found by the preceding command. These details include a link to any scientific summary (the "Article" column) associated with a dataset.
 
 ```{r ttudss, echo = F, tab.cap='Transfer to Utility Datasets', tab.id = 'ttudss', results="asis"}
-ttu_dv_dss_tb %>% 
+ttu_dv_dss_tb[,c(1:3,5)] %>% 
   ready4show::print_table(output_type_1L_chr = params$output_type_1L_chr,
                           caption_1L_chr = knitr::opts_current$get("tab.cap"),
                           use_lbls_as_col_nms_1L_lgl = T,
@@ -70,8 +76,10 @@ get_mdl_ctlg_url(mdls_lup,
                  mdl_nm_1L_chr = "PHQ9_SOFAS_1_OLS_CLL")
 ```
 
-## Prepare prediction dataset
-First import and inspect the dataset you will be using for prediction. In the below example we use fake data.
+## Prepare a prediction dataset for use with a selected transfer to utility model
+
+### Import data
+You can now import and inspect the dataset you plan on using for prediction. In the below example we use fake data.
 
 ```{r }
 data_tb <- make_fake_ds_one()
@@ -86,12 +94,20 @@ data_tb %>%
 ```
 
 ### Confirm dataset can be used as a prediction dataset
-The prediction dataset must contain variables that correspond to all the predictors of the model you intend to apply. The values of each predictor variable must conform to the corresponding parameter as described in the model predictor metadata, which can be accessed with a call to the `get_predictors_lup` function.
+The prediction dataset must contain variables that correspond to all the predictors of the model you intend to apply. The allowable range and required class of each predictor variable are described in the `min_val_dbl`,	`max_val_dbl` and	`class_chr` columns model predictors lookup table, which can be accessed with a call to the `get_predictors_lup` function.
 
 ```{r}
-get_predictors_lup(mdls_lup = mdls_lup,
-                   mdl_nm_1L_chr = "PHQ9_SOFAS_1_OLS_CLL")
+predictors_lup <- get_predictors_lup(mdls_lup = mdls_lup,
+                                     mdl_nm_1L_chr = "PHQ9_SOFAS_1_OLS_CLL")
 ```
+```{r predluptb, echo = F, tab.cap='Model predictors lookup table', tab.id = 'predluptb', results="asis"}
+predictors_lup %>% 
+  ready4show::print_table(output_type_1L_chr = params$output_type_1L_chr,
+                          caption_1L_chr = knitr::opts_current$get("tab.cap"),
+                          mkdn_tbl_ref_1L_chr = paste0("tab:",knitr::opts_current$get("tab.id")),
+                          add_to_row_ls = NULL) 
+```
+
 The prediction dataset must also include both a unique client identifier variable and a measurement time-point identifier variable (which must be a `factor`{.R} with two levels). The dataset also needs to be in long format (ie where measures at different time-points for the same individual are stacked on top of each other in separate rows). We can confirm these conditions hold by creating a dataset metadata object using the `make_predn_metadata_ls` function. In creating the metadata object, the function checks that the dataset can be used in conjunction with the model specified at the `mdl_nm_1L_chr` argument. If the prediction dataset uses different variable names for the predictors to those specified in the `predictors_lup`{.R} lookup table, a named vector detailing the correspondence between the two sets of variable names needs to be passed to the `predr_vars_nms_chr` argument. Finally, if you wish to specify a preferred variable name to use for the predicted utility values when applying the model, you can do this by passing this name to the `utl_var_nm_1L_chr` argument.
 
 ```{r}
@@ -107,8 +123,9 @@ predn_ds_ls <- make_predn_metadata_ls(data_tb,
 ```
 
 
-## Predict utility
+## Apply the selected transfer to utility model to a prediction dataset to predict Quality Adjusted Life Years (QALYs)
 
+### Predict health utility at baseline and follow-up timepoints
 To generate utility predictions we use the `add_utl_predn`{.R} function. The function needs to be supplied with the prediction dataset (the value passed to argument `data_tb`) and the validated prediction metadata object we created in the previous step. By default the function chooses a constrained simulation approach, based on a table of model coefficients when making predictions. You can override this by adding additional arguments `new_data_is_1L_chr = "Predicted"`, `force_min_max_1L_lgl = T` and (if the source dataset makes available downloadable models) `make_from_tbl_1L_lgl = F`. However, before doing so it is strongly recommended that you consult the model catalogue (see above) to understand how such a decision may affect the validity of the predicted values that will be generated.
 
 ```{r }
@@ -124,13 +141,14 @@ data_tb %>%
                           mkdn_tbl_ref_1L_chr = paste0("tab:",knitr::opts_current$get("tab.id")),
                           add_to_row_ls = NULL) 
 ```
+
 Our health utility predictions are now available for use and are summarised below.
 
 ```{r }
 summary(data_tb$AQoL6D_HU)
 ```
 
-## Calculate QALYs
+### Calculate QALYs
 The last step is to calculate Quality Adjusted Life Years, using a method assuming a linear rate of change between timepoints.
 
 ```{r}

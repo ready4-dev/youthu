@@ -16,17 +16,13 @@ knitr::opts_chunk$set(echo = TRUE)
 library(youthu)
 set.seed(1234)
 ```
-Note, this example is illustrated with fake data. It should not be used to inform decision-making.
-
-# Introduction
+This vignette illustrates the rationale for and practical decision-making utility of youthu's [QALYs prediction workflow](Prediction_With_Mdls.html). Note, this example is illustrated with fake data and should not be used to inform decision-making.
 
 ## Motivation
 The main motivation behind the youthu package is to extend the types of economic analysis that can be undertaken with both single group (e.g. pilot study, health service records) and matched groups (e.g. trial) longitudinal datasets that do not include measures of health utility. This article focuses on its application to matched group datasets.
 
-# Economic analysis of matched group datasets
-
-## Data 
-We must first import our data. In this example we will use a fake dataset.
+## Example dataset 
+First, we must first import our data. In this example we will use a fake dataset.
 
 ```{r}
 ds_tb <- make_fake_ds_two()

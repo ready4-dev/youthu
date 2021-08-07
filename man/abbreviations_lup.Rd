@@ -5,7 +5,7 @@
 \alias{abbreviations_lup}
 \title{Common abbreviations lookup table}
 \format{
-An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 501 rows and 3 columns.
+An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 503 rows and 3 columns.
 }
 \source{
 \url{https://doi.org/10.7910/DVN/2Y9VF9}
