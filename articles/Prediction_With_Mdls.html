@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">youthu</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9094</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9095</span>
       </span>
     </div>
 
@@ -106,11 +106,17 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ready4-dev.github.io/youthu/">youthu</a></span><span class="op">)</span></code></pre></div>
-<p>Note, this example uses fake data - it should should not be used to inform decision making.</p>
-<div id="identifying-suitable-transfer-to-utility-algorithms" class="section level2">
+<p>This vignette outlines a workflow for:</p>
+<ul>
+<li>Searching, selecting and retrieving transfer to utility models;</li>
+<li>Preparing a prediction dataset for use with a selected transfer to utility model; and</li>
+<li>Applying the selected transfer to utility model to a prediction dataset to predict Quality Adjusted Life Years (QALYs).</li>
+</ul>
+<p>The practical value of implementing such a workflow is discussed in the <a href="Economic_Analysis.html">economic analysis vignette</a> and <a href="https://www.medrxiv.org/content/10.1101/2021.07.07.21260129v2.full">a scientific manuscript</a>. Note, this example uses fake data - it should should not be used to inform decision making.</p>
+<div id="search-select-and-retrie-transfer-to-utility-models" class="section level2">
 <h2 class="hasAnchor">
-<a href="#identifying-suitable-transfer-to-utility-algorithms" class="anchor"></a>Identifying suitable transfer to utility algorithms</h2>
-<p>To identify datasets that contain transfer to utility models compatible with youthu (ie those developped with the <a href="https://ready4-dev.github.io/TTU/index.html">TTU package</a>), you can use the following command.</p>
+<a href="#search-select-and-retrie-transfer-to-utility-models" class="anchor"></a>Search, select and retrie transfer to utility models</h2>
+<p>To identify datasets that contain transfer to utility models compatible with youthu (ie those developped with the <a href="https://ready4-dev.github.io/TTU/index.html">TTU package</a>), you can use the <code>get_ttu_dv_dss</code> function. The function searches specified dataverses (in the below example, the <a href="https://dataverse.harvard.edu/dataverse/TTU">TTU dataverse</a>) for datasets containing output from the TTU package.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ttu_dv_dss_tb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_ttu_dv_dss.html">get_ttu_dv_dss</a></span><span class="op">(</span><span class="st">"TTU"</span><span class="op">)</span></code></pre></div>
 <p>The <code>ttu_dv_dss_tb</code> table summarises some pertinent details about each dataset containing TTU models found by the preceding command. These details include a link to any scientific summary (the “Article” column) associated with a dataset.</p>
@@ -129,9 +135,6 @@ Utility
 Predictors
 </th>
 <th style="text-align:left;">
-Dataset
-</th>
-<th style="text-align:left;">
 Article
 </th>
 </tr></thead>
@@ -144,9 +147,6 @@ AQoL-6D
 </td>
 <td style="text-align:left;">
 BADS total score , GAD7 total score , K6 total score , OASIS total score , PHQ9 total score , SCARED total score, SOFAS total score
-</td>
-<td style="text-align:left;">
-<a href="https://doi.org/10.7910/DVN/DKDIB0" class="uri">https://doi.org/10.7910/DVN/DKDIB0</a>
 </td>
 <td style="text-align:left;">
 <a href="https://doi.org/10.1101/2021.07.07.21260129" class="uri">https://doi.org/10.1101/2021.07.07.21260129</a>
@@ -451,10 +451,13 @@ Secondary Analysis B
                  mdl_nm_1L_chr <span class="op">=</span> <span class="st">"PHQ9_SOFAS_1_OLS_CLL"</span><span class="op">)</span></code></pre></div>
 <p>[1] “<a href="https://dataverse.harvard.edu/api/access/datafile/4880098" class="uri">https://dataverse.harvard.edu/api/access/datafile/4880098</a>”</p>
 </div>
-<div id="prepare-prediction-dataset" class="section level2">
+<div id="prepare-a-prediction-dataset-for-use-with-a-selected-transfer-to-utility-model" class="section level2">
 <h2 class="hasAnchor">
-<a href="#prepare-prediction-dataset" class="anchor"></a>Prepare prediction dataset</h2>
-<p>First import and inspect the dataset you will be using for prediction. In the below example we use fake data.</p>
+<a href="#prepare-a-prediction-dataset-for-use-with-a-selected-transfer-to-utility-model" class="anchor"></a>Prepare a prediction dataset for use with a selected transfer to utility model</h2>
+<div id="import-data" class="section level3">
+<h3 class="hasAnchor">
+<a href="#import-data" class="anchor"></a>Import data</h3>
+<p>You can now import and inspect the dataset you plan on using for prediction. In the below example we use fake data.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">data_tb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/make_fake_ds_one.html">make_fake_ds_one</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <table class="table  lightable-paper lightable-hover">
@@ -487,7 +490,7 @@ Participant_1
 Baseline
 </td>
 <td style="text-align:right;">
-2020-03-18
+2020-04-10
 </td>
 <td style="text-align:right;">
 7
@@ -504,7 +507,7 @@ Participant_10
 Baseline
 </td>
 <td style="text-align:right;">
-2020-03-31
+2020-01-10
 </td>
 <td style="text-align:right;">
 17
@@ -521,7 +524,7 @@ Participant_10
 Follow-up
 </td>
 <td style="text-align:right;">
-2020-06-26
+2020-04-15
 </td>
 <td style="text-align:right;">
 17
@@ -538,7 +541,7 @@ Participant_100
 Baseline
 </td>
 <td style="text-align:right;">
-2020-01-18
+2020-01-16
 </td>
 <td style="text-align:right;">
 0
@@ -555,7 +558,7 @@ Participant_1000
 Baseline
 </td>
 <td style="text-align:right;">
-2020-01-31
+2020-02-02
 </td>
 <td style="text-align:right;">
 0
@@ -572,7 +575,7 @@ Participant_1000
 Follow-up
 </td>
 <td style="text-align:right;">
-2020-04-06
+2020-05-02
 </td>
 <td style="text-align:right;">
 0
@@ -588,22 +591,115 @@ Follow-up
 </td>
 </tr></tfoot>
 </table>
+</div>
 <div id="confirm-dataset-can-be-used-as-a-prediction-dataset" class="section level3">
 <h3 class="hasAnchor">
 <a href="#confirm-dataset-can-be-used-as-a-prediction-dataset" class="anchor"></a>Confirm dataset can be used as a prediction dataset</h3>
-<p>The prediction dataset must contain variables that correspond to all the predictors of the model you intend to apply. The values of each predictor variable must conform to the corresponding parameter as described in the model predictor metadata, which can be accessed with a call to the <code>get_predictors_lup</code> function.</p>
+<p>The prediction dataset must contain variables that correspond to all the predictors of the model you intend to apply. The allowable range and required class of each predictor variable are described in the <code>min_val_dbl</code>, <code>max_val_dbl</code> and <code>class_chr</code> columns model predictors lookup table, which can be accessed with a call to the <code>get_predictors_lup</code> function.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/get_predictors_lup.html">get_predictors_lup</a></span><span class="op">(</span>mdls_lup <span class="op">=</span> <span class="va">mdls_lup</span>,
-                   mdl_nm_1L_chr <span class="op">=</span> <span class="st">"PHQ9_SOFAS_1_OLS_CLL"</span><span class="op">)</span></code></pre></div>
-<pre><code>## # A tibble: 2 x 9
-##   short_name_chr long_name_chr   min_val_dbl max_val_dbl class_chr increment_dbl
-##   &lt;chr&gt;          &lt;chr&gt;                 &lt;dbl&gt;       &lt;dbl&gt; &lt;chr&gt;             &lt;dbl&gt;
-## 1 PHQ9           PHQ9 total sco…           0          27 integer               1
-## 2 SOFAS          SOFAS total sc…           0         100 integer               1
-## # … with 3 more variables: class_fn_chr &lt;chr&gt;, mdl_scaling_dbl &lt;dbl&gt;,
-## #   covariate_lgl &lt;lgl&gt;</code></pre>
+<code class="sourceCode R"><span class="va">predictors_lup</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_predictors_lup.html">get_predictors_lup</a></span><span class="op">(</span>mdls_lup <span class="op">=</span> <span class="va">mdls_lup</span>,
+                                     mdl_nm_1L_chr <span class="op">=</span> <span class="st">"PHQ9_SOFAS_1_OLS_CLL"</span><span class="op">)</span></code></pre></div>
+<table class="table  lightable-paper lightable-hover">
+<caption>
+Model predictors lookup table
+</caption>
+<thead><tr>
+<th style="text-align:left;">
+short_name_chr
+</th>
+<th style="text-align:right;">
+long_name_chr
+</th>
+<th style="text-align:left;">
+min_val_dbl
+</th>
+<th style="text-align:right;">
+max_val_dbl
+</th>
+<th style="text-align:left;">
+class_chr
+</th>
+<th style="text-align:right;">
+increment_dbl
+</th>
+<th style="text-align:left;">
+class_fn_chr
+</th>
+<th style="text-align:right;">
+mdl_scaling_dbl
+</th>
+<th style="text-align:left;">
+covariate_lgl
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+PHQ9
+</td>
+<td style="text-align:right;">
+PHQ9 total score
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:right;">
+27
+</td>
+<td style="text-align:left;">
+integer
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+youthvars::youthvars_phq9
+</td>
+<td style="text-align:right;">
+0.01
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+SOFAS
+</td>
+<td style="text-align:right;">
+SOFAS total score
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:right;">
+100
+</td>
+<td style="text-align:left;">
+integer
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+youthvars::youthvars_sofas
+</td>
+<td style="text-align:right;">
+0.01
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+</tr>
+</tbody>
+<tfoot><tr>
+<td style="padding: 0; " colspan="100%">
+<sup></sup>
+</td>
+</tr></tfoot>
+</table>
 <p>The prediction dataset must also include both a unique client identifier variable and a measurement time-point identifier variable (which must be a <code class="sourceCode r">factor</code> with two levels). The dataset also needs to be in long format (ie where measures at different time-points for the same individual are stacked on top of each other in separate rows). We can confirm these conditions hold by creating a dataset metadata object using the <code>make_predn_metadata_ls</code> function. In creating the metadata object, the function checks that the dataset can be used in conjunction with the model specified at the <code>mdl_nm_1L_chr</code> argument. If the prediction dataset uses different variable names for the predictors to those specified in the <code class="sourceCode r">predictors_lup</code> lookup table, a named vector detailing the correspondence between the two sets of variable names needs to be passed to the <code>predr_vars_nms_chr</code> argument. Finally, if you wish to specify a preferred variable name to use for the predicted utility values when applying the model, you can do this by passing this name to the <code>utl_var_nm_1L_chr</code> argument.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">predn_ds_ls</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/make_predn_metadata_ls.html">make_predn_metadata_ls</a></span><span class="op">(</span><span class="va">data_tb</span>,
                                       id_var_nm_1L_chr <span class="op">=</span> <span class="st">"UID"</span>,
                                       msrmnt_date_var_nm_1L_chr <span class="op">=</span> <span class="st">"Date"</span>,
@@ -615,11 +711,14 @@ Follow-up
                                       mdl_nm_1L_chr <span class="op">=</span> <span class="st">"PHQ9_SOFAS_1_OLS_CLL"</span><span class="op">)</span></code></pre></div>
 </div>
 </div>
-<div id="predict-utility" class="section level2">
+<div id="apply-the-selected-transfer-to-utility-model-to-a-prediction-dataset-to-predict-quality-adjusted-life-years-qalys" class="section level2">
 <h2 class="hasAnchor">
-<a href="#predict-utility" class="anchor"></a>Predict utility</h2>
+<a href="#apply-the-selected-transfer-to-utility-model-to-a-prediction-dataset-to-predict-quality-adjusted-life-years-qalys" class="anchor"></a>Apply the selected transfer to utility model to a prediction dataset to predict Quality Adjusted Life Years (QALYs)</h2>
+<div id="predict-health-utility-at-baseline-and-follow-up-timepoints" class="section level3">
+<h3 class="hasAnchor">
+<a href="#predict-health-utility-at-baseline-and-follow-up-timepoints" class="anchor"></a>Predict health utility at baseline and follow-up timepoints</h3>
 <p>To generate utility predictions we use the <code class="sourceCode r">add_utl_predn</code> function. The function needs to be supplied with the prediction dataset (the value passed to argument <code>data_tb</code>) and the validated prediction metadata object we created in the previous step. By default the function chooses a constrained simulation approach, based on a table of model coefficients when making predictions. You can override this by adding additional arguments <code>new_data_is_1L_chr = "Predicted"</code>, <code>force_min_max_1L_lgl = T</code> and (if the source dataset makes available downloadable models) <code>make_from_tbl_1L_lgl = F</code>. However, before doing so it is strongly recommended that you consult the model catalogue (see above) to understand how such a decision may affect the validity of the predicted values that will be generated.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">data_tb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/add_utl_predn.html">add_utl_predn</a></span><span class="op">(</span><span class="va">data_tb</span>,
                          predn_ds_ls <span class="op">=</span> <span class="va">predn_ds_ls</span><span class="op">)</span></code></pre></div>
 <pre><code>## Joining, by = c("UID", "Timepoint")</code></pre>
@@ -656,7 +755,7 @@ Participant_1
 Baseline
 </td>
 <td style="text-align:right;">
-2020-03-18
+2020-04-10
 </td>
 <td style="text-align:right;">
 7
@@ -665,7 +764,7 @@ Baseline
 69
 </td>
 <td style="text-align:right;">
-0.9268923
+0.8498538
 </td>
 </tr>
 <tr>
@@ -676,7 +775,7 @@ Participant_10
 Baseline
 </td>
 <td style="text-align:right;">
-2020-03-31
+2020-01-10
 </td>
 <td style="text-align:right;">
 17
@@ -685,7 +784,7 @@ Baseline
 60
 </td>
 <td style="text-align:right;">
-0.2649848
+0.3088998
 </td>
 </tr>
 <tr>
@@ -696,7 +795,7 @@ Participant_10
 Follow-up
 </td>
 <td style="text-align:right;">
-2020-06-26
+2020-04-15
 </td>
 <td style="text-align:right;">
 17
@@ -705,7 +804,7 @@ Follow-up
 64
 </td>
 <td style="text-align:right;">
-0.5938655
+0.7298361
 </td>
 </tr>
 <tr>
@@ -716,7 +815,7 @@ Participant_100
 Baseline
 </td>
 <td style="text-align:right;">
-2020-01-18
+2020-01-16
 </td>
 <td style="text-align:right;">
 0
@@ -725,7 +824,7 @@ Baseline
 76
 </td>
 <td style="text-align:right;">
-0.9877980
+0.9281013
 </td>
 </tr>
 <tr>
@@ -736,7 +835,7 @@ Participant_1000
 Baseline
 </td>
 <td style="text-align:right;">
-2020-01-31
+2020-02-02
 </td>
 <td style="text-align:right;">
 0
@@ -745,7 +844,7 @@ Baseline
 71
 </td>
 <td style="text-align:right;">
-0.9993263
+0.8240187
 </td>
 </tr>
 <tr>
@@ -756,7 +855,7 @@ Participant_1000
 Follow-up
 </td>
 <td style="text-align:right;">
-2020-04-06
+2020-05-02
 </td>
 <td style="text-align:right;">
 0
@@ -765,7 +864,7 @@ Follow-up
 71
 </td>
 <td style="text-align:right;">
-0.9964280
+0.9511514
 </td>
 </tr>
 </tbody>
@@ -776,16 +875,16 @@ Follow-up
 </tr></tfoot>
 </table>
 <p>Our health utility predictions are now available for use and are summarised below.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">data_tb</span><span class="op">$</span><span class="va">AQoL6D_HU</span><span class="op">)</span></code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-## 0.06973 0.41901 0.62508 0.61761 0.82881 1.00000</code></pre>
+## 0.04494 0.42966 0.63788 0.62716 0.84099 1.00000</code></pre>
 </div>
-<div id="calculate-qalys" class="section level2">
-<h2 class="hasAnchor">
-<a href="#calculate-qalys" class="anchor"></a>Calculate QALYs</h2>
+<div id="calculate-qalys" class="section level3">
+<h3 class="hasAnchor">
+<a href="#calculate-qalys" class="anchor"></a>Calculate QALYs</h3>
 <p>The last step is to calculate Quality Adjusted Life Years, using a method assuming a linear rate of change between timepoints.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">data_tb</span> <span class="op">&lt;-</span> <span class="va">data_tb</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/add_qalys_to_ds.html">add_qalys_to_ds</a></span><span class="op">(</span>predn_ds_ls <span class="op">=</span> <span class="va">predn_ds_ls</span>,
                                        include_predrs_1L_lgl <span class="op">=</span> <span class="cn">F</span>,
                                        reshape_1L_lgl <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></code></pre></div>
@@ -831,7 +930,7 @@ Participant_1
 Baseline
 </td>
 <td style="text-align:right;">
-2020-03-18
+2020-04-10
 </td>
 <td style="text-align:right;">
 7
@@ -840,7 +939,7 @@ Baseline
 69
 </td>
 <td style="text-align:right;">
-0.9268923
+0.8498538
 </td>
 <td style="text-align:left;">
 0.0000000
@@ -860,7 +959,7 @@ Participant_10
 Baseline
 </td>
 <td style="text-align:right;">
-2020-03-31
+2020-01-10
 </td>
 <td style="text-align:right;">
 17
@@ -869,7 +968,7 @@ Baseline
 60
 </td>
 <td style="text-align:right;">
-0.2649848
+0.3088998
 </td>
 <td style="text-align:left;">
 0.0000000
@@ -889,7 +988,7 @@ Participant_10
 Follow-up
 </td>
 <td style="text-align:right;">
-2020-06-26
+2020-04-15
 </td>
 <td style="text-align:right;">
 17
@@ -898,16 +997,16 @@ Follow-up
 64
 </td>
 <td style="text-align:right;">
-0.5938655
+0.7298361
 </td>
 <td style="text-align:left;">
-0.3288807
+0.4209363
 </td>
 <td style="text-align:right;">
-87d 0H 0M 0S
+96d 0H 0M 0S
 </td>
 <td style="text-align:right;">
-0.1022861
+0.1365074
 </td>
 </tr>
 <tr>
@@ -918,7 +1017,7 @@ Participant_100
 Baseline
 </td>
 <td style="text-align:right;">
-2020-01-18
+2020-01-16
 </td>
 <td style="text-align:right;">
 0
@@ -927,7 +1026,7 @@ Baseline
 76
 </td>
 <td style="text-align:right;">
-0.9877980
+0.9281013
 </td>
 <td style="text-align:left;">
 0.0000000
@@ -947,7 +1046,7 @@ Participant_1000
 Baseline
 </td>
 <td style="text-align:right;">
-2020-01-31
+2020-02-02
 </td>
 <td style="text-align:right;">
 0
@@ -956,7 +1055,7 @@ Baseline
 71
 </td>
 <td style="text-align:right;">
-0.9993263
+0.8240187
 </td>
 <td style="text-align:left;">
 0.0000000
@@ -976,7 +1075,7 @@ Participant_1000
 Follow-up
 </td>
 <td style="text-align:right;">
-2020-04-06
+2020-05-02
 </td>
 <td style="text-align:right;">
 0
@@ -985,16 +1084,16 @@ Follow-up
 71
 </td>
 <td style="text-align:right;">
-0.9964280
+0.9511514
 </td>
 <td style="text-align:left;">
--0.0028983
+0.1271327
 </td>
 <td style="text-align:right;">
-66d 0H 0M 0S
+90d 0H 0M 0S
 </td>
 <td style="text-align:right;">
-0.1803146
+0.2187068
 </td>
 </tr>
 </tbody>
@@ -1004,6 +1103,7 @@ Follow-up
 </td>
 </tr></tfoot>
 </table>
+</div>
 </div>
   </div>
 

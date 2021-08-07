@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">youthu</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9094</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9095</span>
       </span>
     </div>
 
@@ -106,23 +106,16 @@
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ready4-dev.github.io/youthu/">youthu</a></span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span></code></pre></div>
-<p>Note, this example is illustrated with fake data. It should not be used to inform decision-making.</p>
-<div id="introduction" class="section level1">
-<h1 class="hasAnchor">
-<a href="#introduction" class="anchor"></a>Introduction</h1>
+<p>This vignette illustrates the rationale for and practical decision-making utility of youthu’s <a href="Prediction_With_Mdls.html">QALYs prediction workflow</a>. Note, this example is illustrated with fake data and should not be used to inform decision-making.</p>
 <div id="motivation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#motivation" class="anchor"></a>Motivation</h2>
 <p>The main motivation behind the youthu package is to extend the types of economic analysis that can be undertaken with both single group (e.g. pilot study, health service records) and matched groups (e.g. trial) longitudinal datasets that do not include measures of health utility. This article focuses on its application to matched group datasets.</p>
 </div>
-</div>
-<div id="economic-analysis-of-matched-group-datasets" class="section level1">
-<h1 class="hasAnchor">
-<a href="#economic-analysis-of-matched-group-datasets" class="anchor"></a>Economic analysis of matched group datasets</h1>
-<div id="data" class="section level2">
+<div id="example-dataset" class="section level2">
 <h2 class="hasAnchor">
-<a href="#data" class="anchor"></a>Data</h2>
-<p>We must first import our data. In this example we will use a fake dataset.</p>
+<a href="#example-dataset" class="anchor"></a>Example dataset</h2>
+<p>First, we must first import our data. In this example we will use a fake dataset.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ds_tb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/make_fake_ds_two.html">make_fake_ds_two</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <pre><code>## Joining, by = c("fkClientID", "study_arm_chr")</code></pre>
@@ -169,7 +162,7 @@ Participant_20
 Baseline
 </td>
 <td style="text-align:right;">
-2020-12-07
+2020-12-31
 </td>
 <td style="text-align:right;">
 0S
@@ -198,7 +191,7 @@ Participant_593
 Baseline
 </td>
 <td style="text-align:right;">
-2020-10-14
+2020-11-07
 </td>
 <td style="text-align:right;">
 0S
@@ -227,7 +220,7 @@ Participant_593
 Follow-up
 </td>
 <td style="text-align:right;">
-2021-04-07
+2021-05-01
 </td>
 <td style="text-align:right;">
 175d 0H 0M 0S
@@ -256,7 +249,7 @@ Participant_20
 Follow-up
 </td>
 <td style="text-align:right;">
-2021-06-03
+2021-06-27
 </td>
 <td style="text-align:right;">
 178d 0H 0M 0S
@@ -285,7 +278,7 @@ Participant_259
 Baseline
 </td>
 <td style="text-align:right;">
-2021-02-01
+2021-02-25
 </td>
 <td style="text-align:right;">
 0S
@@ -314,7 +307,7 @@ Participant_962
 Baseline
 </td>
 <td style="text-align:right;">
-2021-03-16
+2021-04-09
 </td>
 <td style="text-align:right;">
 0S
@@ -523,10 +516,10 @@ Control
 243
 </td>
 <td style="text-align:right;">
-2020-09-22
+2020-10-16
 </td>
 <td style="text-align:right;">
-2021-03-18
+2021-04-11
 </td>
 <td style="text-align:right;">
 0S
@@ -594,10 +587,10 @@ Control
 191
 </td>
 <td style="text-align:right;">
-2020-11-18
+2020-12-12
 </td>
 <td style="text-align:right;">
-2021-05-21
+2021-06-14
 </td>
 <td style="text-align:right;">
 0S
@@ -665,10 +658,10 @@ Intervention
 230
 </td>
 <td style="text-align:right;">
-2020-10-13
+2020-11-06
 </td>
 <td style="text-align:right;">
-2021-04-10
+2021-05-04
 </td>
 <td style="text-align:right;">
 0S
@@ -736,10 +729,10 @@ Intervention
 115
 </td>
 <td style="text-align:right;">
-2020-11-11
+2020-12-05
 </td>
 <td style="text-align:right;">
-2021-05-12
+2021-06-05
 </td>
 <td style="text-align:right;">
 0S
@@ -807,10 +800,10 @@ Intervention
 183
 </td>
 <td style="text-align:right;">
-2021-02-12
+2021-03-08
 </td>
 <td style="text-align:right;">
-2021-08-17
+2021-09-10
 </td>
 <td style="text-align:right;">
 0S
@@ -878,10 +871,10 @@ Intervention
 219
 </td>
 <td style="text-align:right;">
-2021-03-10
+2021-04-03
 </td>
 <td style="text-align:right;">
-2021-09-05
+2021-09-29
 </td>
 <td style="text-align:right;">
 0S
@@ -963,7 +956,6 @@ Intervention
                     graph <span class="op">=</span> <span class="st">"ggplot2"</span>,
           theme <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_light</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="Economic_Analysis_files/figure-html/unnamed-chunk-13-1.png" width="576"></p>
-</div>
 </div>
 </div>
   </div>
