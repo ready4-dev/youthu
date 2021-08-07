@@ -1,3 +1,11 @@
+home:
+  links:
+  - text: User manual (PDF)
+    href: https://github.com/ready4-dev/youthu/files/6950014/youthu_0.0.0.9095_user.pdf
+  - text: Developer version of usual manual (PDF)
+    href: https://github.com/ready4-dev/youthu/files/6950013/youthu_0.0.0.9095_developer.pdf
+  - text: Project website
+    href: https://www.ready4-dev.com/
 development:
   mode: auto
 reference:
