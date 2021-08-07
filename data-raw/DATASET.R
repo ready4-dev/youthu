@@ -128,8 +128,8 @@ ready4fun::write_and_doc_fn_fls(fns_dmt_tb,
 # }
 # devtools::build_vignettes()
 #
-ready4fun::write_links_for_website(user_manual_url_1L_chr = "https://github.com/ready4-dev/youthu/releases/download/v0.0.0.9065/youthu_user_0.0.0.9065.pdf",
-                                   developer_manual_url_1L_chr = "https://github.com/ready4-dev/youthu/releases/download/v0.0.0.9065/youthu_developer_0.0.0.9065.pdf",
+ready4fun::write_links_for_website(user_manual_url_1L_chr = "https://github.com/ready4-dev/youthu/files/6950014/youthu_0.0.0.9095_user.pdf",
+                                   developer_manual_url_1L_chr = "https://github.com/ready4-dev/youthu/files/6950013/youthu_0.0.0.9095_developer.pdf",
                                    project_website_url_1L_chr = "https://www.ready4-dev.com/")
 #
 
