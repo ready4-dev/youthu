@@ -10,7 +10,6 @@ params:
 ---
 
 ```{r message=FALSE}
-library(magrittr)
 library(youthu)
 ```
 This vignette outlines a workflow for:
@@ -21,7 +20,7 @@ This vignette outlines a workflow for:
 
 The practical value of implementing such a workflow is discussed in the [economic analysis vignette](Economic_Analysis.html) and [a scientific manuscript](https://www.medrxiv.org/content/10.1101/2021.07.07.21260129v2.full). Note, this example uses fake data - it should should not be used to inform decision making.
 
-## Search, select and retrie transfer to utility models
+## Search, select and retrieve transfer to utility models
 To identify datasets that contain transfer to utility models compatible with youthu (ie those developped with the [TTU package](https://ready4-dev.github.io/TTU/index.html)), you can use the `get_ttu_dv_dss` function. The function searches specified dataverses (in the below example, the [TTU dataverse](https://dataverse.harvard.edu/dataverse/TTU)) for datasets containing output from the TTU package.
 
 ```{r}
@@ -94,7 +93,7 @@ data_tb %>%
 ```
 
 ### Confirm dataset can be used as a prediction dataset
-The prediction dataset must contain variables that correspond to all the predictors of the model you intend to apply. The allowable range and required class of each predictor variable are described in the `min_val_dbl`,	`max_val_dbl` and	`class_chr` columns model predictors lookup table, which can be accessed with a call to the `get_predictors_lup` function.
+The prediction dataset must contain variables that correspond to all the predictors of the model you intend to apply. The allowable range and required class of each predictor variable are described in the `min_val_dbl`,	`max_val_dbl` and	`class_chr` columns of the model predictors lookup table, which can be accessed with a call to the `get_predictors_lup` function.
 
 ```{r}
 predictors_lup <- get_predictors_lup(mdls_lup = mdls_lup,
@@ -126,13 +125,15 @@ predn_ds_ls <- make_predn_metadata_ls(data_tb,
 ## Apply the selected transfer to utility model to a prediction dataset to predict Quality Adjusted Life Years (QALYs)
 
 ### Predict health utility at baseline and follow-up timepoints
-To generate utility predictions we use the `add_utl_predn`{.R} function. The function needs to be supplied with the prediction dataset (the value passed to argument `data_tb`) and the validated prediction metadata object we created in the previous step. By default the function chooses a constrained simulation approach, based on a table of model coefficients when making predictions. You can override this by adding additional arguments `new_data_is_1L_chr = "Predicted"`, `force_min_max_1L_lgl = T` and (if the source dataset makes available downloadable models) `make_from_tbl_1L_lgl = F`. However, before doing so it is strongly recommended that you consult the model catalogue (see above) to understand how such a decision may affect the validity of the predicted values that will be generated.
-
+To generate utility predictions we use the `add_utl_predn`{.R} function. The function needs to be supplied with the prediction dataset (the value passed to argument `data_tb`) and the validated prediction metadata object we created in the previous step. 
 ```{r }
 data_tb <- add_utl_predn(data_tb,
                          predn_ds_ls = predn_ds_ls)
 
 ```
+By default the `add_utl_predn`{.R} function samples model parameter values based on a table of model coefficients when making predictions and constrains predictions to an allowed range. You can override these defaults by adding additional arguments `new_data_is_1L_chr = "Predicted"` (which uses mean parameter values), `force_min_max_1L_lgl = F` (removes range constraint) and (if the source dataset makes available downloadable model objects) `make_from_tbl_1L_lgl = F`. These settings will produce different predictions. It is strongly recommended that you consult the model catalogue (see above) to understand how such decisions may affect the validity of the predicted values that will be generated.
+
+
 ```{r updtb, echo = F, tab.cap='Prediction dataset with predicted utilities', tab.id = 'updtb', results="asis"}
 data_tb %>% 
   head() %>%
