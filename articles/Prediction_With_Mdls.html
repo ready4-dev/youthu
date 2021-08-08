@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">youthu</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9095</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.0.0.9096</span>
       </span>
     </div>
 
@@ -104,8 +104,7 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ready4-dev.github.io/youthu/">youthu</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ready4-dev.github.io/youthu/">youthu</a></span><span class="op">)</span></code></pre></div>
 <p>This vignette outlines a workflow for:</p>
 <ul>
 <li>Searching, selecting and retrieving transfer to utility models;</li>
@@ -113,9 +112,9 @@
 <li>Applying the selected transfer to utility model to a prediction dataset to predict Quality Adjusted Life Years (QALYs).</li>
 </ul>
 <p>The practical value of implementing such a workflow is discussed in the <a href="Economic_Analysis.html">economic analysis vignette</a> and <a href="https://www.medrxiv.org/content/10.1101/2021.07.07.21260129v2.full">a scientific manuscript</a>. Note, this example uses fake data - it should should not be used to inform decision making.</p>
-<div id="search-select-and-retrie-transfer-to-utility-models" class="section level2">
+<div id="search-select-and-retrieve-transfer-to-utility-models" class="section level2">
 <h2 class="hasAnchor">
-<a href="#search-select-and-retrie-transfer-to-utility-models" class="anchor"></a>Search, select and retrie transfer to utility models</h2>
+<a href="#search-select-and-retrieve-transfer-to-utility-models" class="anchor"></a>Search, select and retrieve transfer to utility models</h2>
 <p>To identify datasets that contain transfer to utility models compatible with youthu (ie those developped with the <a href="https://ready4-dev.github.io/TTU/index.html">TTU package</a>), you can use the <code>get_ttu_dv_dss</code> function. The function searches specified dataverses (in the below example, the <a href="https://dataverse.harvard.edu/dataverse/TTU">TTU dataverse</a>) for datasets containing output from the TTU package.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ttu_dv_dss_tb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_ttu_dv_dss.html">get_ttu_dv_dss</a></span><span class="op">(</span><span class="st">"TTU"</span><span class="op">)</span></code></pre></div>
@@ -595,7 +594,7 @@ Follow-up
 <div id="confirm-dataset-can-be-used-as-a-prediction-dataset" class="section level3">
 <h3 class="hasAnchor">
 <a href="#confirm-dataset-can-be-used-as-a-prediction-dataset" class="anchor"></a>Confirm dataset can be used as a prediction dataset</h3>
-<p>The prediction dataset must contain variables that correspond to all the predictors of the model you intend to apply. The allowable range and required class of each predictor variable are described in the <code>min_val_dbl</code>, <code>max_val_dbl</code> and <code>class_chr</code> columns model predictors lookup table, which can be accessed with a call to the <code>get_predictors_lup</code> function.</p>
+<p>The prediction dataset must contain variables that correspond to all the predictors of the model you intend to apply. The allowable range and required class of each predictor variable are described in the <code>min_val_dbl</code>, <code>max_val_dbl</code> and <code>class_chr</code> columns of the model predictors lookup table, which can be accessed with a call to the <code>get_predictors_lup</code> function.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">predictors_lup</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_predictors_lup.html">get_predictors_lup</a></span><span class="op">(</span>mdls_lup <span class="op">=</span> <span class="va">mdls_lup</span>,
                                      mdl_nm_1L_chr <span class="op">=</span> <span class="st">"PHQ9_SOFAS_1_OLS_CLL"</span><span class="op">)</span></code></pre></div>
@@ -717,11 +716,12 @@ TRUE
 <div id="predict-health-utility-at-baseline-and-follow-up-timepoints" class="section level3">
 <h3 class="hasAnchor">
 <a href="#predict-health-utility-at-baseline-and-follow-up-timepoints" class="anchor"></a>Predict health utility at baseline and follow-up timepoints</h3>
-<p>To generate utility predictions we use the <code class="sourceCode r">add_utl_predn</code> function. The function needs to be supplied with the prediction dataset (the value passed to argument <code>data_tb</code>) and the validated prediction metadata object we created in the previous step. By default the function chooses a constrained simulation approach, based on a table of model coefficients when making predictions. You can override this by adding additional arguments <code>new_data_is_1L_chr = "Predicted"</code>, <code>force_min_max_1L_lgl = T</code> and (if the source dataset makes available downloadable models) <code>make_from_tbl_1L_lgl = F</code>. However, before doing so it is strongly recommended that you consult the model catalogue (see above) to understand how such a decision may affect the validity of the predicted values that will be generated.</p>
+<p>To generate utility predictions we use the <code class="sourceCode r">add_utl_predn</code> function. The function needs to be supplied with the prediction dataset (the value passed to argument <code>data_tb</code>) and the validated prediction metadata object we created in the previous step.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">data_tb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/add_utl_predn.html">add_utl_predn</a></span><span class="op">(</span><span class="va">data_tb</span>,
                          predn_ds_ls <span class="op">=</span> <span class="va">predn_ds_ls</span><span class="op">)</span></code></pre></div>
 <pre><code>## Joining, by = c("UID", "Timepoint")</code></pre>
+<p>By default the <code class="sourceCode r">add_utl_predn</code> function samples model parameter values based on a table of model coefficients when making predictions and constrains predictions to an allowed range. You can override these defaults by adding additional arguments <code>new_data_is_1L_chr = "Predicted"</code> (which uses mean parameter values), <code>force_min_max_1L_lgl = F</code> (removes range constraint) and (if the source dataset makes available downloadable model objects) <code>make_from_tbl_1L_lgl = F</code>. These settings will produce different predictions. It is strongly recommended that you consult the model catalogue (see above) to understand how such decisions may affect the validity of the predicted values that will be generated.</p>
 <table class="table  lightable-paper lightable-hover">
 <caption>
 Prediction dataset with predicted utilities
@@ -764,7 +764,7 @@ Baseline
 69
 </td>
 <td style="text-align:right;">
-0.9982499
+0.8380464
 </td>
 </tr>
 <tr>
@@ -784,7 +784,7 @@ Baseline
 60
 </td>
 <td style="text-align:right;">
-0.4908590
+0.2946146
 </td>
 </tr>
 <tr>
@@ -804,7 +804,7 @@ Follow-up
 64
 </td>
 <td style="text-align:right;">
-0.7829852
+0.4595013
 </td>
 </tr>
 <tr>
@@ -824,7 +824,7 @@ Baseline
 76
 </td>
 <td style="text-align:right;">
-0.9460952
+0.6011129
 </td>
 </tr>
 <tr>
@@ -844,7 +844,7 @@ Baseline
 71
 </td>
 <td style="text-align:right;">
-0.9674503
+0.9728644
 </td>
 </tr>
 <tr>
@@ -864,7 +864,7 @@ Follow-up
 71
 </td>
 <td style="text-align:right;">
-0.9934186
+0.9637061
 </td>
 </tr>
 </tbody>
@@ -878,7 +878,7 @@ Follow-up
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">data_tb</span><span class="op">$</span><span class="va">AQoL6D_HU</span><span class="op">)</span></code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-## 0.07016 0.43684 0.63641 0.62804 0.83353 1.00000</code></pre>
+## 0.05832 0.42445 0.63202 0.61987 0.82746 1.00000</code></pre>
 </div>
 <div id="calculate-qalys" class="section level3">
 <h3 class="hasAnchor">
@@ -939,7 +939,7 @@ Baseline
 69
 </td>
 <td style="text-align:right;">
-0.9982499
+0.8380464
 </td>
 <td style="text-align:left;">
 0.0000000
@@ -968,7 +968,7 @@ Baseline
 60
 </td>
 <td style="text-align:right;">
-0.4908590
+0.2946146
 </td>
 <td style="text-align:left;">
 0.0000000
@@ -997,16 +997,16 @@ Follow-up
 64
 </td>
 <td style="text-align:right;">
-0.7829852
+0.4595013
 </td>
 <td style="text-align:left;">
-0.2921262
+0.1648867
 </td>
 <td style="text-align:right;">
 96d 0H 0M 0S
 </td>
 <td style="text-align:right;">
-0.1674046
+0.0991035
 </td>
 </tr>
 <tr>
@@ -1026,7 +1026,7 @@ Baseline
 76
 </td>
 <td style="text-align:right;">
-0.9460952
+0.6011129
 </td>
 <td style="text-align:left;">
 0.0000000
@@ -1055,7 +1055,7 @@ Baseline
 71
 </td>
 <td style="text-align:right;">
-0.9674503
+0.9728644
 </td>
 <td style="text-align:left;">
 0.0000000
@@ -1084,16 +1084,16 @@ Follow-up
 71
 </td>
 <td style="text-align:right;">
-0.9934186
+0.9637061
 </td>
 <td style="text-align:left;">
-0.0259683
+-0.0091583
 </td>
 <td style="text-align:right;">
 90d 0H 0M 0S
 </td>
 <td style="text-align:right;">
-0.2415855
+0.2385918
 </td>
 </tr>
 </tbody>
