@@ -2,13 +2,13 @@
 % Please edit documentation in R/fn_get.R
 \name{get_predictors_lup}
 \alias{get_predictors_lup}
-\title{Get predictors}
+\title{Get predictors lookup table}
 \usage{
 get_predictors_lup(
   mdl_meta_data_ls = NULL,
   mdls_lup = NULL,
   mdl_nm_1L_chr = NULL,
-  outp_is_abbrvs_tb = F,
+  outp_is_abbrs_tb = F,
   server_1L_chr = "dataverse.harvard.edu",
   key_1L_chr = NULL
 )
@@ -20,7 +20,7 @@ get_predictors_lup(
 
 \item{mdl_nm_1L_chr}{Model name (a character vector of length one), Default: NULL}
 
-\item{outp_is_abbrvs_tb}{Output is abbrvs (a tibble), Default: F}
+\item{outp_is_abbrs_tb}{Output is abbreviations (a tibble), Default: F}
 
 \item{server_1L_chr}{Server (a character vector of length one), Default: 'dataverse.harvard.edu'}
 

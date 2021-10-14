@@ -10,7 +10,6 @@
 #' @return Dataset (a tibble)
 #' @rdname make_balanced_fake_ds
 #' @export 
-
 #' @keywords internal
 make_balanced_fake_ds <- function (ds_tb, match_on_vars_chr, id_var_nm_1L_chr = "UID_chr", 
     round_var_nm_1L_chr = "Timepoint_chr", timepoint_bl_val_1L_chr = "Baseline", 
@@ -42,8 +41,8 @@ make_costs_vec_from_gamma_dstr <- function (n_int, costs_mean_dbl, costs_sd_dbl)
     costs_dbl <- stats::rgamma(n_int, shape = shape_1L_dbl, scale = scale_1L_dbl)
     return(costs_dbl)
 }
-#' Make cost efns summary
-#' @description make_cst_efns_smry() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make cost efns summary. The function returns Summary (a double vector).
+#' Make cost effectiveness summary
+#' @description make_cst_efcn_smry() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make cost effectiveness summary. The function returns Summary (a double vector).
 #' @param ds_tb Dataset (a tibble)
 #' @param idxs_int Indices (an integer vector)
 #' @param change_types_chr Change types (a character vector), Default: 'dbl'
@@ -57,7 +56,7 @@ make_costs_vec_from_gamma_dstr <- function (n_int, costs_mean_dbl, costs_sd_dbl)
 #' @param cmprsn_var_nm_1L_chr Comparison variable name (a character vector of length one), Default: 'study_arm_chr'
 #' @param round_fup_val_1L_chr Round follow-up value (a character vector of length one), Default: 'Follow-up'
 #' @return Summary (a double vector)
-#' @rdname make_cst_efns_smry
+#' @rdname make_cst_efcn_smry
 #' @export 
 #' @importFrom tibble tibble
 #' @importFrom tidyselect all_of
@@ -67,7 +66,7 @@ make_costs_vec_from_gamma_dstr <- function (n_int, costs_mean_dbl, costs_sd_dbl)
 #' @importFrom ready4fun get_from_lup_obj
 #' @importFrom tidyr pivot_wider
 #' @keywords internal
-make_cst_efns_smry <- function (ds_tb, idxs_int, change_types_chr = "dbl", benefits_pfx_1L_chr = "qalys_dbl", 
+make_cst_efcn_smry <- function (ds_tb, idxs_int, change_types_chr = "dbl", benefits_pfx_1L_chr = "qalys_dbl", 
     benefits_var_nm_1L_chr = "qalys", costs_pfx_1L_chr = "costs_dbl", 
     costs_var_nm_1L_chr = "costs", change_sfx_1L_chr = "change", 
     change_vars_chr = NA_character_, cmprsn_groups_chr = c("Intervention", 
@@ -186,7 +185,6 @@ make_fake_ds_two <- function ()
 #' @return Updated dataset (a tibble)
 #' @rdname make_fake_trial_ds
 #' @export 
-
 #' @keywords internal
 make_fake_trial_ds <- function (ds_tb, id_var_nm_1L_chr = "fkClientID", round_var_nm_1L_chr = "round", 
     round_lvls_chr = c("Baseline", "Follow-up"), match_on_vars_chr, 
@@ -235,7 +233,7 @@ make_hlth_ec_smry <- function (ds_tb, predn_ds_ls, wtp_dbl = 50000, bootstrap_it
         predn_ds_ls$ds_ls$utl_var_nm_1L_chr)
     change_types_chr <- rep("dbl", length(change_vars_chr))
     costs_pfx_1L_chr <- predn_ds_ls$ds_ls$costs_var_nm_1L_chr
-    bootstraps_ls <- boot::boot(ds_tb, make_cst_efns_smry, R = bootstrap_iters_1L_int, 
+    bootstraps_ls <- boot::boot(ds_tb, make_cst_efcn_smry, R = bootstrap_iters_1L_int, 
         benefits_pfx_1L_chr = benefits_pfx_1L_chr, costs_pfx_1L_chr = costs_pfx_1L_chr, 
         change_vars_chr = change_vars_chr, change_sfx_1L_chr = change_sfx_1L_chr, 
         change_types_chr = change_types_chr, cmprsn_groups_chr = cmprsn_groups_chr, 
@@ -319,7 +317,7 @@ make_matched_ds_spine <- function (ds_tb, round_var_nm_1L_chr = "Timepoint_chr",
         dplyr::arrange(match_idx_int)
     return(matched_ds_tb)
 }
-#' Make prediction metadata
+#' Make prediction metadata list
 #' @description make_predn_metadata_ls() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make prediction metadata list. The function returns Prediction metadata (a list).
 #' @param data_tb Data (a tibble)
 #' @param cmprsn_groups_chr Comparison groups (a character vector), Default: NULL
@@ -359,7 +357,7 @@ make_predn_metadata_ls <- function (data_tb, cmprsn_groups_chr = NULL, cmprsn_va
             vec_nms_as_new_1L_lgl = T)
     }
     predictors_lup <- get_predictors_lup(mdl_meta_data_ls = mdl_meta_data_ls, 
-        mdls_lup = mdls_lup, mdl_nm_1L_chr = mdl_nm_1L_chr, outp_is_abbrvs_tb = F, 
+        mdls_lup = mdls_lup, mdl_nm_1L_chr = mdl_nm_1L_chr, outp_is_abbrs_tb = F, 
         server_1L_chr = server_1L_chr, key_1L_chr = key_1L_chr)
     data_tb <- data_tb %>% TTU::transform_mdl_vars_with_clss(predictors_lup = predictors_lup)
     purrr::walk(predictors_lup$short_name_chr, ~{

@@ -2,7 +2,7 @@
 % Please edit documentation in R/fn_make.R
 \name{make_predn_metadata_ls}
 \alias{make_predn_metadata_ls}
-\title{Make prediction metadata}
+\title{Make prediction metadata list}
 \usage{
 make_predn_metadata_ls(
   data_tb,

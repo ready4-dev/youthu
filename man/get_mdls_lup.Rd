@@ -2,7 +2,7 @@
 % Please edit documentation in R/fn_get.R
 \name{get_mdls_lup}
 \alias{get_mdls_lup}
-\title{Get models}
+\title{Get models lookup table}
 \usage{
 get_mdls_lup(
   ttu_dv_dss_tb = NULL,
@@ -14,13 +14,13 @@ get_mdls_lup(
 )
 }
 \arguments{
-\item{ttu_dv_dss_tb}{Ttu dataverse datasets (a tibble), Default: NULL}
+\item{ttu_dv_dss_tb}{Transfer to utility algorithm dataverse datasets (a tibble), Default: NULL}
 
 \item{mdl_predrs_in_ds_chr}{Model predictors in dataset (a character vector), Default: NULL}
 
 \item{utility_type_chr}{Utility type (a character vector), Default: NULL}
 
-\item{ttu_dv_nms_chr}{Ttu dataverse names (a character vector), Default: 'TTU'}
+\item{ttu_dv_nms_chr}{Transfer to utility algorithm dataverse names (a character vector), Default: 'TTU'}
 
 \item{server_1L_chr}{Server (a character vector of length one), Default: 'dataverse.harvard.edu'}
 

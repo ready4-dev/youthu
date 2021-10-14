@@ -19,7 +19,7 @@ make_balanced_fake_ds <- function(ds_tb,
                         match_on_vars_chr = match_on_vars_chr)
     return(ds_tb)
 }
-make_cst_efns_smry <- function(ds_tb,
+make_cst_efcn_smry <- function(ds_tb,
                          idxs_int,
                          change_types_chr = "dbl",
                          benefits_pfx_1L_chr = "qalys_dbl",
@@ -186,7 +186,7 @@ make_hlth_ec_smry <- function(ds_tb,
     change_types_chr <- rep("dbl",length(change_vars_chr))
     costs_pfx_1L_chr <- predn_ds_ls$ds_ls$costs_var_nm_1L_chr
     bootstraps_ls <- boot::boot(ds_tb,
-                                make_cst_efns_smry,
+                                make_cst_efcn_smry,
                                 R = bootstrap_iters_1L_int,
                                 benefits_pfx_1L_chr = benefits_pfx_1L_chr,
                                 costs_pfx_1L_chr = costs_pfx_1L_chr,
@@ -282,7 +282,7 @@ make_predn_metadata_ls <- function(data_tb,
     predictors_lup <- get_predictors_lup(mdl_meta_data_ls = mdl_meta_data_ls,
                                         mdls_lup = mdls_lup,
                                         mdl_nm_1L_chr = mdl_nm_1L_chr,
-                                        outp_is_abbrvs_tb = F,
+                                        outp_is_abbrs_tb = F,
                                         server_1L_chr = server_1L_chr,
                                         key_1L_chr = key_1L_chr)
     data_tb <- data_tb %>%

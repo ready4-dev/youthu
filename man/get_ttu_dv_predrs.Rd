@@ -2,7 +2,7 @@
 % Please edit documentation in R/fn_get.R
 \name{get_ttu_dv_predrs}
 \alias{get_ttu_dv_predrs}
-\title{Get ttu dataverse predictors}
+\title{Get transfer to utility algorithm dataverse predictors}
 \usage{
 get_ttu_dv_predrs(
   ttu_dv_dss_tb = NULL,
@@ -12,9 +12,9 @@ get_ttu_dv_predrs(
 )
 }
 \arguments{
-\item{ttu_dv_dss_tb}{Ttu dataverse datasets (a tibble), Default: NULL}
+\item{ttu_dv_dss_tb}{Transfer to utility algorithm dataverse datasets (a tibble), Default: NULL}
 
-\item{ttu_dv_nms_chr}{Ttu dataverse names (a character vector), Default: 'TTU'}
+\item{ttu_dv_nms_chr}{Transfer to utility algorithm dataverse names (a character vector), Default: 'TTU'}
 
 \item{server_1L_chr}{Server (a character vector of length one), Default: 'dataverse.harvard.edu'}
 
@@ -24,6 +24,6 @@ get_ttu_dv_predrs(
 Predictors (a character vector)
 }
 \description{
-get_ttu_dv_predrs() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get ttu dataverse predictors. Function argument ttu_dv_dss_tb specifies the where to look for the required object. The function returns Predictors (a character vector).
+get_ttu_dv_predrs() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get transfer to utility algorithm dataverse predictors. Function argument ttu_dv_dss_tb specifies the where to look for the required object. The function returns Predictors (a character vector).
 }
 \keyword{internal}

@@ -2,7 +2,7 @@
 % Please edit documentation in R/fn_get.R
 \name{get_tfmn_from_lup}
 \alias{get_tfmn_from_lup}
-\title{Get transformation from}
+\title{Get transformation from lookup table}
 \usage{
 get_tfmn_from_lup(mdl_nm_1L_chr, mdls_lup = NULL)
 }

@@ -218,7 +218,7 @@ get_model <- function(mdls_lup,
 get_predictors_lup <- function(mdl_meta_data_ls = NULL,
                                mdls_lup = NULL,
                                mdl_nm_1L_chr = NULL,
-                               outp_is_abbrvs_tb = F,
+                               outp_is_abbrs_tb = F,
                                server_1L_chr = "dataverse.harvard.edu",
                                key_1L_chr = NULL){
   if(is.null(mdl_meta_data_ls))
@@ -235,7 +235,7 @@ get_predictors_lup <- function(mdl_meta_data_ls = NULL,
                                 target_var_nm_1L_chr = "predrs_ls",
                                 evaluate_lgl = F) %>% purrr::flatten_chr()))
   }
-  if(outp_is_abbrvs_tb){
+  if(outp_is_abbrs_tb){
     predictors_tb <- predictors_tb %>%
       dplyr::select(short_name_chr, long_name_chr) %>%
       dplyr::rename(Variable = short_name_chr,

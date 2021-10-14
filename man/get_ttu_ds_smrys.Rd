@@ -2,7 +2,7 @@
 % Please edit documentation in R/fn_get.R
 \name{get_ttu_ds_smrys}
 \alias{get_ttu_ds_smrys}
-\title{Get ttu dataset summarys}
+\title{Get transfer to utility algorithm dataset summarys}
 \usage{
 get_ttu_ds_smrys(
   ttu_dv_nm_1L_chr = "TTU",
@@ -12,7 +12,7 @@ get_ttu_ds_smrys(
 )
 }
 \arguments{
-\item{ttu_dv_nm_1L_chr}{Ttu dataverse name (a character vector of length one), Default: 'TTU'}
+\item{ttu_dv_nm_1L_chr}{Transfer to utility algorithm dataverse name (a character vector of length one), Default: 'TTU'}
 
 \item{server_1L_chr}{Server (a character vector of length one), Default: 'dataverse.harvard.edu'}
 
@@ -24,6 +24,6 @@ get_ttu_ds_smrys(
 Dataverse datasets model summarys (a list)
 }
 \description{
-get_ttu_ds_smrys() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get ttu dataset summarys. Function argument ttu_dv_nm_1L_chr specifies the where to look for the required object. The function returns Dataverse datasets model summarys (a list).
+get_ttu_ds_smrys() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get transfer to utility algorithm dataset summarys. Function argument ttu_dv_nm_1L_chr specifies the where to look for the required object. The function returns Dataverse datasets model summarys (a list).
 }
 \keyword{internal}

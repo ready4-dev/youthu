@@ -2,7 +2,7 @@
 % Please edit documentation in R/fn_get.R
 \name{get_mdl_ctlg_url}
 \alias{get_mdl_ctlg_url}
-\title{Get model ctlg url}
+\title{Get model catalogue url}
 \usage{
 get_mdl_ctlg_url(
   mdls_lup,
@@ -24,6 +24,6 @@ get_mdl_ctlg_url(
 NA ()
 }
 \description{
-get_mdl_ctlg_url() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get model ctlg url. Function argument mdls_lup specifies the where to look for the required object. The function is called for its side effects and does not return a value.
+get_mdl_ctlg_url() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get model catalogue url. Function argument mdls_lup specifies the where to look for the required object. The function is called for its side effects and does not return a value.
 }
 \keyword{internal}

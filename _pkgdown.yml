@@ -1,19 +1,14 @@
 home:
   links:
-  - text: User manual (PDF)
-    href: https://github.com/ready4-dev/youthu/files/6950014/youthu_0.0.0.9095_user.pdf
-  - text: Developer version of usual manual (PDF)
-    href: https://github.com/ready4-dev/youthu/files/6950013/youthu_0.0.0.9095_developer.pdf
+  - text: Manual - User (PDF)
+    href: https://dataverse.harvard.edu/api/access/datafile/5251514
+  - text: Manual - Developer (PDF)
+    href: https://dataverse.harvard.edu/api/access/datafile/5251512
   - text: Project website
-    href: https://www.ready4-dev.com/
+    href:  https://www.ready4-dev.com/
 development:
   mode: auto
 reference:
-- title: "Datasets"
-- contents:
-  - abbreviations_lup
-  - fn_type_lup_tb
-  - fns_dmt_tb
 - title: "Functions"
 - contents:
   - add_qalys_to_ds

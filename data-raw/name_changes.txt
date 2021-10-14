@@ -17,7 +17,7 @@ edit extract guide box legend
 dstr_par to dstr_param
 indices to idxs_dbl
 jt_dstr_ to jt_dstr_
-make_cst_efns_smry make_cst_efns
+make_cst_efcn_smry make_cst_efcn
 make_hlth_ec_smry to make_hlth_ec_smry
 round_fup_val_1L_chr to round_fup_val_1L_chr
 sngl_grp_ds to sngl_grp_ds_tb

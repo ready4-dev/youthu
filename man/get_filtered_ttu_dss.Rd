@@ -2,7 +2,7 @@
 % Please edit documentation in R/fn_get.R
 \name{get_filtered_ttu_dss}
 \alias{get_filtered_ttu_dss}
-\title{Get filtered ttu datasets}
+\title{Get filtered transfer to utility algorithm datasets}
 \usage{
 get_filtered_ttu_dss(
   ttu_dv_dss_tb = NULL,
@@ -14,22 +14,22 @@ get_filtered_ttu_dss(
 )
 }
 \arguments{
-\item{ttu_dv_dss_tb}{Ttu dataverse datasets (a tibble), Default: NULL}
+\item{ttu_dv_dss_tb}{Transfer to utility algorithm dataverse datasets (a tibble), Default: NULL}
 
 \item{mdl_predrs_in_ds_chr}{Model predictors in dataset (a character vector), Default: NULL}
 
 \item{utility_type_chr}{Utility type (a character vector), Default: NULL}
 
-\item{ttu_dv_nms_chr}{Ttu dataverse names (a character vector), Default: 'TTU'}
+\item{ttu_dv_nms_chr}{Transfer to utility algorithm dataverse names (a character vector), Default: 'TTU'}
 
 \item{server_1L_chr}{Server (a character vector of length one), Default: 'dataverse.harvard.edu'}
 
 \item{key_1L_chr}{Key (a character vector of length one), Default: NULL}
 }
 \value{
-Ttu dataverse datasets (a tibble)
+Transfer to utility algorithm dataverse datasets (a tibble)
 }
 \description{
-get_filtered_ttu_dss() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get filtered ttu datasets. Function argument ttu_dv_dss_tb specifies the where to look for the required object. The function returns Ttu dataverse datasets (a tibble).
+get_filtered_ttu_dss() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get filtered transfer to utility algorithm datasets. Function argument ttu_dv_dss_tb specifies the where to look for the required object. The function returns Transfer to utility algorithm dataverse datasets (a tibble).
 }
 \keyword{internal}

@@ -1,8 +1,8 @@
 #' Predict from model coefficients
-#' @description predict_from_mdl_coefs() is a Predict function that makes predictions from data using a specified statistical model. Specifically, this function implements an algorithm to predict from model coefficients. The function returns Pred (a double vector).
+#' @description predict_from_mdl_coefs() is a Predict function that makes predictions from data using a specified statistical model. Specifically, this function implements an algorithm to predict from model coefficients. The function returns Predicted (a double vector).
 #' @param smry_of_mdl_tb Summary of model (a tibble)
 #' @param new_data_tb New data (a tibble)
-#' @return Pred (a double vector)
+#' @return Predicted (a double vector)
 #' @rdname predict_from_mdl_coefs
 #' @export 
 #' @importFrom dplyr filter pull
@@ -16,7 +16,7 @@ predict_from_mdl_coefs <- function (smry_of_mdl_tb, new_data_tb)
     vecs_1_ls <- coef_tb$Parameter[-1] %>% purrr::map(~new_data_tb %>% 
         dplyr::pull(.x %>% stringr::str_replace(" ", "_")) * 
         coef_tb %>% dplyr::filter(Parameter == .x) %>% dplyr::pull(Estimate))
-    pred_dbl <- exp(Reduce(`+`, vecs_1_ls) + coef_tb %>% dplyr::filter(Parameter == 
+    predd_dbl <- exp(Reduce(`+`, vecs_1_ls) + coef_tb %>% dplyr::filter(Parameter == 
         "Intercept") %>% dplyr::pull(Estimate))
-    return(pred_dbl)
+    return(predd_dbl)
 }

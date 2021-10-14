@@ -35,13 +35,13 @@
 ^data-raw/adol_dim_scalg_eqs_lup\.csv$
 ^data-raw/aqol_scrg_dict_r3\.csv$
 ^data-raw/aqol6d_adult_disv_lup_tb\.csv$
-^data-raw/aqol6d_adult_itm_wrst_wghts_lup_tb\.csv$
+^data-raw/aqol6d_adult_itm_wrst_wts_lup_tb\.csv$
 ^data-raw/aqol6d_adult_vldn_pop_with_STATA_scores_tb\.csv$
 ^data-raw/aqol6d_dim_sclg_con_lup_tb\.csv$
 ^data-raw/aqol6d_domain_qs_lup_tb\.csv$
 ^data-raw/aqol6d_from_8d_coefs_lup_tb\.csv$
 ^data-raw/predictors_lup\.csv$
-^data-raw/fn_type_lup_tb\.csv$
+^data-raw/fn_types_lup\.csv$
 ^data-raw/fns_dmt_tb\.csv$
 ^data-raw/prototype_lup\.csv$
 ^data-raw/replication_popl_tb\.csv$
@@ -60,8 +60,8 @@
 ^doc$
 ^Meta$
 ^data-raw/vignettes/_Clippings\.Rmd$
-^data-raw/dataverse/fn_type_lup_tb/fn_type_lup_tb\.csv$
-^data-raw/dataverse/fn_type_lup_tb/fn_type_lup_tb\.RDS$
+^data-raw/dataverse/fn_types_lup/fn_types_lup\.csv$
+^data-raw/dataverse/fn_types_lup/fn_types_lup\.RDS$
 ^data-raw/MAKE_HOUSESTYLE_DSS\.R$
 ^data-raw/dataverse/abbreviations_lup/abbreviations_lup\.csv$
 ^data-raw/dataverse/abbreviations_lup/abbreviations_lup\.RDS$
@@ -72,3 +72,6 @@
 ^data-raw/name_changes\.txt$
 ^data-raw/safety\.txt$
 ^data-raw/vignette_pts/_clipped_fake_ds\.Rmd$
+^data-raw/dataverse/fn_type_lup_tb/fn_type_lup_tb\.csv$
+^data-raw/dataverse/fn_type_lup_tb/fn_type_lup_tb\.RDS$
+^data-raw/NOTES\.R$

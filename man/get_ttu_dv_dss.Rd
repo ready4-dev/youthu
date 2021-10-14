@@ -2,7 +2,7 @@
 % Please edit documentation in R/fn_get.R
 \name{get_ttu_dv_dss}
 \alias{get_ttu_dv_dss}
-\title{Get ttu dataverse datasets}
+\title{Get transfer to utility algorithm dataverse datasets}
 \usage{
 get_ttu_dv_dss(
   ttu_dv_nms_chr = "TTU",
@@ -11,16 +11,16 @@ get_ttu_dv_dss(
 )
 }
 \arguments{
-\item{ttu_dv_nms_chr}{Ttu dataverse names (a character vector), Default: 'TTU'}
+\item{ttu_dv_nms_chr}{Transfer to utility algorithm dataverse names (a character vector), Default: 'TTU'}
 
 \item{server_1L_chr}{Server (a character vector of length one), Default: 'dataverse.harvard.edu'}
 
 \item{key_1L_chr}{Key (a character vector of length one), Default: NULL}
 }
 \value{
-Ttu dataverse datasets (a tibble)
+Transfer to utility algorithm dataverse datasets (a tibble)
 }
 \description{
-get_ttu_dv_dss() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get ttu dataverse datasets. Function argument ttu_dv_nms_chr specifies the where to look for the required object. The function returns Ttu dataverse datasets (a tibble).
+get_ttu_dv_dss() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get transfer to utility algorithm dataverse datasets. Function argument ttu_dv_nms_chr specifies the where to look for the required object. The function returns Transfer to utility algorithm dataverse datasets (a tibble).
 }
 \keyword{internal}

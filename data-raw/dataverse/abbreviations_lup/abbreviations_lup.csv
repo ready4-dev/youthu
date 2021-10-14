@@ -360,7 +360,7 @@
 "ready4_local","ready4 S4 class defining data to be saved in local directory.",NA
 "ready4_local_proc","ready4 S4 class defining data to be saved in local directory in a processed (R) format.",NA
 "ready4_local_raw","ready4 S4 class defining data to be saved in local directory in a raw (unprocessed) format.",NA
-"ready4_par_struc_mape","ready4 S3 class for tibble object that stores simulation structural parameters relating to Mean Absolute Prediction Errors.",NA
+"ready4_param_struc_mape","ready4 S3 class for tibble object that stores simulation structural parameters relating to Mean Absolute Prediction Errors.",NA
 "ready4_script_data","ready4 S4 class containing data to be passed to a function that constructs a spatial object from a lookup table.",NA
 "ref","reference",FALSE
 "refs","references",TRUE

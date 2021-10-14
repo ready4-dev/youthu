@@ -15,6 +15,6 @@ get_dv_mdl_smrys(mdls_lup, mdl_nms_chr = NULL)
 Dataverse model (summarys)
 }
 \description{
-get_dv_mdl_smrys() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get dataverse model summarys. Function argument mdls_lup specifies the where to look for the required object. The function is called for its side effects and does not return a value.
+get_dv_mdl_smrys() is a Get Data function that retrieves data from R objects loaded in memory. Specifically, this function implements an algorithm to get dataverse model summarys. The function is called for its side effects and does not return a value.
 }
 \keyword{internal}

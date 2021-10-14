@@ -18,9 +18,9 @@ get_dv_ds_publication(
 \item{key_1L_chr}{Key (a character vector of length one), Default: NULL}
 }
 \value{
-Doi url (a character vector of length one)
+Digital object identifier url (a character vector of length one)
 }
 \description{
-get_dv_ds_publication() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get dataverse dataset publication. Function argument ds_url_1L_chr specifies the where to look for the required object. The function returns Doi url (a character vector of length one).
+get_dv_ds_publication() is a Get Data function that retrieves data from R objects loaded in memory. Specifically, this function implements an algorithm to get dataverse dataset publication. The function returns Digital object identifier url (a character vector of length one).
 }
 \keyword{internal}
