@@ -1,23 +1,15 @@
 Package: youthu
 Title: Youth Outcomes to Health Utility
-Version: 0.0.0.9096
-Authors@R: 
-    c(person(given = "Matthew",
-             family = "Hamilton",
-             role = c("aut", "cre"),
-             email = "matthew.hamilton@orygen.org.au",
-             comment = c(ORCID = "0000-0001-7407-9194")),
-      person(given = "Caroline",
-             family = "Gao",
-             role = "aut",
-             email = "caroline.gao@orygen.org.au",
-             comment = c(ORCID = "0000-0002-0987-2759")),
-      person(given = "Orygen",
-             role = c("cph", "fnd")),
-      person(given = "Headspace",
-             role = "fnd"),
-      person(given = "National Health and Medical Research Council",
-             role = "fnd"))
+Version: 0.0.0.9097
+Authors@R: c(
+    person("Matthew", "Hamilton", , "matthew.hamilton@orygen.org.au", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0001-7407-9194")),
+    person("Caroline", "Gao", , "caroline.gao@orygen.org.au", role = "aut",
+           comment = c(ORCID = "0000-0002-0987-2759")),
+    person("Orygen", role = c("cph", "fnd")),
+    person("Headspace", role = "fnd"),
+    person("National Health and Medical Research Council", role = "fnd")
+  )
 Description: Tools for mapping measures routinely collected in youth
     mental health services to Quality Adjusted Life Years (QALYs). Part of
     the First Bounce model of primary youth mental health services.  This
@@ -34,24 +26,22 @@ URL: https://ready4-dev.github.io/youthu/,
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Imports: 
     assertthat,
     BCEA,
     boot,
-    dataverse (>= 0.3.9),
+    dataverse,
     dplyr,
     knitr,
-    knitrBootstrap,
     lifecycle,
     lubridate,
     magrittr,
     MatchIt,
     methods,
     purrr,
-    ready4fun (>= 0.0.0.9298),
-    ready4show (>= 0.0.0.9038),
-    ready4use (>= 0.0.0.9133),
+    ready4fun (>= 0.0.0.9445),
+    ready4use (>= 0.0.0.9148),
     rlang,
     stats,
     stringr,
@@ -60,18 +50,14 @@ Imports:
     tidyr,
     tidyselect,
     truncnorm,
-    TTU (>= 0.0.0.9317),
+    TTU (>= 0.0.0.9319),
     utils,
-    youthvars (>= 0.0.0.9064)
+    youthvars (>= 0.0.0.9070)
 VignetteBuilder: knitr
-Depends: 
-    R (>= 2.10)
 Suggests: 
     rmarkdown
 Remotes: 
-    ready4-dev/ready4show,
+    ready4-dev/ready4fun,
     ready4-dev/ready4use,
-    ready4-dev/youthvars,
     ready4-dev/TTU,
-    iqss/dataverse-client-r,
-    ready4-dev/ready4fun
+    ready4-dev/youthvars
