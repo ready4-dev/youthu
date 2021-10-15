@@ -64,53 +64,5 @@ x_ready4use_manifest <- ready4use::make_pt_ready4use_manifest(x_ready4fun_manife
                                                               pkg_ds_ls_ls = datasets_ls) %>%
   ready4use::ready4use_manifest() # Need to rebuild
 x_xx <- ready4::author(x_ready4use_manifest)
-
-
-
-
-
-
-##
-
-
-# 7. Save copy of package documentation to online data repo.
-# ds_ls <- ready4use::write_pkg_dss_to_dv_ds_csvs(pkg_dss_tb,
-#                                                 dv_nm_1L_chr = "ready4models",
-#                                                 ds_url_1L_chr = "https://doi.org/10.7910/DVN/RXGPAT",
-#                                                 parent_dv_dir_1L_chr = "../../../../../Data/Dataverse",
-#                                                 wait_time_in_secs_int = 5L)
-# NOTE: NEED TO UPDATE DIR PATH FOR MODELS
-## Note files to be rewritten cannot be open in RStudio.
-## 8. Document functions.
-usethis::use_build_ignore("initial_setup.R")
-usethis::use_package("knitrBootstrap")
-usethis::use_package("truncnorm")
-usethis::use_package("rmarkdown",type = "Suggests")
-usethis::use_dev_package("ready4show")
-usethis::use_dev_package("ready4use")
-usethis::use_dev_package("youthvars")
-usethis::use_dev_package("TTU")
-readLines(".github/workflows/R-CMD-check.yaml")[-28] %>%
-  writeLines(".github/workflows/R-CMD-check.yaml")
-ready4fun::write_and_doc_fn_fls(fns_dmt_tb,
-                                r_dir_1L_chr = "R",
-                                dev_pkgs_chr = c("ready4fun","ready4show","ready4use","youthvars","TTU","dataverse"),
-                                update_pkgdown_1L_lgl = T,
-                                path_to_dvpr_dmt_dir_1L_chr = "../../../../../Documentation/Code/Developer",
-                                path_to_user_dmt_dir_1L_chr = "../../../../../Documentation/Code/User")
-# PAUSE FOR INTERACTIVE
-# PART FOUR
-# data("prototype_lup")
-# if(!identical(prototype_lup,ready4fun::get_rds_from_dv("prototype_lup"))){
-#   prototype_lup %>%
-#     ready4use::write_paired_ds_fls_to_dv(fl_nm_1L_chr = "prototype_lup",
-#                                          desc_1L_chr = "Prototypes lookup table")
-# }
+# usethis::use_package("truncnorm")
 # devtools::build_vignettes()
-#
-ready4fun::write_links_for_website(user_manual_url_1L_chr = "https://github.com/ready4-dev/youthu/files/6950014/youthu_0.0.0.9095_user.pdf",
-                                   developer_manual_url_1L_chr = "https://github.com/ready4-dev/youthu/files/6950013/youthu_0.0.0.9095_developer.pdf",
-                                   project_website_url_1L_chr = "https://www.ready4-dev.com/")
-#
-
-
