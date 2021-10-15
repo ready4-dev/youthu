@@ -50,7 +50,7 @@ Imports:
     tidyr,
     tidyselect,
     truncnorm,
-    TTU (>= 0.0.0.9319),
+    TTU (>= 0.0.0.9321),
     utils,
     youthvars (>= 0.0.0.9070)
 VignetteBuilder: knitr
