@@ -63,7 +63,7 @@ make_costs_vec_from_gamma_dstr <- function (n_int, costs_mean_dbl, costs_sd_dbl)
 #' @importFrom purrr map
 #' @importFrom dplyr group_by select all_of rename_with summarise across ungroup mutate
 #' @importFrom rlang sym
-#' @importFrom ready4fun get_from_lup_obj
+#' @importFrom ready4 get_from_lup_obj
 #' @importFrom tidyr pivot_wider
 #' @keywords internal
 make_cst_efcn_smry <- function (ds_tb, idxs_int, change_types_chr = "dbl", benefits_pfx_1L_chr = "qalys_dbl", 
@@ -90,9 +90,9 @@ make_cst_efcn_smry <- function (ds_tb, idxs_int, change_types_chr = "dbl", benef
     summary_tb <- ds_tb[idxs_int, ] %>% dplyr::group_by(!!rlang::sym(cmprsn_var_nm_1L_chr)) %>% 
         dplyr::select(dplyr::all_of(c(selected_cols_chr, cmprsn_var_nm_1L_chr))) %>% 
         dplyr::rename_with(.cols = tidyselect::all_of(selected_cols_chr), 
-            ~ready4fun::get_from_lup_obj(rename_lup, match_var_nm_1L_chr = "old_name_chr", 
+            ~ready4::get_from_lup_obj(rename_lup, match_var_nm_1L_chr = "old_name_chr", 
                 match_value_xx = .x, target_var_nm_1L_chr = "new_name_chr", 
-                evaluate_lgl = F)) %>% dplyr::summarise(dplyr::across(.fns = mean)) %>% 
+                evaluate_1L_lgl = F)) %>% dplyr::summarise(dplyr::across(.fns = mean)) %>% 
         dplyr::ungroup() %>% tidyr::pivot_wider(names_from = tidyselect::all_of(cmprsn_var_nm_1L_chr), 
         values_from = rename_lup$new_name_chr) %>% dplyr::mutate(`:=`(!!rlang::sym(paste0("diff_", 
         costs_var_nm_1L_chr, "_dbl")), !!rlang::sym(new_nms_ls[[1]][1]) - 
@@ -340,7 +340,7 @@ make_matched_ds_spine <- function (ds_tb, round_var_nm_1L_chr = "Timepoint_chr",
 #' @importFrom TTU rename_from_nmd_vec transform_mdl_vars_with_clss
 #' @importFrom purrr walk pluck
 #' @importFrom dplyr pull filter
-#' @importFrom ready4fun get_from_lup_obj
+#' @importFrom ready4 get_from_lup_obj
 #' @importFrom assertthat assert_that
 #' @importFrom rlang sym
 #' @importFrom lubridate is.Date
@@ -362,12 +362,12 @@ make_predn_metadata_ls <- function (data_tb, cmprsn_groups_chr = NULL, cmprsn_va
     data_tb <- data_tb %>% TTU::transform_mdl_vars_with_clss(predictors_lup = predictors_lup)
     purrr::walk(predictors_lup$short_name_chr, ~{
         vector_xx <- data_tb %>% dplyr::pull(.x)
-        min_dbl <- ready4fun::get_from_lup_obj(predictors_lup, 
-            match_value_xx = .x, match_var_nm_1L_chr = "short_name_chr", 
-            target_var_nm_1L_chr = "min_val_dbl", evaluate_lgl = F)
-        max_dbl <- ready4fun::get_from_lup_obj(predictors_lup, 
-            match_value_xx = .x, match_var_nm_1L_chr = "short_name_chr", 
-            target_var_nm_1L_chr = "max_val_dbl", evaluate_lgl = F)
+        min_dbl <- ready4::get_from_lup_obj(predictors_lup, match_value_xx = .x, 
+            match_var_nm_1L_chr = "short_name_chr", target_var_nm_1L_chr = "min_val_dbl", 
+            evaluate_1L_lgl = F)
+        max_dbl <- ready4::get_from_lup_obj(predictors_lup, match_value_xx = .x, 
+            match_var_nm_1L_chr = "short_name_chr", target_var_nm_1L_chr = "max_val_dbl", 
+            evaluate_1L_lgl = F)
         assertthat::assert_that(max(vector_xx) <= max_dbl & min(vector_xx) >= 
             min_dbl, msg = paste0(predr_vars_nms_chr %>% purrr::pluck(.x), 
             " variable must be within range of ", min_dbl, " and ", 

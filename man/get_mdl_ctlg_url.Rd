@@ -21,7 +21,7 @@ get_mdl_ctlg_url(
 \item{key_1L_chr}{Key (a character vector of length one), Default: NULL}
 }
 \value{
-NA ()
+ctlg_url (An object)
 }
 \description{
 get_mdl_ctlg_url() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get model catalogue url. Function argument mdls_lup specifies the where to look for the required object. The function is called for its side effects and does not return a value.

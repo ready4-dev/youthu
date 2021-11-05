@@ -265,7 +265,7 @@ add_qalys_to_ds <- function (ds_tb, predn_ds_ls, include_predrs_1L_lgl = T, resh
 #' @rdname add_utl_predn
 #' @export 
 #' @importFrom TTU add_utl_predn_to_new_ds
-#' @importFrom ready4fun get_from_lup_obj
+#' @importFrom ready4 get_from_lup_obj
 add_utl_predn <- function (data_tb, predn_ds_ls, deterministic_1L_lgl = T, force_min_max_1L_lgl = T, 
     key_1L_chr = NULL, make_from_tbl_1L_lgl = T, model_mdl = NULL, 
     new_data_is_1L_chr = "Simulated", server_1L_chr = "dataverse.harvard.edu", 
@@ -284,9 +284,9 @@ add_utl_predn <- function (data_tb, predn_ds_ls, deterministic_1L_lgl = T, force
             make_from_tbl_1L_lgl = make_from_tbl_1L_lgl, mdl_meta_data_ls = mdl_meta_data_ls, 
             server_1L_chr = server_1L_chr, key_1L_chr = key_1L_chr)
     updated_tb <- TTU::add_utl_predn_to_new_ds(data_tb, mdl_nm_1L_chr = mdl_nm_1L_chr, 
-        id_var_nm_1L_chr = id_var_nm_1L_chr, analysis_1L_chr = ready4fun::get_from_lup_obj(mdls_lup, 
+        id_var_nm_1L_chr = id_var_nm_1L_chr, analysis_1L_chr = ready4::get_from_lup_obj(mdls_lup, 
             match_value_xx = mdl_nm_1L_chr, match_var_nm_1L_chr = "mdl_nms_chr", 
-            target_var_nm_1L_chr = "source_chr", evaluate_lgl = F), 
+            target_var_nm_1L_chr = "source_chr", evaluate_1L_lgl = F), 
         ingredients_ls = get_mdl_metadata(mdls_lup, mdl_nm_1L_chr = mdl_nm_1L_chr), 
         model_mdl = model_mdl, new_data_is_1L_chr = new_data_is_1L_chr, 
         predr_vars_nms_chr = predr_vars_nms_chr, round_var_nm_1L_chr = round_var_nm_1L_chr, 

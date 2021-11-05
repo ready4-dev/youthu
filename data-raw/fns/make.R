@@ -47,11 +47,11 @@ make_cst_efcn_smry <- function(ds_tb,
         dplyr::group_by(!!rlang::sym(cmprsn_var_nm_1L_chr)) %>%
         dplyr::select(dplyr::all_of(c(selected_cols_chr, cmprsn_var_nm_1L_chr))) %>%
         dplyr::rename_with(.cols = tidyselect::all_of(selected_cols_chr),
-                           ~ ready4fun::get_from_lup_obj(rename_lup,
+                           ~ ready4::get_from_lup_obj(rename_lup,
                                                          match_var_nm_1L_chr = "old_name_chr",
                                                          match_value_xx = .x,
                                                          target_var_nm_1L_chr = "new_name_chr",
-                                                         evaluate_lgl = F)) %>%
+                                                         evaluate_1L_lgl = F)) %>%
         dplyr::summarise(dplyr::across(.fns = mean)) %>%
         dplyr::ungroup()  %>%
         tidyr::pivot_wider(names_from = tidyselect::all_of(cmprsn_var_nm_1L_chr),
@@ -290,16 +290,16 @@ make_predn_metadata_ls <- function(data_tb,
     purrr::walk(predictors_lup$short_name_chr,
                ~{
                    vector_xx <- data_tb %>% dplyr::pull(.x)
-                   min_dbl <- ready4fun::get_from_lup_obj(predictors_lup,
+                   min_dbl <- ready4::get_from_lup_obj(predictors_lup,
                                                          match_value_xx = .x,
                                                          match_var_nm_1L_chr = "short_name_chr",
                                                          target_var_nm_1L_chr = "min_val_dbl",
-                                                         evaluate_lgl = F)
-                   max_dbl <- ready4fun::get_from_lup_obj(predictors_lup,
+                                                         evaluate_1L_lgl = F)
+                   max_dbl <- ready4::get_from_lup_obj(predictors_lup,
                                                           match_value_xx = .x,
                                                           match_var_nm_1L_chr = "short_name_chr",
                                                           target_var_nm_1L_chr = "max_val_dbl",
-                                                          evaluate_lgl = F)
+                                                          evaluate_1L_lgl = F)
                    assertthat::assert_that(max(vector_xx)<= max_dbl & min(vector_xx)>=min_dbl, msg = paste0(predr_vars_nms_chr %>% purrr::pluck(.x),
                                                                                                             " variable must be within range of ",
                                                                                                             min_dbl,

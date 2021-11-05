@@ -72,11 +72,11 @@ get_mdl_ctlg_url <- function(mdls_lup,
   include_lgl <- all_lbls_chr %>% purrr::map_lgl(~startsWith(.x,"AAA_TTU_MDL_CTG"))
   all_descs_chr <- purrr::map_chr(ds_ls,~.x$description)
   include_lgl <- include_lgl & (all_descs_chr %>% purrr::map_lgl(~stringr::str_detect(.x,
-                                                                                     ready4fun::get_from_lup_obj(mdls_lup,
+                                                                                     ready4::get_from_lup_obj(mdls_lup,
                                                                                                                  match_value_xx = mdl_nm_1L_chr,
                                                                                                                  match_var_nm_1L_chr = "mdl_nms_chr",
                                                                                                                  target_var_nm_1L_chr = "source_chr",
-                                                                                                                 evaluate_lgl = F))))
+                                                                                                                 evaluate_1L_lgl = F))))
   idx_1L_int <- which(include_lgl)
   if(identical(idx_1L_int,integer(0))){
     ctlg_url <- NULL
@@ -87,11 +87,11 @@ get_mdl_ctlg_url <- function(mdls_lup,
 }
 get_mdl_ds_url <- function(mdls_lup,
                            mdl_nm_1L_chr){
-  mdl_ds_url <- ready4fun::get_from_lup_obj(mdls_lup,
+  mdl_ds_url <- ready4::get_from_lup_obj(mdls_lup,
                                                  match_value_xx = mdl_nm_1L_chr,
                                                  match_var_nm_1L_chr = "mdl_nms_chr",
                                                  target_var_nm_1L_chr = "ds_url",
-                                                 evaluate_lgl = F)
+                                                 evaluate_1L_lgl = F)
   return(mdl_ds_url)
 }
 get_mdl_from_dv <- function(mdl_nm_1L_chr,
@@ -135,11 +135,11 @@ get_mdls_lup <- function(ttu_dv_dss_tb = NULL,
                         predictors_lup <- .x$predictors_lup
                         urls_chr <- .y
                         predrs_short_nms_chr <- mdl_predrs_in_ds_chr %>%
-                          purrr::map_chr(~ready4fun::get_from_lup_obj(predictors_lup,
+                          purrr::map_chr(~ready4::get_from_lup_obj(predictors_lup,
                                                                       match_value_xx = .x,
                                                                       match_var_nm_1L_chr = "long_name_chr",
                                                                       target_var_nm_1L_chr = "short_name_chr",
-                                                                      evaluate_lgl = F))
+                                                                      evaluate_1L_lgl = F))
                         .x$mdls_lup %>%
                           dplyr::filter(predrs_ls %>%
                                           purrr::map_lgl(~{!identical(intersect(.x,
@@ -201,11 +201,11 @@ get_model <- function(mdls_lup,
     }
     model_mdl <- TTU::get_table_predn_mdl(mdl_nm_1L_chr,
                                           ingredients_ls = mdl_meta_data_ls,
-                                          analysis_1L_chr = ready4fun::get_from_lup_obj(mdls_lup,
+                                          analysis_1L_chr = ready4::get_from_lup_obj(mdls_lup,
                                                                                    match_value_xx = mdl_nm_1L_chr,
                                                                                    match_var_nm_1L_chr = "mdl_nms_chr",
                                                                                    target_var_nm_1L_chr = "source_chr",
-                                                                                   evaluate_lgl = F))
+                                                                                   evaluate_1L_lgl = F))
   }else{
     model_mdl <- get_mdl_from_dv(mdl_nm_1L_chr,
                                  dv_ds_nm_1L_chr = get_mdl_ds_url(mdls_lup,
@@ -229,11 +229,11 @@ get_predictors_lup <- function(mdl_meta_data_ls = NULL,
   predictors_tb <- mdl_meta_data_ls$predictors_lup
   if(!is.null(mdl_nm_1L_chr)){
     predictors_tb <- predictors_tb %>%
-      dplyr::filter(short_name_chr %in% (ready4fun::get_from_lup_obj(mdls_lup,
+      dplyr::filter(short_name_chr %in% (ready4::get_from_lup_obj(mdls_lup,
                                 match_value_xx = mdl_nm_1L_chr,
                                 match_var_nm_1L_chr = "mdl_nms_chr",
                                 target_var_nm_1L_chr = "predrs_ls",
-                                evaluate_lgl = F) %>% purrr::flatten_chr()))
+                                evaluate_1L_lgl = F) %>% purrr::flatten_chr()))
   }
   if(outp_is_abbrs_tb){
     predictors_tb <- predictors_tb %>%
@@ -260,11 +260,11 @@ get_ttu_dv_predrs <- function(ttu_dv_dss_tb = NULL,
 get_tfmn_from_lup <- function(mdl_nm_1L_chr, mdls_lup = NULL){
   if (is.null(mdls_lup))
     utils::data("mdls_lup", envir = environment())
-  tfmn_1L_chr <- ready4fun::get_from_lup_obj(mdls_lup,
+  tfmn_1L_chr <- ready4::get_from_lup_obj(mdls_lup,
                                              target_var_nm_1L_chr = "tfmn_chr",
                                              match_value_xx = mdl_nm_1L_chr,
                                              match_var_nm_1L_chr = "mdl_nms_chr",
-                                             evaluate_lgl = F)
+                                             evaluate_1L_lgl = F)
 
   return(tfmn_1L_chr)
 }

@@ -101,13 +101,13 @@ get_filtered_ttu_dss <- function (ttu_dv_dss_tb = NULL, mdl_predrs_in_ds_chr = N
 #' @param mdl_nm_1L_chr Model name (a character vector of length one)
 #' @param server_1L_chr Server (a character vector of length one), Default: 'dataverse.harvard.edu'
 #' @param key_1L_chr Key (a character vector of length one), Default: NULL
-#' @return NA ()
+#' @return ctlg_url (An object)
 #' @rdname get_mdl_ctlg_url
 #' @export 
 #' @importFrom dataverse dataset_files
 #' @importFrom purrr map_chr map_lgl
 #' @importFrom stringr str_detect
-#' @importFrom ready4fun get_from_lup_obj
+#' @importFrom ready4 get_from_lup_obj
 #' @keywords internal
 get_mdl_ctlg_url <- function (mdls_lup, mdl_nm_1L_chr, server_1L_chr = "dataverse.harvard.edu", 
     key_1L_chr = NULL) 
@@ -120,9 +120,9 @@ get_mdl_ctlg_url <- function (mdls_lup, mdl_nm_1L_chr, server_1L_chr = "datavers
         "AAA_TTU_MDL_CTG"))
     all_descs_chr <- purrr::map_chr(ds_ls, ~.x$description)
     include_lgl <- include_lgl & (all_descs_chr %>% purrr::map_lgl(~stringr::str_detect(.x, 
-        ready4fun::get_from_lup_obj(mdls_lup, match_value_xx = mdl_nm_1L_chr, 
+        ready4::get_from_lup_obj(mdls_lup, match_value_xx = mdl_nm_1L_chr, 
             match_var_nm_1L_chr = "mdl_nms_chr", target_var_nm_1L_chr = "source_chr", 
-            evaluate_lgl = F))))
+            evaluate_1L_lgl = F))))
     idx_1L_int <- which(include_lgl)
     if (identical(idx_1L_int, integer(0))) {
         ctlg_url <- NULL
@@ -137,16 +137,16 @@ get_mdl_ctlg_url <- function (mdls_lup, mdl_nm_1L_chr, server_1L_chr = "datavers
 #' @description get_mdl_ds_url() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get model dataset url. Function argument mdls_lup specifies the where to look for the required object. The function is called for its side effects and does not return a value.
 #' @param mdls_lup Models (a lookup table)
 #' @param mdl_nm_1L_chr Model name (a character vector of length one)
-#' @return NA ()
+#' @return mdl_ds_url (An object)
 #' @rdname get_mdl_ds_url
 #' @export 
-#' @importFrom ready4fun get_from_lup_obj
+#' @importFrom ready4 get_from_lup_obj
 #' @keywords internal
 get_mdl_ds_url <- function (mdls_lup, mdl_nm_1L_chr) 
 {
-    mdl_ds_url <- ready4fun::get_from_lup_obj(mdls_lup, match_value_xx = mdl_nm_1L_chr, 
+    mdl_ds_url <- ready4::get_from_lup_obj(mdls_lup, match_value_xx = mdl_nm_1L_chr, 
         match_var_nm_1L_chr = "mdl_nms_chr", target_var_nm_1L_chr = "ds_url", 
-        evaluate_lgl = F)
+        evaluate_1L_lgl = F)
     return(mdl_ds_url)
 }
 #' Get model from dataverse
@@ -231,7 +231,7 @@ get_mdl_smrys <- function (ingredients_ls, mdl_nms_chr = NULL)
 #' @rdname get_mdls_lup
 #' @export 
 #' @importFrom purrr map2_dfr map_chr map_lgl
-#' @importFrom ready4fun get_from_lup_obj
+#' @importFrom ready4 get_from_lup_obj
 #' @importFrom dplyr filter mutate
 #' @keywords internal
 get_mdls_lup <- function (ttu_dv_dss_tb = NULL, mdl_predrs_in_ds_chr = NULL, 
@@ -254,10 +254,10 @@ get_mdls_lup <- function (ttu_dv_dss_tb = NULL, mdl_predrs_in_ds_chr = NULL,
                 predictors_lup <- .x$predictors_lup
                 urls_chr <- .y
                 predrs_short_nms_chr <- mdl_predrs_in_ds_chr %>% 
-                  purrr::map_chr(~ready4fun::get_from_lup_obj(predictors_lup, 
+                  purrr::map_chr(~ready4::get_from_lup_obj(predictors_lup, 
                     match_value_xx = .x, match_var_nm_1L_chr = "long_name_chr", 
                     target_var_nm_1L_chr = "short_name_chr", 
-                    evaluate_lgl = F))
+                    evaluate_1L_lgl = F))
                 .x$mdls_lup %>% dplyr::filter(predrs_ls %>% purrr::map_lgl(~{
                   !identical(intersect(.x, predrs_short_nms_chr), 
                     character(0))
@@ -281,7 +281,7 @@ get_mdls_lup <- function (ttu_dv_dss_tb = NULL, mdl_predrs_in_ds_chr = NULL,
 #' @rdname get_model
 #' @export 
 #' @importFrom TTU get_table_predn_mdl
-#' @importFrom ready4fun get_from_lup_obj
+#' @importFrom ready4 get_from_lup_obj
 #' @keywords internal
 get_model <- function (mdls_lup, mdl_nm_1L_chr, make_from_tbl_1L_lgl = T, 
     mdl_meta_data_ls = NULL, server_1L_chr = "dataverse.harvard.edu", 
@@ -293,9 +293,9 @@ get_model <- function (mdls_lup, mdl_nm_1L_chr, make_from_tbl_1L_lgl = T,
                 server_1L_chr = server_1L_chr, key_1L_chr = key_1L_chr)
         }
         model_mdl <- TTU::get_table_predn_mdl(mdl_nm_1L_chr, 
-            ingredients_ls = mdl_meta_data_ls, analysis_1L_chr = ready4fun::get_from_lup_obj(mdls_lup, 
+            ingredients_ls = mdl_meta_data_ls, analysis_1L_chr = ready4::get_from_lup_obj(mdls_lup, 
                 match_value_xx = mdl_nm_1L_chr, match_var_nm_1L_chr = "mdl_nms_chr", 
-                target_var_nm_1L_chr = "source_chr", evaluate_lgl = F))
+                target_var_nm_1L_chr = "source_chr", evaluate_1L_lgl = F))
     }
     else {
         model_mdl <- get_mdl_from_dv(mdl_nm_1L_chr, dv_ds_nm_1L_chr = get_mdl_ds_url(mdls_lup, 
@@ -316,7 +316,7 @@ get_model <- function (mdls_lup, mdl_nm_1L_chr, make_from_tbl_1L_lgl = T,
 #' @rdname get_predictors_lup
 #' @export 
 #' @importFrom dplyr filter select rename
-#' @importFrom ready4fun get_from_lup_obj
+#' @importFrom ready4 get_from_lup_obj
 #' @importFrom purrr flatten_chr
 #' @keywords internal
 get_predictors_lup <- function (mdl_meta_data_ls = NULL, mdls_lup = NULL, mdl_nm_1L_chr = NULL, 
@@ -330,9 +330,9 @@ get_predictors_lup <- function (mdl_meta_data_ls = NULL, mdls_lup = NULL, mdl_nm
     predictors_tb <- mdl_meta_data_ls$predictors_lup
     if (!is.null(mdl_nm_1L_chr)) {
         predictors_tb <- predictors_tb %>% dplyr::filter(short_name_chr %in% 
-            (ready4fun::get_from_lup_obj(mdls_lup, match_value_xx = mdl_nm_1L_chr, 
+            (ready4::get_from_lup_obj(mdls_lup, match_value_xx = mdl_nm_1L_chr, 
                 match_var_nm_1L_chr = "mdl_nms_chr", target_var_nm_1L_chr = "predrs_ls", 
-                evaluate_lgl = F) %>% purrr::flatten_chr()))
+                evaluate_1L_lgl = F) %>% purrr::flatten_chr()))
     }
     if (outp_is_abbrs_tb) {
         predictors_tb <- predictors_tb %>% dplyr::select(short_name_chr, 
@@ -349,14 +349,14 @@ get_predictors_lup <- function (mdl_meta_data_ls = NULL, mdls_lup = NULL, mdl_nm
 #' @rdname get_tfmn_from_lup
 #' @export 
 #' @importFrom utils data
-#' @importFrom ready4fun get_from_lup_obj
+#' @importFrom ready4 get_from_lup_obj
 get_tfmn_from_lup <- function (mdl_nm_1L_chr, mdls_lup = NULL) 
 {
     if (is.null(mdls_lup)) 
         utils::data("mdls_lup", envir = environment())
-    tfmn_1L_chr <- ready4fun::get_from_lup_obj(mdls_lup, target_var_nm_1L_chr = "tfmn_chr", 
+    tfmn_1L_chr <- ready4::get_from_lup_obj(mdls_lup, target_var_nm_1L_chr = "tfmn_chr", 
         match_value_xx = mdl_nm_1L_chr, match_var_nm_1L_chr = "mdl_nms_chr", 
-        evaluate_lgl = F)
+        evaluate_1L_lgl = F)
     return(tfmn_1L_chr)
 }
 #' Get transfer to utility algorithm dataset summarys
