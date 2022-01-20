@@ -20,8 +20,8 @@ x <- ready4fun::make_pkg_desc_ls(pkg_title_1L_chr = "Transform Youth Outcomes to
                                  urls_chr = c("https://ready4-dev.github.io/youthu/",
                                               "https://github.com/ready4-dev/youthu",
                                               "https://www.ready4-dev.com/")) %>%
-  ready4fun::make_manifest(addl_pkgs_ls = ready4fun::make_addl_pkgs_ls(depends_chr = "TTU",#c("eq5d","ggfortify"),
-                                                                       suggests_chr = c("knitr","rmarkdown")),
+  ready4fun::make_manifest(addl_pkgs_ls = ready4fun::make_addl_pkgs_ls(#depends_chr = "TTU",#c("eq5d","ggfortify"),
+                                                                       suggests_chr = c("knitr","rmarkdown","specific")),
   build_ignore_ls = ready4fun::make_build_ignore_ls(file_nms_chr = c("initial_setup.R")),
   check_type_1L_chr = "ready4",
   copyright_holders_chr = "Orygen",
@@ -54,20 +54,11 @@ z <- ready4pack::make_pt_ready4pack_manifest(x,
                                              pkg_ds_ls_ls = datasets_ls) %>%
   ready4pack::ready4pack_manifest()
 z <- ready4::author(z)
-# usethis::use_dev_package("ready4",
+# usethis::use_dev_package("TTU",
 #                          type = "Depends",
-#                          remote = "ready4-dev/ready4")
-# usethis::use_dev_package("youthvars",
-#                          type = "Depends",
-#                          remote = "ready4-dev/youthvars")
-# usethis::use_dev_package("scorz",
-#                          type = "Depends",
-#                          remote = "ready4-dev/scorz")
-# usethis::use_dev_package("specific",
-#                          type = "Depends",
-#                          remote = "ready4-dev/specific")
-usethis::use_dev_package("TTU",
-                         type = "Depends",
+#                          remote = "ready4-dev/TTU")
+usethis::use_dev_package("specific",
+                         type = "Suggests",
                          remote = "ready4-dev/specific")
 # usethis::use_package("truncnorm")
 # devtools::build_vignettes()
