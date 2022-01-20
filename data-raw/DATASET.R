@@ -32,7 +32,7 @@ x <- ready4fun::make_pkg_desc_ls(pkg_title_1L_chr = "Transform Youth Outcomes to
                                                                         "rename_from_nmd_vec")),##
   dev_pkgs_chr = c("ready4",#"ready4fun",
                    "ready4use","ready4show",
-                   "youthvars", "TTU"),
+                   "youthvars", "specific","TTU"),
   lifecycle_stage_1L_chr = "experimental",
   path_to_pkg_logo_1L_chr = "../../../../../Documentation/Images/youthu-logo/default.png",
   piggyback_to_1L_chr = "ready4-dev/ready4",
