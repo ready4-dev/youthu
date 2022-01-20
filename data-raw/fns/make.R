@@ -286,7 +286,7 @@ make_predn_metadata_ls <- function(data_tb,
                                         server_1L_chr = server_1L_chr,
                                         key_1L_chr = key_1L_chr)
     data_tb <- data_tb %>%
-        TTU::transform_mdl_vars_with_clss(predictors_lup = predictors_lup)#
+        specific::transform_mdl_vars_with_clss(predictors_lup = predictors_lup)#
     purrr::walk(predictors_lup$short_name_chr,
                ~{
                    vector_xx <- data_tb %>% dplyr::pull(.x)

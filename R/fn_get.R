@@ -1,5 +1,5 @@
 #' Get dataverse dataset publication
-#' @description get_dv_ds_publication() is a Get Data function that retrieves data from R objects loaded in memory. Specifically, this function implements an algorithm to get dataverse dataset publication. The function returns Digital object identifier url (a character vector of length one).
+#' @description get_dv_ds_publication() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get dataverse dataset publication. Function argument ds_url_1L_chr specifies the where to look for the required object. The function returns Digital object identifier url (a character vector of length one).
 #' @param ds_url_1L_chr Dataset url (a character vector of length one)
 #' @param server_1L_chr Server (a character vector of length one), Default: 'dataverse.harvard.edu'
 #' @param key_1L_chr Key (a character vector of length one), Default: NULL
@@ -22,7 +22,7 @@ get_dv_ds_publication <- function (ds_url_1L_chr, server_1L_chr = "dataverse.har
     return(doi_url_1L_chr)
 }
 #' Get dataverse datasets model summarys
-#' @description get_dv_dss_mdl_smrys() is a Get Data function that retrieves data from R objects loaded in memory. Specifically, this function implements an algorithm to get dataverse datasets model summarys. The function returns Dataverse datasets model summarys (a list).
+#' @description get_dv_dss_mdl_smrys() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get dataverse datasets model summarys. Function argument ids_chr specifies the where to look for the required object. The function returns Dataverse datasets model summarys (a list).
 #' @param ids_chr Identities (a character vector)
 #' @param server_1L_chr Server (a character vector of length one), Default: 'dataverse.harvard.edu'
 #' @param key_1L_chr Key (a character vector of length one), Default: NULL
@@ -40,7 +40,7 @@ get_dv_dss_mdl_smrys <- function (ids_chr, server_1L_chr = "dataverse.harvard.ed
     return(dv_dss_mdl_smrys_ls)
 }
 #' Get dataverse model summarys
-#' @description get_dv_mdl_smrys() is a Get Data function that retrieves data from R objects loaded in memory. Specifically, this function implements an algorithm to get dataverse model summarys. The function is called for its side effects and does not return a value.
+#' @description get_dv_mdl_smrys() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get dataverse model summarys. Function argument mdls_lup specifies the where to look for the required object. The function is called for its side effects and does not return a value.
 #' @param mdls_lup Models (a lookup table)
 #' @param mdl_nms_chr Model names (a character vector), Default: NULL
 #' @return Dataverse model (summarys)

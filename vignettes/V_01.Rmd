@@ -1,0 +1,14 @@
+---
+title: "Significant Changes To The Youthu Package"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Significant Changes To The Youthu Package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Change is coming!
+
+The youthu package is undergoing significant redevelopment currently. As a result the syntax will soon look very different to that outlined in the current vignettes.
+
+More updates will appear here shortly.

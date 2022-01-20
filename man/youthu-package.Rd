@@ -4,7 +4,7 @@
 \name{youthu-package}
 \alias{youthu}
 \alias{youthu-package}
-\title{youthu: Youth Outcomes to Health Utility}
+\title{youthu: Transform Youth Outcomes to Health Utility Predictions}
 \description{
 \if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
 

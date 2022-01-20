@@ -337,7 +337,8 @@ make_matched_ds_spine <- function (ds_tb, round_var_nm_1L_chr = "Timepoint_chr",
 #' @return Prediction metadata (a list)
 #' @rdname make_predn_metadata_ls
 #' @export 
-#' @importFrom TTU rename_from_nmd_vec transform_mdl_vars_with_clss
+#' @importFrom TTU rename_from_nmd_vec
+#' @importFrom specific transform_mdl_vars_with_clss
 #' @importFrom purrr walk pluck
 #' @importFrom dplyr pull filter
 #' @importFrom ready4 get_from_lup_obj
@@ -359,7 +360,7 @@ make_predn_metadata_ls <- function (data_tb, cmprsn_groups_chr = NULL, cmprsn_va
     predictors_lup <- get_predictors_lup(mdl_meta_data_ls = mdl_meta_data_ls, 
         mdls_lup = mdls_lup, mdl_nm_1L_chr = mdl_nm_1L_chr, outp_is_abbrs_tb = F, 
         server_1L_chr = server_1L_chr, key_1L_chr = key_1L_chr)
-    data_tb <- data_tb %>% TTU::transform_mdl_vars_with_clss(predictors_lup = predictors_lup)
+    data_tb <- data_tb %>% specific::transform_mdl_vars_with_clss(predictors_lup = predictors_lup)
     purrr::walk(predictors_lup$short_name_chr, ~{
         vector_xx <- data_tb %>% dplyr::pull(.x)
         min_dbl <- ready4::get_from_lup_obj(predictors_lup, match_value_xx = .x, 

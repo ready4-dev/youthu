@@ -1,6 +1,6 @@
-# youthu <img src="man/figures/fav120.png" align="right" />
+# youthu
 
-## Youth Outcomes to Health Utility
+## Transform Youth Outcomes to Health Utility Predictions
 
 <!-- badges: start -->
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
