@@ -13,6 +13,8 @@ params:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 ```{r message=FALSE}
+library(specific)
+library(TTU)
 library(youthu)
 set.seed(1234)
 ```
