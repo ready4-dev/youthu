@@ -4,7 +4,6 @@ library(ready4use)
 library(youthvars)
 library(scorz)
 library(specific)
-library(TTU)
 ready4fun::write_fn_type_dirs()
 # MANUAL STEP. Write all your functions to R files in the new "fns" directory.
 fns_env_ls <- ready4fun::read_fns(c("data-raw/fns/","data-raw/mthds/"),
@@ -20,7 +19,7 @@ x <- ready4fun::make_pkg_desc_ls(pkg_title_1L_chr = "Transform Youth Outcomes to
                                  urls_chr = c("https://ready4-dev.github.io/youthu/",
                                               "https://github.com/ready4-dev/youthu",
                                               "https://www.ready4-dev.com/")) %>%
-  ready4fun::make_manifest(addl_pkgs_ls = ready4fun::make_addl_pkgs_ls(depends_chr = "TTU",#c("eq5d","ggfortify"),
+  ready4fun::make_manifest(addl_pkgs_ls = ready4fun::make_addl_pkgs_ls(#depends_chr = "TTU",#c("eq5d","ggfortify"),
                                                                        suggests_chr = c("knitr","rmarkdown")),
   build_ignore_ls = ready4fun::make_build_ignore_ls(file_nms_chr = c("initial_setup.R")),
   check_type_1L_chr = "ready4",
@@ -36,11 +35,11 @@ x <- ready4fun::make_pkg_desc_ls(pkg_title_1L_chr = "Transform Youth Outcomes to
                                                                         "rename_from_nmd_vec")),##
   dev_pkgs_chr = c("ready4",#"ready4fun",
                    "ready4use","ready4show",
-                   "youthvars", "specific","TTU"),
+                   "youthvars", "specific"),
   lifecycle_stage_1L_chr = "experimental",
   path_to_pkg_logo_1L_chr = "../../../../../Documentation/Images/youthu-logo/default.png",
   piggyback_to_1L_chr = "ready4-dev/ready4",
-  ready4_type_1L_chr = "authoring",
+  ready4_type_1L_chr = "prediction",
   zenodo_badge_1L_chr = "[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5646668.svg)](https://doi.org/10.5281/zenodo.5646668)")
 mdl_ingredients_ls <- ready4::get_rds_from_dv("mdl_ingredients",
                                               dv_ds_nm_1L_chr = "https://doi.org/10.7910/DVN/DKDIB0")

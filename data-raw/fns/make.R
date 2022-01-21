@@ -275,7 +275,7 @@ make_predn_metadata_ls <- function(data_tb,
                                    server_1L_chr = "dataverse.harvard.edu",
                                    key_1L_chr = NULL){
     if(!is.null(predr_vars_nms_chr)){
-        data_tb <- TTU::rename_from_nmd_vec(data_tb,
+        data_tb <- specific::rename_from_nmd_vec(data_tb,
                                        nmd_vec_chr = predr_vars_nms_chr,
                                        vec_nms_as_new_1L_lgl = T)
     }

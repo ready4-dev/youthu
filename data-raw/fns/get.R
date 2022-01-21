@@ -199,7 +199,7 @@ get_model <- function(mdls_lup,
                                          server_1L_chr = server_1L_chr,
                                          key_1L_chr = key_1L_chr)
     }
-    model_mdl <- TTU::get_table_predn_mdl(mdl_nm_1L_chr,
+    model_mdl <- specific::get_table_predn_mdl(mdl_nm_1L_chr,
                                           ingredients_ls = mdl_meta_data_ls,
                                           analysis_1L_chr = ready4::get_from_lup_obj(mdls_lup,
                                                                                    match_value_xx = mdl_nm_1L_chr,

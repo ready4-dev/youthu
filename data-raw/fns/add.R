@@ -200,7 +200,7 @@ add_utl_predn <- function(data_tb,
                            mdl_meta_data_ls = mdl_meta_data_ls,
                            server_1L_chr = server_1L_chr,
                            key_1L_chr = key_1L_chr)
-  updated_tb <- TTU::add_utl_predn_to_new_ds(data_tb,
+  updated_tb <- specific::add_utl_predn_to_new_ds(data_tb,
                                              mdl_nm_1L_chr = mdl_nm_1L_chr,
                                              id_var_nm_1L_chr = id_var_nm_1L_chr,
                                              analysis_1L_chr = ready4::get_from_lup_obj(mdls_lup,

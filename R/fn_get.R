@@ -280,7 +280,7 @@ get_mdls_lup <- function (ttu_dv_dss_tb = NULL, mdl_predrs_in_ds_chr = NULL,
 #' @return Model (a model)
 #' @rdname get_model
 #' @export 
-#' @importFrom TTU get_table_predn_mdl
+#' @importFrom specific get_table_predn_mdl
 #' @importFrom ready4 get_from_lup_obj
 #' @keywords internal
 get_model <- function (mdls_lup, mdl_nm_1L_chr, make_from_tbl_1L_lgl = T, 
@@ -292,7 +292,7 @@ get_model <- function (mdls_lup, mdl_nm_1L_chr, make_from_tbl_1L_lgl = T,
             mdl_meta_data_ls <- get_mdl_metadata(mdls_lup, mdl_nm_1L_chr = mdl_nm_1L_chr, 
                 server_1L_chr = server_1L_chr, key_1L_chr = key_1L_chr)
         }
-        model_mdl <- TTU::get_table_predn_mdl(mdl_nm_1L_chr, 
+        model_mdl <- specific::get_table_predn_mdl(mdl_nm_1L_chr, 
             ingredients_ls = mdl_meta_data_ls, analysis_1L_chr = ready4::get_from_lup_obj(mdls_lup, 
                 match_value_xx = mdl_nm_1L_chr, match_var_nm_1L_chr = "mdl_nms_chr", 
                 target_var_nm_1L_chr = "source_chr", evaluate_1L_lgl = F))

@@ -10,8 +10,6 @@ params:
 ---
 
 ```{r message=FALSE}
-library(specific)
-library(TTU)
 library(youthu)
 ```
 This vignette outlines a workflow for:
