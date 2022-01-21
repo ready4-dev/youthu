@@ -51,7 +51,7 @@ Imports:
     youthvars (>= 0.0.0.9101)
 VignetteBuilder: knitr
 Depends: 
-    TTU,
+    TTU (>= 0.0.0.9327),
     R (>= 2.10)
 LazyData: true
 Suggests: 
