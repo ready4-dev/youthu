@@ -87,6 +87,12 @@ jobs:
           remotes::install_cran("rcmdcheck")
         shell: Rscript {0}
 
+      - name: Address conditional specific install fail
+        if: runner.os == 'Linux'
+       run: |
+         Rscript -e "remove.packages(c('igraph'))"
+         conda install -c r r-igraph
+         Rscript -e "install.packages('remotes')" -e "options(timeout=600)" -e "remotes::install_github('ready4-dev/specific')"
       - name: Session info
         run: |
           options(width = 100)
