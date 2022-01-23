@@ -1,7 +1,7 @@
 #https://github.com/dbarneche/envPred/blob/cec96440bdebea073e68425b325abe9430c17527/.github/workflows/pkgdown.yaml
 on:
   push:
-  branches: master
+  branches: main
 
 name: pkgdown
 
