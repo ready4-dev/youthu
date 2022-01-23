@@ -1,6 +1,6 @@
 Package: youthu
 Title: Transform Youth Outcomes to Health Utility Predictions
-Version: 0.0.0.9109
+Version: 0.0.0.9110
 Authors@R: c(
     person("Matthew", "Hamilton", , "matthew.hamilton@orygen.org.au", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-7407-9194")),
