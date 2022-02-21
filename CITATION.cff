@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "Matthew Hamilton and Caroline Gao  (2022). youthu: Transform Youth Outcomes to Health Utility Predictions. Version 0.0.0.9108. Zenodo. https://doi.org/10.5281/zenodo.5646668"
+authors:
+  - family-names: "Hamilton"
+    given-names: "Matthew"
+  - family-names: "Gao"
+    given-names: "Caroline"
+title: "youthu: Transform Youth Outcomes to Health Utility Predictions"
+version: 0.0.0.9108
+doi: 10.5281/zenodo.5646668
+date-released: 2022-02-22
+url: "https://ready4-dev.github.io/youthu/"
