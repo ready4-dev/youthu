@@ -71,11 +71,12 @@ get_mdl_ctlg_url <- function(mdls_lup,
   all_lbls_chr <- purrr::map_chr(ds_ls,~.x$label)
   include_lgl <- all_lbls_chr %>% purrr::map_lgl(~startsWith(.x,"AAA_TTU_MDL_CTG"))
   all_descs_chr <- purrr::map_chr(ds_ls,~.x$description)
-  include_lgl <- include_lgl & (all_descs_chr %>% purrr::map_lgl(~stringr::str_detect(.x,
-                                                                                     ready4::get_from_lup_obj(mdls_lup,
-                                                                                                                 match_value_xx = mdl_nm_1L_chr,
-                                                                                                                 match_var_nm_1L_chr = "mdl_nms_chr",
-                                                                                                                 target_var_nm_1L_chr = "source_chr",
+  include_lgl <- include_lgl & (all_descs_chr %>%
+                                  purrr::map_lgl(~stringr::str_detect(.x,
+                                                                      ready4::get_from_lup_obj(mdls_lup,
+                                                                                               match_value_xx = mdl_nm_1L_chr,
+                                                                                               match_var_nm_1L_chr = "mdl_nms_chr",
+                                                                                               target_var_nm_1L_chr = "source_chr",
                                                                                                                  evaluate_1L_lgl = F))))
   idx_1L_int <- which(include_lgl)
   if(identical(idx_1L_int,integer(0))){
@@ -147,6 +148,9 @@ get_mdls_lup <- function(ttu_dv_dss_tb = NULL,
                                                                       character(0))})) %>%
                           dplyr::mutate(ds_url = urls_chr)
                       })
+    mdls_lup <- mdls_lup %>%
+      dplyr::mutate(source_chr = dplyr::case_when(is.na(source_chr) ~ "Primary Analysis",
+                                                  T ~ source_chr))
   }else{
     mdls_lup <- NULL
   }
@@ -199,13 +203,16 @@ get_model <- function(mdls_lup,
                                          server_1L_chr = server_1L_chr,
                                          key_1L_chr = key_1L_chr)
     }
+    analysis_1L_chr <- ready4::get_from_lup_obj(mdls_lup,
+                                               match_value_xx = mdl_nm_1L_chr,
+                                               match_var_nm_1L_chr = "mdl_nms_chr",
+                                               target_var_nm_1L_chr = "source_chr",
+                                               evaluate_1L_lgl = F)
+    if(analysis_1L_chr == "Primary Analysis")
+      analysis_1L_chr <- NULL
     model_mdl <- specific::get_table_predn_mdl(mdl_nm_1L_chr,
-                                          ingredients_ls = mdl_meta_data_ls,
-                                          analysis_1L_chr = ready4::get_from_lup_obj(mdls_lup,
-                                                                                   match_value_xx = mdl_nm_1L_chr,
-                                                                                   match_var_nm_1L_chr = "mdl_nms_chr",
-                                                                                   target_var_nm_1L_chr = "source_chr",
-                                                                                   evaluate_1L_lgl = F))
+                                               ingredients_ls = mdl_meta_data_ls,
+                                               analysis_1L_chr = analysis_1L_chr)
   }else{
     model_mdl <- get_mdl_from_dv(mdl_nm_1L_chr,
                                  dv_ds_nm_1L_chr = get_mdl_ds_url(mdls_lup,

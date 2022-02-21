@@ -232,7 +232,7 @@ get_mdl_smrys <- function (ingredients_ls, mdl_nms_chr = NULL)
 #' @export 
 #' @importFrom purrr map2_dfr map_chr map_lgl
 #' @importFrom ready4 get_from_lup_obj
-#' @importFrom dplyr filter mutate
+#' @importFrom dplyr filter mutate case_when
 #' @keywords internal
 get_mdls_lup <- function (ttu_dv_dss_tb = NULL, mdl_predrs_in_ds_chr = NULL, 
     utility_type_chr = NULL, ttu_dv_nms_chr = "TTU", server_1L_chr = "dataverse.harvard.edu", 
@@ -263,6 +263,8 @@ get_mdls_lup <- function (ttu_dv_dss_tb = NULL, mdl_predrs_in_ds_chr = NULL,
                     character(0))
                 })) %>% dplyr::mutate(ds_url = urls_chr)
             })
+        mdls_lup <- mdls_lup %>% dplyr::mutate(source_chr = dplyr::case_when(is.na(source_chr) ~ 
+            "Primary Analysis", T ~ source_chr))
     }
     else {
         mdls_lup <- NULL
@@ -280,8 +282,8 @@ get_mdls_lup <- function (ttu_dv_dss_tb = NULL, mdl_predrs_in_ds_chr = NULL,
 #' @return Model (a model)
 #' @rdname get_model
 #' @export 
-#' @importFrom specific get_table_predn_mdl
 #' @importFrom ready4 get_from_lup_obj
+#' @importFrom specific get_table_predn_mdl
 #' @keywords internal
 get_model <- function (mdls_lup, mdl_nm_1L_chr, make_from_tbl_1L_lgl = T, 
     mdl_meta_data_ls = NULL, server_1L_chr = "dataverse.harvard.edu", 
@@ -292,10 +294,13 @@ get_model <- function (mdls_lup, mdl_nm_1L_chr, make_from_tbl_1L_lgl = T,
             mdl_meta_data_ls <- get_mdl_metadata(mdls_lup, mdl_nm_1L_chr = mdl_nm_1L_chr, 
                 server_1L_chr = server_1L_chr, key_1L_chr = key_1L_chr)
         }
+        analysis_1L_chr <- ready4::get_from_lup_obj(mdls_lup, 
+            match_value_xx = mdl_nm_1L_chr, match_var_nm_1L_chr = "mdl_nms_chr", 
+            target_var_nm_1L_chr = "source_chr", evaluate_1L_lgl = F)
+        if (analysis_1L_chr == "Primary Analysis") 
+            analysis_1L_chr <- NULL
         model_mdl <- specific::get_table_predn_mdl(mdl_nm_1L_chr, 
-            ingredients_ls = mdl_meta_data_ls, analysis_1L_chr = ready4::get_from_lup_obj(mdls_lup, 
-                match_value_xx = mdl_nm_1L_chr, match_var_nm_1L_chr = "mdl_nms_chr", 
-                target_var_nm_1L_chr = "source_chr", evaluate_1L_lgl = F))
+            ingredients_ls = mdl_meta_data_ls, analysis_1L_chr = analysis_1L_chr)
     }
     else {
         model_mdl <- get_mdl_from_dv(mdl_nm_1L_chr, dv_ds_nm_1L_chr = get_mdl_ds_url(mdls_lup, 

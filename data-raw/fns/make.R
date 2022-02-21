@@ -274,11 +274,17 @@ make_predn_metadata_ls <- function(data_tb,
                                    utl_var_nm_1L_chr = "AQoL6D_HU",
                                    server_1L_chr = "dataverse.harvard.edu",
                                    key_1L_chr = NULL){
-    if(!is.null(predr_vars_nms_chr)){
-        data_tb <- specific::rename_from_nmd_vec(data_tb,
-                                       nmd_vec_chr = predr_vars_nms_chr,
-                                       vec_nms_as_new_1L_lgl = T)
-    }
+  if(!is.null(predr_vars_nms_chr)){
+    data_tb <- specific::rename_from_nmd_vec(data_tb,
+                                             nmd_vec_chr = predr_vars_nms_chr,
+                                             vec_nms_as_new_1L_lgl = T)
+  }
+  if(is.null(mdl_meta_data_ls)){
+    mdl_meta_data_ls <- get_mdl_metadata(mdls_lup,
+                                         mdl_nm_1L_chr = mdl_nm_1L_chr,
+                                         key_1L_chr = key_1L_chr,
+                                         server_1L_chr = server_1L_chr)
+  }
     predictors_lup <- get_predictors_lup(mdl_meta_data_ls = mdl_meta_data_ls,
                                         mdls_lup = mdls_lup,
                                         mdl_nm_1L_chr = mdl_nm_1L_chr,
