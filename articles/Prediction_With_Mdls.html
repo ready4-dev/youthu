@@ -33,7 +33,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">youthu</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.0.9110</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.0.9111</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -128,7 +128,7 @@ Article
 1
 </td>
 <td style="text-align:left;">
-AQoL-6D
+aqol6dtotalw
 </td>
 <td style="text-align:left;">
 BADS total score , GAD7 total score , K6 total score , OASIS total score , PHQ9 total score , SCARED total score, SOFAS total score
@@ -256,28 +256,6 @@ Primary Analysis
 </tr>
 <tr>
 <td style="text-align:left;">
-SCARED_SOFAS_1_GLM_GSN_LOG
-</td>
-<td style="text-align:right;">
-SCARED, SOFAS
-</td>
-<td style="text-align:right;">
-Primary Analysis
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-SCARED_SOFAS_1_OLS_CLL
-</td>
-<td style="text-align:right;">
-SCARED, SOFAS
-</td>
-<td style="text-align:right;">
-Primary Analysis
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
 K6_SOFAS_1_GLM_GSN_LOG
 </td>
 <td style="text-align:right;">
@@ -293,6 +271,28 @@ K6_SOFAS_1_OLS_CLL
 </td>
 <td style="text-align:right;">
 K6 , SOFAS
+</td>
+<td style="text-align:right;">
+Primary Analysis
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+SCARED_SOFAS_1_GLM_GSN_LOG
+</td>
+<td style="text-align:right;">
+SCARED, SOFAS
+</td>
+<td style="text-align:right;">
+Primary Analysis
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+SCARED_SOFAS_1_OLS_CLL
+</td>
+<td style="text-align:right;">
+SCARED, SOFAS
 </td>
 <td style="text-align:right;">
 Primary Analysis
@@ -421,20 +421,20 @@ Secondary Analysis B
                  mdl_nms_chr <span class="op">=</span> <span class="st">"PHQ9_SOFAS_1_OLS_CLL"</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">## $PHQ9_SOFAS_1_OLS_CLL</span>
 <span class="co">##        Parameter Estimate    SE          95% CI</span>
-<span class="co">## 1 SD (Intercept)    0.347 0.017   0.312 , 0.381</span>
-<span class="co">## 2      Intercept    0.429 0.132   0.171 , 0.684</span>
-<span class="co">## 3  PHQ9 baseline   -9.117 0.252 -9.598 , -8.613</span>
-<span class="co">## 4    PHQ9 change   -7.323 0.335  -7.964 , -6.65</span>
-<span class="co">## 5 SOFAS baseline    0.959 0.176     0.62 , 1.31</span>
-<span class="co">## 6   SOFAS change    1.149 0.232   0.703 , 1.611</span>
-<span class="co">## 7             R2    0.767 0.012   0.742 , 0.788</span>
+<span class="co">## 1 SD (Intercept)    0.348 0.017   0.314 , 0.381</span>
+<span class="co">## 2      Intercept    0.421 0.131   0.167 , 0.681</span>
+<span class="co">## 3  PHQ9 baseline   -9.100 0.253  -9.601 , -8.61</span>
+<span class="co">## 4    PHQ9 change   -7.320 0.335 -7.974 , -6.655</span>
+<span class="co">## 5 SOFAS baseline    0.968 0.175   0.629 , 1.307</span>
+<span class="co">## 6   SOFAS change    1.149 0.231   0.703 , 1.603</span>
+<span class="co">## 7             R2    0.767 0.012   0.743 , 0.789</span>
 <span class="co">## 8           RMSE    0.925 0.004   0.922 , 0.928</span>
-<span class="co">## 9          Sigma    0.406 0.012    0.383 , 0.43</span></code></pre>
+<span class="co">## 9          Sigma    0.405 0.011   0.383 , 0.428</span></code></pre>
 <p>More information about a selected model can be found in the online model catalogue, the link to which can be obtained with the following command:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/get_mdl_ctlg_url.html">get_mdl_ctlg_url</a></span><span class="op">(</span><span class="va">mdls_lup</span>,
                  mdl_nm_1L_chr <span class="op">=</span> <span class="st">"PHQ9_SOFAS_1_OLS_CLL"</span><span class="op">)</span></code></pre></div>
-<p>[1] “<a href="https://dataverse.harvard.edu/api/access/datafile/4880098" class="external-link uri">https://dataverse.harvard.edu/api/access/datafile/4880098</a>”</p>
+<p>[1] “<a href="https://dataverse.harvard.edu/api/access/datafile/6017792" class="external-link uri">https://dataverse.harvard.edu/api/access/datafile/6017792</a>”</p>
 </div>
 <div class="section level2">
 <h2 id="prepare-a-prediction-dataset-for-use-with-a-selected-transfer-to-utility-model">Prepare a prediction dataset for use with a selected transfer to utility model<a class="anchor" aria-label="anchor" href="#prepare-a-prediction-dataset-for-use-with-a-selected-transfer-to-utility-model"></a>
@@ -475,7 +475,7 @@ Participant_1
 Baseline
 </td>
 <td style="text-align:right;">
-2020-06-02
+2020-08-15
 </td>
 <td style="text-align:right;">
 7
@@ -492,7 +492,7 @@ Participant_10
 Baseline
 </td>
 <td style="text-align:right;">
-2020-09-14
+2020-12-22
 </td>
 <td style="text-align:right;">
 17
@@ -509,7 +509,7 @@ Participant_10
 Follow-up
 </td>
 <td style="text-align:right;">
-2020-12-19
+2021-03-30
 </td>
 <td style="text-align:right;">
 17
@@ -526,7 +526,7 @@ Participant_100
 Baseline
 </td>
 <td style="text-align:right;">
-2020-09-14
+2020-12-20
 </td>
 <td style="text-align:right;">
 0
@@ -543,7 +543,7 @@ Participant_1000
 Baseline
 </td>
 <td style="text-align:right;">
-2020-11-07
+2020-08-14
 </td>
 <td style="text-align:right;">
 0
@@ -560,7 +560,7 @@ Participant_1000
 Follow-up
 </td>
 <td style="text-align:right;">
-2021-02-03
+2020-11-15
 </td>
 <td style="text-align:right;">
 0
@@ -741,7 +741,7 @@ Participant_1
 Baseline
 </td>
 <td style="text-align:right;">
-2020-06-02
+2020-08-15
 </td>
 <td style="text-align:right;">
 7
@@ -750,7 +750,7 @@ Baseline
 69
 </td>
 <td style="text-align:right;">
-0.7323065
+0.6256297
 </td>
 </tr>
 <tr>
@@ -761,7 +761,7 @@ Participant_10
 Baseline
 </td>
 <td style="text-align:right;">
-2020-09-14
+2020-12-22
 </td>
 <td style="text-align:right;">
 17
@@ -770,7 +770,7 @@ Baseline
 60
 </td>
 <td style="text-align:right;">
-0.3937271
+0.5862882
 </td>
 </tr>
 <tr>
@@ -781,7 +781,7 @@ Participant_10
 Follow-up
 </td>
 <td style="text-align:right;">
-2020-12-19
+2021-03-30
 </td>
 <td style="text-align:right;">
 17
@@ -790,7 +790,7 @@ Follow-up
 64
 </td>
 <td style="text-align:right;">
-0.3479076
+0.4807363
 </td>
 </tr>
 <tr>
@@ -801,7 +801,7 @@ Participant_100
 Baseline
 </td>
 <td style="text-align:right;">
-2020-09-14
+2020-12-20
 </td>
 <td style="text-align:right;">
 0
@@ -810,7 +810,7 @@ Baseline
 76
 </td>
 <td style="text-align:right;">
-0.9886034
+0.9298548
 </td>
 </tr>
 <tr>
@@ -821,7 +821,7 @@ Participant_1000
 Baseline
 </td>
 <td style="text-align:right;">
-2020-11-07
+2020-08-14
 </td>
 <td style="text-align:right;">
 0
@@ -830,7 +830,7 @@ Baseline
 71
 </td>
 <td style="text-align:right;">
-0.9845736
+0.9510183
 </td>
 </tr>
 <tr>
@@ -841,7 +841,7 @@ Participant_1000
 Follow-up
 </td>
 <td style="text-align:right;">
-2021-02-03
+2020-11-15
 </td>
 <td style="text-align:right;">
 0
@@ -850,7 +850,7 @@ Follow-up
 71
 </td>
 <td style="text-align:right;">
-0.9993997
+0.9799460
 </td>
 </tr>
 </tbody>
@@ -864,7 +864,7 @@ Follow-up
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">data_tb</span><span class="op">$</span><span class="va">AQoL6D_HU</span><span class="op">)</span></code></pre></div>
 <pre><code><span class="co">##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span>
-<span class="co">## 0.03302 0.42952 0.62964 0.62077 0.82487 1.00000</span></code></pre>
+<span class="co">## 0.05204 0.42216 0.62449 0.61976 0.82281 0.99999</span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="calculate-qalys">Calculate QALYs<a class="anchor" aria-label="anchor" href="#calculate-qalys"></a>
@@ -916,7 +916,7 @@ Participant_1
 Baseline
 </td>
 <td style="text-align:right;">
-2020-06-02
+2020-08-15
 </td>
 <td style="text-align:right;">
 7
@@ -925,7 +925,7 @@ Baseline
 69
 </td>
 <td style="text-align:right;">
-0.7323065
+0.6256297
 </td>
 <td style="text-align:left;">
 0.0000000
@@ -945,7 +945,7 @@ Participant_10
 Baseline
 </td>
 <td style="text-align:right;">
-2020-09-14
+2020-12-22
 </td>
 <td style="text-align:right;">
 17
@@ -954,7 +954,7 @@ Baseline
 60
 </td>
 <td style="text-align:right;">
-0.3937271
+0.5862882
 </td>
 <td style="text-align:left;">
 0.0000000
@@ -974,7 +974,7 @@ Participant_10
 Follow-up
 </td>
 <td style="text-align:right;">
-2020-12-19
+2021-03-30
 </td>
 <td style="text-align:right;">
 17
@@ -983,16 +983,16 @@ Follow-up
 64
 </td>
 <td style="text-align:right;">
-0.3479076
+0.4807363
 </td>
 <td style="text-align:left;">
--0.0458195
+-0.1055519
 </td>
 <td style="text-align:right;">
-96d 0H 0M 0S
+98d 0H 0M 0S
 </td>
 <td style="text-align:right;">
-0.0974633
+0.1431463
 </td>
 </tr>
 <tr>
@@ -1003,7 +1003,7 @@ Participant_100
 Baseline
 </td>
 <td style="text-align:right;">
-2020-09-14
+2020-12-20
 </td>
 <td style="text-align:right;">
 0
@@ -1012,7 +1012,7 @@ Baseline
 76
 </td>
 <td style="text-align:right;">
-0.9886034
+0.9298548
 </td>
 <td style="text-align:left;">
 0.0000000
@@ -1032,7 +1032,7 @@ Participant_1000
 Baseline
 </td>
 <td style="text-align:right;">
-2020-11-07
+2020-08-14
 </td>
 <td style="text-align:right;">
 0
@@ -1041,7 +1041,7 @@ Baseline
 71
 </td>
 <td style="text-align:right;">
-0.9845736
+0.9510183
 </td>
 <td style="text-align:left;">
 0.0000000
@@ -1061,7 +1061,7 @@ Participant_1000
 Follow-up
 </td>
 <td style="text-align:right;">
-2021-02-03
+2020-11-15
 </td>
 <td style="text-align:right;">
 0
@@ -1070,16 +1070,16 @@ Follow-up
 71
 </td>
 <td style="text-align:right;">
-0.9993997
+0.9799460
 </td>
 <td style="text-align:left;">
-0.0148261
+0.0289277
 </td>
 <td style="text-align:right;">
-88d 0H 0M 0S
+93d 0H 0M 0S
 </td>
 <td style="text-align:right;">
-0.2390002
+0.2458312
 </td>
 </tr>
 </tbody>
