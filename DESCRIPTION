@@ -1,6 +1,6 @@
 Package: youthu
 Title: Transform Youth Outcomes to Health Utility Predictions
-Version: 0.0.0.9111
+Version: 0.0.0.9112
 Authors@R: c(
     person("Matthew", "Hamilton", , "matthew.hamilton@orygen.org.au", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-7407-9194")),
@@ -39,7 +39,7 @@ Imports:
     ready4 (>= 0.0.0.9089),
     ready4use (>= 0.0.0.9220),
     rlang,
-    specific (>= 0.0.0.9079),
+    specific (>= 0.0.0.9080),
     stats,
     stringr,
     testthat,
@@ -48,7 +48,7 @@ Imports:
     tidyselect,
     truncnorm,
     utils,
-    youthvars (>= 0.0.0.9104)
+    youthvars (>= 0.0.0.9105)
 VignetteBuilder: knitr
 Depends: 
     R (>= 2.10)
