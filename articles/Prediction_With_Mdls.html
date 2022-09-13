@@ -14,8 +14,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Predict Quality Adjusted Life Years (QALYs)">
 <meta property="og:description" content="youthu">
@@ -79,7 +79,7 @@
 
 <script src="Prediction_With_Mdls_files/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="Prediction_With_Mdls_files/kePrint-0.0.1/kePrint.js"></script><link href="Prediction_With_Mdls_files/lightable-0.0.1/lightable.css" rel="stylesheet">
 <div class="row">
-  <main id="main"><div class="page-header">
+  <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Predict Quality Adjusted Life Years (QALYs)</h1>
             
       
@@ -90,7 +90,7 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ready4-dev.github.io/youthu/">youthu</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ready4-dev.github.io/youthu/">youthu</a></span><span class="op">)</span></span></code></pre></div>
 <p>This vignette outlines a workflow for:</p>
 <ul>
 <li>Searching, selecting and retrieving transfer to utility models;</li>
@@ -103,7 +103,7 @@
 </h2>
 <p>To identify datasets that contain transfer to utility models compatible with youthu (ie those developped with the <a href="https://ready4-dev.github.io/TTU/index.html" class="external-link">TTU package</a>), you can use the <code>get_ttu_dv_dss</code> function. The function searches specified dataverses (in the below example, the <a href="https://dataverse.harvard.edu/dataverse/TTU" class="external-link">TTU dataverse</a>) for datasets containing output from the TTU package.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ttu_dv_dss_tb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_ttu_dv_dss.html">get_ttu_dv_dss</a></span><span class="op">(</span><span class="st">"TTU"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">ttu_dv_dss_tb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_ttu_dv_dss.html">get_ttu_dv_dss</a></span><span class="op">(</span><span class="st">"TTU"</span><span class="op">)</span></span></code></pre></div>
 <p>The <code>ttu_dv_dss_tb</code> table summarises some pertinent details about each dataset containing TTU models found by the preceding command. These details include a link to any scientific summary (the “Article” column) associated with a dataset.</p>
 <table class="table  lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0;'>
 <caption>
@@ -145,10 +145,10 @@ BADS total score , GAD7 total score , K6 total score , OASIS total score , PHQ9 
 </table>
 <p>To identify models that predict a specified type of health utility from one or more of a specified subset of predictors, use:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mdls_lup</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_mdls_lup.html">get_mdls_lup</a></span><span class="op">(</span>ttu_dv_dss_tb <span class="op">=</span> <span class="va">ttu_dv_dss_tb</span>,
-                         utility_type_chr <span class="op">=</span> <span class="st">"AQoL-6D"</span>,
-                         mdl_predrs_in_ds_chr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"PHQ9 total score"</span>,
-                                                  <span class="st">"SOFAS total score"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">mdls_lup</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_mdls_lup.html">get_mdls_lup</a></span><span class="op">(</span>ttu_dv_dss_tb <span class="op">=</span> <span class="va">ttu_dv_dss_tb</span>,</span>
+<span>                         utility_type_chr <span class="op">=</span> <span class="st">"AQoL-6D"</span>,</span>
+<span>                         mdl_predrs_in_ds_chr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"PHQ9 total score"</span>,</span>
+<span>                                                  <span class="st">"SOFAS total score"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>The preceding command will produce a lookup table with information that includes the catalogue names of models, the predictors used in each model and the analysis that generated each one.</p>
 <table class="table  lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0;'>
 <caption>
@@ -417,24 +417,24 @@ Secondary Analysis B
 </table>
 <p>To review the summary information about the predictive performance of a specific model, use:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/get_dv_mdl_smrys.html">get_dv_mdl_smrys</a></span><span class="op">(</span><span class="va">mdls_lup</span>,
-                 mdl_nms_chr <span class="op">=</span> <span class="st">"PHQ9_SOFAS_1_OLS_CLL"</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## $PHQ9_SOFAS_1_OLS_CLL</span>
-<span class="co">##        Parameter Estimate    SE          95% CI</span>
-<span class="co">## 1 SD (Intercept)    0.348 0.017   0.314 , 0.381</span>
-<span class="co">## 2      Intercept    0.421 0.131   0.167 , 0.681</span>
-<span class="co">## 3  PHQ9 baseline   -9.100 0.253  -9.601 , -8.61</span>
-<span class="co">## 4    PHQ9 change   -7.320 0.335 -7.974 , -6.655</span>
-<span class="co">## 5 SOFAS baseline    0.968 0.175   0.629 , 1.307</span>
-<span class="co">## 6   SOFAS change    1.149 0.231   0.703 , 1.603</span>
-<span class="co">## 7             R2    0.767 0.012   0.743 , 0.789</span>
-<span class="co">## 8           RMSE    0.925 0.004   0.922 , 0.928</span>
-<span class="co">## 9          Sigma    0.405 0.011   0.383 , 0.428</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/get_dv_mdl_smrys.html">get_dv_mdl_smrys</a></span><span class="op">(</span><span class="va">mdls_lup</span>,</span>
+<span>                 mdl_nms_chr <span class="op">=</span> <span class="st">"PHQ9_SOFAS_1_OLS_CLL"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## $PHQ9_SOFAS_1_OLS_CLL</span></span>
+<span><span class="co">##        Parameter Estimate    SE          95% CI</span></span>
+<span><span class="co">## 1 SD (Intercept)    0.348 0.017   0.312 , 0.382</span></span>
+<span><span class="co">## 2      Intercept    0.428 0.129   0.174 , 0.686</span></span>
+<span><span class="co">## 3  PHQ9 baseline   -9.115 0.249 -9.601 , -8.618</span></span>
+<span><span class="co">## 4    PHQ9 change   -7.331 0.339 -8.007 , -6.665</span></span>
+<span><span class="co">## 5 SOFAS baseline    0.960 0.172   0.616 , 1.292</span></span>
+<span><span class="co">## 6   SOFAS change    1.146 0.235   0.674 , 1.607</span></span>
+<span><span class="co">## 7             R2    0.767 0.012   0.743 , 0.788</span></span>
+<span><span class="co">## 8           RMSE    0.925 0.004   0.922 , 0.928</span></span>
+<span><span class="co">## 9          Sigma    0.406 0.012   0.384 , 0.429</span></span></code></pre>
 <p>More information about a selected model can be found in the online model catalogue, the link to which can be obtained with the following command:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/get_mdl_ctlg_url.html">get_mdl_ctlg_url</a></span><span class="op">(</span><span class="va">mdls_lup</span>,
-                 mdl_nm_1L_chr <span class="op">=</span> <span class="st">"PHQ9_SOFAS_1_OLS_CLL"</span><span class="op">)</span></code></pre></div>
-<p>[1] “<a href="https://dataverse.harvard.edu/api/access/datafile/6038646" class="external-link uri">https://dataverse.harvard.edu/api/access/datafile/6038646</a>”</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/get_mdl_ctlg_url.html">get_mdl_ctlg_url</a></span><span class="op">(</span><span class="va">mdls_lup</span>,</span>
+<span>                 mdl_nm_1L_chr <span class="op">=</span> <span class="st">"PHQ9_SOFAS_1_OLS_CLL"</span><span class="op">)</span></span></code></pre></div>
+<p>[1] “<a href="https://dataverse.harvard.edu/api/access/datafile/6484935" class="external-link uri">https://dataverse.harvard.edu/api/access/datafile/6484935</a>”</p>
 </div>
 <div class="section level2">
 <h2 id="prepare-a-prediction-dataset-for-use-with-a-selected-transfer-to-utility-model">Prepare a prediction dataset for use with a selected transfer to utility model<a class="anchor" aria-label="anchor" href="#prepare-a-prediction-dataset-for-use-with-a-selected-transfer-to-utility-model"></a>
@@ -444,7 +444,7 @@ Secondary Analysis B
 </h3>
 <p>You can now import and inspect the dataset you plan on using for prediction. In the below example we use fake data.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">data_tb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/make_fake_ds_one.html">make_fake_ds_one</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">data_tb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/make_fake_ds_one.html">make_fake_ds_one</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <table class="table  lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0;'>
 <caption>
 Illustrative example of a prediction dataset
@@ -475,7 +475,7 @@ Participant_1
 Baseline
 </td>
 <td style="text-align:right;">
-2020-10-04
+2021-05-08
 </td>
 <td style="text-align:right;">
 7
@@ -492,7 +492,7 @@ Participant_10
 Baseline
 </td>
 <td style="text-align:right;">
-2020-08-31
+2021-06-11
 </td>
 <td style="text-align:right;">
 17
@@ -509,7 +509,7 @@ Participant_10
 Follow-up
 </td>
 <td style="text-align:right;">
-2020-11-23
+2021-08-31
 </td>
 <td style="text-align:right;">
 17
@@ -526,7 +526,7 @@ Participant_100
 Baseline
 </td>
 <td style="text-align:right;">
-2020-09-22
+2021-06-11
 </td>
 <td style="text-align:right;">
 0
@@ -543,7 +543,7 @@ Participant_1000
 Baseline
 </td>
 <td style="text-align:right;">
-2020-09-14
+2021-02-23
 </td>
 <td style="text-align:right;">
 0
@@ -560,7 +560,7 @@ Participant_1000
 Follow-up
 </td>
 <td style="text-align:right;">
-2020-12-17
+2021-05-15
 </td>
 <td style="text-align:right;">
 0
@@ -582,8 +582,8 @@ Follow-up
 </h3>
 <p>The prediction dataset must contain variables that correspond to all the predictors of the model you intend to apply. The allowable range and required class of each predictor variable are described in the <code>min_val_dbl</code>, <code>max_val_dbl</code> and <code>class_chr</code> columns of the model predictors lookup table, which can be accessed with a call to the <code>get_predictors_lup</code> function.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">predictors_lup</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_predictors_lup.html">get_predictors_lup</a></span><span class="op">(</span>mdls_lup <span class="op">=</span> <span class="va">mdls_lup</span>,
-                                     mdl_nm_1L_chr <span class="op">=</span> <span class="st">"PHQ9_SOFAS_1_OLS_CLL"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">predictors_lup</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_predictors_lup.html">get_predictors_lup</a></span><span class="op">(</span>mdls_lup <span class="op">=</span> <span class="va">mdls_lup</span>,</span>
+<span>                                     mdl_nm_1L_chr <span class="op">=</span> <span class="st">"PHQ9_SOFAS_1_OLS_CLL"</span><span class="op">)</span></span></code></pre></div>
 <table class="table  lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0;'>
 <caption>
 Model predictors lookup table
@@ -685,15 +685,15 @@ TRUE
 </table>
 <p>The prediction dataset must also include both a unique client identifier variable and a measurement time-point identifier variable (which must be a <code class="sourceCode r">factor</code> with two levels). The dataset also needs to be in long format (ie where measures at different time-points for the same individual are stacked on top of each other in separate rows). We can confirm these conditions hold by creating a dataset metadata object using the <code>make_predn_metadata_ls</code> function. In creating the metadata object, the function checks that the dataset can be used in conjunction with the model specified at the <code>mdl_nm_1L_chr</code> argument. If the prediction dataset uses different variable names for the predictors to those specified in the <code class="sourceCode r">predictors_lup</code> lookup table, a named vector detailing the correspondence between the two sets of variable names needs to be passed to the <code>predr_vars_nms_chr</code> argument. Finally, if you wish to specify a preferred variable name to use for the predicted utility values when applying the model, you can do this by passing this name to the <code>utl_var_nm_1L_chr</code> argument.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">predn_ds_ls</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/make_predn_metadata_ls.html">make_predn_metadata_ls</a></span><span class="op">(</span><span class="va">data_tb</span>,
-                                      id_var_nm_1L_chr <span class="op">=</span> <span class="st">"UID"</span>,
-                                      msrmnt_date_var_nm_1L_chr <span class="op">=</span> <span class="st">"Date"</span>,
-                                      predr_vars_nms_chr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>PHQ9 <span class="op">=</span> <span class="st">"PHQ_total"</span>,SOFAS <span class="op">=</span> <span class="st">"SOFAS_total"</span><span class="op">)</span>,
-                                      round_var_nm_1L_chr <span class="op">=</span> <span class="st">"Timepoint"</span>,
-                                      round_bl_val_1L_chr <span class="op">=</span> <span class="st">"Baseline"</span>,
-                                      utl_var_nm_1L_chr <span class="op">=</span> <span class="st">"AQoL6D_HU"</span>,
-                                      mdls_lup <span class="op">=</span> <span class="va">mdls_lup</span>,
-                                      mdl_nm_1L_chr <span class="op">=</span> <span class="st">"PHQ9_SOFAS_1_OLS_CLL"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">predn_ds_ls</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/make_predn_metadata_ls.html">make_predn_metadata_ls</a></span><span class="op">(</span><span class="va">data_tb</span>,</span>
+<span>                                      id_var_nm_1L_chr <span class="op">=</span> <span class="st">"UID"</span>,</span>
+<span>                                      msrmnt_date_var_nm_1L_chr <span class="op">=</span> <span class="st">"Date"</span>,</span>
+<span>                                      predr_vars_nms_chr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>PHQ9 <span class="op">=</span> <span class="st">"PHQ_total"</span>,SOFAS <span class="op">=</span> <span class="st">"SOFAS_total"</span><span class="op">)</span>,</span>
+<span>                                      round_var_nm_1L_chr <span class="op">=</span> <span class="st">"Timepoint"</span>,</span>
+<span>                                      round_bl_val_1L_chr <span class="op">=</span> <span class="st">"Baseline"</span>,</span>
+<span>                                      utl_var_nm_1L_chr <span class="op">=</span> <span class="st">"AQoL6D_HU"</span>,</span>
+<span>                                      mdls_lup <span class="op">=</span> <span class="va">mdls_lup</span>,</span>
+<span>                                      mdl_nm_1L_chr <span class="op">=</span> <span class="st">"PHQ9_SOFAS_1_OLS_CLL"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -704,9 +704,9 @@ TRUE
 </h3>
 <p>To generate utility predictions we use the <code class="sourceCode r">add_utl_predn</code> function. The function needs to be supplied with the prediction dataset (the value passed to argument <code>data_tb</code>) and the validated prediction metadata object we created in the previous step.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">data_tb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/add_utl_predn.html">add_utl_predn</a></span><span class="op">(</span><span class="va">data_tb</span>,
-                         predn_ds_ls <span class="op">=</span> <span class="va">predn_ds_ls</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## Joining, by = c("UID", "Timepoint")</span></code></pre>
+<code class="sourceCode R"><span><span class="va">data_tb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/add_utl_predn.html">add_utl_predn</a></span><span class="op">(</span><span class="va">data_tb</span>,</span>
+<span>                         predn_ds_ls <span class="op">=</span> <span class="va">predn_ds_ls</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Joining, by = c("UID", "Timepoint")</span></span></code></pre>
 <p>By default the <code class="sourceCode r">add_utl_predn</code> function samples model parameter values based on a table of model coefficients when making predictions and constrains predictions to an allowed range. You can override these defaults by adding additional arguments <code>new_data_is_1L_chr = "Predicted"</code> (which uses mean parameter values), <code>force_min_max_1L_lgl = F</code> (removes range constraint) and (if the source dataset makes available downloadable model objects) <code>make_from_tbl_1L_lgl = F</code>. These settings will produce different predictions. It is strongly recommended that you consult the model catalogue (see above) to understand how such decisions may affect the validity of the predicted values that will be generated.</p>
 <table class="table  lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0;'>
 <caption>
@@ -741,7 +741,7 @@ Participant_1
 Baseline
 </td>
 <td style="text-align:right;">
-2020-10-04
+2021-05-08
 </td>
 <td style="text-align:right;">
 7
@@ -750,7 +750,7 @@ Baseline
 69
 </td>
 <td style="text-align:right;">
-0.4777216
+0.6129969
 </td>
 </tr>
 <tr>
@@ -761,7 +761,7 @@ Participant_10
 Baseline
 </td>
 <td style="text-align:right;">
-2020-08-31
+2021-06-11
 </td>
 <td style="text-align:right;">
 17
@@ -770,7 +770,7 @@ Baseline
 60
 </td>
 <td style="text-align:right;">
-0.5600380
+0.2612406
 </td>
 </tr>
 <tr>
@@ -781,7 +781,7 @@ Participant_10
 Follow-up
 </td>
 <td style="text-align:right;">
-2020-11-23
+2021-08-31
 </td>
 <td style="text-align:right;">
 17
@@ -790,7 +790,7 @@ Follow-up
 64
 </td>
 <td style="text-align:right;">
-0.5555328
+0.3143755
 </td>
 </tr>
 <tr>
@@ -801,7 +801,7 @@ Participant_100
 Baseline
 </td>
 <td style="text-align:right;">
-2020-09-22
+2021-06-11
 </td>
 <td style="text-align:right;">
 0
@@ -810,7 +810,7 @@ Baseline
 76
 </td>
 <td style="text-align:right;">
-0.9982537
+0.9432739
 </td>
 </tr>
 <tr>
@@ -821,7 +821,7 @@ Participant_1000
 Baseline
 </td>
 <td style="text-align:right;">
-2020-09-14
+2021-02-23
 </td>
 <td style="text-align:right;">
 0
@@ -830,7 +830,7 @@ Baseline
 71
 </td>
 <td style="text-align:right;">
-0.9947785
+0.9573783
 </td>
 </tr>
 <tr>
@@ -841,7 +841,7 @@ Participant_1000
 Follow-up
 </td>
 <td style="text-align:right;">
-2020-12-17
+2021-05-15
 </td>
 <td style="text-align:right;">
 0
@@ -850,7 +850,7 @@ Follow-up
 71
 </td>
 <td style="text-align:right;">
-0.9658230
+0.8447926
 </td>
 </tr>
 </tbody>
@@ -862,18 +862,18 @@ Follow-up
 </table>
 <p>Our health utility predictions are now available for use and are summarised below.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">data_tb</span><span class="op">$</span><span class="va">AQoL6D_HU</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span>
-<span class="co">## 0.04024 0.41598 0.63414 0.61536 0.81755 0.99998</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">data_tb</span><span class="op">$</span><span class="va">AQoL6D_HU</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
+<span><span class="co">## 0.06155 0.43547 0.62386 0.62174 0.83325 1.00000</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="calculate-qalys">Calculate QALYs<a class="anchor" aria-label="anchor" href="#calculate-qalys"></a>
 </h3>
 <p>The last step is to calculate Quality Adjusted Life Years, using a method assuming a linear rate of change between timepoints.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">data_tb</span> <span class="op">&lt;-</span> <span class="va">data_tb</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/add_qalys_to_ds.html">add_qalys_to_ds</a></span><span class="op">(</span>predn_ds_ls <span class="op">=</span> <span class="va">predn_ds_ls</span>,
-                                       include_predrs_1L_lgl <span class="op">=</span> <span class="cn">F</span>,
-                                       reshape_1L_lgl <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">data_tb</span> <span class="op">&lt;-</span> <span class="va">data_tb</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/add_qalys_to_ds.html">add_qalys_to_ds</a></span><span class="op">(</span>predn_ds_ls <span class="op">=</span> <span class="va">predn_ds_ls</span>,</span>
+<span>                                       include_predrs_1L_lgl <span class="op">=</span> <span class="cn">F</span>,</span>
+<span>                                       reshape_1L_lgl <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
 <table class="table  lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0;'>
 <caption>
 Prediction dataset with QALYs
@@ -916,7 +916,7 @@ Participant_1
 Baseline
 </td>
 <td style="text-align:right;">
-2020-10-04
+2021-05-08
 </td>
 <td style="text-align:right;">
 7
@@ -925,7 +925,7 @@ Baseline
 69
 </td>
 <td style="text-align:right;">
-0.4777216
+0.6129969
 </td>
 <td style="text-align:left;">
 0.0000000
@@ -934,7 +934,7 @@ Baseline
 0S
 </td>
 <td style="text-align:right;">
-0.0000000
+0.000000
 </td>
 </tr>
 <tr>
@@ -945,7 +945,7 @@ Participant_10
 Baseline
 </td>
 <td style="text-align:right;">
-2020-08-31
+2021-06-11
 </td>
 <td style="text-align:right;">
 17
@@ -954,7 +954,7 @@ Baseline
 60
 </td>
 <td style="text-align:right;">
-0.5600380
+0.2612406
 </td>
 <td style="text-align:left;">
 0.0000000
@@ -963,7 +963,7 @@ Baseline
 0S
 </td>
 <td style="text-align:right;">
-0.0000000
+0.000000
 </td>
 </tr>
 <tr>
@@ -974,7 +974,7 @@ Participant_10
 Follow-up
 </td>
 <td style="text-align:right;">
-2020-11-23
+2021-08-31
 </td>
 <td style="text-align:right;">
 17
@@ -983,16 +983,16 @@ Follow-up
 64
 </td>
 <td style="text-align:right;">
-0.5555328
+0.3143755
 </td>
 <td style="text-align:left;">
--0.0045052
+0.0531349
 </td>
 <td style="text-align:right;">
-84d 0H 0M 0S
+81d 0H 0M 0S
 </td>
 <td style="text-align:right;">
-0.1282792
+0.063826
 </td>
 </tr>
 <tr>
@@ -1003,7 +1003,7 @@ Participant_100
 Baseline
 </td>
 <td style="text-align:right;">
-2020-09-22
+2021-06-11
 </td>
 <td style="text-align:right;">
 0
@@ -1012,7 +1012,7 @@ Baseline
 76
 </td>
 <td style="text-align:right;">
-0.9982537
+0.9432739
 </td>
 <td style="text-align:left;">
 0.0000000
@@ -1021,7 +1021,7 @@ Baseline
 0S
 </td>
 <td style="text-align:right;">
-0.0000000
+0.000000
 </td>
 </tr>
 <tr>
@@ -1032,7 +1032,7 @@ Participant_1000
 Baseline
 </td>
 <td style="text-align:right;">
-2020-09-14
+2021-02-23
 </td>
 <td style="text-align:right;">
 0
@@ -1041,7 +1041,7 @@ Baseline
 71
 </td>
 <td style="text-align:right;">
-0.9947785
+0.9573783
 </td>
 <td style="text-align:left;">
 0.0000000
@@ -1050,7 +1050,7 @@ Baseline
 0S
 </td>
 <td style="text-align:right;">
-0.0000000
+0.000000
 </td>
 </tr>
 <tr>
@@ -1061,7 +1061,7 @@ Participant_1000
 Follow-up
 </td>
 <td style="text-align:right;">
-2020-12-17
+2021-05-15
 </td>
 <td style="text-align:right;">
 0
@@ -1070,16 +1070,16 @@ Follow-up
 71
 </td>
 <td style="text-align:right;">
-0.9658230
+0.8447926
 </td>
 <td style="text-align:left;">
--0.0289555
+-0.1125857
 </td>
 <td style="text-align:right;">
-94d 0H 0M 0S
+81d 0H 0M 0S
 </td>
 <td style="text-align:right;">
-0.2522882
+0.199830
 </td>
 </tr>
 </tbody>
@@ -1104,7 +1104,7 @@ Follow-up
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer>

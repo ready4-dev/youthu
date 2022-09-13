@@ -14,8 +14,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Economic analysis">
 <meta property="og:description" content="youthu">
@@ -79,7 +79,7 @@
 
 <script src="Economic_Analysis_files/accessible-code-block-0.0.1/empty-anchor.js"></script><script src="Economic_Analysis_files/kePrint-0.0.1/kePrint.js"></script><link href="Economic_Analysis_files/lightable-0.0.1/lightable.css" rel="stylesheet">
 <div class="row">
-  <main id="main"><div class="page-header">
+  <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Economic analysis</h1>
             
       
@@ -90,8 +90,8 @@
     
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ready4-dev.github.io/youthu/">youthu</a></span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ready4-dev.github.io/youthu/">youthu</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span></span></code></pre></div>
 <p>This vignette illustrates the rationale for and practical decision-making utility of youthu’s <a href="Prediction_With_Mdls.html">QALYs prediction workflow</a>. Note, this example is illustrated with fake data and should not be used to inform decision-making.</p>
 <div class="section level2">
 <h2 id="motivation">Motivation<a class="anchor" aria-label="anchor" href="#motivation"></a>
@@ -103,8 +103,8 @@
 </h2>
 <p>First, we must first import our data. In this example we will use a fake dataset.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ds_tb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/make_fake_ds_two.html">make_fake_ds_two</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## Joining, by = c("fkClientID", "study_arm_chr")</span></code></pre>
+<code class="sourceCode R"><span><span class="va">ds_tb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/make_fake_ds_two.html">make_fake_ds_two</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Joining, by = c("fkClientID", "study_arm_chr")</span></span></code></pre>
 <p>Our dataset includes 268 matched comparisons, with each comparison containing baseline and follow-up records for one intervention arm participant and one control arm participant. The first few records are as follows.</p>
 <table class="table  lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0;'>
 <caption>
@@ -148,7 +148,7 @@ Participant_20
 Baseline
 </td>
 <td style="text-align:right;">
-2021-07-21
+2022-02-06
 </td>
 <td style="text-align:right;">
 0S
@@ -177,7 +177,7 @@ Participant_593
 Baseline
 </td>
 <td style="text-align:right;">
-2021-05-28
+2021-12-14
 </td>
 <td style="text-align:right;">
 0S
@@ -206,7 +206,7 @@ Participant_593
 Follow-up
 </td>
 <td style="text-align:right;">
-2021-11-19
+2022-06-07
 </td>
 <td style="text-align:right;">
 175d 0H 0M 0S
@@ -235,7 +235,7 @@ Participant_20
 Follow-up
 </td>
 <td style="text-align:right;">
-2022-01-15
+2022-08-03
 </td>
 <td style="text-align:right;">
 178d 0H 0M 0S
@@ -264,7 +264,7 @@ Participant_259
 Baseline
 </td>
 <td style="text-align:right;">
-2021-09-15
+2022-04-03
 </td>
 <td style="text-align:right;">
 0S
@@ -293,7 +293,7 @@ Participant_962
 Baseline
 </td>
 <td style="text-align:right;">
-2021-10-28
+2022-05-16
 </td>
 <td style="text-align:right;">
 0S
@@ -330,41 +330,41 @@ Intervention
 <p>A notable omission from the dataset is any measure of utility. This omission means that, in the absence of using mapping algorithms such as those included with youthu, the most feasible types of economic evaluation to apply to this dataset would likely be cost-consequence analysis (where a synopsis of the differences in a range of measures are presented alongside cost differences) and cost-effectiveness analysis (where a summary statistic - the incremental cost-effectiveness ratio or ICER - is calculated by dividing differences in costs by differences in a single outcome measure).</p>
 <p>These types of economic analyses can be relatively simple to interpret if either the intervention or control arm is simultaneously cheaper and more effective across all included outcome measures. However, these conditions don’t hold in our sample data.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="op">(</span><span class="va">ds_tb</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">study_arm_chr</span> <span class="op">==</span> <span class="st">"Control"</span> <span class="op">&amp;</span> <span class="va">round</span> <span class="op">==</span> <span class="st">"Baseline"</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fl">5</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">##       PHQ9          SOFAS      </span>
-<span class="co">##  Min.   : 0.0   Min.   :39.00  </span>
-<span class="co">##  1st Qu.: 7.0   1st Qu.:60.00  </span>
-<span class="co">##  Median :12.0   Median :66.00  </span>
-<span class="co">##  Mean   :10.9   Mean   :66.13  </span>
-<span class="co">##  3rd Qu.:15.0   3rd Qu.:72.00  </span>
-<span class="co">##  Max.   :19.0   Max.   :89.00</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="op">(</span><span class="va">ds_tb</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">study_arm_chr</span> <span class="op">==</span> <span class="st">"Control"</span> <span class="op">&amp;</span> <span class="va">round</span> <span class="op">==</span> <span class="st">"Baseline"</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fl">5</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##       PHQ9          SOFAS      </span></span>
+<span><span class="co">##  Min.   : 0.0   Min.   :39.00  </span></span>
+<span><span class="co">##  1st Qu.: 7.0   1st Qu.:60.00  </span></span>
+<span><span class="co">##  Median :12.0   Median :66.00  </span></span>
+<span><span class="co">##  Mean   :10.9   Mean   :66.13  </span></span>
+<span><span class="co">##  3rd Qu.:15.0   3rd Qu.:72.00  </span></span>
+<span><span class="co">##  Max.   :19.0   Max.   :89.00</span></span></code></pre>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="op">(</span><span class="va">ds_tb</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">study_arm_chr</span> <span class="op">==</span> <span class="st">"Control"</span> <span class="op">&amp;</span> <span class="va">round</span> <span class="op">==</span> <span class="st">"Follow-up"</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fl">5</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">##       PHQ9            SOFAS         costs_dbl     </span>
-<span class="co">##  Min.   : 0.000   Min.   :39.00   Min.   : 889.9  </span>
-<span class="co">##  1st Qu.: 4.000   1st Qu.:64.00   1st Qu.:1321.1  </span>
-<span class="co">##  Median : 8.000   Median :71.00   Median :1486.7  </span>
-<span class="co">##  Mean   : 8.493   Mean   :70.65   Mean   :1489.0  </span>
-<span class="co">##  3rd Qu.:13.000   3rd Qu.:77.00   3rd Qu.:1627.0  </span>
-<span class="co">##  Max.   :27.000   Max.   :98.00   Max.   :2216.5</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="op">(</span><span class="va">ds_tb</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">study_arm_chr</span> <span class="op">==</span> <span class="st">"Control"</span> <span class="op">&amp;</span> <span class="va">round</span> <span class="op">==</span> <span class="st">"Follow-up"</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fl">5</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##       PHQ9            SOFAS         costs_dbl     </span></span>
+<span><span class="co">##  Min.   : 0.000   Min.   :39.00   Min.   : 889.9  </span></span>
+<span><span class="co">##  1st Qu.: 4.000   1st Qu.:64.00   1st Qu.:1321.1  </span></span>
+<span><span class="co">##  Median : 8.000   Median :71.00   Median :1486.7  </span></span>
+<span><span class="co">##  Mean   : 8.493   Mean   :70.65   Mean   :1489.0  </span></span>
+<span><span class="co">##  3rd Qu.:13.000   3rd Qu.:77.00   3rd Qu.:1627.0  </span></span>
+<span><span class="co">##  Max.   :27.000   Max.   :98.00   Max.   :2216.5</span></span></code></pre>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="op">(</span><span class="va">ds_tb</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">study_arm_chr</span> <span class="op">==</span> <span class="st">"Intervention"</span> <span class="op">&amp;</span> <span class="va">round</span> <span class="op">==</span> <span class="st">"Baseline"</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fl">5</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">##       PHQ9           SOFAS      </span>
-<span class="co">##  Min.   : 0.00   Min.   :36.00  </span>
-<span class="co">##  1st Qu.: 7.00   1st Qu.:61.00  </span>
-<span class="co">##  Median :11.00   Median :67.00  </span>
-<span class="co">##  Mean   :10.81   Mean   :66.74  </span>
-<span class="co">##  3rd Qu.:15.00   3rd Qu.:72.25  </span>
-<span class="co">##  Max.   :19.00   Max.   :88.00</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="op">(</span><span class="va">ds_tb</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">study_arm_chr</span> <span class="op">==</span> <span class="st">"Intervention"</span> <span class="op">&amp;</span> <span class="va">round</span> <span class="op">==</span> <span class="st">"Baseline"</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fl">5</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##       PHQ9           SOFAS      </span></span>
+<span><span class="co">##  Min.   : 0.00   Min.   :36.00  </span></span>
+<span><span class="co">##  1st Qu.: 7.00   1st Qu.:61.00  </span></span>
+<span><span class="co">##  Median :11.00   Median :67.00  </span></span>
+<span><span class="co">##  Mean   :10.81   Mean   :66.74  </span></span>
+<span><span class="co">##  3rd Qu.:15.00   3rd Qu.:72.25  </span></span>
+<span><span class="co">##  Max.   :19.00   Max.   :88.00</span></span></code></pre>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="op">(</span><span class="va">ds_tb</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">study_arm_chr</span> <span class="op">==</span> <span class="st">"Intervention"</span> <span class="op">&amp;</span> <span class="va">round</span> <span class="op">==</span> <span class="st">"Follow-up"</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fl">5</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">##       PHQ9            SOFAS      costs_dbl     </span>
-<span class="co">##  Min.   : 0.000   Min.   :40   Min.   : 923.4  </span>
-<span class="co">##  1st Qu.: 2.000   1st Qu.:60   1st Qu.:1625.6  </span>
-<span class="co">##  Median : 6.500   Median :68   Median :1777.3  </span>
-<span class="co">##  Mean   : 6.851   Mean   :68   Mean   :1807.8  </span>
-<span class="co">##  3rd Qu.:11.000   3rd Qu.:77   3rd Qu.:1996.0  </span>
-<span class="co">##  Max.   :25.000   Max.   :93   Max.   :2872.7</span></code></pre>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="op">(</span><span class="va">ds_tb</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">study_arm_chr</span> <span class="op">==</span> <span class="st">"Intervention"</span> <span class="op">&amp;</span> <span class="va">round</span> <span class="op">==</span> <span class="st">"Follow-up"</span><span class="op">)</span><span class="op">)</span><span class="op">[</span><span class="fl">5</span><span class="op">:</span><span class="fl">7</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">##       PHQ9            SOFAS      costs_dbl     </span></span>
+<span><span class="co">##  Min.   : 0.000   Min.   :40   Min.   : 923.4  </span></span>
+<span><span class="co">##  1st Qu.: 2.000   1st Qu.:60   1st Qu.:1625.6  </span></span>
+<span><span class="co">##  Median : 6.500   Median :68   Median :1777.3  </span></span>
+<span><span class="co">##  Mean   : 6.851   Mean   :68   Mean   :1807.8  </span></span>
+<span><span class="co">##  3rd Qu.:11.000   3rd Qu.:77   3rd Qu.:1996.0  </span></span>
+<span><span class="co">##  Max.   :25.000   Max.   :93   Max.   :2872.7</span></span></code></pre>
 <p>The pattern of results summarised above create some significant barriers to meaningfully interpreting economic evaluations that are based on cost-consequence or cost-effectiveness analysis:</p>
 <ul>
 <li><p>A cost-effectiveness analysis in which change in PHQ-9 was the benefit measure would be difficult to interpret as the Intervention arm is both more effective and more costly, which begs the question is it worth paying the extra dollars for this improvement? Also - would a judgment of cost-effectiveness remain the same if the study had measured a slightly different incremental benefit or recorded change over a longer or shorter time horizon? It is likely that there is no commonly used value for money benchmark for improvements measured in PHQ-9, nor is there any time weighting associated with the measure. Furthermore, if the potential funding for the intervention is from a budget that is allocated to non-depressive illnesses (e.g. physical health), results from a cost-effectiveness analysis using PHQ-9 as its benefit measure are not readily comparable with economic evaluations of interventions from other illness groups using different benefit measures that are potentially competing for the same scarce funding.</p></li>
@@ -386,35 +386,35 @@ Intervention
 <p>Our first step is to identify which youthu models we will use to predict adolescent AQoL-6D and apply these models to our data. This step was explained in more detail in <a href="Prediction_With_Mdls.html">another vignette article about finding and using transfer to utility models</a>, so will be dealt with briefly here.</p>
 <p>First we make sure that our dataset can be used as a prediction dataset in conjunction with the model we intend using.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">predn_ds_ls</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/make_predn_metadata_ls.html">make_predn_metadata_ls</a></span><span class="op">(</span><span class="va">ds_tb</span>,
-                                      cmprsn_groups_chr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Intervention"</span>, <span class="st">"Control"</span><span class="op">)</span>,
-                                      cmprsn_var_nm_1L_chr <span class="op">=</span> <span class="st">"study_arm_chr"</span>,
-                                      costs_var_nm_1L_chr <span class="op">=</span> <span class="st">"costs_dbl"</span>,
-                                      id_var_nm_1L_chr <span class="op">=</span> <span class="st">"fkClientID"</span>,
-                                      msrmnt_date_var_nm_1L_chr <span class="op">=</span> <span class="st">"date_psx"</span>,
-                                      round_var_nm_1L_chr <span class="op">=</span> <span class="st">"round"</span>,
-                                      round_bl_val_1L_chr <span class="op">=</span> <span class="st">"Baseline"</span>,
-                                      utl_var_nm_1L_chr <span class="op">=</span> <span class="st">"AQoL6D_HU"</span>,
-                                      mdls_lup <span class="op">=</span> <span class="fu"><a href="../reference/get_mdls_lup.html">get_mdls_lup</a></span><span class="op">(</span>utility_type_chr <span class="op">=</span> <span class="st">"AQoL-6D"</span>,
-                                                              mdl_predrs_in_ds_chr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"PHQ9 total score"</span>,
-                                                                                       <span class="st">"SOFAS total score"</span><span class="op">)</span>,
-                                                              ttu_dv_nms_chr <span class="op">=</span> <span class="st">"TTU"</span><span class="op">)</span>,
-                                      mdl_nm_1L_chr <span class="op">=</span>  <span class="st">"PHQ9_SOFAS_1_OLS_CLL"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">predn_ds_ls</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/make_predn_metadata_ls.html">make_predn_metadata_ls</a></span><span class="op">(</span><span class="va">ds_tb</span>,</span>
+<span>                                      cmprsn_groups_chr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Intervention"</span>, <span class="st">"Control"</span><span class="op">)</span>,</span>
+<span>                                      cmprsn_var_nm_1L_chr <span class="op">=</span> <span class="st">"study_arm_chr"</span>,</span>
+<span>                                      costs_var_nm_1L_chr <span class="op">=</span> <span class="st">"costs_dbl"</span>,</span>
+<span>                                      id_var_nm_1L_chr <span class="op">=</span> <span class="st">"fkClientID"</span>,</span>
+<span>                                      msrmnt_date_var_nm_1L_chr <span class="op">=</span> <span class="st">"date_psx"</span>,</span>
+<span>                                      round_var_nm_1L_chr <span class="op">=</span> <span class="st">"round"</span>,</span>
+<span>                                      round_bl_val_1L_chr <span class="op">=</span> <span class="st">"Baseline"</span>,</span>
+<span>                                      utl_var_nm_1L_chr <span class="op">=</span> <span class="st">"AQoL6D_HU"</span>,</span>
+<span>                                      mdls_lup <span class="op">=</span> <span class="fu"><a href="../reference/get_mdls_lup.html">get_mdls_lup</a></span><span class="op">(</span>utility_type_chr <span class="op">=</span> <span class="st">"AQoL-6D"</span>,</span>
+<span>                                                              mdl_predrs_in_ds_chr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"PHQ9 total score"</span>,</span>
+<span>                                                                                       <span class="st">"SOFAS total score"</span><span class="op">)</span>,</span>
+<span>                                                              ttu_dv_nms_chr <span class="op">=</span> <span class="st">"TTU"</span><span class="op">)</span>,</span>
+<span>                                      mdl_nm_1L_chr <span class="op">=</span>  <span class="st">"PHQ9_SOFAS_1_OLS_CLL"</span><span class="op">)</span></span></code></pre></div>
 <p>We now use our preferred model to predict health utility from the measures in our dataset.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ds_tb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/add_utl_predn.html">add_utl_predn</a></span><span class="op">(</span><span class="va">ds_tb</span>,
-                       predn_ds_ls <span class="op">=</span> <span class="va">predn_ds_ls</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">fkClientID</span>, <span class="va">round</span>, <span class="va">study_arm_chr</span>, <span class="va">date_psx</span>, <span class="va">duration_prd</span>, <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## Joining, by = c("fkClientID", "round")</span></code></pre>
+<code class="sourceCode R"><span><span class="va">ds_tb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/add_utl_predn.html">add_utl_predn</a></span><span class="op">(</span><span class="va">ds_tb</span>,</span>
+<span>                       predn_ds_ls <span class="op">=</span> <span class="va">predn_ds_ls</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">fkClientID</span>, <span class="va">round</span>, <span class="va">study_arm_chr</span>, <span class="va">date_psx</span>, <span class="va">duration_prd</span>, <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Joining, by = c("fkClientID", "round")</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="calculate-qalys">Calculate QALYs<a class="anchor" aria-label="anchor" href="#calculate-qalys"></a>
 </h3>
 <p>Next we combine the health utility data with the interval between measurement data to calculate QALYs and add them to the dataset.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">ds_tb</span>  <span class="op">&lt;-</span> <span class="va">ds_tb</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/add_qalys_to_ds.html">add_qalys_to_ds</a></span><span class="op">(</span>predn_ds_ls <span class="op">=</span> <span class="va">predn_ds_ls</span>,
-                                    include_predrs_1L_lgl <span class="op">=</span> <span class="cn">T</span>,
-                                    reshape_1L_lgl <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">ds_tb</span>  <span class="op">&lt;-</span> <span class="va">ds_tb</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/add_qalys_to_ds.html">add_qalys_to_ds</a></span><span class="op">(</span>predn_ds_ls <span class="op">=</span> <span class="va">predn_ds_ls</span>,</span>
+<span>                                    include_predrs_1L_lgl <span class="op">=</span> <span class="cn">T</span>,</span>
+<span>                                    reshape_1L_lgl <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
 <table class="table  lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0;'>
 <caption>
 First few records from updated dataset with QALYs
@@ -502,10 +502,10 @@ Control
 243
 </td>
 <td style="text-align:right;">
-2021-05-06
+2021-11-22
 </td>
 <td style="text-align:right;">
-2021-10-30
+2022-05-18
 </td>
 <td style="text-align:right;">
 0S
@@ -532,10 +532,10 @@ Control
 64
 </td>
 <td style="text-align:right;">
-0.7600161
+0.7597988
 </td>
 <td style="text-align:right;">
-0.6065245
+0.6079774
 </td>
 <td style="text-align:right;">
 0
@@ -553,13 +553,13 @@ Control
 0
 </td>
 <td style="text-align:right;">
--0.1534916
+-0.1518214
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-0.3311125
+0.3314119
 </td>
 </tr>
 <tr>
@@ -573,10 +573,10 @@ Control
 191
 </td>
 <td style="text-align:right;">
-2021-07-02
+2022-01-18
 </td>
 <td style="text-align:right;">
-2022-01-02
+2022-07-21
 </td>
 <td style="text-align:right;">
 0S
@@ -603,10 +603,10 @@ Control
 82
 </td>
 <td style="text-align:right;">
-0.8451426
+0.8459579
 </td>
 <td style="text-align:right;">
-0.7679962
+0.7688131
 </td>
 <td style="text-align:right;">
 0
@@ -624,13 +624,13 @@ Control
 0
 </td>
 <td style="text-align:right;">
--0.0771464
+-0.0771448
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-0.4063211
+0.4067322
 </td>
 </tr>
 <tr>
@@ -644,10 +644,10 @@ Intervention
 230
 </td>
 <td style="text-align:right;">
-2021-05-27
+2021-12-13
 </td>
 <td style="text-align:right;">
-2021-11-22
+2022-06-10
 </td>
 <td style="text-align:right;">
 0S
@@ -674,10 +674,10 @@ Intervention
 72
 </td>
 <td style="text-align:right;">
-0.6116001
+0.6138300
 </td>
 <td style="text-align:right;">
-0.8609119
+0.8607305
 </td>
 <td style="text-align:right;">
 0
@@ -695,13 +695,13 @@ Intervention
 0
 </td>
 <td style="text-align:right;">
-0.2493118
+0.2469005
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-0.3608209
+0.3613228
 </td>
 </tr>
 <tr>
@@ -715,10 +715,10 @@ Intervention
 115
 </td>
 <td style="text-align:right;">
-2021-06-25
+2022-01-11
 </td>
 <td style="text-align:right;">
-2021-12-24
+2022-07-12
 </td>
 <td style="text-align:right;">
 0S
@@ -745,10 +745,10 @@ Intervention
 81
 </td>
 <td style="text-align:right;">
-0.5788130
+0.5808015
 </td>
 <td style="text-align:right;">
-0.9316209
+0.9315788
 </td>
 <td style="text-align:right;">
 0
@@ -766,13 +766,13 @@ Intervention
 0
 </td>
 <td style="text-align:right;">
-0.3528079
+0.3507773
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-0.3763162
+0.3768011
 </td>
 </tr>
 <tr>
@@ -786,10 +786,10 @@ Intervention
 183
 </td>
 <td style="text-align:right;">
-2021-09-26
+2022-04-14
 </td>
 <td style="text-align:right;">
-2022-03-31
+2022-10-17
 </td>
 <td style="text-align:right;">
 0S
@@ -816,10 +816,10 @@ Intervention
 88
 </td>
 <td style="text-align:right;">
-0.5479434
+0.5460607
 </td>
 <td style="text-align:right;">
-0.9593007
+0.9593811
 </td>
 <td style="text-align:right;">
 0
@@ -837,13 +837,13 @@ Intervention
 0
 </td>
 <td style="text-align:right;">
-0.4113573
+0.4133204
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-0.3837747
+0.3833158
 </td>
 </tr>
 <tr>
@@ -857,10 +857,10 @@ Intervention
 219
 </td>
 <td style="text-align:right;">
-2021-10-22
+2022-05-10
 </td>
 <td style="text-align:right;">
-2022-04-19
+2022-11-05
 </td>
 <td style="text-align:right;">
 0S
@@ -887,10 +887,10 @@ Intervention
 73
 </td>
 <td style="text-align:right;">
-0.7241764
+0.7239490
 </td>
 <td style="text-align:right;">
-0.5884387
+0.5885972
 </td>
 <td style="text-align:right;">
 0
@@ -908,13 +908,13 @@ Intervention
 0
 </td>
 <td style="text-align:right;">
--0.1357377
+-0.1353518
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-0.3216401
+0.3216232
 </td>
 </tr>
 </tbody>
@@ -931,17 +931,17 @@ Intervention
 <p>Now we can run the main economic analysis. This is implemented by the <code class="sourceCode r">make_hlth_ec_smry</code> function, which first bootstraps the dataset (implemented by the <code>boot</code> function from the <code>boot</code> package) before passing the mean values for costs and QALYs from each bootstrap sample to with <code>bcea</code> function of the <code>BCEA</code> package to calculate a range of health economic statistics. For this example we pass a value of 50,000 for the willingness to pay parameter, as this is the dollar amount commonly used in Australia as a benchmark for the value of a QALY.</p>
 <p>Note, for this illustrative example we only request 1000 bootstrap iterations - in practice this number may be higher.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">he_smry_ls</span> <span class="op">&lt;-</span> <span class="va">ds_tb</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/make_hlth_ec_smry.html">make_hlth_ec_smry</a></span><span class="op">(</span>predn_ds_ls <span class="op">=</span> <span class="va">predn_ds_ls</span>,
-                                                 wtp_dbl <span class="op">=</span> <span class="fl">50000</span>,
-                                                 bootstrap_iters_1L_int <span class="op">=</span> <span class="fl">1000L</span><span class="op">)</span></code></pre></div>
-<p>As part of the output of the <code class="sourceCode r">make_hlth_ec_smry</code> function is a BCEA object, we can use the BCEA package to produce a number of graphical summaries of economic results. One of the most important is the production of a cost-effectiveness plane. This plot highlights that, with an ICER of $-99,800.86, less than half of the bootstrapped iteration incremental cost and QALY pairs fall within the zone of cost-effectiveness (green). In fact, at the cost-effectiveness threshold we supplied, the results suggest there is a 8.2% probability that the intervention is cost-effective.</p>
+<code class="sourceCode R"><span><span class="va">he_smry_ls</span> <span class="op">&lt;-</span> <span class="va">ds_tb</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/make_hlth_ec_smry.html">make_hlth_ec_smry</a></span><span class="op">(</span>predn_ds_ls <span class="op">=</span> <span class="va">predn_ds_ls</span>,</span>
+<span>                                                 wtp_dbl <span class="op">=</span> <span class="fl">50000</span>,</span>
+<span>                                                 bootstrap_iters_1L_int <span class="op">=</span> <span class="fl">1000L</span><span class="op">)</span></span></code></pre></div>
+<p>As part of the output of the <code class="sourceCode r">make_hlth_ec_smry</code> function is a BCEA object, we can use the BCEA package to produce a number of graphical summaries of economic results. One of the most important is the production of a cost-effectiveness plane. This plot highlights that, with an ICER of $-98,145.56, less than half of the bootstrapped iteration incremental cost and QALY pairs fall within the zone of cost-effectiveness (green). In fact, at the cost-effectiveness threshold we supplied, the results suggest there is a 8% probability that the intervention is cost-effective.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span>
-<span class="fu">BCEA</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BCEA/man/ceplane.plot.html" class="external-link">ceplane.plot</a></span><span class="op">(</span><span class="va">he_smry_ls</span><span class="op">$</span><span class="va">ce_res_ls</span>, wtp <span class="op">=</span><span class="fl">50000</span>,    
-                   area_color <span class="op">=</span> <span class="st">"green"</span>,
-                    graph <span class="op">=</span> <span class="st">"ggplot2"</span>,
-          theme <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_light</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<pre><code><span class="co">## Warning: Duplicated aesthetics after name standardisation: colour</span></code></pre>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="fu">BCEA</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BCEA/man/ceplane.plot.html" class="external-link">ceplane.plot</a></span><span class="op">(</span><span class="va">he_smry_ls</span><span class="op">$</span><span class="va">ce_res_ls</span>, wtp <span class="op">=</span><span class="fl">50000</span>,    </span>
+<span>                   area_color <span class="op">=</span> <span class="st">"green"</span>,</span>
+<span>                    graph <span class="op">=</span> <span class="st">"ggplot2"</span>,</span>
+<span>          theme <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_light</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Warning: Duplicated aesthetics after name standardisation: colour</span></span></code></pre>
 <p><img src="Economic_Analysis_files/figure-html/unnamed-chunk-13-1.png" width="576"></p>
 </div>
 </div>
@@ -958,7 +958,7 @@ Intervention
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer>
