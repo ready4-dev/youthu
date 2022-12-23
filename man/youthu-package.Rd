@@ -4,15 +4,15 @@
 \name{youthu-package}
 \alias{youthu}
 \alias{youthu-package}
-\title{youthu: Transform Youth Outcomes to Health Utility Predictions}
+\title{youthu: Transform Youth Outcomes to Health Utility Predictions with Ready4}
 \description{
-\if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-Tools for mapping measures routinely collected in youth mental health services to Quality Adjusted Life Years (QALYs). Part of the First Bounce model of primary youth mental health services. This development version of the youthu package has been made available as part of the process of testing and documenting the package. If you have any questions, please contact the authors (matthew.hamilton@orygen.org.au).
+Tools for mapping measures routinely collected in youth mental health services to Quality Adjusted Life Years (QALYs). Part of the ready4 youth mental health systems model (https://www.ready4-dev.com/). This development version of the youthu package has been made available as part of the process of testing and documenting the package. If you have any questions, please contact the authors (matthew.hamilton@orygen.org.au).
 
-\if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-Tools for mapping measures routinely collected in youth mental health services to Quality Adjusted Life Years (QALYs). Part of the First Bounce model of primary youth mental health services. This development version of the youthu package has been made available as part of the process of testing and documenting the package. If you have any questions, please contact the authors (matthew.hamilton@orygen.org.au).
+Tools for mapping measures routinely collected in youth mental health services to Quality Adjusted Life Years (QALYs). Part of the ready4 youth mental health systems model (https://www.ready4-dev.com/). This development version of the youthu package has been made available as part of the process of testing and documenting the package. If you have any questions, please contact the authors (matthew.hamilton@orygen.org.au).
 }
 \seealso{
 Useful links:
@@ -32,21 +32,6 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Matthew Hamilton \email{matthew.hamilton@orygen.org.au} (\href{https://orcid.org/0000-0001-7407-9194}{ORCID})
-
-Authors:
-\itemize{
-  \item Caroline Gao \email{caroline.gao@orygen.org.au} (\href{https://orcid.org/0000-0002-0987-2759}{ORCID})
-}
-
-Other contributors:
-\itemize{
-  \item Orygen [copyright holder, funder]
-  \item Headspace [funder]
-  \item National Health and Medical Research Council [funder]
-}
-
-
 \strong{Maintainer}: Matthew Hamilton \email{matthew.hamilton@orygen.org.au} (\href{https://orcid.org/0000-0001-7407-9194}{ORCID})
 
 Authors:

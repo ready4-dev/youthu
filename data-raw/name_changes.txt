@@ -15,7 +15,7 @@ a.gplot to plot_plt
 edit extract guide box legend
 ##
 dstr_par to dstr_param
-indices to idxs_dbl
+indices to indcs_dbl
 jt_dstr_ to jt_dstr_
 make_cst_efcn_smry make_cst_efcn
 make_hlth_ec_smry to make_hlth_ec_smry

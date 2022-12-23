@@ -1,3 +1,4 @@
+library(generics)
 library(ready4)
 library(ready4show)
 library(ready4use)
@@ -8,8 +9,8 @@ ready4fun::write_fn_type_dirs()
 # MANUAL STEP. Write all your functions to R files in the new "fns" directory.
 fns_env_ls <- ready4fun::read_fns(c("data-raw/fns/","data-raw/mthds/"),
                                   fns_env = new.env(parent = globalenv()))
-x <- ready4fun::make_pkg_desc_ls(pkg_title_1L_chr = "Transform Youth Outcomes to Health Utility Predictions",
-                                 pkg_desc_1L_chr = "Tools for mapping measures routinely collected in youth mental health services to Quality Adjusted Life Years (QALYs). Part of the First Bounce model of primary youth mental health services.
+x <- ready4fun::make_pkg_desc_ls(pkg_title_1L_chr = "Transform Youth Outcomes to Health Utility Predictions With Ready4",
+                                 pkg_desc_1L_chr = "Tools for mapping measures routinely collected in youth mental health services to Quality Adjusted Life Years (QALYs). Part of the ready4 youth mental health systems model (https://www.ready4-dev.com/).
   This development version of the youthu package has been made available as part of the process of testing and documenting the package. If you have any questions, please contact the authors (matthew.hamilton@orygen.org.au).",
                                  authors_prsn = c(utils::person(given = "Matthew",family = "Hamilton",email = "matthew.hamilton@orygen.org.au", role = c("aut", "cre"),comment = c(ORCID = "0000-0001-7407-9194")),
                                                   utils::person(given = "Caroline",family = "Gao",email = "caroline.gao@orygen.org.au", role = c("aut"),comment = c(ORCID = "0000-0002-0987-2759")),
@@ -53,6 +54,8 @@ z <- ready4pack::make_pt_ready4pack_manifest(x,
                                              pkg_ds_ls_ls = datasets_ls) %>%
   ready4pack::ready4pack_manifest()
 z <- ready4::author(z)
+ready4::write_extra_pkgs_to_actions()
+devtools::build_vignettes()
 ready4::write_citation_cff(packageDescription("youthu"),
                            citation_chr = readLines("inst/CITATION"))
 # usethis::use_dev_package("TTU",
@@ -61,4 +64,4 @@ ready4::write_citation_cff(packageDescription("youthu"),
 # usethis::use_dev_package("specific",
 #                          remote = "ready4-dev/specific")
 # usethis::use_package("truncnorm")
-# devtools::build_vignettes()
+

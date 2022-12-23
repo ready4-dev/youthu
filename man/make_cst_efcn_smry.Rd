@@ -6,7 +6,7 @@
 \usage{
 make_cst_efcn_smry(
   ds_tb,
-  idxs_int,
+  indcs_int,
   change_types_chr = "dbl",
   benefits_pfx_1L_chr = "qalys_dbl",
   benefits_var_nm_1L_chr = "qalys",
@@ -22,7 +22,7 @@ make_cst_efcn_smry(
 \arguments{
 \item{ds_tb}{Dataset (a tibble)}
 
-\item{idxs_int}{Indices (an integer vector)}
+\item{indcs_int}{Indices (an integer vector)}
 
 \item{change_types_chr}{Change types (a character vector), Default: 'dbl'}
 

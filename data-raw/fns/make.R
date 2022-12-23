@@ -20,7 +20,7 @@ make_balanced_fake_ds <- function(ds_tb,
     return(ds_tb)
 }
 make_cst_efcn_smry <- function(ds_tb,
-                         idxs_int,
+                         indcs_int,
                          change_types_chr = "dbl",
                          benefits_pfx_1L_chr = "qalys_dbl",
                          benefits_var_nm_1L_chr = "qalys",
@@ -43,7 +43,7 @@ make_cst_efcn_smry <- function(ds_tb,
     rename_lup <- tibble::tibble(old_name_chr = tidyselect::all_of(selected_cols_chr),
                                  new_name_chr = c(costs_var_nm_1L_chr, benefits_var_nm_1L_chr, replacements_chr))
     new_nms_ls <- rename_lup$new_name_chr %>% purrr::map(~paste0(.x,"_",cmprsn_groups_chr))
-    summary_tb <- ds_tb[idxs_int,] %>%
+    summary_tb <- ds_tb[indcs_int,] %>%
         dplyr::group_by(!!rlang::sym(cmprsn_var_nm_1L_chr)) %>%
         dplyr::select(dplyr::all_of(c(selected_cols_chr, cmprsn_var_nm_1L_chr))) %>%
         dplyr::rename_with(.cols = tidyselect::all_of(selected_cols_chr),

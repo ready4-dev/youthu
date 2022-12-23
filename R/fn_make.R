@@ -44,7 +44,7 @@ make_costs_vec_from_gamma_dstr <- function (n_int, costs_mean_dbl, costs_sd_dbl)
 #' Make cost effectiveness summary
 #' @description make_cst_efcn_smry() is a Make function that creates a new R object. Specifically, this function implements an algorithm to make cost effectiveness summary. The function returns Summary (a double vector).
 #' @param ds_tb Dataset (a tibble)
-#' @param idxs_int Indices (an integer vector)
+#' @param indcs_int Indices (an integer vector)
 #' @param change_types_chr Change types (a character vector), Default: 'dbl'
 #' @param benefits_pfx_1L_chr Benefits prefix (a character vector of length one), Default: 'qalys_dbl'
 #' @param benefits_var_nm_1L_chr Benefits variable name (a character vector of length one), Default: 'qalys'
@@ -66,7 +66,7 @@ make_costs_vec_from_gamma_dstr <- function (n_int, costs_mean_dbl, costs_sd_dbl)
 #' @importFrom ready4 get_from_lup_obj
 #' @importFrom tidyr pivot_wider
 #' @keywords internal
-make_cst_efcn_smry <- function (ds_tb, idxs_int, change_types_chr = "dbl", benefits_pfx_1L_chr = "qalys_dbl", 
+make_cst_efcn_smry <- function (ds_tb, indcs_int, change_types_chr = "dbl", benefits_pfx_1L_chr = "qalys_dbl", 
     benefits_var_nm_1L_chr = "qalys", costs_pfx_1L_chr = "costs_dbl", 
     costs_var_nm_1L_chr = "costs", change_sfx_1L_chr = "change", 
     change_vars_chr = NA_character_, cmprsn_groups_chr = c("Intervention", 
@@ -87,7 +87,7 @@ make_cst_efcn_smry <- function (ds_tb, idxs_int, change_types_chr = "dbl", benef
             replacements_chr))
     new_nms_ls <- rename_lup$new_name_chr %>% purrr::map(~paste0(.x, 
         "_", cmprsn_groups_chr))
-    summary_tb <- ds_tb[idxs_int, ] %>% dplyr::group_by(!!rlang::sym(cmprsn_var_nm_1L_chr)) %>% 
+    summary_tb <- ds_tb[indcs_int, ] %>% dplyr::group_by(!!rlang::sym(cmprsn_var_nm_1L_chr)) %>% 
         dplyr::select(dplyr::all_of(c(selected_cols_chr, cmprsn_var_nm_1L_chr))) %>% 
         dplyr::rename_with(.cols = tidyselect::all_of(selected_cols_chr), 
             ~ready4::get_from_lup_obj(rename_lup, match_var_nm_1L_chr = "old_name_chr", 
