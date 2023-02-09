@@ -56,8 +56,8 @@ z <- ready4pack::make_pt_ready4pack_manifest(x,
 z <- ready4::author(z)
 ready4::write_extra_pkgs_to_actions()
 devtools::build_vignettes()
-ready4::write_citation_cff(packageDescription("youthu"),
-                           citation_chr = readLines("inst/CITATION"))
+# ready4::write_citation_cff(packageDescription("youthu"),
+#                            citation_chr = readLines("inst/CITATION"))
 # usethis::use_dev_package("TTU",
 #                          type = "Depends",
 #                          remote = "ready4-dev/TTU")
