@@ -34,7 +34,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">youthu</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.0.9113</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.0.9116</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -763,7 +763,7 @@ created in the previous step.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data_tb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/add_utl_predn.html">add_utl_predn</a></span><span class="op">(</span><span class="va">data_tb</span>,</span>
 <span>                         predn_ds_ls <span class="op">=</span> <span class="va">predn_ds_ls</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Joining, by = c("UID", "Timepoint")</span></span></code></pre>
+<pre><code><span><span class="co">## Joining with `by = join_by(UID, Timepoint)`</span></span></code></pre>
 <p>By default the <code class="sourceCode r">add_utl_predn</code>
 function samples model parameter values based on a table of model
 coefficients when making predictions and constrains predictions to an
@@ -819,7 +819,7 @@ Baseline
 69
 </td>
 <td style="text-align:right;">
-0.9803317
+0.8331776
 </td>
 </tr>
 <tr>
@@ -839,7 +839,7 @@ Baseline
 60
 </td>
 <td style="text-align:right;">
-0.7983377
+0.3050778
 </td>
 </tr>
 <tr>
@@ -859,7 +859,7 @@ Follow-up
 64
 </td>
 <td style="text-align:right;">
-0.4561444
+0.6704479
 </td>
 </tr>
 <tr>
@@ -879,7 +879,7 @@ Baseline
 76
 </td>
 <td style="text-align:right;">
-0.9117511
+0.9991066
 </td>
 </tr>
 <tr>
@@ -899,7 +899,7 @@ Baseline
 71
 </td>
 <td style="text-align:right;">
-0.9373539
+0.9253631
 </td>
 </tr>
 <tr>
@@ -919,7 +919,7 @@ Follow-up
 71
 </td>
 <td style="text-align:right;">
-0.9998747
+0.7115511
 </td>
 </tr>
 </tbody>
@@ -935,7 +935,7 @@ summarised below.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">data_tb</span><span class="op">$</span><span class="va">AQoL6D_HU</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
-<span><span class="co">##  0.0419  0.4372  0.6319  0.6237  0.8248  0.9999</span></span></code></pre>
+<span><span class="co">## 0.08548 0.42785 0.63780 0.62466 0.83318 0.99999</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="calculate-qalys">Calculate QALYs<a class="anchor" aria-label="anchor" href="#calculate-qalys"></a>
@@ -998,7 +998,7 @@ Baseline
 69
 </td>
 <td style="text-align:right;">
-0.9803317
+0.8331776
 </td>
 <td style="text-align:left;">
 0.0000000
@@ -1027,7 +1027,7 @@ Baseline
 60
 </td>
 <td style="text-align:right;">
-0.7983377
+0.3050778
 </td>
 <td style="text-align:left;">
 0.0000000
@@ -1056,16 +1056,16 @@ Follow-up
 64
 </td>
 <td style="text-align:right;">
-0.4561444
+0.6704479
 </td>
 <td style="text-align:left;">
--0.3421933
+0.3653701
 </td>
 <td style="text-align:right;">
 76d 0H 0M 0S
 </td>
 <td style="text-align:right;">
-0.1305142
+0.1014921
 </td>
 </tr>
 <tr>
@@ -1085,7 +1085,7 @@ Baseline
 76
 </td>
 <td style="text-align:right;">
-0.9117511
+0.9991066
 </td>
 <td style="text-align:left;">
 0.0000000
@@ -1114,7 +1114,7 @@ Baseline
 71
 </td>
 <td style="text-align:right;">
-0.9373539
+0.9253631
 </td>
 <td style="text-align:left;">
 0.0000000
@@ -1143,16 +1143,16 @@ Follow-up
 71
 </td>
 <td style="text-align:right;">
-0.9998747
+0.7115511
 </td>
 <td style="text-align:left;">
-0.0625208
+-0.2138120
 </td>
 <td style="text-align:right;">
 87d 0H 0M 0S
 </td>
 <td style="text-align:right;">
-0.2307172
+0.1949508
 </td>
 </tr>
 </tbody>
