@@ -17,7 +17,7 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(youthu)
 ```
-The tools in YOUTHU are designed to make it easier to predict health utility with [ready4 - an open source health economic model of the systems shaping mental health and wellbeing in young people](https://www.ready4-dev.com).
+The tools in youthu are designed to make it easier to predict health utility with the [ready4 health economic model](https://www.ready4-dev.com/docs/model/).
 
 This development version of the youthu package has been made available as part of the process of testing and documenting the package. 
 
