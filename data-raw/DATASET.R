@@ -3,13 +3,13 @@ library(ready4)
 library(ready4show)
 library(ready4use)
 library(youthvars)
-#library(scorz)
+library(scorz)
 library(specific)
 ready4fun::write_fn_type_dirs()
 # MANUAL STEP. Write all your functions to R files in the new "fns" directory.
 fns_env_ls <- ready4fun::read_fns(c("data-raw/fns/","data-raw/mthds/"),
                                   fns_env = new.env(parent = globalenv()))
-x <- ready4fun::make_pkg_desc_ls(pkg_title_1L_chr = "Transform Youth Outcomes to Health Utility Predictions",
+x <- ready4fun::make_pkg_desc_ls(pkg_title_1L_chr = "Transform Youth Outcomes to Health Utility Predictions" %>% tools::toTitleCase(),
                                  pkg_desc_1L_chr = "Tools for mapping measures routinely collected in youth mental health services to Quality Adjusted Life Years (QALYs). Part of the ready4 youth mental health systems model (https://www.ready4-dev.com/docs/model/).
   This development version of the youthu package has been made available as part of the process of testing and documenting the package. If you have any questions, please contact the authors (matthew.hamilton1@monash.edu).",
                                  authors_prsn = c(utils::person(given = "Matthew",family = "Hamilton",email = "matthew.hamilton1@monash.edu", role = c("aut", "cre"),comment = c(ORCID = "0000-0001-7407-9194")),
@@ -21,7 +21,7 @@ x <- ready4fun::make_pkg_desc_ls(pkg_title_1L_chr = "Transform Youth Outcomes to
                                               "https://github.com/ready4-dev/youthu",
                                               "https://www.ready4-dev.com/")) %>%
   ready4fun::make_manifest(addl_pkgs_ls = ready4fun::make_addl_pkgs_ls(#depends_chr = "TTU",#c("eq5d","ggfortify"),
-                                                                       suggests_chr = c("knitr","rmarkdown")),
+                                                                       suggests_chr = c("knitr","rmarkdown", "scorz")),
   build_ignore_ls = ready4fun::make_build_ignore_ls(file_nms_chr = c("initial_setup.R")),
   check_type_1L_chr = "ready4",
   copyright_holders_chr = "Orygen",
@@ -34,9 +34,10 @@ x <- ready4fun::make_pkg_desc_ls(pkg_title_1L_chr = "Transform Youth Outcomes to
                                                                         "make_sngl_grp_ds",
                                                                         "make_matched_ds",
                                                                         "rename_from_nmd_vec")),##
-  dev_pkgs_chr = c("ready4",#"ready4fun",
+  dev_pkgs_chr = c("ready4",
                    "ready4use","ready4show",
-                   "youthvars", "specific"),
+                   "scorz", "specific",
+                   "youthvars"),
   lifecycle_stage_1L_chr = "experimental",
   path_to_pkg_logo_1L_chr = "../../../../../Documentation/Images/youthu-logo/default.png",
   piggyback_to_1L_chr = "ready4-dev/ready4",
@@ -54,6 +55,9 @@ z <- ready4pack::make_pt_ready4pack_manifest(x,
                                              pkg_ds_ls_ls = datasets_ls) %>%
   ready4pack::ready4pack_manifest()
 z <- ready4::author(z)
+usethis::use_dev_package("scorz",
+                         type = "Suggests",
+                         remote = "ready4-dev/scorz")
 ready4::write_extra_pkgs_to_actions(consent_1L_chr = "Y")
 write_to_edit_workflow("pkgdown.yaml", consent_1L_chr = "Y") # In other packages, run for "test-coverage.yaml" as well.
 readLines("_pkgdown.yml") %>%

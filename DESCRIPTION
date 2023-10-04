@@ -55,9 +55,10 @@ Depends:
 LazyData: true
 Suggests: 
     rmarkdown,
-    scorz
-Remotes: 
+    scorz (>= 0.0.0.9062)
+Remotes:  
     ready4-dev/ready4,
     ready4-dev/ready4use,
     ready4-dev/specific,
-    ready4-dev/youthvars
+    ready4-dev/youthvars,
+    ready4-dev/scorz
