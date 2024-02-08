@@ -1,5 +1,5 @@
 ---
-title: "Predict health utility from psychological measures"
+title: "Predict health utility from psychological measures (PHQ-9 and GAD-7)"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Significant Changes To The Youthu Package}

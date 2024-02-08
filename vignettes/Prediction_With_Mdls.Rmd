@@ -1,5 +1,5 @@
 ---
-title: "Predict Quality Adjusted Life Years (QALYs)"
+title: "Predict health utility from psychological and functional measures (PHQ-9 and SOFAS)"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Predict Quality Adjusted Life Years (QALYs)}
