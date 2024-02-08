@@ -14,8 +14,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
 <meta property="og:title" content="Economic analysis">
@@ -34,7 +34,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">youthu</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.0.9118</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.0.9119</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,7 +54,7 @@
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/Economic_Analysis.html">Economic analysis</a>
     <a class="dropdown-item" href="../articles/Prediction_With_Mdls.html">Predict Quality Adjusted Life Years (QALYs)</a>
-    <a class="dropdown-item" href="../articles/V_01.html">Significant Changes To The Youthu Package</a>
+    <a class="dropdown-item" href="../articles/V_01.html">Predict health utility from psychological measures</a>
   </div>
 </li>
       </ul>
@@ -92,6 +92,8 @@
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ready4-dev.github.io/youthu/">youthu</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ready4-dev.github.io/ready4use/" class="external-link">ready4use</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span></span></code></pre></div>
 <p>This vignette illustrates the rationale for and practical
 decision-making utility of youthu’s <a href="https://ready4-dev.github.io/youthu/articles/Prediction_With_Mdls.html">QALYs
@@ -162,7 +164,7 @@ Participant_20
 Baseline
 </td>
 <td style="text-align:right;">
-2023-02-27
+2023-07-04
 </td>
 <td style="text-align:right;">
 0S
@@ -191,7 +193,7 @@ Participant_593
 Baseline
 </td>
 <td style="text-align:right;">
-2023-01-04
+2023-05-11
 </td>
 <td style="text-align:right;">
 0S
@@ -220,7 +222,7 @@ Participant_593
 Follow-up
 </td>
 <td style="text-align:right;">
-2023-06-28
+2023-11-02
 </td>
 <td style="text-align:right;">
 175d 0H 0M 0S
@@ -249,7 +251,7 @@ Participant_20
 Follow-up
 </td>
 <td style="text-align:right;">
-2023-08-24
+2023-12-29
 </td>
 <td style="text-align:right;">
 178d 0H 0M 0S
@@ -278,7 +280,7 @@ Participant_259
 Baseline
 </td>
 <td style="text-align:right;">
-2023-04-24
+2023-08-29
 </td>
 <td style="text-align:right;">
 0S
@@ -307,7 +309,7 @@ Participant_962
 Baseline
 </td>
 <td style="text-align:right;">
-2023-06-06
+2023-10-11
 </td>
 <td style="text-align:right;">
 0S
@@ -453,14 +455,23 @@ predict adolescent AQoL-6D and apply these models to our data. This step
 was explained in more detail in <a href="https://ready4-dev.github.io/youthu/articles/Prediction_With_Mdls.html">another
 vignette article about finding and using transfer to utility models</a>,
 so will be dealt with briefly here.</p>
-<p>First we make sure that our dataset can be used as a prediction
-dataset in conjunction with the model we intend using.</p>
+<p>We ingest metadata about the mapping models we plan to use.
+<strong>NOTE: This is a temporary step that is required due to the
+metadata file not being in the study online repository. This code will
+cease to work once the metadata file has been moved from its temporary
+location to the study dataset. We will perform this task when an
+associated manuscript exits its current review process.</strong></p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mdl_meta_data_ls</span> <span class="op">&lt;-</span> <span class="fu">ingest</span><span class="op">(</span><span class="fu"><a href="https://ready4-dev.github.io/ready4use/reference/Ready4useRepos-class.html" class="external-link">Ready4useRepos</a></span><span class="op">(</span>gh_repo_1L_chr <span class="op">=</span> <span class="st">"ready4-dev/youthu"</span>, gh_tag_1L_chr <span class="op">=</span> <span class="st">"v0.0.0.91125"</span><span class="op">)</span>, fls_to_ingest_chr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mdl_meta_data_ls"</span><span class="op">)</span>, metadata_1L_lgl <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
+<p>We now make sure that our dataset can be used as a prediction dataset
+in conjunction with the model we intend using.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">predn_ds_ls</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/make_predn_metadata_ls.html">make_predn_metadata_ls</a></span><span class="op">(</span><span class="va">ds_tb</span>,</span>
 <span>                                      cmprsn_groups_chr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Intervention"</span>, <span class="st">"Control"</span><span class="op">)</span>,</span>
 <span>                                      cmprsn_var_nm_1L_chr <span class="op">=</span> <span class="st">"study_arm_chr"</span>,</span>
 <span>                                      costs_var_nm_1L_chr <span class="op">=</span> <span class="st">"costs_dbl"</span>,</span>
 <span>                                      id_var_nm_1L_chr <span class="op">=</span> <span class="st">"fkClientID"</span>,</span>
+<span>                                      mdl_meta_data_ls <span class="op">=</span> <span class="va">mdl_meta_data_ls</span>,</span>
 <span>                                      msrmnt_date_var_nm_1L_chr <span class="op">=</span> <span class="st">"date_psx"</span>,</span>
 <span>                                      round_var_nm_1L_chr <span class="op">=</span> <span class="st">"round"</span>,</span>
 <span>                                      round_bl_val_1L_chr <span class="op">=</span> <span class="st">"Baseline"</span>,</span>
@@ -472,7 +483,7 @@ dataset in conjunction with the model we intend using.</p>
 <span>                                      mdl_nm_1L_chr <span class="op">=</span>  <span class="st">"PHQ9_SOFAS_1_OLS_CLL"</span><span class="op">)</span></span></code></pre></div>
 <p>We now use our preferred model to predict health utility from the
 measures in our dataset.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ds_tb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/add_utl_predn.html">add_utl_predn</a></span><span class="op">(</span><span class="va">ds_tb</span>,</span>
 <span>                       predn_ds_ls <span class="op">=</span> <span class="va">predn_ds_ls</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">fkClientID</span>, <span class="va">round</span>, <span class="va">study_arm_chr</span>, <span class="va">date_psx</span>, <span class="va">duration_prd</span>, <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
@@ -483,7 +494,7 @@ measures in our dataset.</p>
 </h3>
 <p>Next we combine the health utility data with the interval between
 measurement data to calculate QALYs and add them to the dataset.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ds_tb</span>  <span class="op">&lt;-</span> <span class="va">ds_tb</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/add_qalys_to_ds.html">add_qalys_to_ds</a></span><span class="op">(</span>predn_ds_ls <span class="op">=</span> <span class="va">predn_ds_ls</span>,</span>
 <span>                                    include_predrs_1L_lgl <span class="op">=</span> <span class="cn">T</span>,</span>
 <span>                                    reshape_1L_lgl <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
@@ -575,10 +586,10 @@ Control
 243
 </td>
 <td style="text-align:right;">
-2022-12-13
+2023-04-19
 </td>
 <td style="text-align:right;">
-2023-06-08
+2023-10-13
 </td>
 <td style="text-align:right;">
 0S
@@ -646,10 +657,10 @@ Control
 191
 </td>
 <td style="text-align:right;">
-2023-02-08
+2023-06-15
 </td>
 <td style="text-align:right;">
-2023-08-11
+2023-12-16
 </td>
 <td style="text-align:right;">
 0S
@@ -717,10 +728,10 @@ Intervention
 230
 </td>
 <td style="text-align:right;">
-2023-01-03
+2023-05-10
 </td>
 <td style="text-align:right;">
-2023-07-01
+2023-11-05
 </td>
 <td style="text-align:right;">
 0S
@@ -788,10 +799,10 @@ Intervention
 115
 </td>
 <td style="text-align:right;">
-2023-02-01
+2023-06-08
 </td>
 <td style="text-align:right;">
-2023-08-02
+2023-12-07
 </td>
 <td style="text-align:right;">
 0S
@@ -859,10 +870,10 @@ Intervention
 183
 </td>
 <td style="text-align:right;">
-2023-05-05
+2023-09-09
 </td>
 <td style="text-align:right;">
-2023-11-07
+2024-03-13
 </td>
 <td style="text-align:right;">
 0S
@@ -930,10 +941,10 @@ Intervention
 219
 </td>
 <td style="text-align:right;">
-2023-05-31
+2023-10-05
 </td>
 <td style="text-align:right;">
-2023-11-26
+2024-04-01
 </td>
 <td style="text-align:right;">
 0S
@@ -1014,7 +1025,7 @@ amount commonly used in Australia as a benchmark for the value of a
 QALY.</p>
 <p>Note, for this illustrative example we only request 1000 bootstrap
 iterations - in practice this number may be higher.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">he_smry_ls</span> <span class="op">&lt;-</span> <span class="va">ds_tb</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/make_hlth_ec_smry.html">make_hlth_ec_smry</a></span><span class="op">(</span>predn_ds_ls <span class="op">=</span> <span class="va">predn_ds_ls</span>,</span>
 <span>                                                 wtp_dbl <span class="op">=</span> <span class="fl">50000</span>,</span>
 <span>                                                 bootstrap_iters_1L_int <span class="op">=</span> <span class="fl">1000L</span><span class="op">)</span></span></code></pre></div>
@@ -1032,15 +1043,9 @@ cost and QALY pairs fall within the zone of cost-effectiveness (green).
 In fact, at the cost-effectiveness threshold we supplied, the results
 suggest there is a 8% probability that the intervention is
 cost-effective.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
-<span><span class="fu">BCEA</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BCEA/man/ceplane.plot.html" class="external-link">ceplane.plot</a></span><span class="op">(</span><span class="va">he_smry_ls</span><span class="op">$</span><span class="va">ce_res_ls</span>, wtp <span class="op">=</span><span class="fl">50000</span>,    </span>
-<span>                   area_color <span class="op">=</span> <span class="st">"green"</span>,</span>
-<span>                    graph <span class="op">=</span> <span class="st">"ggplot2"</span>,</span>
-<span>          theme <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_light</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Warning: Duplicated aesthetics after name standardisation:</span></span>
-<span><span class="co">## <span style="color: #00BB00;">colour</span></span></span></code></pre>
-<p><img src="Economic_Analysis_files/figure-html/unnamed-chunk-13-1.png" width="576"></p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">BCEA</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/BCEA/man/ceplane.plot.html" class="external-link">ceplane.plot</a></span><span class="op">(</span><span class="va">he_smry_ls</span><span class="op">$</span><span class="va">ce_res_ls</span>, wtp <span class="op">=</span><span class="fl">50000</span>,  graph <span class="op">=</span> <span class="st">"ggplot2"</span>, theme <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_light</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Economic_Analysis_files/figure-html/unnamed-chunk-14-1.png" width="576"></p>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>

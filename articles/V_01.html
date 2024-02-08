@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="youthu">
-<title>Significant Changes To The Youthu Package • youthu</title>
+<title>Predict health utility from psychological measures • youthu</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -14,11 +14,11 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
-<meta property="og:title" content="Significant Changes To The Youthu Package">
+<meta property="og:title" content="Predict health utility from psychological measures">
 <meta property="og:description" content="youthu">
 <meta property="og:image" content="https://ready4-dev.github.io/youthu/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -34,7 +34,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">youthu</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.0.9118</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.0.9119</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,7 +54,7 @@
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/Economic_Analysis.html">Economic analysis</a>
     <a class="dropdown-item" href="../articles/Prediction_With_Mdls.html">Predict Quality Adjusted Life Years (QALYs)</a>
-    <a class="dropdown-item" href="../articles/V_01.html">Significant Changes To The Youthu Package</a>
+    <a class="dropdown-item" href="../articles/V_01.html">Predict health utility from psychological measures</a>
   </div>
 </li>
       </ul>
@@ -78,10 +78,10 @@
 
 
 
-
+<script src="V_01_files/kePrint-0.0.1/kePrint.js"></script><link href="V_01_files/lightable-0.0.1/lightable.css" rel="stylesheet">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.png" class="logo" alt=""><h1>Significant Changes To The Youthu Package</h1>
+      <img src="../logo.png" class="logo" alt=""><h1>Predict health utility from psychological measures</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/ready4-dev/youthu/blob/HEAD/vignettes/V_01.Rmd" class="external-link"><code>vignettes/V_01.Rmd</code></a></small>
@@ -90,15 +90,945 @@
 
     
     
+<p><strong>This vignette article is abridged and modified version of <a href="https://ready4-dev.github.io/youthu/articles/Prediction_With_Mdls.html">another
+article on predicting Quality Adjusted Life Years with
+youthu</a>.</strong></p>
 <div class="section level2">
-<h2 id="change-is-coming">Change is coming!<a class="anchor" aria-label="anchor" href="#change-is-coming"></a>
+<h2 id="motivation">Motivation<a class="anchor" aria-label="anchor" href="#motivation"></a>
 </h2>
-<p>The youthu package is undergoing significant redevelopment currently.
-As a result the syntax will soon look very different to that outlined in
-the current vignettes.</p>
-<p>More updates will appear here shortly.</p>
+<p>This article illustrates how to make QALY predictions using a dataset
+in wide format with no health-utility measures but containing two
+psychological measures (GAD-7 and PHQ-9).</p>
 </div>
-  </main>
+<div class="section level2">
+<h2 id="install-youthu">Install youthu<a class="anchor" aria-label="anchor" href="#install-youthu"></a>
+</h2>
+<p>If not already installed it will be necessary to install the
+<code>youthu</code> R library. As <code>youthu</code> is not yet
+available on CRAN, it will be necessary to install it directly from its
+GitHub repository using an R package like <code>remotes</code> or
+<code>devtools</code>.</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Uncomment and run if installation is required.</span></span>
+<span><span class="co"># utils::install.packages("devtools") </span></span>
+<span><span class="co"># devtools::install_github("ready4-dev/youthu")</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="load-required-packages">Load required packages<a class="anchor" aria-label="anchor" href="#load-required-packages"></a>
+</h2>
+<p>We now load the libraries we will be using in subsequent steps. Note,
+both the <code>ready4</code> and <code>ready4use</code> <a href="https://www.ready4-dev.com/" class="external-link">ready4 framework</a> libraries will
+have been installed automatically when <code>youthu</code> was
+installed. The <code>specific</code> readyforwhatsnext module library
+and <code>dplyr</code>, <code>purrr</code>, <code>stringr</code> and
+<code>tidyr</code> CRAN libraries will have been installed at the same
+time.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ready4-dev.github.io/ready4/" class="external-link">ready4</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ready4-dev.github.io/ready4use/" class="external-link">ready4use</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ready4-dev.github.io/specific/" class="external-link">specific</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ready4-dev.github.io/youthu/">youthu</a></span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="specify-data-sources">Specify data sources<a class="anchor" aria-label="anchor" href="#specify-data-sources"></a>
+</h2>
+<p>We begin by specifying the sources for our data. In this example, our
+data sources are online repositories.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">X</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ready4-dev.github.io/ready4use/reference/Ready4useRepos-class.html" class="external-link">Ready4useRepos</a></span><span class="op">(</span>dv_nm_1L_chr <span class="op">=</span> <span class="st">"fakes"</span>, dv_ds_nm_1L_chr <span class="op">=</span> <span class="st">"https://doi.org/10.7910/DVN/HJXYKQ"</span>, </span>
+<span>                    dv_server_1L_chr <span class="op">=</span> <span class="st">"dataverse.harvard.edu"</span>,</span>
+<span>                    gh_repo_1L_chr <span class="op">=</span> <span class="st">"ready4-dev/youthu"</span>, gh_tag_1L_chr <span class="op">=</span> <span class="st">"v0.0.0.91125"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="inspect-dataset">Inspect dataset<a class="anchor" aria-label="anchor" href="#inspect-dataset"></a>
+</h2>
+<p>We can now inspect the dataset we will be using to make predictions.
+As this is a demonstration article we are going to create a custom
+synthetic dataset. Our first step in doing so is to ingest a preexisting
+synthetic dataset (in long format) using the method explained in <a href="https://ready4-dev.github.io/ready4use/articles/V_03.html" class="external-link">another
+vignette article</a></p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">data_tb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ready4-dev.github.io/ready4/reference/ingest-methods.html" class="external-link">ingest</a></span><span class="op">(</span><span class="va">X</span>, fls_to_ingest_chr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ymh_clinical_tb"</span><span class="op">)</span>, metadata_1L_lgl <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
+<p>We next select only the essential variables for this example,
+transform the dataset to wide format and rename our two clinical
+variables of interest.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">data_tb</span> <span class="op">&lt;-</span> <span class="va">data_tb</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"fkClientID"</span>, <span class="st">"round"</span>, </span>
+<span>                                        <span class="st">"d_interview_date"</span>, </span>
+<span>                                        <span class="st">"gad7_total"</span>, <span class="st">"phq9_total"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html" class="external-link">pivot_wider</a></span><span class="op">(</span>names_from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"round"</span><span class="op">)</span>, </span>
+<span>                     values_from <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"d_interview_date"</span>, <span class="st">"gad7_total"</span>, <span class="st">"phq9_total"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">rename_with</a></span><span class="op">(</span><span class="op">~</span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html" class="external-link">str_replace</a></span><span class="op">(</span><span class="va">.x</span>,<span class="st">"_Baseline"</span>,<span class="st">"_t1"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>                       <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html" class="external-link">str_replace</a></span><span class="op">(</span><span class="st">"_Follow-up"</span>,<span class="st">"_t2"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> </span>
+<span>                       <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_replace.html" class="external-link">str_replace</a></span><span class="op">(</span><span class="st">"_total"</span>,<span class="st">""</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>Our resulting dataset has unique IDs for each participant (character
+class), timestamps for each data collection timepoint (Date class
+variables) and GAD-7 and PHQ-9 scores for each timepoint (integer
+class).</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">data_tb</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; ">
+<table class="table  lightable-paper lightable-hover lightable-paper" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0; font-family: "Arial Narrow", arial, helvetica, sans-serif; margin-left: auto; margin-right: auto;'>
+<thead><tr>
+<th style="text-align:left;">
+fkClientID
+</th>
+<th style="text-align:right;">
+d_interview_date_t1
+</th>
+<th style="text-align:right;">
+d_interview_date_t2
+</th>
+<th style="text-align:right;">
+gad7_t1
+</th>
+<th style="text-align:right;">
+gad7_t2
+</th>
+<th style="text-align:right;">
+phq9_t1
+</th>
+<th style="text-align:left;">
+phq9_t2
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Participant_1
+</td>
+<td style="text-align:right;">
+2020-03-22
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+7
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Participant_2
+</td>
+<td style="text-align:right;">
+2020-06-15
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Participant_3
+</td>
+<td style="text-align:right;">
+2020-08-20
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+16
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+17
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Participant_4
+</td>
+<td style="text-align:right;">
+2020-05-23
+</td>
+<td style="text-align:right;">
+2020-08-19
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+17
+</td>
+<td style="text-align:left;">
+14
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Participant_5
+</td>
+<td style="text-align:right;">
+2020-04-05
+</td>
+<td style="text-align:right;">
+2020-07-19
+</td>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+22
+</td>
+<td style="text-align:left;">
+8
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Participant_6
+</td>
+<td style="text-align:right;">
+2020-06-09
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+NA
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+</tbody>
+<tfoot><tr>
+<td style="padding: 0; " colspan="100%">
+<sup></sup>
+</td>
+</tr></tfoot>
+</table>
+</div>
+</div>
+<div class="section level2">
+<h2 id="get-mapping-models">Get mapping models<a class="anchor" aria-label="anchor" href="#get-mapping-models"></a>
+</h2>
+<p>We retrieve details of relevant AQoL-6D mapping models for wither of
+the predictors we plan on using. How these models were derived is
+described in a <a href="https://doi.org/10.1101/2021.07.07.21260129" class="external-link">pre-print</a> and
+details of model performance is included in catalogues available in an
+<a href="https://doi.org/10.7910/DVN/DKDIB0" class="external-link">open access data
+repository</a>.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mdls_lup</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_mdls_lup.html">get_mdls_lup</a></span><span class="op">(</span>ttu_dv_dss_tb <span class="op">=</span> <span class="fu"><a href="../reference/get_ttu_dv_dss.html">get_ttu_dv_dss</a></span><span class="op">(</span><span class="st">"TTU"</span><span class="op">)</span>,</span>
+<span>                         utility_type_chr <span class="op">=</span> <span class="st">"AQoL-6D"</span>,</span>
+<span>                         mdl_predrs_in_ds_chr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"GAD7 total score"</span>, <span class="st">"PHQ9 total score"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mdls_lup</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">5</span><span class="op">)</span><span class="op">]</span> </span></code></pre></div>
+<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; ">
+<table class="table  lightable-paper lightable-hover lightable-paper" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0; font-family: "Arial Narrow", arial, helvetica, sans-serif; margin-left: auto; margin-right: auto;'>
+<thead><tr>
+<th style="text-align:left;">
+mdl_nms_chr
+</th>
+<th style="text-align:right;">
+predrs_ls
+</th>
+<th style="text-align:right;">
+source_chr
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+PHQ9_1_GLM_GSN_LOG
+</td>
+<td style="text-align:right;">
+PHQ9
+</td>
+<td style="text-align:right;">
+Primary Analysis
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PHQ9_1_OLS_CLL
+</td>
+<td style="text-align:right;">
+PHQ9
+</td>
+<td style="text-align:right;">
+Primary Analysis
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GAD7_1_GLM_GSN_LOG
+</td>
+<td style="text-align:right;">
+GAD7
+</td>
+<td style="text-align:right;">
+Primary Analysis
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GAD7_1_OLS_CLL
+</td>
+<td style="text-align:right;">
+GAD7
+</td>
+<td style="text-align:right;">
+Primary Analysis
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PHQ9_SOFAS_1_GLM_GSN_LOG
+</td>
+<td style="text-align:right;">
+PHQ9 , SOFAS
+</td>
+<td style="text-align:right;">
+Primary Analysis
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PHQ9_SOFAS_1_OLS_CLL
+</td>
+<td style="text-align:right;">
+PHQ9 , SOFAS
+</td>
+<td style="text-align:right;">
+Primary Analysis
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GAD7_SOFAS_1_GLM_GSN_LOG
+</td>
+<td style="text-align:right;">
+GAD7 , SOFAS
+</td>
+<td style="text-align:right;">
+Primary Analysis
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GAD7_SOFAS_1_OLS_CLL
+</td>
+<td style="text-align:right;">
+GAD7 , SOFAS
+</td>
+<td style="text-align:right;">
+Primary Analysis
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OASIS_PHQ9_1_GLM_GSN_LOG
+</td>
+<td style="text-align:right;">
+OASIS, PHQ9
+</td>
+<td style="text-align:right;">
+Secondary Analysis B
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OASIS_PHQ9_1_OLS_CLL
+</td>
+<td style="text-align:right;">
+OASIS, PHQ9
+</td>
+<td style="text-align:right;">
+Secondary Analysis B
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GAD7_PHQ9_1_GLM_GSN_LOG
+</td>
+<td style="text-align:right;">
+GAD7, PHQ9
+</td>
+<td style="text-align:right;">
+Secondary Analysis B
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+GAD7_PHQ9_1_OLS_CLL
+</td>
+<td style="text-align:right;">
+GAD7, PHQ9
+</td>
+<td style="text-align:right;">
+Secondary Analysis B
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+SCARED_PHQ9_1_GLM_GSN_LOG
+</td>
+<td style="text-align:right;">
+SCARED, PHQ9
+</td>
+<td style="text-align:right;">
+Secondary Analysis B
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+SCARED_PHQ9_1_OLS_CLL
+</td>
+<td style="text-align:right;">
+SCARED, PHQ9
+</td>
+<td style="text-align:right;">
+Secondary Analysis B
+</td>
+</tr>
+</tbody>
+<tfoot><tr>
+<td style="padding: 0; " colspan="100%">
+<sup></sup>
+</td>
+</tr></tfoot>
+</table>
+</div>
+<p>We select our preferred model and retrieve summary data about the
+model’s predictor variables.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">predictors_lup</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get_predictors_lup.html">get_predictors_lup</a></span><span class="op">(</span>mdls_lup <span class="op">=</span> <span class="va">mdls_lup</span>, mdl_nm_1L_chr <span class="op">=</span> <span class="st">"GAD7_PHQ9_1_OLS_CLL"</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://ready4-dev.github.io/ready4/reference/exhibit-methods.html" class="external-link">exhibit</a></span><span class="op">(</span><span class="va">predictors_lup</span><span class="op">)</span></span></code></pre></div>
+<table class="table  lightable-paper lightable-hover" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0;'>
+<thead><tr>
+<th style="text-align:left;">
+Variable
+</th>
+<th style="text-align:right;">
+Description
+</th>
+<th style="text-align:left;">
+Minimum
+</th>
+<th style="text-align:right;">
+Maximum
+</th>
+<th style="text-align:left;">
+Class
+</th>
+<th style="text-align:right;">
+Increment
+</th>
+<th style="text-align:left;">
+Function
+</th>
+<th style="text-align:right;">
+Scaling
+</th>
+<th style="text-align:left;">
+Covariate
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+GAD7
+</td>
+<td style="text-align:right;">
+GAD7 total score
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:right;">
+21
+</td>
+<td style="text-align:left;">
+integer
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+youthvars::youthvars_gad7
+</td>
+<td style="text-align:right;">
+0.01
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+PHQ9
+</td>
+<td style="text-align:right;">
+PHQ9 total score
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:right;">
+27
+</td>
+<td style="text-align:left;">
+integer
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:left;">
+youthvars::youthvars_phq9
+</td>
+<td style="text-align:right;">
+0.01
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+</tbody>
+<tfoot><tr>
+<td style="padding: 0; " colspan="100%">
+<sup></sup>
+</td>
+</tr></tfoot>
+</table>
+</div>
+<div class="section level2">
+<h2 id="transform-prediction-dataset">Transform prediction dataset<a class="anchor" aria-label="anchor" href="#transform-prediction-dataset"></a>
+</h2>
+<p>To be used with the mapping models available to us, our prediction
+dataset needs to be in long format. We perform the necessary
+transformation.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">data_tb</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"d_interview_date"</span>, <span class="st">"gad7"</span>, <span class="st">"phq9"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="op">~</span> <span class="va">data_tb</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>               <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html" class="external-link">pivot_longer</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">.x</span>,<span class="st">"_t"</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span>, </span>
+<span>                                   names_to <span class="op">=</span> <span class="st">"When"</span>, values_to <span class="op">=</span> <span class="va">.x</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>               <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/rownames.html" class="external-link">rowid_to_column</a></span><span class="op">(</span><span class="st">"case_id"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>               <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>When <span class="op">=</span> <span class="va">When</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_sub.html" class="external-link">str_sub</a></span><span class="op">(</span>start <span class="op">=</span> <span class="op">-</span><span class="fl">2L</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>               <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu">tidyselect</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/all_of.html" class="external-link">all_of</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"case_id"</span>, <span class="st">"fkClientID"</span>,<span class="st">"When"</span>,<span class="va">.x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/reduce.html" class="external-link">reduce</a></span><span class="op">(</span><span class="op">~</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html" class="external-link">left_join</a></span><span class="op">(</span><span class="va">.x</span>,<span class="va">.y</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">case_id</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Joining with `by = join_by(case_id, fkClientID, When)`</span></span>
+<span><span class="co">## Joining with `by = join_by(case_id, fkClientID, When)`</span></span></code></pre>
+<p>We drop records where we are missing data for either GAD7 or PHQ9 at
+either timepoint.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">drop_chr</span> <span class="op">&lt;-</span> <span class="va">data_tb</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/pmap.html" class="external-link">pmap_chr</a></span><span class="op">(</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">..4</span><span class="op">)</span><span class="op">|</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">..5</span><span class="op">)</span>,<span class="va">..1</span>,<span class="cn">NA_character_</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/keep.html" class="external-link">discard</a></span><span class="op">(</span><span class="va">is.na</span><span class="op">)</span></span>
+<span><span class="va">data_tb</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">data_tb</span>, <span class="op">!</span><span class="va">fkClientID</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">drop_chr</span><span class="op">)</span></span></code></pre></div>
+<p>We ingest metadata about our models. <strong>NOTE: This is a
+temporary step that is required due to the metadata file not being in
+the study online repository. This code will cease to work once the
+metadata file has been moved from its temporary location to the study
+dataset. We will perform this task when an associated manuscript exits
+its current review process.</strong></p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mdl_meta_data_ls</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ready4-dev.github.io/ready4/reference/ingest-methods.html" class="external-link">ingest</a></span><span class="op">(</span><span class="va">X</span>, fls_to_ingest_chr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mdl_meta_data_ls"</span><span class="op">)</span>, metadata_1L_lgl <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
+<p>We now predict AQoL-6D health utility for each case with complete
+data.</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">predn_ds_ls</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/make_predn_metadata_ls.html">make_predn_metadata_ls</a></span><span class="op">(</span><span class="va">data_tb</span>,</span>
+<span>                                      id_var_nm_1L_chr <span class="op">=</span> <span class="st">"fkClientID"</span>,</span>
+<span>                                      mdl_meta_data_ls <span class="op">=</span> <span class="va">mdl_meta_data_ls</span>,</span>
+<span>                                      msrmnt_date_var_nm_1L_chr <span class="op">=</span> <span class="st">"d_interview_date"</span>,</span>
+<span>                                      predr_vars_nms_chr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>GAD7 <span class="op">=</span> <span class="st">"gad7"</span>, PHQ9 <span class="op">=</span> <span class="st">"phq9"</span><span class="op">)</span>,</span>
+<span>                                      round_var_nm_1L_chr <span class="op">=</span> <span class="st">"When"</span>,</span>
+<span>                                      round_bl_val_1L_chr <span class="op">=</span> <span class="st">"t1"</span>,</span>
+<span>                                      utl_var_nm_1L_chr <span class="op">=</span> <span class="st">"AQoL6D_HU"</span>,</span>
+<span>                                      mdls_lup <span class="op">=</span> <span class="va">mdls_lup</span>,</span>
+<span>                                      mdl_nm_1L_chr <span class="op">=</span> <span class="st">"GAD7_PHQ9_1_OLS_CLL"</span><span class="op">)</span></span>
+<span><span class="va">data_tb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/add_utl_predn.html">add_utl_predn</a></span><span class="op">(</span><span class="va">data_tb</span>, new_data_is_1L_chr <span class="op">=</span> <span class="st">"Predicted"</span>, predn_ds_ls <span class="op">=</span> <span class="va">predn_ds_ls</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Joining with `by = join_by(fkClientID, When)`</span></span></code></pre>
+<p>Finally, we derive QALY predictions from the health utility measures
+at both time-points.</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">data_tb</span> <span class="op">&lt;-</span> <span class="va">data_tb</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/add_qalys_to_ds.html">add_qalys_to_ds</a></span><span class="op">(</span>predn_ds_ls <span class="op">=</span> <span class="va">predn_ds_ls</span>, include_predrs_1L_lgl <span class="op">=</span> <span class="cn">F</span>, reshape_1L_lgl <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">data_tb</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span> </span></code></pre></div>
+<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; ">
+<table class="table  lightable-paper lightable-hover lightable-paper" style='font-family: "Arial Narrow", arial, helvetica, sans-serif; width: auto !important; margin-left: auto; margin-right: auto;border-bottom: 0; font-family: "Arial Narrow", arial, helvetica, sans-serif; margin-left: auto; margin-right: auto;'>
+<thead><tr>
+<th style="text-align:left;">
+fkClientID
+</th>
+<th style="text-align:right;">
+d_interview_date_t1
+</th>
+<th style="text-align:right;">
+d_interview_date_t2
+</th>
+<th style="text-align:right;">
+gad7_t1
+</th>
+<th style="text-align:right;">
+gad7_t2
+</th>
+<th style="text-align:right;">
+phq9_t1
+</th>
+<th style="text-align:left;">
+phq9_t2
+</th>
+<th style="text-align:right;">
+AQoL6D_HU_t1
+</th>
+<th style="text-align:right;">
+AQoL6D_HU_t2
+</th>
+<th style="text-align:right;">
+AQoL6D_HU_change_dbl_t1
+</th>
+<th style="text-align:right;">
+AQoL6D_HU_change_dbl_t2
+</th>
+<th style="text-align:right;">
+duration_prd_t1
+</th>
+<th style="text-align:left;">
+duration_prd_t2
+</th>
+<th style="text-align:right;">
+qalys_dbl_t1
+</th>
+<th style="text-align:right;">
+qalys_dbl_t2
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Participant_10
+</td>
+<td style="text-align:right;">
+2020-08-05
+</td>
+<td style="text-align:right;">
+2020-11-07
+</td>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:right;">
+17
+</td>
+<td style="text-align:left;">
+18
+</td>
+<td style="text-align:right;">
+0.4044404
+</td>
+<td style="text-align:right;">
+0.4255379
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.0210974
+</td>
+<td style="text-align:right;">
+0S
+</td>
+<td style="text-align:left;">
+94d 0H 0M 0S
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.1068008
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Participant_1000
+</td>
+<td style="text-align:right;">
+2020-09-06
+</td>
+<td style="text-align:right;">
+2020-12-20
+</td>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+13
+</td>
+<td style="text-align:left;">
+10
+</td>
+<td style="text-align:right;">
+0.4674688
+</td>
+<td style="text-align:right;">
+0.3679690
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+-0.0994998
+</td>
+<td style="text-align:right;">
+0S
+</td>
+<td style="text-align:left;">
+105d 0H 0M 0S
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.1200835
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Participant_1001
+</td>
+<td style="text-align:right;">
+2020-07-05
+</td>
+<td style="text-align:right;">
+2020-10-15
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:right;">
+11
+</td>
+<td style="text-align:right;">
+10
+</td>
+<td style="text-align:left;">
+16
+</td>
+<td style="text-align:right;">
+0.5957813
+</td>
+<td style="text-align:right;">
+0.6692726
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.0734913
+</td>
+<td style="text-align:right;">
+0S
+</td>
+<td style="text-align:left;">
+102d 0H 0M 0S
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.1766400
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Participant_1003
+</td>
+<td style="text-align:right;">
+2020-05-18
+</td>
+<td style="text-align:right;">
+2020-08-12
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+8
+</td>
+<td style="text-align:right;">
+16
+</td>
+<td style="text-align:left;">
+7
+</td>
+<td style="text-align:right;">
+0.3341705
+</td>
+<td style="text-align:right;">
+0.7893572
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.4551867
+</td>
+<td style="text-align:right;">
+0S
+</td>
+<td style="text-align:left;">
+86d 0H 0M 0S
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.1322702
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Participant_1005
+</td>
+<td style="text-align:right;">
+2020-05-09
+</td>
+<td style="text-align:right;">
+2020-08-25
+</td>
+<td style="text-align:right;">
+14
+</td>
+<td style="text-align:right;">
+5
+</td>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:left;">
+9
+</td>
+<td style="text-align:right;">
+0.3415747
+</td>
+<td style="text-align:right;">
+0.4315610
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.0899863
+</td>
+<td style="text-align:right;">
+0S
+</td>
+<td style="text-align:left;">
+108d 0H 0M 0S
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.1143034
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Participant_1006
+</td>
+<td style="text-align:right;">
+2020-05-29
+</td>
+<td style="text-align:right;">
+2020-08-25
+</td>
+<td style="text-align:right;">
+15
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+21
+</td>
+<td style="text-align:left;">
+17
+</td>
+<td style="text-align:right;">
+0.2403117
+</td>
+<td style="text-align:right;">
+0.5715116
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.3311999
+</td>
+<td style="text-align:right;">
+0S
+</td>
+<td style="text-align:left;">
+88d 0H 0M 0S
+</td>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+0.0977966
+</td>
+</tr>
+</tbody>
+<tfoot><tr>
+<td style="padding: 0; " colspan="100%">
+<sup></sup>
+</td>
+</tr></tfoot>
+</table>
+</div>
+</div>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
