@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="youthu">
-<title>Predict health utility from psychological measures • youthu</title>
+<title>Predict health utility from psychological measures (PHQ-9 and GAD-7) • youthu</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -18,7 +18,7 @@
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
-<meta property="og:title" content="Predict health utility from psychological measures">
+<meta property="og:title" content="Predict health utility from psychological measures (PHQ-9 and GAD-7)">
 <meta property="og:description" content="youthu">
 <meta property="og:image" content="https://ready4-dev.github.io/youthu/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -53,8 +53,8 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/Economic_Analysis.html">Economic analysis</a>
-    <a class="dropdown-item" href="../articles/Prediction_With_Mdls.html">Predict Quality Adjusted Life Years (QALYs)</a>
-    <a class="dropdown-item" href="../articles/V_01.html">Predict health utility from psychological measures</a>
+    <a class="dropdown-item" href="../articles/Prediction_With_Mdls.html">Predict health utility from psychological and functional measures (PHQ-9 and SOFAS)</a>
+    <a class="dropdown-item" href="../articles/V_01.html">Predict health utility from psychological measures (PHQ-9 and GAD-7)</a>
   </div>
 </li>
       </ul>
@@ -81,7 +81,7 @@
 <script src="V_01_files/kePrint-0.0.1/kePrint.js"></script><link href="V_01_files/lightable-0.0.1/lightable.css" rel="stylesheet">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.png" class="logo" alt=""><h1>Predict health utility from psychological measures</h1>
+      <img src="../logo.png" class="logo" alt=""><h1>Predict health utility from psychological measures (PHQ-9 and GAD-7)</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/ready4-dev/youthu/blob/HEAD/vignettes/V_01.Rmd" class="external-link"><code>vignettes/V_01.Rmd</code></a></small>
@@ -759,16 +759,16 @@ Participant_10
 18
 </td>
 <td style="text-align:right;">
-0.4044404
+0.3170291
 </td>
 <td style="text-align:right;">
-0.4255379
+0.3683288
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-0.0210974
+0.0512997
 </td>
 <td style="text-align:right;">
 0S
@@ -780,7 +780,7 @@ Participant_10
 0
 </td>
 <td style="text-align:right;">
-0.1068008
+0.0881912
 </td>
 </tr>
 <tr>
@@ -806,16 +806,16 @@ Participant_1000
 10
 </td>
 <td style="text-align:right;">
-0.4674688
+0.6973895
 </td>
 <td style="text-align:right;">
-0.3679690
+0.5900528
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
--0.0994998
+-0.1073368
 </td>
 <td style="text-align:right;">
 0S
@@ -827,7 +827,7 @@ Participant_1000
 0
 </td>
 <td style="text-align:right;">
-0.1200835
+0.1850533
 </td>
 </tr>
 <tr>
@@ -853,16 +853,16 @@ Participant_1001
 16
 </td>
 <td style="text-align:right;">
-0.5957813
+0.9419855
 </td>
 <td style="text-align:right;">
-0.6692726
+0.6024489
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-0.0734913
+-0.3395366
 </td>
 <td style="text-align:right;">
 0S
@@ -874,7 +874,7 @@ Participant_1001
 0
 </td>
 <td style="text-align:right;">
-0.1766400
+0.2156500
 </td>
 </tr>
 <tr>
@@ -900,16 +900,16 @@ Participant_1003
 7
 </td>
 <td style="text-align:right;">
-0.3341705
+0.4005401
 </td>
 <td style="text-align:right;">
-0.7893572
+0.5636936
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-0.4551867
+0.1631535
 </td>
 <td style="text-align:right;">
 0S
@@ -921,7 +921,7 @@ Participant_1003
 0
 </td>
 <td style="text-align:right;">
-0.1322702
+0.1135169
 </td>
 </tr>
 <tr>
@@ -947,16 +947,16 @@ Participant_1005
 9
 </td>
 <td style="text-align:right;">
-0.3415747
+0.4571705
 </td>
 <td style="text-align:right;">
-0.4315610
+0.6969706
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-0.0899863
+0.2398002
 </td>
 <td style="text-align:right;">
 0S
@@ -968,7 +968,7 @@ Participant_1005
 0
 </td>
 <td style="text-align:right;">
-0.1143034
+0.1706328
 </td>
 </tr>
 <tr>
@@ -994,16 +994,16 @@ Participant_1006
 17
 </td>
 <td style="text-align:right;">
-0.2403117
+0.2154620
 </td>
 <td style="text-align:right;">
-0.5715116
+0.5372224
 </td>
 <td style="text-align:right;">
 0
 </td>
 <td style="text-align:right;">
-0.3311999
+0.3217604
 </td>
 <td style="text-align:right;">
 0S
@@ -1015,7 +1015,7 @@ Participant_1006
 0
 </td>
 <td style="text-align:right;">
-0.0977966
+0.0906725
 </td>
 </tr>
 </tbody>

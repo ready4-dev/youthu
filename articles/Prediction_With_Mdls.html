@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="youthu">
-<title>Predict Quality Adjusted Life Years (QALYs) • youthu</title>
+<title>Predict health utility from psychological and functional measures (PHQ-9 and SOFAS) • youthu</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -18,7 +18,7 @@
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
-<meta property="og:title" content="Predict Quality Adjusted Life Years (QALYs)">
+<meta property="og:title" content="Predict health utility from psychological and functional measures (PHQ-9 and SOFAS)">
 <meta property="og:description" content="youthu">
 <meta property="og:image" content="https://ready4-dev.github.io/youthu/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -53,8 +53,8 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/Economic_Analysis.html">Economic analysis</a>
-    <a class="dropdown-item" href="../articles/Prediction_With_Mdls.html">Predict Quality Adjusted Life Years (QALYs)</a>
-    <a class="dropdown-item" href="../articles/V_01.html">Predict health utility from psychological measures</a>
+    <a class="dropdown-item" href="../articles/Prediction_With_Mdls.html">Predict health utility from psychological and functional measures (PHQ-9 and SOFAS)</a>
+    <a class="dropdown-item" href="../articles/V_01.html">Predict health utility from psychological measures (PHQ-9 and GAD-7)</a>
   </div>
 </li>
       </ul>
@@ -81,7 +81,7 @@
 <script src="Prediction_With_Mdls_files/kePrint-0.0.1/kePrint.js"></script><link href="Prediction_With_Mdls_files/lightable-0.0.1/lightable.css" rel="stylesheet">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.png" class="logo" alt=""><h1>Predict Quality Adjusted Life Years (QALYs)</h1>
+      <img src="../logo.png" class="logo" alt=""><h1>Predict health utility from psychological and functional measures (PHQ-9 and SOFAS)</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/ready4-dev/youthu/blob/HEAD/vignettes/Prediction_With_Mdls.Rmd" class="external-link"><code>vignettes/Prediction_With_Mdls.Rmd</code></a></small>
@@ -829,7 +829,7 @@ Baseline
 69
 </td>
 <td style="text-align:right;">
-0.6843662
+0.9392486
 </td>
 </tr>
 <tr>
@@ -849,7 +849,7 @@ Baseline
 60
 </td>
 <td style="text-align:right;">
-0.3360422
+0.3871527
 </td>
 </tr>
 <tr>
@@ -869,7 +869,7 @@ Follow-up
 64
 </td>
 <td style="text-align:right;">
-0.3503774
+0.8106665
 </td>
 </tr>
 <tr>
@@ -889,7 +889,7 @@ Baseline
 76
 </td>
 <td style="text-align:right;">
-0.9999631
+0.6288071
 </td>
 </tr>
 <tr>
@@ -909,7 +909,7 @@ Baseline
 71
 </td>
 <td style="text-align:right;">
-1.0000000
+0.8207542
 </td>
 </tr>
 <tr>
@@ -929,7 +929,7 @@ Follow-up
 71
 </td>
 <td style="text-align:right;">
-0.9324866
+0.9731775
 </td>
 </tr>
 </tbody>
@@ -945,7 +945,7 @@ summarised below.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">data_tb</span><span class="op">$</span><span class="va">AQoL6D_HU</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
-<span><span class="co">## 0.08804 0.43116 0.63590 0.62551 0.83338 1.00000</span></span></code></pre>
+<span><span class="co">## 0.04553 0.42251 0.61862 0.61862 0.83037 1.00000</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="calculate-qalys">Calculate QALYs<a class="anchor" aria-label="anchor" href="#calculate-qalys"></a>
@@ -1008,7 +1008,7 @@ Baseline
 69
 </td>
 <td style="text-align:right;">
-0.6843662
+0.9392486
 </td>
 <td style="text-align:left;">
 0.0000000
@@ -1037,7 +1037,7 @@ Baseline
 60
 </td>
 <td style="text-align:right;">
-0.3360422
+0.3871527
 </td>
 <td style="text-align:left;">
 0.0000000
@@ -1066,16 +1066,16 @@ Follow-up
 64
 </td>
 <td style="text-align:right;">
-0.3503774
+0.8106665
 </td>
 <td style="text-align:left;">
-0.0143352
+0.4235138
 </td>
 <td style="text-align:right;">
 76d 0H 0M 0S
 </td>
 <td style="text-align:right;">
-0.0714140
+0.1246191
 </td>
 </tr>
 <tr>
@@ -1095,7 +1095,7 @@ Baseline
 76
 </td>
 <td style="text-align:right;">
-0.9999631
+0.6288071
 </td>
 <td style="text-align:left;">
 0.0000000
@@ -1124,7 +1124,7 @@ Baseline
 71
 </td>
 <td style="text-align:right;">
-1.0000000
+0.8207542
 </td>
 <td style="text-align:left;">
 0.0000000
@@ -1153,16 +1153,16 @@ Follow-up
 71
 </td>
 <td style="text-align:right;">
-0.9324866
+0.9731775
 </td>
 <td style="text-align:left;">
--0.0675134
+0.1524233
 </td>
 <td style="text-align:right;">
 84d 0H 0M 0S
 </td>
 <td style="text-align:right;">
-0.2222161
+0.2062837
 </td>
 </tr>
 </tbody>
