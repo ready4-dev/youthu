@@ -1,6 +1,6 @@
 Package: youthu
 Title: Transform Youth Outcomes to Health Utility Predictions
-Version: 0.0.0.9118
+Version: 0.0.0.9119
 Authors@R: c(
     person("Matthew", "Hamilton", , "matthew.hamilton1@monash.edu", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-7407-9194")),
@@ -23,42 +23,41 @@ URL: https://ready4-dev.github.io/youthu/,
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
+Suggests: 
+    knitr,
+    rmarkdown,
+    scorz,
+    testthat
+VignetteBuilder: knitr
 Imports: 
     assertthat,
     BCEA,
     boot,
     dataverse,
     dplyr,
-    knitr,
     lifecycle,
     lubridate,
     magrittr,
     MatchIt,
     methods,
     purrr,
-    ready4 (>= 0.0.0.9125),
+    ready4 (>= 0.1.6.9000),
     ready4use (>= 0.0.0.9231),
     rlang,
     specific (>= 0.0.0.9108),
     stats,
     stringr,
-    testthat,
     tibble,
     tidyr,
     tidyselect,
     truncnorm,
     utils,
     youthvars (>= 0.0.0.9123)
-VignetteBuilder: knitr
 Depends: 
     R (>= 2.10)
 LazyData: true
-Suggests: 
-    rmarkdown,
-    scorz (>= 0.0.0.9062)
-Remotes:  
+Remotes: 
     ready4-dev/ready4,
     ready4-dev/ready4use,
     ready4-dev/specific,
-    ready4-dev/youthvars,
-    ready4-dev/scorz
+    ready4-dev/youthvars
