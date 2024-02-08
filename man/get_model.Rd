@@ -30,6 +30,6 @@ get_model(
 Model (a model)
 }
 \description{
-get_model() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get model. Function argument mdls_lup specifies the where to look for the required object. The function returns Model (a model).
+get_model() is a Get function that extracts data from an object. Specifically, this function implements an algorithm to get model. The function returns Model (a model).
 }
 \keyword{internal}

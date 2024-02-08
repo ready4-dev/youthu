@@ -54,6 +54,6 @@ add_diffs_by_group_and_tmpt(
 Updated dataset (a tibble)
 }
 \description{
-add_diffs_by_group_and_tmpt() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add differences by group and time point. Function argument ds_tb specifies the object to be updated. The function returns Updated dataset (a tibble).
+add_diffs_by_group_and_tmpt() is an Add function that updates an object by adding new values to new or empty fields. Specifically, this function implements an algorithm to add differences by group and time point. The function returns Updated dataset (a tibble).
 }
 \keyword{internal}

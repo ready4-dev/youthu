@@ -58,7 +58,7 @@ z <- ready4::author(z)
 usethis::use_dev_package("scorz",
                          type = "Suggests",
                          remote = "ready4-dev/scorz")
-ready4::write_extra_pkgs_to_actions(consent_1L_chr = "Y")
+ready4::write_extra_pkgs_to_actions(path_to_dir_1L_chr = ".github/workflows", consent_1L_chr = "Y")
 write_to_edit_workflow("pkgdown.yaml", consent_1L_chr = "Y") # In other packages, run for "test-coverage.yaml" as well.
 readLines("_pkgdown.yml") %>%
   stringr::str_replace_all("  - text: Model", "  - text: Framework & Model") %>%

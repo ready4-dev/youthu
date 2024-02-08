@@ -1,5 +1,5 @@
 #' Transform dataset for comparison
-#' @description transform_ds_for_cmprsn() is a Transform function that edits an object in such a way that core object attributes - e.g. shape, dimensions, elements, type - are altered. Specifically, this function implements an algorithm to transform dataset for comparison. Function argument ds_tb specifies the object to be updated. Argument cmprsn_var_nm_1L_chr provides the object to be updated. The function returns Dataset (a tibble).
+#' @description transform_ds_for_cmprsn() is a Transform function that edits an object in such a way that core object attributes - e.g. shape, dimensions, elements, type - are altered. Specifically, this function implements an algorithm to transform dataset for comparison. The function returns Dataset (a tibble).
 #' @param ds_tb Dataset (a tibble)
 #' @param cmprsn_var_nm_1L_chr Comparison variable name (a character vector of length one)
 #' @param id_var_nm_1L_chr Identity variable name (a character vector of length one), Default: 'UID_chr'

@@ -39,6 +39,6 @@ update_col_with_diff(
 New (a dataset)
 }
 \description{
-update_col_with_diff() is an Update function that edits an object, while preserving core object attributes. Specifically, this function implements an algorithm to update column with difference. Function argument ds_tb specifies the object to be updated. Argument var_nm_1L_chr provides the object to be updated. The function is called for its side effects and does not return a value.
+update_col_with_diff() is an Update function that edits an object, while preserving core object attributes. Specifically, this function implements an algorithm to update column with difference. The function is called for its side effects and does not return a value.
 }
 \keyword{internal}

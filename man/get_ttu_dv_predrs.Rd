@@ -24,6 +24,6 @@ get_ttu_dv_predrs(
 Predictors (a character vector)
 }
 \description{
-get_ttu_dv_predrs() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get transfer to utility algorithm dataverse predictors. Function argument ttu_dv_dss_tb specifies the where to look for the required object. The function returns Predictors (a character vector).
+get_ttu_dv_predrs() is a Get function that extracts data from an object. Specifically, this function implements an algorithm to get transfer to utility algorithm dataverse predictors. The function returns Predictors (a character vector).
 }
 \keyword{internal}

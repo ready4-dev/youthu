@@ -24,6 +24,6 @@ get_mdl_metadata(
 Ingredients (a list)
 }
 \description{
-get_mdl_metadata() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get model metadata. Function argument mdls_lup specifies the where to look for the required object. The function returns Ingredients (a list).
+get_mdl_metadata() is a Get function that extracts data from an object. Specifically, this function implements an algorithm to get model metadata. The function returns Ingredients (a list).
 }
 \keyword{internal}

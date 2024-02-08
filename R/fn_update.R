@@ -1,5 +1,5 @@
 #' Update column with difference
-#' @description update_col_with_diff() is an Update function that edits an object, while preserving core object attributes. Specifically, this function implements an algorithm to update column with difference. Function argument ds_tb specifies the object to be updated. Argument var_nm_1L_chr provides the object to be updated. The function is called for its side effects and does not return a value.
+#' @description update_col_with_diff() is an Update function that edits an object, while preserving core object attributes. Specifically, this function implements an algorithm to update column with difference. The function is called for its side effects and does not return a value.
 #' @param ds_tb Dataset (a tibble)
 #' @param var_nm_1L_chr Variable name (a character vector of length one)
 #' @param fn Function (a function)
@@ -35,7 +35,7 @@ update_col_with_diff <- function (ds_tb, var_nm_1L_chr, fn, abs_mean_diff_1L_dbl
     return(new_ds)
 }
 #' Update multiplier columns with differences
-#' @description update_multpl_cols_with_diffs() is an Update function that edits an object, while preserving core object attributes. Specifically, this function implements an algorithm to update multiplier columns with differences. Function argument ds_tb specifies the object to be updated. Argument var_nms_chr provides the object to be updated. The function returns Updated dataset (a tibble).
+#' @description update_multpl_cols_with_diffs() is an Update function that edits an object, while preserving core object attributes. Specifically, this function implements an algorithm to update multiplier columns with differences. The function returns Updated dataset (a tibble).
 #' @param ds_tb Dataset (a tibble)
 #' @param var_nms_chr Variable names (a character vector)
 #' @param fns_ls Functions (a list)

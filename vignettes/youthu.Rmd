@@ -23,5 +23,6 @@ This development version of the youthu package has been made available as part o
 
 The following vignettes demonstrate some of the tools currently included in the youthu package:
 
-- [Predict Adolescent AQoL-6D](Prediction_With_Mdls.html)
+- [Predict Adolescent AQoL-6D from PHQ-9 & SOFAS](Prediction_With_Mdls.html)
+- [Predict Adolescent AQoL-6D from PHQ-9 & GAD-7](V_01.html)
 - [Economic analysis](Economic_Analysis.html)

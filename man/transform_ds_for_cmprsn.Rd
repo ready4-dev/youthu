@@ -27,6 +27,6 @@ transform_ds_for_cmprsn(
 Dataset (a tibble)
 }
 \description{
-transform_ds_for_cmprsn() is a Transform function that edits an object in such a way that core object attributes - e.g. shape, dimensions, elements, type - are altered. Specifically, this function implements an algorithm to transform dataset for comparison. Function argument ds_tb specifies the object to be updated. Argument cmprsn_var_nm_1L_chr provides the object to be updated. The function returns Dataset (a tibble).
+transform_ds_for_cmprsn() is a Transform function that edits an object in such a way that core object attributes - e.g. shape, dimensions, elements, type - are altered. Specifically, this function implements an algorithm to transform dataset for comparison. The function returns Dataset (a tibble).
 }
 \keyword{internal}

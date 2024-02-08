@@ -24,5 +24,5 @@ add_qalys_to_ds(
 Dataset (a tibble)
 }
 \description{
-add_qalys_to_ds() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add quality adjusted life years to dataset. Function argument ds_tb specifies the object to be updated. The function returns Dataset (a tibble).
+add_qalys_to_ds() is an Add function that updates an object by adding new values to new or empty fields. Specifically, this function implements an algorithm to add quality adjusted life years to dataset. The function returns Dataset (a tibble).
 }

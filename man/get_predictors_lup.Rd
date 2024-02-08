@@ -30,6 +30,6 @@ get_predictors_lup(
 Predictors (a tibble)
 }
 \description{
-get_predictors_lup() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get predictors lookup table. Function argument mdl_meta_data_ls specifies the where to look for the required object. The function returns Predictors (a tibble).
+get_predictors_lup() is a Get function that extracts data from an object. Specifically, this function implements an algorithm to get predictors lookup table. The function returns Predictors (a tibble).
 }
 \keyword{internal}

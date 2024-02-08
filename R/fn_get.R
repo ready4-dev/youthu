@@ -1,5 +1,5 @@
 #' Get dataverse dataset publication
-#' @description get_dv_ds_publication() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get dataverse dataset publication. Function argument ds_url_1L_chr specifies the where to look for the required object. The function returns Digital object identifier url (a character vector of length one).
+#' @description get_dv_ds_publication() is a Get function that extracts data from an object. Specifically, this function implements an algorithm to get dataverse dataset publication. The function returns Digital object identifier url (a character vector of length one).
 #' @param ds_url_1L_chr Dataset url (a character vector of length one)
 #' @param server_1L_chr Server (a character vector of length one), Default: 'dataverse.harvard.edu'
 #' @param key_1L_chr Key (a character vector of length one), Default: NULL
@@ -22,7 +22,7 @@ get_dv_ds_publication <- function (ds_url_1L_chr, server_1L_chr = "dataverse.har
     return(doi_url_1L_chr)
 }
 #' Get dataverse datasets model summarys
-#' @description get_dv_dss_mdl_smrys() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get dataverse datasets model summarys. Function argument ids_chr specifies the where to look for the required object. The function returns Dataverse datasets model summarys (a list).
+#' @description get_dv_dss_mdl_smrys() is a Get function that extracts data from an object. Specifically, this function implements an algorithm to get dataverse datasets model summarys. The function returns Dataverse datasets model summarys (a list).
 #' @param ids_chr Identities (a character vector)
 #' @param server_1L_chr Server (a character vector of length one), Default: 'dataverse.harvard.edu'
 #' @param key_1L_chr Key (a character vector of length one), Default: NULL
@@ -40,7 +40,7 @@ get_dv_dss_mdl_smrys <- function (ids_chr, server_1L_chr = "dataverse.harvard.ed
     return(dv_dss_mdl_smrys_ls)
 }
 #' Get dataverse model summarys
-#' @description get_dv_mdl_smrys() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get dataverse model summarys. Function argument mdls_lup specifies the where to look for the required object. The function is called for its side effects and does not return a value.
+#' @description get_dv_mdl_smrys() is a Get function that extracts data from an object. Specifically, this function implements an algorithm to get dataverse model summarys. The function is called for its side effects and does not return a value.
 #' @param mdls_lup Models (a lookup table)
 #' @param mdl_nms_chr Model names (a character vector), Default: NULL
 #' @return Dataverse model (summarys)
@@ -63,7 +63,7 @@ get_dv_mdl_smrys <- function (mdls_lup, mdl_nms_chr = NULL)
     return(dv_mdl_smrys)
 }
 #' Get filtered transfer to utility algorithm datasets
-#' @description get_filtered_ttu_dss() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get filtered transfer to utility algorithm datasets. Function argument ttu_dv_dss_tb specifies the where to look for the required object. The function returns Transfer to utility algorithm dataverse datasets (a tibble).
+#' @description get_filtered_ttu_dss() is a Get function that extracts data from an object. Specifically, this function implements an algorithm to get filtered transfer to utility algorithm datasets. The function returns Transfer to utility algorithm dataverse datasets (a tibble).
 #' @param ttu_dv_dss_tb Transfer to utility algorithm dataverse datasets (a tibble), Default: NULL
 #' @param mdl_predrs_in_ds_chr Model predictors in dataset (a character vector), Default: NULL
 #' @param utility_type_chr Utility type (a character vector), Default: NULL
@@ -96,7 +96,7 @@ get_filtered_ttu_dss <- function (ttu_dv_dss_tb = NULL, mdl_predrs_in_ds_chr = N
     return(ttu_dv_dss_tb)
 }
 #' Get model catalogue url
-#' @description get_mdl_ctlg_url() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get model catalogue url. Function argument mdls_lup specifies the where to look for the required object. The function is called for its side effects and does not return a value.
+#' @description get_mdl_ctlg_url() is a Get function that extracts data from an object. Specifically, this function implements an algorithm to get model catalogue url. The function is called for its side effects and does not return a value.
 #' @param mdls_lup Models (a lookup table)
 #' @param mdl_nm_1L_chr Model name (a character vector of length one)
 #' @param server_1L_chr Server (a character vector of length one), Default: 'dataverse.harvard.edu'
@@ -134,7 +134,7 @@ get_mdl_ctlg_url <- function (mdls_lup, mdl_nm_1L_chr, server_1L_chr = "datavers
     return(ctlg_url)
 }
 #' Get model dataset url
-#' @description get_mdl_ds_url() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get model dataset url. Function argument mdls_lup specifies the where to look for the required object. The function is called for its side effects and does not return a value.
+#' @description get_mdl_ds_url() is a Get function that extracts data from an object. Specifically, this function implements an algorithm to get model dataset url. The function is called for its side effects and does not return a value.
 #' @param mdls_lup Models (a lookup table)
 #' @param mdl_nm_1L_chr Model name (a character vector of length one)
 #' @return mdl_ds_url (An object)
@@ -150,7 +150,7 @@ get_mdl_ds_url <- function (mdls_lup, mdl_nm_1L_chr)
     return(mdl_ds_url)
 }
 #' Get model from dataverse
-#' @description get_mdl_from_dv() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get model from dataverse. Function argument mdl_nm_1L_chr specifies the where to look for the required object. The function returns Model (a model).
+#' @description get_mdl_from_dv() is a Get function that extracts data from an object. Specifically, this function implements an algorithm to get model from dataverse. The function returns Model (a model).
 #' @param mdl_nm_1L_chr Model name (a character vector of length one)
 #' @param dv_ds_nm_1L_chr Dataverse dataset name (a character vector of length one), Default: 'https://doi.org/10.7910/DVN/JC6PTV'
 #' @param server_1L_chr Server (a character vector of length one), Default: 'dataverse.harvard.edu'
@@ -178,7 +178,7 @@ get_mdl_from_dv <- function (mdl_nm_1L_chr, dv_ds_nm_1L_chr = "https://doi.org/1
     return(model_mdl)
 }
 #' Get model metadata
-#' @description get_mdl_metadata() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get model metadata. Function argument mdls_lup specifies the where to look for the required object. The function returns Ingredients (a list).
+#' @description get_mdl_metadata() is a Get function that extracts data from an object. Specifically, this function implements an algorithm to get model metadata. The function returns Ingredients (a list).
 #' @param mdls_lup Models (a lookup table)
 #' @param mdl_nm_1L_chr Model name (a character vector of length one)
 #' @param server_1L_chr Server (a character vector of length one), Default: 'dataverse.harvard.edu'
@@ -196,7 +196,7 @@ get_mdl_metadata <- function (mdls_lup, mdl_nm_1L_chr, server_1L_chr = "datavers
     return(ingredients_ls)
 }
 #' Get model summarys
-#' @description get_mdl_smrys() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get model summarys. Function argument ingredients_ls specifies the where to look for the required object. The function returns Models summary (a list).
+#' @description get_mdl_smrys() is a Get function that extracts data from an object. Specifically, this function implements an algorithm to get model summarys. The function returns Models summary (a list).
 #' @param ingredients_ls Ingredients (a list)
 #' @param mdl_nms_chr Model names (a character vector), Default: NULL
 #' @return Models summary (a list)
@@ -220,7 +220,7 @@ get_mdl_smrys <- function (ingredients_ls, mdl_nms_chr = NULL)
     return(mdls_smry_ls)
 }
 #' Get models lookup table
-#' @description get_mdls_lup() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get models lookup table. Function argument ttu_dv_dss_tb specifies the where to look for the required object. The function returns Models (a lookup table).
+#' @description get_mdls_lup() is a Get function that extracts data from an object. Specifically, this function implements an algorithm to get models lookup table. The function returns Models (a lookup table).
 #' @param ttu_dv_dss_tb Transfer to utility algorithm dataverse datasets (a tibble), Default: NULL
 #' @param mdl_predrs_in_ds_chr Model predictors in dataset (a character vector), Default: NULL
 #' @param utility_type_chr Utility type (a character vector), Default: NULL
@@ -272,7 +272,7 @@ get_mdls_lup <- function (ttu_dv_dss_tb = NULL, mdl_predrs_in_ds_chr = NULL,
     return(mdls_lup)
 }
 #' Get model
-#' @description get_model() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get model. Function argument mdls_lup specifies the where to look for the required object. The function returns Model (a model).
+#' @description get_model() is a Get function that extracts data from an object. Specifically, this function implements an algorithm to get model. The function returns Model (a model).
 #' @param mdls_lup Models (a lookup table)
 #' @param mdl_nm_1L_chr Model name (a character vector of length one)
 #' @param make_from_tbl_1L_lgl Make from table (a logical vector of length one), Default: T
@@ -310,7 +310,7 @@ get_model <- function (mdls_lup, mdl_nm_1L_chr, make_from_tbl_1L_lgl = T,
     return(model_mdl)
 }
 #' Get predictors lookup table
-#' @description get_predictors_lup() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get predictors lookup table. Function argument mdl_meta_data_ls specifies the where to look for the required object. The function returns Predictors (a tibble).
+#' @description get_predictors_lup() is a Get function that extracts data from an object. Specifically, this function implements an algorithm to get predictors lookup table. The function returns Predictors (a tibble).
 #' @param mdl_meta_data_ls Model meta data (a list), Default: NULL
 #' @param mdls_lup Models (a lookup table), Default: NULL
 #' @param mdl_nm_1L_chr Model name (a character vector of length one), Default: NULL
@@ -347,7 +347,7 @@ get_predictors_lup <- function (mdl_meta_data_ls = NULL, mdls_lup = NULL, mdl_nm
     return(predictors_tb)
 }
 #' Get transformation from lookup table
-#' @description get_tfmn_from_lup() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get transformation from lookup table. Function argument mdl_nm_1L_chr specifies the where to look for the required object. The function returns Transformation (a character vector of length one).
+#' @description get_tfmn_from_lup() is a Get function that extracts data from an object. Specifically, this function implements an algorithm to get transformation from lookup table. The function returns Transformation (a character vector of length one).
 #' @param mdl_nm_1L_chr Model name (a character vector of length one)
 #' @param mdls_lup Models (a lookup table), Default: NULL
 #' @return Transformation (a character vector of length one)
@@ -365,7 +365,7 @@ get_tfmn_from_lup <- function (mdl_nm_1L_chr, mdls_lup = NULL)
     return(tfmn_1L_chr)
 }
 #' Get transfer to utility algorithm dataset summarys
-#' @description get_ttu_ds_smrys() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get transfer to utility algorithm dataset summarys. Function argument ttu_dv_nm_1L_chr specifies the where to look for the required object. The function returns Dataverse datasets model summarys (a list).
+#' @description get_ttu_ds_smrys() is a Get function that extracts data from an object. Specifically, this function implements an algorithm to get transfer to utility algorithm dataset summarys. The function returns Dataverse datasets model summarys (a list).
 #' @param ttu_dv_nm_1L_chr Transfer to utility algorithm dataverse name (a character vector of length one), Default: 'TTU'
 #' @param server_1L_chr Server (a character vector of length one), Default: 'dataverse.harvard.edu'
 #' @param key_1L_chr Key (a character vector of length one), Default: NULL
@@ -393,7 +393,7 @@ get_ttu_ds_smrys <- function (ttu_dv_nm_1L_chr = "TTU", server_1L_chr = "dataver
     return(dv_dss_mdl_smrys_ls)
 }
 #' Get transfer to utility algorithm dataverse datasets
-#' @description get_ttu_dv_dss() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get transfer to utility algorithm dataverse datasets. Function argument ttu_dv_nms_chr specifies the where to look for the required object. The function returns Transfer to utility algorithm dataverse datasets (a tibble).
+#' @description get_ttu_dv_dss() is a Get function that extracts data from an object. Specifically, this function implements an algorithm to get transfer to utility algorithm dataverse datasets. The function returns Transfer to utility algorithm dataverse datasets (a tibble).
 #' @param ttu_dv_nms_chr Transfer to utility algorithm dataverse names (a character vector), Default: 'TTU'
 #' @param server_1L_chr Server (a character vector of length one), Default: 'dataverse.harvard.edu'
 #' @param key_1L_chr Key (a character vector of length one), Default: NULL
@@ -437,7 +437,7 @@ get_ttu_dv_dss <- function (ttu_dv_nms_chr = "TTU", server_1L_chr = "dataverse.h
     return(ttu_dv_dss_tb)
 }
 #' Get transfer to utility algorithm dataverse predictors
-#' @description get_ttu_dv_predrs() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get transfer to utility algorithm dataverse predictors. Function argument ttu_dv_dss_tb specifies the where to look for the required object. The function returns Predictors (a character vector).
+#' @description get_ttu_dv_predrs() is a Get function that extracts data from an object. Specifically, this function implements an algorithm to get transfer to utility algorithm dataverse predictors. The function returns Predictors (a character vector).
 #' @param ttu_dv_dss_tb Transfer to utility algorithm dataverse datasets (a tibble), Default: NULL
 #' @param ttu_dv_nms_chr Transfer to utility algorithm dataverse names (a character vector), Default: 'TTU'
 #' @param server_1L_chr Server (a character vector of length one), Default: 'dataverse.harvard.edu'

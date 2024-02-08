@@ -10,8 +10,11 @@ params:
 ---
 
 ```{r message=FALSE}
+library(ready4)
+library(ready4use)
 library(youthu)
 ```
+
 This vignette outlines a workflow for:
 
 - Searching, selecting and retrieving transfer to utility models;
@@ -111,6 +114,13 @@ predictors_lup %>%
                           scroll_box_args_ls = list(width = "100%")) 
 ```
 
+We now ingest metadata about the mapping models we plan to use. **NOTE: This is a temporary step that is required due to the metadata file not being in its study online repository. This code will cease to work once the metadata file has been moved from its temporary location to the study dataset. We will perform this task when an associated manuscript exits its current review process.**
+
+```{r}
+mdl_meta_data_ls <- ingest(Ready4useRepos(gh_repo_1L_chr = "ready4-dev/youthu", gh_tag_1L_chr = "v0.0.0.91125"), fls_to_ingest_chr = c("mdl_meta_data_ls"), metadata_1L_lgl = F)
+```
+
+
 The prediction dataset must also include both a unique client identifier variable and a measurement time-point identifier variable (which must be a `factor`{.R} with two levels). The dataset also needs to be in long format (ie where measures at different time-points for the same individual are stacked on top of each other in separate rows). We can confirm these conditions hold by creating a dataset metadata object using the `make_predn_metadata_ls` function. In creating the metadata object, the function checks that the dataset can be used in conjunction with the model specified at the `mdl_nm_1L_chr` argument. If the prediction dataset uses different variable names for the predictors to those specified in the `predictors_lup`{.R} lookup table, a named vector detailing the correspondence between the two sets of variable names needs to be passed to the `predr_vars_nms_chr` argument. Finally, if you wish to specify a preferred variable name to use for the predicted utility values when applying the model, you can do this by passing this name to the `utl_var_nm_1L_chr` argument.
 
 ```{r}
@@ -174,17 +184,4 @@ data_tb %>%
 
 ```
 
-```{r include=FALSE}
-#Source: https://stackoverflow.com/questions/60042689/how-to-include-the-description-of-a-data-set-in-rmarkdown
-help_text <- function(...) {
-  file <- help(...)
-  path <- dirname(file)
-  dirpath <- dirname(path)
-  pkgname <- basename(dirpath)
-  RdDB <- file.path(path, pkgname)
-  rd <- tools:::fetchRdDB(RdDB, basename(file))
-  capture.output(tools::Rd2txt(rd, out="", options=list(underline_titles=FALSE)))
-}
-# help_text(add_aqol6d_predn_to_ds) %>%
-#   purrr::map_chr(~.x %>% stringr::str_trim())
-```
+

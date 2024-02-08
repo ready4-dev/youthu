@@ -42,5 +42,5 @@ add_utl_predn(
 Updated (a tibble)
 }
 \description{
-add_utl_predn() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add utility prediction. Function argument data_tb specifies the object to be updated. The function returns Updated (a tibble).
+add_utl_predn() is an Add function that updates an object by adding new values to new or empty fields. Specifically, this function implements an algorithm to add utility prediction. The function returns Updated (a tibble).
 }

@@ -21,6 +21,6 @@ get_ttu_dv_dss(
 Transfer to utility algorithm dataverse datasets (a tibble)
 }
 \description{
-get_ttu_dv_dss() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get transfer to utility algorithm dataverse datasets. Function argument ttu_dv_nms_chr specifies the where to look for the required object. The function returns Transfer to utility algorithm dataverse datasets (a tibble).
+get_ttu_dv_dss() is a Get function that extracts data from an object. Specifically, this function implements an algorithm to get transfer to utility algorithm dataverse datasets. The function returns Transfer to utility algorithm dataverse datasets (a tibble).
 }
 \keyword{internal}

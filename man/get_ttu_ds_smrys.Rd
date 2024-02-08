@@ -24,6 +24,6 @@ get_ttu_ds_smrys(
 Dataverse datasets model summarys (a list)
 }
 \description{
-get_ttu_ds_smrys() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get transfer to utility algorithm dataset summarys. Function argument ttu_dv_nm_1L_chr specifies the where to look for the required object. The function returns Dataverse datasets model summarys (a list).
+get_ttu_ds_smrys() is a Get function that extracts data from an object. Specifically, this function implements an algorithm to get transfer to utility algorithm dataset summarys. The function returns Dataverse datasets model summarys (a list).
 }
 \keyword{internal}

@@ -1,5 +1,5 @@
 ---
-title: "Significant Changes To The Youthu Package"
+title: "Predict health utility from psychological measures"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Significant Changes To The Youthu Package}
@@ -7,8 +7,170 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-## Change is coming!
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
 
-The youthu package is undergoing significant redevelopment currently. As a result the syntax will soon look very different to that outlined in the current vignettes.
+**This vignette article is abridged and modified version of [another article on predicting Quality Adjusted Life Years with youthu](https://ready4-dev.github.io/youthu/articles/Prediction_With_Mdls.html).**
 
-More updates will appear here shortly.
+## Motivation
+This article illustrates how to make QALY predictions using a dataset in wide format with no health-utility measures but containing two psychological measures (GAD-7 and PHQ-9).
+
+## Install youthu
+If not already installed it will be necessary to install the `youthu` R library. As `youthu` is not yet available on CRAN, it will be necessary to install it directly from its GitHub repository using an R package like `remotes` or `devtools`.
+
+```{r eval=FALSE}
+# Uncomment and run if installation is required.
+# utils::install.packages("devtools") 
+# devtools::install_github("ready4-dev/youthu")
+```
+
+## Load required packages
+We now load the libraries we will be using in subsequent steps. Note, both the `ready4` and `ready4use` [ready4 framework](https://www.ready4-dev.com/) libraries will have been installed automatically when `youthu` was installed. The `specific` readyforwhatsnext module library and `dplyr`, `purrr`, `stringr` and `tidyr` CRAN libraries will have been installed at the same time.
+
+```{r message=FALSE}
+library(ready4)
+library(ready4use)
+library(specific)
+library(youthu)
+```
+
+## Specify data sources
+We begin by specifying the sources for our data. In this example, our data sources are online repositories.
+
+```{r}
+X <- Ready4useRepos(dv_nm_1L_chr = "fakes", dv_ds_nm_1L_chr = "https://doi.org/10.7910/DVN/HJXYKQ", 
+                    dv_server_1L_chr = "dataverse.harvard.edu",
+                    gh_repo_1L_chr = "ready4-dev/youthu", gh_tag_1L_chr = "v0.0.0.91125")
+```
+
+## Inspect dataset
+We can now inspect the dataset we will be using to make predictions. As this is a demonstration article we are going to create a custom synthetic dataset. Our first step in doing so is to ingest a preexisting synthetic dataset (in long format) using the method explained in [another vignette article](https://ready4-dev.github.io/ready4use/articles/V_03.html)
+
+```{r}
+data_tb <- ingest(X, fls_to_ingest_chr = c("ymh_clinical_tb"), metadata_1L_lgl = F)
+```
+
+We next select only the essential variables for this example, transform the dataset to wide format and rename our two clinical variables of interest.
+
+```{r}
+data_tb <- data_tb %>% dplyr:: select(c("fkClientID", "round", 
+                                        "d_interview_date", 
+                                        "gad7_total", "phq9_total")) %>%
+  tidyr::pivot_wider(names_from = c("round"), 
+                     values_from = c("d_interview_date", "gad7_total", "phq9_total")) %>%
+  dplyr::rename_with(~stringr::str_replace(.x,"_Baseline","_t1") %>% 
+                       stringr::str_replace("_Follow-up","_t2") %>% 
+                       stringr::str_replace("_total",""))
+```
+
+Our resulting dataset has unique IDs for each participant (character class), timestamps for each data collection timepoint (Date class variables) and GAD-7 and PHQ-9 scores for each timepoint (integer class).
+
+```{r eval=FALSE}
+data_tb %>% head()
+```
+
+```{r echo=FALSE}
+data_tb %>% head() %>% ready4show::print_table(output_type_1L_chr = "HTML",
+                          caption_1L_chr = knitr::opts_current$get("tab.cap"),
+                          use_lbls_as_col_nms_1L_lgl = T,
+                          mkdn_tbl_ref_1L_chr = paste0("tab:",knitr::opts_current$get("tab.id")),
+                          add_to_row_ls = NULL,
+                          scroll_box_args_ls = list(width = "100%")) 
+```
+
+## Get mapping models
+We retrieve details of relevant AQoL-6D mapping models for wither of the predictors we plan on using. How these models were derived is described in a [pre-print](https://doi.org/10.1101/2021.07.07.21260129) and details of model performance is included in catalogues available in an [open access data repository](https://doi.org/10.7910/DVN/DKDIB0).
+
+```{r}
+mdls_lup <- get_mdls_lup(ttu_dv_dss_tb = get_ttu_dv_dss("TTU"),
+                         utility_type_chr = "AQoL-6D",
+                         mdl_predrs_in_ds_chr = c("GAD7 total score", "PHQ9 total score"))
+```
+
+```{r eval=FALSE}
+mdls_lup[,c(1,2,5)] 
+```
+
+```{r echo=FALSE}
+mdls_lup[,c(1,2,5)] %>% 
+  ready4show::print_table(output_type_1L_chr = "HTML",
+                          caption_1L_chr = knitr::opts_current$get("tab.cap"),
+                          use_lbls_as_col_nms_1L_lgl = T,
+                          mkdn_tbl_ref_1L_chr = paste0("tab:",knitr::opts_current$get("tab.id")),
+                          add_to_row_ls = NULL,
+                          scroll_box_args_ls = list(width = "100%")) 
+```
+
+We select our preferred model and retrieve summary data about the model's predictor variables.
+
+```{r }
+predictors_lup <- get_predictors_lup(mdls_lup = mdls_lup, mdl_nm_1L_chr = "GAD7_PHQ9_1_OLS_CLL")
+```
+
+```{r }
+exhibit(predictors_lup)
+```
+
+## Transform prediction dataset
+To be used with the mapping models available to us, our prediction dataset needs to be in long format. We perform the necessary transformation.
+
+```{r}
+data_tb <- c("d_interview_date", "gad7", "phq9") %>%
+  purrr::map(~ data_tb %>%
+               tidyr::pivot_longer(cols = paste0(.x,"_t",1:2), 
+                                   names_to = "When", values_to = .x) %>%
+               tibble::rowid_to_column("case_id") %>%
+               dplyr::mutate(When = When %>% stringr::str_sub(start = -2L) %>% factor()) %>%
+               dplyr::select(tidyselect::all_of(c("case_id", "fkClientID","When",.x)))) %>%
+  purrr::reduce(~dplyr::left_join(.x,.y)) %>%
+  dplyr::select(-case_id)
+```
+We drop records where we are missing data for either GAD7 or PHQ9 at either timepoint.
+
+```{r}
+drop_chr <- data_tb %>% purrr::pmap_chr(~ifelse(is.na(..4)|is.na(..5),..1,NA_character_)) %>% purrr::discard(is.na)
+data_tb <- dplyr::filter(data_tb, !fkClientID %in% drop_chr)
+```
+
+
+We ingest metadata about our models. **NOTE: This is a temporary step that is required due to the metadata file not being in the study online repository. This code will cease to work once the metadata file has been moved from its temporary location to the study dataset. We will perform this task when an associated manuscript exits its current review process.**
+
+```{r}
+mdl_meta_data_ls <- ingest(X, fls_to_ingest_chr = c("mdl_meta_data_ls"), metadata_1L_lgl = F)
+```
+
+
+We now predict AQoL-6D health utility for each case with complete data.
+
+```{r}
+predn_ds_ls <- make_predn_metadata_ls(data_tb,
+                                      id_var_nm_1L_chr = "fkClientID",
+                                      mdl_meta_data_ls = mdl_meta_data_ls,
+                                      msrmnt_date_var_nm_1L_chr = "d_interview_date",
+                                      predr_vars_nms_chr = c(GAD7 = "gad7", PHQ9 = "phq9"),
+                                      round_var_nm_1L_chr = "When",
+                                      round_bl_val_1L_chr = "t1",
+                                      utl_var_nm_1L_chr = "AQoL6D_HU",
+                                      mdls_lup = mdls_lup,
+                                      mdl_nm_1L_chr = "GAD7_PHQ9_1_OLS_CLL")
+data_tb <- add_utl_predn(data_tb, new_data_is_1L_chr = "Predicted", predn_ds_ls = predn_ds_ls)
+```
+
+Finally, we derive QALY predictions from the health utility measures at both time-points.
+
+```{r}
+data_tb <- data_tb %>% add_qalys_to_ds(predn_ds_ls = predn_ds_ls, include_predrs_1L_lgl = F, reshape_1L_lgl = T)
+```
+
+```{r eval=FALSE}
+data_tb %>% head() 
+```
+```{r echo=FALSE}
+data_tb %>% head() %>%
+  ready4show::print_table(output_type_1L_chr = "HTML",
+                          caption_1L_chr = knitr::opts_current$get("tab.cap"),
+                          mkdn_tbl_ref_1L_chr = paste0("tab:",knitr::opts_current$get("tab.id")),
+                          add_to_row_ls = NULL,
+                          scroll_box_args_ls = list(width = "100%"))
+```

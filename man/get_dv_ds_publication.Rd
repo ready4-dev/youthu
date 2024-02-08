@@ -21,6 +21,6 @@ get_dv_ds_publication(
 Digital object identifier url (a character vector of length one)
 }
 \description{
-get_dv_ds_publication() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get dataverse dataset publication. Function argument ds_url_1L_chr specifies the where to look for the required object. The function returns Digital object identifier url (a character vector of length one).
+get_dv_ds_publication() is a Get function that extracts data from an object. Specifically, this function implements an algorithm to get dataverse dataset publication. The function returns Digital object identifier url (a character vector of length one).
 }
 \keyword{internal}

@@ -42,6 +42,6 @@ add_dates_from_dstr(
 Updated dataset (a tibble)
 }
 \description{
-add_dates_from_dstr() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add dates from distribution. Function argument ds_tb specifies the object to be updated. The function returns Updated dataset (a tibble).
+add_dates_from_dstr() is an Add function that updates an object by adding new values to new or empty fields. Specifically, this function implements an algorithm to add dates from distribution. The function returns Updated dataset (a tibble).
 }
 \keyword{internal}

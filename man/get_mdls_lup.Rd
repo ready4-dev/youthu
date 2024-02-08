@@ -30,6 +30,6 @@ get_mdls_lup(
 Models (a lookup table)
 }
 \description{
-get_mdls_lup() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get models lookup table. Function argument ttu_dv_dss_tb specifies the where to look for the required object. The function returns Models (a lookup table).
+get_mdls_lup() is a Get function that extracts data from an object. Specifically, this function implements an algorithm to get models lookup table. The function returns Models (a lookup table).
 }
 \keyword{internal}

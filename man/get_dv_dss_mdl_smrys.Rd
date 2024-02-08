@@ -21,6 +21,6 @@ get_dv_dss_mdl_smrys(
 Dataverse datasets model summarys (a list)
 }
 \description{
-get_dv_dss_mdl_smrys() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get dataverse datasets model summarys. Function argument ids_chr specifies the where to look for the required object. The function returns Dataverse datasets model summarys (a list).
+get_dv_dss_mdl_smrys() is a Get function that extracts data from an object. Specifically, this function implements an algorithm to get dataverse datasets model summarys. The function returns Dataverse datasets model summarys (a list).
 }
 \keyword{internal}

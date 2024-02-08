@@ -39,6 +39,6 @@ update_multpl_cols_with_diffs(
 Updated dataset (a tibble)
 }
 \description{
-update_multpl_cols_with_diffs() is an Update function that edits an object, while preserving core object attributes. Specifically, this function implements an algorithm to update multiplier columns with differences. Function argument ds_tb specifies the object to be updated. Argument var_nms_chr provides the object to be updated. The function returns Updated dataset (a tibble).
+update_multpl_cols_with_diffs() is an Update function that edits an object, while preserving core object attributes. Specifically, this function implements an algorithm to update multiplier columns with differences. The function returns Updated dataset (a tibble).
 }
 \keyword{internal}

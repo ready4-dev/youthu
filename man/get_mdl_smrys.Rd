@@ -15,6 +15,6 @@ get_mdl_smrys(ingredients_ls, mdl_nms_chr = NULL)
 Models summary (a list)
 }
 \description{
-get_mdl_smrys() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get model summarys. Function argument ingredients_ls specifies the where to look for the required object. The function returns Models summary (a list).
+get_mdl_smrys() is a Get function that extracts data from an object. Specifically, this function implements an algorithm to get model summarys. The function returns Models summary (a list).
 }
 \keyword{internal}

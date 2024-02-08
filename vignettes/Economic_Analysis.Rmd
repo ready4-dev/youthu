@@ -14,6 +14,8 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 ```{r message=FALSE}
 library(youthu)
+library(ggplot2)
+library(ready4use)
 set.seed(1234)
 ```
 This vignette illustrates the rationale for and practical decision-making utility of youthu's [QALYs prediction workflow](https://ready4-dev.github.io/youthu/articles/Prediction_With_Mdls.html). Note, this example is illustrated with fake data and should not be used to inform decision-making.
@@ -80,13 +82,20 @@ The rest of this article demonstrates how youthu functions can be used to undert
 ### Predict adolescent AQoL-6D health utility
 Our first step is to identify which youthu models we will use to predict adolescent AQoL-6D  and apply these models to our data. This step was explained in more detail in [another vignette article about finding and using transfer to utility models](https://ready4-dev.github.io/youthu/articles/Prediction_With_Mdls.html), so will be dealt with briefly here.
 
-First we make sure that our dataset can be used as a prediction dataset in conjunction with the model we intend using. 
+We ingest metadata about the mapping models we plan to use. **NOTE: This is a temporary step that is required due to the metadata file not being in the study online repository. This code will cease to work once the metadata file has been moved from its temporary location to the study dataset. We will perform this task when an associated manuscript exits its current review process.**
+
+```{r}
+mdl_meta_data_ls <- ingest(Ready4useRepos(gh_repo_1L_chr = "ready4-dev/youthu", gh_tag_1L_chr = "v0.0.0.91125"), fls_to_ingest_chr = c("mdl_meta_data_ls"), metadata_1L_lgl = F)
+```
+
+We now make sure that our dataset can be used as a prediction dataset in conjunction with the model we intend using. 
 ```{r}
 predn_ds_ls <- make_predn_metadata_ls(ds_tb,
                                       cmprsn_groups_chr = c("Intervention", "Control"),
                                       cmprsn_var_nm_1L_chr = "study_arm_chr",
                                       costs_var_nm_1L_chr = "costs_dbl",
                                       id_var_nm_1L_chr = "fkClientID",
+                                      mdl_meta_data_ls = mdl_meta_data_ls,
                                       msrmnt_date_var_nm_1L_chr = "date_psx",
                                       round_var_nm_1L_chr = "round",
                                       round_bl_val_1L_chr = "Baseline",
@@ -137,9 +146,5 @@ he_smry_ls <- ds_tb %>% make_hlth_ec_smry(predn_ds_ls = predn_ds_ls,
 As part of the output of the `make_hlth_ec_smry`{.R} function is a BCEA object, we can use the BCEA package to produce a number of graphical summaries of economic results. One of the most important is the production of a cost-effectiveness plane. This plot highlights that, with an ICER of \$`r he_smry_ls$ce_res_ls$ICER %>% format(big.mark =",")`, `r ifelse(he_smry_ls$ce_res_ls$ceac[he_smry_ls$ce_res_ls$k==50000]==0.5,"half",ifelse(he_smry_ls$ce_res_ls$ceac[he_smry_ls$ce_res_ls$k==50000]<0.5,"less than half","most"))` of the bootstrapped iteration incremental cost and QALY pairs fall within the zone of cost-effectiveness (green). In fact, at the cost-effectiveness threshold we supplied, the results suggest there is a `r he_smry_ls$ce_res_ls$ceac[he_smry_ls$ce_res_ls$k==50000] * 100`% probability that the intervention is cost-effective.
 
 ```{r fig.width=6}
-library(ggplot2)
-BCEA::ceplane.plot(he_smry_ls$ce_res_ls, wtp =50000,    
-                   area_color = "green",
-                    graph = "ggplot2",
-          theme = ggplot2::theme_light())
+BCEA::ceplane.plot(he_smry_ls$ce_res_ls, wtp =50000,  graph = "ggplot2", theme = ggplot2::theme_light())
 ```

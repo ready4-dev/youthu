@@ -24,6 +24,6 @@ get_mdl_ctlg_url(
 ctlg_url (An object)
 }
 \description{
-get_mdl_ctlg_url() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get model catalogue url. Function argument mdls_lup specifies the where to look for the required object. The function is called for its side effects and does not return a value.
+get_mdl_ctlg_url() is a Get function that extracts data from an object. Specifically, this function implements an algorithm to get model catalogue url. The function is called for its side effects and does not return a value.
 }
 \keyword{internal}

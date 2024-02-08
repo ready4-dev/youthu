@@ -1,5 +1,5 @@
 #' Add change in dataset variable
-#' @description add_change_in_ds_var() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add change in dataset variable. Function argument ds_tb specifies the object to be updated. The function returns Updated dataset (a tibble).
+#' @description add_change_in_ds_var() is an Add function that updates an object by adding new values to new or empty fields. Specifically, this function implements an algorithm to add change in dataset variable. The function returns Updated dataset (a tibble).
 #' @param ds_tb Dataset (a tibble)
 #' @param id_var_nm_1L_chr Identity variable name (a character vector of length one), Default: 'fkClientID'
 #' @param round_var_nm_1L_chr Round variable name (a character vector of length one), Default: 'round'
@@ -28,7 +28,7 @@ add_change_in_ds_var <- function (ds_tb, id_var_nm_1L_chr = "fkClientID", round_
     return(updated_ds_tb)
 }
 #' Add costs by time point
-#' @description add_costs_by_tmpt() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add costs by time point. Function argument ds_tb specifies the object to be updated. The function returns Updated dataset (a tibble).
+#' @description add_costs_by_tmpt() is an Add function that updates an object by adding new values to new or empty fields. Specifically, this function implements an algorithm to add costs by time point. The function returns Updated dataset (a tibble).
 #' @param ds_tb Dataset (a tibble)
 #' @param round_var_nm_1L_chr Round variable name (a character vector of length one)
 #' @param round_lvls_chr Round levels (a character vector), Default: c("Baseline", "Follow-up")
@@ -58,7 +58,7 @@ add_costs_by_tmpt <- function (ds_tb, round_var_nm_1L_chr, round_lvls_chr = c("B
     return(updated_ds_tb)
 }
 #' Add costs from gamma distribution
-#' @description add_costs_from_gamma_dstr() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add costs from gamma distribution. Function argument ds_tb specifies the object to be updated. The function returns Updated dataset (a tibble).
+#' @description add_costs_from_gamma_dstr() is an Add function that updates an object by adding new values to new or empty fields. Specifically, this function implements an algorithm to add costs from gamma distribution. The function returns Updated dataset (a tibble).
 #' @param ds_tb Dataset (a tibble)
 #' @param costs_mean_dbl Costs mean (a double vector)
 #' @param costs_sd_dbl Costs standard deviation (a double vector)
@@ -77,7 +77,7 @@ add_costs_from_gamma_dstr <- function (ds_tb, costs_mean_dbl, costs_sd_dbl, cost
     return(updated_ds_tb)
 }
 #' Add dates from distribution
-#' @description add_dates_from_dstr() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add dates from distribution. Function argument ds_tb specifies the object to be updated. The function returns Updated dataset (a tibble).
+#' @description add_dates_from_dstr() is an Add function that updates an object by adding new values to new or empty fields. Specifically, this function implements an algorithm to add dates from distribution. The function returns Updated dataset (a tibble).
 #' @param ds_tb Dataset (a tibble)
 #' @param bl_start_date_dtm Baseline start date (a date vector)
 #' @param bl_end_date_dtm Baseline end date (a date vector)
@@ -120,7 +120,7 @@ add_dates_from_dstr <- function (ds_tb, bl_start_date_dtm, bl_end_date_dtm, dura
     return(updated_ds_tb)
 }
 #' Add differences by group and time point
-#' @description add_diffs_by_group_and_tmpt() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add differences by group and time point. Function argument ds_tb specifies the object to be updated. The function returns Updated dataset (a tibble).
+#' @description add_diffs_by_group_and_tmpt() is an Add function that updates an object by adding new values to new or empty fields. Specifically, this function implements an algorithm to add differences by group and time point. The function returns Updated dataset (a tibble).
 #' @param ds_tb Dataset (a tibble), Default: trial_ds_tb
 #' @param cmprsn_var_nm_1L_chr Comparison variable name (a character vector of length one), Default: 'study_arm_chr'
 #' @param cmprsn_group_match_val_chr Comparison group match value (a character vector), Default: c("Intervention")
@@ -161,7 +161,7 @@ add_diffs_by_group_and_tmpt <- function (ds_tb = trial_ds_tb, cmprsn_var_nm_1L_c
     return(updated_ds_tb)
 }
 #' Add Quality Adjusted Life Years
-#' @description add_qalys() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add quality adjusted life years. Function argument ds_tb specifies the object to be updated. The function returns Updated dataset (a tibble).
+#' @description add_qalys() is an Add function that updates an object by adding new values to new or empty fields. Specifically, this function implements an algorithm to add quality adjusted life years. The function returns Updated dataset (a tibble).
 #' @param ds_tb Dataset (a tibble)
 #' @param cmprsn_var_nm_1L_chr Comparison variable name (a character vector of length one), Default: 'study_arm_chr'
 #' @param duration_var_nm_1L_chr Duration variable name (a character vector of length one), Default: 'duration_prd'
@@ -211,7 +211,7 @@ add_qalys <- function (ds_tb, cmprsn_var_nm_1L_chr = "study_arm_chr", duration_v
     return(updated_ds_tb)
 }
 #' Add Quality Adjusted Life Years to dataset
-#' @description add_qalys_to_ds() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add quality adjusted life years to dataset. Function argument ds_tb specifies the object to be updated. The function returns Dataset (a tibble).
+#' @description add_qalys_to_ds() is an Add function that updates an object by adding new values to new or empty fields. Specifically, this function implements an algorithm to add quality adjusted life years to dataset. The function returns Dataset (a tibble).
 #' @param ds_tb Dataset (a tibble)
 #' @param predn_ds_ls Prediction dataset (a list)
 #' @param include_predrs_1L_lgl Include predictors (a logical vector of length one), Default: T
@@ -250,7 +250,7 @@ add_qalys_to_ds <- function (ds_tb, predn_ds_ls, include_predrs_1L_lgl = T, resh
     return(ds_tb)
 }
 #' Add utility prediction
-#' @description add_utl_predn() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add utility prediction. Function argument data_tb specifies the object to be updated. The function returns Updated (a tibble).
+#' @description add_utl_predn() is an Add function that updates an object by adding new values to new or empty fields. Specifically, this function implements an algorithm to add utility prediction. The function returns Updated (a tibble).
 #' @param data_tb Data (a tibble)
 #' @param predn_ds_ls Prediction dataset (a list)
 #' @param deterministic_1L_lgl Deterministic (a logical vector of length one), Default: T

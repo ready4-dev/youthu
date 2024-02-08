@@ -1,5 +1,5 @@
 #' Predict from model coefficients
-#' @description predict_from_mdl_coefs() is a Predict function that makes predictions from data using a specified statistical model. Specifically, this function implements an algorithm to predict from model coefficients. The function returns Predicted (a double vector).
+#' @description predict_from_mdl_coefs() is a Predict function that applies a model to make predictions. Specifically, this function implements an algorithm to predict from model coefficients. The function returns Predicted (a double vector).
 #' @param smry_of_mdl_tb Summary of model (a tibble)
 #' @param new_data_tb New data (a tibble)
 #' @return Predicted (a double vector)

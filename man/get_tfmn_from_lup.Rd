@@ -15,5 +15,5 @@ get_tfmn_from_lup(mdl_nm_1L_chr, mdls_lup = NULL)
 Transformation (a character vector of length one)
 }
 \description{
-get_tfmn_from_lup() is a Get function that retrieves a pre-existing data object from memory, local file system or online repository. Specifically, this function implements an algorithm to get transformation from lookup table. Function argument mdl_nm_1L_chr specifies the where to look for the required object. The function returns Transformation (a character vector of length one).
+get_tfmn_from_lup() is a Get function that extracts data from an object. Specifically, this function implements an algorithm to get transformation from lookup table. The function returns Transformation (a character vector of length one).
 }

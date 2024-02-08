@@ -33,6 +33,6 @@ add_costs_by_tmpt(
 Updated dataset (a tibble)
 }
 \description{
-add_costs_by_tmpt() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add costs by time point. Function argument ds_tb specifies the object to be updated. The function returns Updated dataset (a tibble).
+add_costs_by_tmpt() is an Add function that updates an object by adding new values to new or empty fields. Specifically, this function implements an algorithm to add costs by time point. The function returns Updated dataset (a tibble).
 }
 \keyword{internal}

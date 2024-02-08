@@ -33,6 +33,6 @@ add_change_in_ds_var(
 Updated dataset (a tibble)
 }
 \description{
-add_change_in_ds_var() is an Add function that updates an object by adding data to that object. Specifically, this function implements an algorithm to add change in dataset variable. Function argument ds_tb specifies the object to be updated. The function returns Updated dataset (a tibble).
+add_change_in_ds_var() is an Add function that updates an object by adding new values to new or empty fields. Specifically, this function implements an algorithm to add change in dataset variable. The function returns Updated dataset (a tibble).
 }
 \keyword{internal}
