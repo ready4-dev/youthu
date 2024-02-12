@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">youthu</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.0.9119</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.0.9121</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -27,7 +27,7 @@
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/Economic_Analysis.html">Economic analysis</a>
+    <a class="dropdown-item" href="../articles/Economic_Analysis.html">Use utility mapping models to implement cost-utility analyses</a>
     <a class="dropdown-item" href="../articles/Prediction_With_Mdls.html">Predict health utility from psychological and functional measures (PHQ-9 and SOFAS)</a>
     <a class="dropdown-item" href="../articles/V_01.html">Predict health utility from psychological measures (PHQ-9 and GAD-7)</a>
   </div>
@@ -62,6 +62,7 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_mdl_from_dv</span><span class="op">(</span></span>
 <span>  <span class="va">mdl_nm_1L_chr</span>,</span>
 <span>  dv_ds_nm_1L_chr <span class="op">=</span> <span class="st">"https://doi.org/10.7910/DVN/JC6PTV"</span>,</span>
+<span>  dv_nm_1L_chr <span class="op">=</span> <span class="st">"TTU"</span>,</span>
 <span>  server_1L_chr <span class="op">=</span> <span class="st">"dataverse.harvard.edu"</span>,</span>
 <span>  key_1L_chr <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -75,6 +76,10 @@
 
 <dt>dv_ds_nm_1L_chr</dt>
 <dd><p>Dataverse dataset name (a character vector of length one), Default: 'https://doi.org/10.7910/DVN/JC6PTV'</p></dd>
+
+
+<dt>dv_nm_1L_chr</dt>
+<dd><p>Dataverse name (a character vector of length one), Default: 'TTU'</p></dd>
 
 
 <dt>server_1L_chr</dt>

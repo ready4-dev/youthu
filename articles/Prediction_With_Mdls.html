@@ -34,7 +34,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">youthu</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.0.9119</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">0.0.0.9121</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -52,7 +52,7 @@
 <li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/Economic_Analysis.html">Economic analysis</a>
+    <a class="dropdown-item" href="../articles/Economic_Analysis.html">Use utility mapping models to implement cost-utility analyses</a>
     <a class="dropdown-item" href="../articles/Prediction_With_Mdls.html">Predict health utility from psychological and functional measures (PHQ-9 and SOFAS)</a>
     <a class="dropdown-item" href="../articles/V_01.html">Predict health utility from psychological measures (PHQ-9 and GAD-7)</a>
   </div>
@@ -722,14 +722,6 @@ TRUE
 </tr></tfoot>
 </table>
 </div>
-<p>We now ingest metadata about the mapping models we plan to use.
-<strong>NOTE: This is a temporary step that is required due to the
-metadata file not being in its study online repository. This code will
-cease to work once the metadata file has been moved from its temporary
-location to the study dataset. We will perform this task when an
-associated manuscript exits its current review process.</strong></p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">mdl_meta_data_ls</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ready4-dev.github.io/ready4/reference/ingest-methods.html" class="external-link">ingest</a></span><span class="op">(</span><span class="fu"><a href="https://ready4-dev.github.io/ready4use/reference/Ready4useRepos-class.html" class="external-link">Ready4useRepos</a></span><span class="op">(</span>gh_repo_1L_chr <span class="op">=</span> <span class="st">"ready4-dev/youthu"</span>, gh_tag_1L_chr <span class="op">=</span> <span class="st">"v0.0.0.91125"</span><span class="op">)</span>, fls_to_ingest_chr <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mdl_meta_data_ls"</span><span class="op">)</span>, metadata_1L_lgl <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
 <p>The prediction dataset must also include both a unique client
 identifier variable and a measurement time-point identifier variable
 (which must be a <code class="sourceCode r">factor</code> with two
@@ -747,7 +739,7 @@ needs to be passed to the <code>predr_vars_nms_chr</code> argument.
 Finally, if you wish to specify a preferred variable name to use for the
 predicted utility values when applying the model, you can do this by
 passing this name to the <code>utl_var_nm_1L_chr</code> argument.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">predn_ds_ls</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/make_predn_metadata_ls.html">make_predn_metadata_ls</a></span><span class="op">(</span><span class="va">data_tb</span>,</span>
 <span>                                      id_var_nm_1L_chr <span class="op">=</span> <span class="st">"UID"</span>,</span>
 <span>                                      msrmnt_date_var_nm_1L_chr <span class="op">=</span> <span class="st">"Date"</span>,</span>
@@ -770,7 +762,7 @@ to predict Quality Adjusted Life Years (QALYs)<a class="anchor" aria-label="anch
 to be supplied with the prediction dataset (the value passed to argument
 <code>data_tb</code>) and the validated prediction metadata object we
 created in the previous step.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data_tb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/add_utl_predn.html">add_utl_predn</a></span><span class="op">(</span><span class="va">data_tb</span>,</span>
 <span>                         predn_ds_ls <span class="op">=</span> <span class="va">predn_ds_ls</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Joining with `by = join_by(UID, Timepoint)`</span></span></code></pre>
@@ -829,7 +821,7 @@ Baseline
 69
 </td>
 <td style="text-align:right;">
-0.9392486
+0.7533187
 </td>
 </tr>
 <tr>
@@ -849,7 +841,7 @@ Baseline
 60
 </td>
 <td style="text-align:right;">
-0.3871527
+0.2987094
 </td>
 </tr>
 <tr>
@@ -869,7 +861,7 @@ Follow-up
 64
 </td>
 <td style="text-align:right;">
-0.8106665
+0.3551494
 </td>
 </tr>
 <tr>
@@ -889,7 +881,7 @@ Baseline
 76
 </td>
 <td style="text-align:right;">
-0.6288071
+0.7422917
 </td>
 </tr>
 <tr>
@@ -909,7 +901,7 @@ Baseline
 71
 </td>
 <td style="text-align:right;">
-0.8207542
+0.8869293
 </td>
 </tr>
 <tr>
@@ -929,7 +921,7 @@ Follow-up
 71
 </td>
 <td style="text-align:right;">
-0.9731775
+0.9885846
 </td>
 </tr>
 </tbody>
@@ -942,17 +934,17 @@ Follow-up
 </div>
 <p>Our health utility predictions are now available for use and are
 summarised below.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">data_tb</span><span class="op">$</span><span class="va">AQoL6D_HU</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. </span></span>
-<span><span class="co">## 0.04553 0.42251 0.61862 0.61862 0.83037 1.00000</span></span></code></pre>
+<span><span class="co">## 0.07387 0.42262 0.64178 0.62367 0.83603 1.00000</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="calculate-qalys">Calculate QALYs<a class="anchor" aria-label="anchor" href="#calculate-qalys"></a>
 </h3>
 <p>The last step is to calculate Quality Adjusted Life Years, using a
 method assuming a linear rate of change between timepoints.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data_tb</span> <span class="op">&lt;-</span> <span class="va">data_tb</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/add_qalys_to_ds.html">add_qalys_to_ds</a></span><span class="op">(</span>predn_ds_ls <span class="op">=</span> <span class="va">predn_ds_ls</span>,</span>
 <span>                                       include_predrs_1L_lgl <span class="op">=</span> <span class="cn">F</span>,</span>
 <span>                                       reshape_1L_lgl <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
@@ -1008,7 +1000,7 @@ Baseline
 69
 </td>
 <td style="text-align:right;">
-0.9392486
+0.7533187
 </td>
 <td style="text-align:left;">
 0.0000000
@@ -1037,7 +1029,7 @@ Baseline
 60
 </td>
 <td style="text-align:right;">
-0.3871527
+0.2987094
 </td>
 <td style="text-align:left;">
 0.0000000
@@ -1066,16 +1058,16 @@ Follow-up
 64
 </td>
 <td style="text-align:right;">
-0.8106665
+0.3551494
 </td>
 <td style="text-align:left;">
-0.4235138
+0.0564401
 </td>
 <td style="text-align:right;">
 76d 0H 0M 0S
 </td>
 <td style="text-align:right;">
-0.1246191
+0.0680264
 </td>
 </tr>
 <tr>
@@ -1095,7 +1087,7 @@ Baseline
 76
 </td>
 <td style="text-align:right;">
-0.6288071
+0.7422917
 </td>
 <td style="text-align:left;">
 0.0000000
@@ -1124,7 +1116,7 @@ Baseline
 71
 </td>
 <td style="text-align:right;">
-0.8207542
+0.8869293
 </td>
 <td style="text-align:left;">
 0.0000000
@@ -1153,16 +1145,16 @@ Follow-up
 71
 </td>
 <td style="text-align:right;">
-0.9731775
+0.9885846
 </td>
 <td style="text-align:left;">
-0.1524233
+0.1016554
 </td>
 <td style="text-align:right;">
 84d 0H 0M 0S
 </td>
 <td style="text-align:right;">
-0.2062837
+0.2156648
 </td>
 </tr>
 </tbody>
