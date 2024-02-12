@@ -1,6 +1,6 @@
 Package: youthu
 Title: Transform Youth Outcomes to Health Utility Predictions
-Version: 0.0.0.9120
+Version: 0.0.0.9121
 Authors@R: c(
     person("Matthew", "Hamilton", , "matthew.hamilton1@monash.edu", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-7407-9194")),
@@ -46,6 +46,7 @@ Imports:
     rlang,
     specific (>= 0.0.0.9108),
     stats,
+    stringi,
     stringr,
     tibble,
     tidyr,
