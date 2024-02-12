@@ -7,6 +7,7 @@
 get_mdl_from_dv(
   mdl_nm_1L_chr,
   dv_ds_nm_1L_chr = "https://doi.org/10.7910/DVN/JC6PTV",
+  dv_nm_1L_chr = "TTU",
   server_1L_chr = "dataverse.harvard.edu",
   key_1L_chr = NULL
 )
@@ -15,6 +16,8 @@ get_mdl_from_dv(
 \item{mdl_nm_1L_chr}{Model name (a character vector of length one)}
 
 \item{dv_ds_nm_1L_chr}{Dataverse dataset name (a character vector of length one), Default: 'https://doi.org/10.7910/DVN/JC6PTV'}
+
+\item{dv_nm_1L_chr}{Dataverse name (a character vector of length one), Default: 'TTU'}
 
 \item{server_1L_chr}{Server (a character vector of length one), Default: 'dataverse.harvard.edu'}
 

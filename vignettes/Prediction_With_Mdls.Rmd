@@ -2,7 +2,7 @@
 title: "Predict health utility from psychological and functional measures (PHQ-9 and SOFAS)"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Predict Quality Adjusted Life Years (QALYs)}
+  %\VignetteIndexEntry{Predict health utility from psychological and functional measures (PHQ-9 and SOFAS)}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 params:
@@ -70,7 +70,6 @@ To review the summary information about the predictive performance of a specific
 ```{r}
 get_dv_mdl_smrys(mdls_lup,
                  mdl_nms_chr = "PHQ9_SOFAS_1_OLS_CLL")
-
 ```
 
 More information about a selected model can be found in the online model catalogue, the link to which can be obtained with the following command:
@@ -113,13 +112,6 @@ predictors_lup %>%
                           add_to_row_ls = NULL,
                           scroll_box_args_ls = list(width = "100%")) 
 ```
-
-We now ingest metadata about the mapping models we plan to use. **NOTE: This is a temporary step that is required due to the metadata file not being in its study online repository. This code will cease to work once the metadata file has been moved from its temporary location to the study dataset. We will perform this task when an associated manuscript exits its current review process.**
-
-```{r}
-mdl_meta_data_ls <- ingest(Ready4useRepos(gh_repo_1L_chr = "ready4-dev/youthu", gh_tag_1L_chr = "v0.0.0.91125"), fls_to_ingest_chr = c("mdl_meta_data_ls"), metadata_1L_lgl = F)
-```
-
 
 The prediction dataset must also include both a unique client identifier variable and a measurement time-point identifier variable (which must be a `factor`{.R} with two levels). The dataset also needs to be in long format (ie where measures at different time-points for the same individual are stacked on top of each other in separate rows). We can confirm these conditions hold by creating a dataset metadata object using the `make_predn_metadata_ls` function. In creating the metadata object, the function checks that the dataset can be used in conjunction with the model specified at the `mdl_nm_1L_chr` argument. If the prediction dataset uses different variable names for the predictors to those specified in the `predictors_lup`{.R} lookup table, a named vector detailing the correspondence between the two sets of variable names needs to be passed to the `predr_vars_nms_chr` argument. Finally, if you wish to specify a preferred variable name to use for the predicted utility values when applying the model, you can do this by passing this name to the `utl_var_nm_1L_chr` argument.
 

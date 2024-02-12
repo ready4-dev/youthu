@@ -153,27 +153,28 @@ get_mdl_ds_url <- function (mdls_lup, mdl_nm_1L_chr)
 #' @description get_mdl_from_dv() is a Get function that extracts data from an object. Specifically, this function implements an algorithm to get model from dataverse. The function returns Model (a model).
 #' @param mdl_nm_1L_chr Model name (a character vector of length one)
 #' @param dv_ds_nm_1L_chr Dataverse dataset name (a character vector of length one), Default: 'https://doi.org/10.7910/DVN/JC6PTV'
+#' @param dv_nm_1L_chr Dataverse name (a character vector of length one), Default: 'TTU'
 #' @param server_1L_chr Server (a character vector of length one), Default: 'dataverse.harvard.edu'
 #' @param key_1L_chr Key (a character vector of length one), Default: NULL
 #' @return Model (a model)
 #' @rdname get_mdl_from_dv
 #' @export 
-#' @importFrom dataverse dataset_files
-#' @importFrom purrr map_chr
+#' @importFrom ready4use Ready4useRepos
+#' @importFrom ready4 ingest
+#' @importFrom purrr pluck
 get_mdl_from_dv <- function (mdl_nm_1L_chr, dv_ds_nm_1L_chr = "https://doi.org/10.7910/DVN/JC6PTV", 
-    server_1L_chr = "dataverse.harvard.edu", key_1L_chr = NULL) 
+    dv_nm_1L_chr = "TTU", server_1L_chr = "dataverse.harvard.edu", 
+    key_1L_chr = NULL) 
 {
-    ds_ls <- dataverse::dataset_files(dv_ds_nm_1L_chr, server = server_1L_chr, 
-        key = key_1L_chr)
-    all_mdls_chr <- purrr::map_chr(ds_ls, ~.x$label)
-    idx_1L_int <- which(all_mdls_chr == paste0(mdl_nm_1L_chr, 
-        ".RDS"))
+    X <- ready4use::Ready4useRepos(dv_nm_1L_chr = dv_nm_1L_chr, 
+        dv_server_1L_chr = server_1L_chr, dv_ds_nm_1L_chr = dv_ds_nm_1L_chr)
+    contents_ls <- ready4::ingest(X, metadata_1L_lgl = F)
+    idx_1L_int <- which(names(contents_ls) == mdl_nm_1L_chr)
     if (identical(idx_1L_int, integer(0))) {
         model_mdl <- NULL
     }
     else {
-        model_mdl <- readRDS(url(paste0("https://dataverse.harvard.edu/api/access/datafile/", 
-            ds_ls[[idx_1L_int]]$dataFile$id)))
+        model_mdl <- contents_ls %>% purrr::pluck(idx_1L_int)
     }
     return(model_mdl)
 }

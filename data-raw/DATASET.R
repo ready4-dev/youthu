@@ -55,9 +55,7 @@ z <- ready4pack::make_pt_ready4pack_manifest(x,
                                              pkg_ds_ls_ls = datasets_ls) %>%
   ready4pack::ready4pack_manifest()
 z <- ready4::author(z)
-usethis::use_dev_package("scorz",
-                         type = "Suggests",
-                         remote = "ready4-dev/scorz")
+usethis::use_dev_package("scorz", type = "Suggests", remote = "ready4-dev/scorz")
 ready4::write_extra_pkgs_to_actions(path_to_dir_1L_chr = ".github/workflows", consent_1L_chr = "Y")
 write_to_edit_workflow("pkgdown.yaml", consent_1L_chr = "Y") # In other packages, run for "test-coverage.yaml" as well.
 readLines("_pkgdown.yml") %>%

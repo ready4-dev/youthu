@@ -97,17 +97,23 @@ get_mdl_ds_url <- function(mdls_lup,
 }
 get_mdl_from_dv <- function(mdl_nm_1L_chr,
                             dv_ds_nm_1L_chr = "https://doi.org/10.7910/DVN/JC6PTV",
+                            dv_nm_1L_chr = "TTU",
                             server_1L_chr = "dataverse.harvard.edu",
                             key_1L_chr = NULL){
-  ds_ls <- dataverse::dataset_files(dv_ds_nm_1L_chr,
-                                    server = server_1L_chr,
-                                    key = key_1L_chr)
-  all_mdls_chr <- purrr::map_chr(ds_ls,~.x$label)
-  idx_1L_int <- which(all_mdls_chr == paste0(mdl_nm_1L_chr,".RDS"))
+  X <- ready4use::Ready4useRepos(dv_nm_1L_chr = dv_nm_1L_chr,
+                                 dv_server_1L_chr = server_1L_chr,
+                                 dv_ds_nm_1L_chr = dv_ds_nm_1L_chr)
+  contents_ls <- ready4::ingest(X, #fls_to_ingest_chr = mdl_nm_1L_chr,
+                              metadata_1L_lgl = F)
+  # ds_ls <- dataverse::dataset_files(dv_ds_nm_1L_chr,
+  #                                   server = server_1L_chr,
+  #                                   key = key_1L_chr)
+  # all_mdls_chr <- purrr::map_chr(ds_ls,~.x$label)
+  idx_1L_int <- which(names(contents_ls) == mdl_nm_1L_chr)#which(all_mdls_chr == paste0(mdl_nm_1L_chr,".RDS"))
   if(identical(idx_1L_int,integer(0))){
     model_mdl <- NULL
   }else{
-    model_mdl <- readRDS(url(paste0("https://dataverse.harvard.edu/api/access/datafile/",ds_ls[[idx_1L_int]]$dataFile$id)))
+    model_mdl <- contents_ls %>% purrr::pluck(idx_1L_int)#readRDS(url(paste0("https://dataverse.harvard.edu/api/access/datafile/",ds_ls[[idx_1L_int]]$dataFile$id)))
   }
   return(model_mdl)
 }

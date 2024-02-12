@@ -2,7 +2,7 @@
 title: "Predict health utility from psychological measures (PHQ-9 and GAD-7)"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Significant Changes To The Youthu Package}
+  %\VignetteIndexEntry{Predict health utility from psychological measures (PHQ-9 and GAD-7)}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -26,10 +26,11 @@ If not already installed it will be necessary to install the `youthu` R library.
 ```
 
 ## Load required packages
-We now load the libraries we will be using in subsequent steps. Note, both the `ready4` and `ready4use` [ready4 framework](https://www.ready4-dev.com/) libraries will have been installed automatically when `youthu` was installed. The `specific` readyforwhatsnext module library and `dplyr`, `purrr`, `stringr` and `tidyr` CRAN libraries will have been installed at the same time.
+We now load the libraries we will be using in subsequent steps. Note, both the `ready4`, `ready4show` and `ready4use` [ready4 framework](https://www.ready4-dev.com/) libraries will have been installed automatically when `youthu` was installed. The `specific` readyforwhatsnext module library and `dplyr`, `purrr`, `stringr` and `tidyr` CRAN libraries will have been installed at the same time.
 
 ```{r message=FALSE}
 library(ready4)
+library(ready4show)
 library(ready4use)
 library(specific)
 library(youthu)
@@ -48,35 +49,27 @@ X <- Ready4useRepos(dv_nm_1L_chr = "fakes", dv_ds_nm_1L_chr = "https://doi.org/1
 We can now inspect the dataset we will be using to make predictions. As this is a demonstration article we are going to create a custom synthetic dataset. Our first step in doing so is to ingest a preexisting synthetic dataset (in long format) using the method explained in [another vignette article](https://ready4-dev.github.io/ready4use/articles/V_03.html)
 
 ```{r}
-data_tb <- ingest(X, fls_to_ingest_chr = c("ymh_clinical_tb"), metadata_1L_lgl = F)
+data_tb <- ingest(X, fls_to_ingest_chr = c("ymh_phq_gad_tb"), metadata_1L_lgl = F)
 ```
 
-We next select only the essential variables for this example, transform the dataset to wide format and rename our two clinical variables of interest.
-
-```{r}
-data_tb <- data_tb %>% dplyr:: select(c("fkClientID", "round", 
-                                        "d_interview_date", 
-                                        "gad7_total", "phq9_total")) %>%
-  tidyr::pivot_wider(names_from = c("round"), 
-                     values_from = c("d_interview_date", "gad7_total", "phq9_total")) %>%
-  dplyr::rename_with(~stringr::str_replace(.x,"_Baseline","_t1") %>% 
-                       stringr::str_replace("_Follow-up","_t2") %>% 
-                       stringr::str_replace("_total",""))
+```{r echo=FALSE, eval = FALSE}
+# Alternatively
+# data_tb <- ingest(X, fls_to_ingest_chr = c("ymh_clinical_tb"), metadata_1L_lgl = F)
+# data_tb <- data_tb %>% dplyr:: select(c("fkClientID", "round", 
+#                                         "d_interview_date", 
+#                                         "gad7_total", "phq9_total")) %>%
+#   tidyr::pivot_wider(names_from = c("round"), 
+#                      values_from = c("d_interview_date", "gad7_total", "phq9_total")) %>%
+#   dplyr::rename_with(~stringr::str_replace(.x,"_Baseline","_t1") %>% 
+#                        stringr::str_replace("_Follow-up","_t2") %>% 
+#                        stringr::str_replace("_total",""))
 ```
 
 Our resulting dataset has unique IDs for each participant (character class), timestamps for each data collection timepoint (Date class variables) and GAD-7 and PHQ-9 scores for each timepoint (integer class).
 
-```{r eval=FALSE}
-data_tb %>% head()
-```
 
-```{r echo=FALSE}
-data_tb %>% head() %>% ready4show::print_table(output_type_1L_chr = "HTML",
-                          caption_1L_chr = knitr::opts_current$get("tab.cap"),
-                          use_lbls_as_col_nms_1L_lgl = T,
-                          mkdn_tbl_ref_1L_chr = paste0("tab:",knitr::opts_current$get("tab.id")),
-                          add_to_row_ls = NULL,
-                          scroll_box_args_ls = list(width = "100%")) 
+```{r }
+data_tb %>% head() %>% ready4show::print_table(caption_1L_chr = "Dataset", output_type_1L_chr = "HTML") 
 ```
 
 ## Get mapping models
@@ -88,18 +81,9 @@ mdls_lup <- get_mdls_lup(ttu_dv_dss_tb = get_ttu_dv_dss("TTU"),
                          mdl_predrs_in_ds_chr = c("GAD7 total score", "PHQ9 total score"))
 ```
 
-```{r eval=FALSE}
-mdls_lup[,c(1,2,5)] 
-```
-
-```{r echo=FALSE}
+```{r }
 mdls_lup[,c(1,2,5)] %>% 
-  ready4show::print_table(output_type_1L_chr = "HTML",
-                          caption_1L_chr = knitr::opts_current$get("tab.cap"),
-                          use_lbls_as_col_nms_1L_lgl = T,
-                          mkdn_tbl_ref_1L_chr = paste0("tab:",knitr::opts_current$get("tab.id")),
-                          add_to_row_ls = NULL,
-                          scroll_box_args_ls = list(width = "100%")) 
+  ready4show::print_table(caption_1L_chr = "Available models", output_type_1L_chr = "HTML") 
 ```
 
 We select our preferred model and retrieve summary data about the model's predictor variables.
@@ -116,28 +100,14 @@ exhibit(predictors_lup)
 To be used with the mapping models available to us, our prediction dataset needs to be in long format. We perform the necessary transformation.
 
 ```{r}
-data_tb <- c("d_interview_date", "gad7", "phq9") %>%
-  purrr::map(~ data_tb %>%
-               tidyr::pivot_longer(cols = paste0(.x,"_t",1:2), 
-                                   names_to = "When", values_to = .x) %>%
-               tibble::rowid_to_column("case_id") %>%
-               dplyr::mutate(When = When %>% stringr::str_sub(start = -2L) %>% factor()) %>%
-               dplyr::select(tidyselect::all_of(c("case_id", "fkClientID","When",.x)))) %>%
-  purrr::reduce(~dplyr::left_join(.x,.y)) %>%
-  dplyr::select(-case_id)
+data_tb <- transform_ds_to_long(data_tb, predictors_chr = c("gad7", "phq9"),
+                             msrmnt_date_var_nm_1L_chr = "d_interview_date", round_var_nm_1L_chr = "When")
 ```
 We drop records where we are missing data for either GAD7 or PHQ9 at either timepoint.
 
 ```{r}
-drop_chr <- data_tb %>% purrr::pmap_chr(~ifelse(is.na(..4)|is.na(..5),..1,NA_character_)) %>% purrr::discard(is.na)
-data_tb <- dplyr::filter(data_tb, !fkClientID %in% drop_chr)
-```
-
-
-We ingest metadata about our models. **NOTE: This is a temporary step that is required due to the metadata file not being in the study online repository. This code will cease to work once the metadata file has been moved from its temporary location to the study dataset. We will perform this task when an associated manuscript exits its current review process.**
-
-```{r}
-mdl_meta_data_ls <- ingest(X, fls_to_ingest_chr = c("mdl_meta_data_ls"), metadata_1L_lgl = F)
+data_tb <- transform_ds_to_drop_msng(data_tb, predictors_chr = c("gad7", "phq9"), 
+                                      uid_var_nm_1L_chr = "fkClientID")
 ```
 
 
@@ -146,7 +116,6 @@ We now predict AQoL-6D health utility for each case with complete data.
 ```{r}
 predn_ds_ls <- make_predn_metadata_ls(data_tb,
                                       id_var_nm_1L_chr = "fkClientID",
-                                      mdl_meta_data_ls = mdl_meta_data_ls,
                                       msrmnt_date_var_nm_1L_chr = "d_interview_date",
                                       predr_vars_nms_chr = c(GAD7 = "gad7", PHQ9 = "phq9"),
                                       round_var_nm_1L_chr = "When",
@@ -163,14 +132,8 @@ Finally, we derive QALY predictions from the health utility measures at both tim
 data_tb <- data_tb %>% add_qalys_to_ds(predn_ds_ls = predn_ds_ls, include_predrs_1L_lgl = F, reshape_1L_lgl = T)
 ```
 
-```{r eval=FALSE}
-data_tb %>% head() 
-```
-```{r echo=FALSE}
+```{r }
 data_tb %>% head() %>%
-  ready4show::print_table(output_type_1L_chr = "HTML",
-                          caption_1L_chr = knitr::opts_current$get("tab.cap"),
-                          mkdn_tbl_ref_1L_chr = paste0("tab:",knitr::opts_current$get("tab.id")),
-                          add_to_row_ls = NULL,
+  ready4show::print_table(caption_1L_chr = "Final dataset", output_type_1L_chr = "HTML",
                           scroll_box_args_ls = list(width = "100%"))
 ```
