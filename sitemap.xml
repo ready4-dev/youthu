@@ -4,9 +4,6 @@
     <loc>https://ready4-dev.github.io/youthu/404.html</loc>
   </url>
   <url>
-    <loc>https://ready4-dev.github.io/youthu/LICENSE-text.html</loc>
-  </url>
-  <url>
     <loc>https://ready4-dev.github.io/youthu/LICENSE.html</loc>
   </url>
   <url>
@@ -56,6 +53,9 @@
   </url>
   <url>
     <loc>https://ready4-dev.github.io/youthu/reference/deprecated.html</loc>
+  </url>
+  <url>
+    <loc>https://ready4-dev.github.io/youthu/reference/dotdata.html</loc>
   </url>
   <url>
     <loc>https://ready4-dev.github.io/youthu/reference/get_dv_ds_publication.html</loc>
@@ -143,6 +143,9 @@
   </url>
   <url>
     <loc>https://ready4-dev.github.io/youthu/reference/mdls_lup.html</loc>
+  </url>
+  <url>
+    <loc>https://ready4-dev.github.io/youthu/reference/nseequals.html</loc>
   </url>
   <url>
     <loc>https://ready4-dev.github.io/youthu/reference/pipe.html</loc>
