@@ -21,7 +21,8 @@ This vignette outlines a workflow for:
 - Preparing a prediction dataset for use with a selected transfer to utility model; and
 - Applying the selected transfer to utility model to a prediction dataset to predict Quality Adjusted Life Years (QALYs).
 
-The practical value of implementing such a workflow is discussed in the [economic analysis vignette](https://ready4-dev.github.io/youthu/articles/Economic_Analysis.html) and [a scientific manuscript](https://www.medrxiv.org/content/10.1101/2021.07.07.21260129v2.full). Note, this example uses fake data - it should should not be used to inform decision making.
+The practical value of implementing such a workflow is discussed in the [economic analysis vignette](https://ready4-dev.github.io/youthu/articles/Economic_Analysis.html) and [a scientific manuscript](
+https://www.medrxiv.org/content/10.1101/2021.07.07.21260129v4). Note, this example uses fake data - it should should not be used to inform decision making.
 
 ## Search, select and retrieve transfer to utility models
 To identify datasets that contain transfer to utility models compatible with youthu (ie those developped with the [TTU package](https://ready4-dev.github.io/TTU/index.html)), you can use the `get_ttu_dv_dss` function. The function searches specified dataverses (in the below example, the [TTU dataverse](https://dataverse.harvard.edu/dataverse/TTU)) for datasets containing output from the TTU package.

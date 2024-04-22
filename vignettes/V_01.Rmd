@@ -110,7 +110,6 @@ data_tb <- transform_ds_to_drop_msng(data_tb, predictors_chr = c("gad7", "phq9")
                                       uid_var_nm_1L_chr = "fkClientID")
 ```
 
-
 We now predict AQoL-6D health utility for each case with complete data.
 
 ```{r}

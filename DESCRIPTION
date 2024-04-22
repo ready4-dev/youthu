@@ -17,7 +17,7 @@ Description: Tools for mapping measures routinely collected in youth
     youthu package has been made available as part of the process of
     testing and documenting the package. If you have any questions, please
     contact the authors (matthew.hamilton1@monash.edu).
-License: GPL-3 + file LICENSE
+License: GPL-3
 URL: https://ready4-dev.github.io/youthu/,
     https://github.com/ready4-dev/youthu, https://www.ready4-dev.com/
 Encoding: UTF-8
@@ -25,8 +25,9 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.1
 Suggests: 
     knitr,
+    pkgload,
     rmarkdown,
-    scorz,
+    scorz (>= 0.0.0.9065),
     testthat
 VignetteBuilder: knitr
 Imports: 
@@ -57,7 +58,8 @@ Imports:
 Depends: 
     R (>= 2.10)
 LazyData: true
-Remotes: 
+Remotes:  
     ready4-dev/ready4use,
     ready4-dev/specific,
-    ready4-dev/youthvars
+    ready4-dev/youthvars,
+    ready4-dev/scorz

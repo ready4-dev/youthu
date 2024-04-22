@@ -2,6 +2,7 @@
 library(ready4)
 library(ready4show)
 library(ready4use)
+library(ready4fun)
 library(youthvars)
 library(scorz)
 library(specific)
@@ -10,9 +11,9 @@ ready4fun::write_fn_type_dirs()
 fns_env_ls <- ready4fun::read_fns(c("data-raw/fns/","data-raw/mthds/"),
                                   fns_env = new.env(parent = globalenv()))
 x <- ready4fun::make_pkg_desc_ls(pkg_title_1L_chr = "Transform Youth Outcomes to Health Utility Predictions" %>% tools::toTitleCase(),
-                                 pkg_desc_1L_chr = "Tools for mapping measures routinely collected in youth mental health services to Quality Adjusted Life Years (QALYs). Part of the ready4 youth mental health systems model (https://www.ready4-dev.com/docs/model/).
+                                 pkg_desc_1L_chr = "Tools for mapping measures routinely collected in youth mental health services to Quality Adjusted Life Years (QALYs). Part of the ready4forwhatsnext youth mental health systems model (https://readyforwhatsnext.org/).
   This development version of the youthu package has been made available as part of the process of testing and documenting the package. If you have any questions, please contact the authors (matthew.hamilton1@monash.edu).",
-                                 authors_prsn = c(utils::person(given = "Matthew",family = "Hamilton",email = "matthew.hamilton1@monash.edu", role = c("aut", "cre"),comment = c(ORCID = "0000-0001-7407-9194")),
+                                 authors_prsn = c(utils::person(given = "Matthew",family = "Hamilton",email = "matthew.hamilton1@monash.edu", role = c("aut", "cre", "cph"),comment = c(ORCID = "0000-0001-7407-9194")),
                                                   utils::person(given = "Caroline",family = "Gao",email = "caroline.gao@orygen.org.au", role = c("aut"),comment = c(ORCID = "0000-0002-0987-2759")),
                                                   utils::person("Orygen", role = c("cph", "fnd")),
                                                   utils::person("Headspace", role = c( "fnd")),
@@ -24,7 +25,7 @@ x <- ready4fun::make_pkg_desc_ls(pkg_title_1L_chr = "Transform Youth Outcomes to
                                                                        suggests_chr = c("knitr","rmarkdown", "scorz")),
   build_ignore_ls = ready4fun::make_build_ignore_ls(file_nms_chr = c("initial_setup.R")),
   check_type_1L_chr = "ready4",
-  copyright_holders_chr = "Orygen",
+  copyright_holders_chr = "Matthew Hamilton and Orygen",
   custom_dmt_ls = ready4fun::make_custom_dmt_ls(user_manual_fns_chr = c("add_utl_predn",
                                                                         "add_qalys_to_ds",
                                                                         "get_mdl_from_dv",
@@ -34,7 +35,7 @@ x <- ready4fun::make_pkg_desc_ls(pkg_title_1L_chr = "Transform Youth Outcomes to
                                                                         "make_sngl_grp_ds",
                                                                         "make_matched_ds",
                                                                         "rename_from_nmd_vec")),##
-  dev_pkgs_chr = c("ready4",
+  dev_pkgs_chr = c(#"ready4",
                    "ready4use","ready4show",
                    "scorz", "specific",
                    "youthvars"),
@@ -58,12 +59,10 @@ z <- ready4::author(z)
 usethis::use_dev_package("scorz", type = "Suggests", remote = "ready4-dev/scorz")
 ready4::write_extra_pkgs_to_actions(path_to_dir_1L_chr = ".github/workflows", consent_1L_chr = "Y")
 write_to_edit_workflow("pkgdown.yaml", consent_1L_chr = "Y") # In other packages, run for "test-coverage.yaml" as well.
-readLines("_pkgdown.yml") %>%
-  stringr::str_replace_all("  - text: Model", "  - text: Framework & Model") %>%
-  writeLines(con = "_pkgdown.yml")
-devtools::build_vignettes()
-# ready4::write_citation_cff(packageDescription("youthu"),
-#                            citation_chr = readLines("inst/CITATION"))
+write_to_tidy_pkg(z$x_ready4fun_manifest, build_vignettes_1L_lgl = TRUE,
+                  clean_license_1L_lgl = TRUE, consent_1L_chr = "Y",
+                  examples_chr = character(0),
+                  suggest_chr = "pkgload")
 # usethis::use_dev_package("TTU",
 #                          type = "Depends",
 #                          remote = "ready4-dev/TTU")

@@ -12,9 +12,9 @@
 
 Tools for mapping measures routinely collected in youth
 mental health services to Quality Adjusted Life Years (QALYs). Part of
-the ready4 youth mental health systems model
-(https://www.ready4-dev.com/docs/model/).  This development version of
-the youthu package has been made available as part of the process of
+the ready4forwhatsnext youth mental health systems model
+(https://readyforwhatsnext.org/).  This development version of the
+youthu package has been made available as part of the process of
 testing and documenting the package. If you have any questions, please
 contact the authors (matthew.hamilton1@monash.edu).
 

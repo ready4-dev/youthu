@@ -2,17 +2,16 @@
 % Please edit documentation in R/pkg_youthu.R, R/youthu-package.R
 \docType{package}
 \name{youthu-package}
-\alias{youthu}
 \alias{youthu-package}
 \title{youthu: Transform Youth Outcomes to Health Utility Predictions}
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-Tools for mapping measures routinely collected in youth mental health services to Quality Adjusted Life Years (QALYs). Part of the ready4 youth mental health systems model (https://www.ready4-dev.com/docs/model/). This development version of the youthu package has been made available as part of the process of testing and documenting the package. If you have any questions, please contact the authors (matthew.hamilton1@monash.edu).
+Tools for mapping measures routinely collected in youth mental health services to Quality Adjusted Life Years (QALYs). Part of the ready4forwhatsnext youth mental health systems model (https://readyforwhatsnext.org/). This development version of the youthu package has been made available as part of the process of testing and documenting the package. If you have any questions, please contact the authors (matthew.hamilton1@monash.edu).
 
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-Tools for mapping measures routinely collected in youth mental health services to Quality Adjusted Life Years (QALYs). Part of the ready4 youth mental health systems model (https://www.ready4-dev.com/docs/model/). This development version of the youthu package has been made available as part of the process of testing and documenting the package. If you have any questions, please contact the authors (matthew.hamilton1@monash.edu).
+Tools for mapping measures routinely collected in youth mental health services to Quality Adjusted Life Years (QALYs). Part of the ready4forwhatsnext youth mental health systems model (https://readyforwhatsnext.org/). This development version of the youthu package has been made available as part of the process of testing and documenting the package. If you have any questions, please contact the authors (matthew.hamilton1@monash.edu).
 }
 \seealso{
 Useful links:
@@ -32,7 +31,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Matthew Hamilton \email{matthew.hamilton1@monash.edu} (\href{https://orcid.org/0000-0001-7407-9194}{ORCID})
+\strong{Maintainer}: Matthew Hamilton \email{matthew.hamilton1@monash.edu} (\href{https://orcid.org/0000-0001-7407-9194}{ORCID}) [copyright holder]
 
 Authors:
 \itemize{
